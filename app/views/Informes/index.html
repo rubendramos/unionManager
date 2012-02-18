@@ -1,0 +1,30 @@
+#{extends 'Privado/privado.html' /}
+
+<div id="informesPage">
+
+	<ul>Informes
+	</ul>
+
+
+	<ul id="informes">
+		<li
+			class="${request.controller == 'informeAfiliados' ? 'selected' : ''}">
+			<a href="@{Informes.informeAfiliados()}">Informe afiliados</a>
+		</li>
+	</ul>
+
+	<form action="informeAfiliados">
+		<div>
+			<p class="field">
+				<label for="data">Data:</label> <input type="text" id="data"
+					name="data" value="${data?.format('dd-MM-yyyy')}"> <span
+					class="error">${errors.forKey('data')}</span>
+			</p>
+
+			<p class="buttons">
+				<a href="@{Informes.index()}">Cancel</a> or <input type="submit"
+					value="Informe Afiliados" id="informeAfiliados">
+			</p>
+		</div>
+	</form>
+</div>

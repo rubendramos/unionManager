@@ -1,0 +1,140 @@
+@import url(main.css);
+
+html, body {	
+    font-family: 'Lucida grande', verdana, sans-serif;
+}
+
+
+#login {
+
+    margin: 15px auto;
+    text-align: center; 
+    height: 10px;    
+    
+}
+
+#login h1 {
+    font-weight: bold;
+    color: #111;
+}
+
+#login2 form {        
+    text-align: left;
+	background: #888;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	padding: 5px 10px;
+	font-size: 80%;
+	text-decoration: none;
+	color: #fff;
+	font-weight: bold;
+	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .3);    
+}
+
+#login form {        
+    width: 350px;
+	margin: 30px auto 20px;
+	padding: 10px 10px 10px;
+	position: relative;
+	top:80px;
+	left:20px;
+	padding: 5px 10px;
+	text-align: left;
+	text-decoration: none;
+	min-height: 150px;
+	background: #000000;
+	background: -webkit-gradient(radial,50% -50,50,50% -100,220, from(rgba(255,255,255,1)), to(rgba(255,255,255,0))) no-repeat, -webkit-gradient(linear, left top, left bottom, from(#ff1111), to(#000000)) no-repeat;
+	background: -moz-radial-gradient(50% 10%, closest-side, rgba(255,255,255,1), rgba(255,255,255,0)) no-repeat, -moz-linear-gradient(-90deg, #ff1111, #000000) no-repeat;
+	-webkit-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #ff1111 0 1px 1px, #000000 0 -1px 0px;
+	-moz-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #ff1111 0 1px 1px, #000000 0 -1px 0px;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;	   
+}
+
+
+
+#login form p {
+    margin: 10px; 
+       
+}
+
+#username-field {
+    margin-top: 10px !important;
+}
+
+#username-field label, #password-field label {
+    display: block;
+    width: 150px;
+    float: left;
+    text-align: right;
+    margin-right: 5px;
+    color: #333;
+    font-size: 15px;
+}
+
+#username-field input {
+    width: 150px;
+	padding-left: 0;
+    font-size: 13px;
+    border-color:#000000;
+	border-width:1px;
+}
+
+#password-field input {
+    width: 150px;
+    font-size: 13px;
+    border-color:#000000;
+	border-width:1px;
+}
+
+#remember-field input {
+    margin-left: 15px;
+}
+
+#remember-field {
+    font-size: 12px;
+    color: #666;
+}
+
+#signin-field2 input {
+    margin-left: 155px;
+    margin-top: 10px;
+}
+
+#signin-field{
+	text-align: right;	
+	
+}
+#signin-field input{
+color: #ffffff;
+	border:none;	
+	position: relative;
+	background: #000;
+	padding: 2px 20px;
+	font-size: 90%;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	cursor: pointer;
+	
+}
+
+#signin-field input:hover {
+	opacity: .7;
+}
+
+#login .error, #login .success  {
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+#login .error {
+    background: #c00 !important;
+}
+
+#login .success {
+    background: #008800 !important;
+}

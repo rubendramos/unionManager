@@ -1,0 +1,9 @@
+#{extends 'main.html' /} #{set title:'Inicio' /}
+
+
+<ul id="module">
+	<li class="${request.controller == 'Admin' ? 'selected' : ''}"><a
+		href="@{Privado.index()}">&{'modulo.administracion'}</a></li>
+</ul>
+
+

@@ -1,0 +1,33 @@
+package models;
+ 
+import java.util.*;
+import javax.persistence.*;
+ 
+import play.db.jpa.*;
+import play.data.validation.*;
+ 
+@Entity
+public class Ocupacion extends Model {
+ 
+    
+    @Required
+    @MaxSize(50)
+    public String descricion;
+    
+
+    @Required
+    @ManyToOne
+    public Ramo ramo;    
+    
+  
+    public Ocupacion(String descricion, Ramo ramo){
+    	this.descricion=descricion;
+    	this.ramo=ramo;
+    }
+      
+    public String toString() {
+        return this.descricion + " (" +ramo.descricion+")";
+    	
+    }
+ 
+}

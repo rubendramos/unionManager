@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     PERSOA."ID" AS PERSOA_ID,
+     PERSOA."APELIDO1" AS PERSOA_APELIDO1,
+     PERSOA."APELIDO2" AS PERSOA_APELIDO2,
+     PERSOA."DATANACEMENTO" AS PERSOA_DATANACEMENTO,
+     PERSOA."DNI" AS PERSOA_DNI,
+     PERSOA."EMAIL" AS PERSOA_EMAIL,
+     PERSOA."NOME" AS PERSOA_NOME,
+     PERSOA."NOMECOMPLETO" AS PERSOA_NOMECOMPLETO,
+     PERSOA."SEXO" AS PERSOA_SEXO,
+     PERSOA."SEXO_ID" AS PERSOA_SEXO_ID,
+     PERSOA."ENDEREZO_ID" AS PERSOA_ENDEREZO_ID,
+     AFILIADO."ID" AS AFILIADO_ID,
+     AFILIADO."CARNETCONFEDERADO" AS AFILIADO_CARNETCONFEDERADO,
+     AFILIADO."DATAALTA" AS AFILIADO_DATAALTA,
+     AFILIADO."DATABAIXA" AS AFILIADO_DATABAIXA,
+     AFILIADO."MILITA" AS AFILIADO_MILITA,
+     AFILIADO."OCUPACION_ID" AS AFILIADO_OCUPACION_ID,
+     AFILIADO."PERSOA_ID" AS AFILIADO_PERSOA_ID,
+     AFILIADO."RAMO_ID" AS AFILIADO_RAMO_ID,
+     AFILIADO."SINDICATO_ID" AS AFILIADO_SINDICATO_ID,
+     ENDEREZO."ID" AS ENDEREZO_ID,
+     ENDEREZO."CODIGOPOSTAL" AS ENDEREZO_CODIGOPOSTAL,
+     ENDEREZO."CONCELLO" AS ENDEREZO_CONCELLO,
+     ENDEREZO."ENDEREZO" AS ENDEREZO_ENDEREZO,
+     ENDEREZO."LOCALIDADE" AS ENDEREZO_LOCALIDADE,
+     ENDEREZO."PAIS" AS ENDEREZO_PAIS,
+     ENDEREZO."PROVINCIA" AS ENDEREZO_PROVINCIA
+FROM
+     "PUBLIC"."PERSOA" PERSOA INNER JOIN "PUBLIC"."AFILIADO" AFILIADO ON PERSOA."ID" = AFILIADO."PERSOA_ID"
+     INNER JOIN "PUBLIC"."ENDEREZO" ENDEREZO ON PERSOA."ENDEREZO_ID" = ENDEREZO."ID"]]>
+	</queryString>
+	<field name="PERSOA_APELIDO1" class="java.lang.String"/>
+	<field name="PERSOA_APELIDO2" class="java.lang.String"/>
+	<field name="PERSOA_DATANACEMENTO" class="java.sql.Timestamp"/>
+	<field name="PERSOA_DNI" class="java.lang.String"/>
+	<field name="PERSOA_EMAIL" class="java.lang.String"/>
+	<field name="PERSOA_NOME" class="java.lang.String"/>
+	<field name="PERSOA_NOMECOMPLETO" class="java.lang.String"/>
+	<field name="PERSOA_SEXO" class="java.lang.String"/>
+	<field name="AFILIADO_DATAALTA" class="java.sql.Timestamp"/>
+	<field name="AFILIADO_DATABAIXA" class="java.sql.Timestamp"/>
+	<field name="AFILIADO_MILITA" class="java.lang.Boolean"/>
+	<field name="ENDEREZO_CODIGOPOSTAL" class="java.lang.String"/>
+	<field name="ENDEREZO_CONCELLO" class="java.lang.String"/>
+	<field name="ENDEREZO_ENDEREZO" class="java.lang.String"/>
+	<field name="ENDEREZO_LOCALIDADE" class="java.lang.String"/>
+	<field name="ENDEREZO_PROVINCIA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="81" height="20"/>
+				<textElement/>
+				<text><![CDATA[PERSOA_APELIDO1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="81" y="0" width="81" height="20"/>
+				<textElement/>
+				<text><![CDATA[PERSOA_APELIDO2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="0" width="81" height="20"/>
+				<textElement/>
+				<text><![CDATA[PERSOA_DATANACEMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="243" y="0" width="81" height="20"/>
+				<textElement/>
+				<text><![CDATA[PERSOA_DNI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="0" width="81" height="20"/>
+				<textElement/>
+				<text><![CDATA[PERSOA_EMAIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="405" y="0" width="81" height="20"/>
+				<textElement/>
+				<text><![CDATA[PERSOA_NOME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="486" y="0" width="81" height="20"/>
+				<textElement/>
+				<text><![CDATA[PERSOA_NOMECOMPLETO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="81" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PERSOA_APELIDO1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="81" y="0" width="81" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PERSOA_APELIDO2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="0" width="81" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PERSOA_DATANACEMENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="243" y="0" width="81" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PERSOA_DNI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="324" y="0" width="81" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PERSOA_EMAIL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="405" y="0" width="81" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PERSOA_NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="0" width="81" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PERSOA_NOMECOMPLETO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

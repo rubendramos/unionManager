@@ -1,0 +1,70 @@
+# play/modules/crud (administration) 
+crud.title = Administración 
+crud.home = Inico 
+crud.blank = Novo
+crud.index.title = Sellecione o obxeto a modificar 
+crud.index.objectType = Tipo de obxeto 
+crud.index.action = XXX 
+crud.index.add = Engadir novo
+crud.add = Engadir &{%s} 
+crud.list.title = &{%s} 
+crud.list.size = %d &{%s} 
+crud.list.totalSize = %d total 
+crud.pagination.previous = « Aterior 
+crud.pagination.next = Seguente » 
+crud.pagination.last = Derradeiro »» 
+crud.pagination.first = «« Primeiro 
+crud.show.title = Modifier &{%s} 
+crud.save = Gardar 
+crud.saveAndContinue = Gardar e seguir modificando 
+crud.cancel = Cancelar 
+crud.hasErrors = Correxir os errors 
+crud.blank.title = Engadir &{%s} 
+crud.saveAndAddAnother = Gardar e engadir outro 
+crud.delete = Eliminar &{%s} 
+crud.created = &{%s} foi creado 
+crud.saved = &{%s} guardouse correctamente 
+crud.deleted = &{%s} eliminouse corretamente 
+crud.delete.error = No se pudido borrar o rexistro 
+crud.search = Acadar 
+crud.none = (aucun) 
+crud.help.required = Obrigatorio. 
+crud.help.minlength = Tamaño mínimo %d. 
+crud.help.maxlength = Tamaño máximo %d. 
+crud.help.email = Enderezo e-mail valido 
+crud.help.dateformat = En formato MM-DD-YYYY. 
+crud.help.numeric = Numérico. 
+crud.help.min = Doit être plus grand que %d. 
+crud.help.future = No futuro. 
+crud.help.past = No pasado. 
+crud.help.after = Despois %s. 
+crud.help.before = Antes %s. 
+crud.help.range = Entre %d e %d 
+ 
+# play/modules/secure 
+secure.username = Enderezo e-mail: 
+secure.password = Contrasinal: 
+secure.signin = Vostede está logeado.
+
+
+
+
+#Menu
+menu.sindicatos
+menu.Enderezos
+menu.Persoas
+menu.Ramos
+menu.Ocupacións
+menu.Usuarios
+menu.Sexos
+menu.InformeAfiliados
+
+
+#layout
+layout.footer=Web de xestión da CNT
+
+#Login
+login.in= Entrar
+login.out= Sair
+
+

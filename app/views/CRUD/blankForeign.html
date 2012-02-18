@@ -1,0 +1,19 @@
+#{set title:messages.get('crud.blank.title', type.modelName) /}
+%{ cacheIde = params["cacheId"] }%
+
+<div id="crudBlank" class="${type.name}">
+
+    <h2 id="crudBlankTitle">&{'crud.blank.title', type.modelName}</h2>
+
+    <div class="objectForm">
+    #{form action:@createForeign(), enctype:'multipart/form-data'}
+        #{crud.form /}
+        <p class="crudButtons">
+            <input type="submit" name="_saveAndBackForeign" value="&{'crud.saveAndBack', type.modelName}" />
+            <input type="hidden" name="cacheId" value="${cacheIde}"/>  
+        </p>
+    #{/form}
+    </div>
+    
+    
+</div>
