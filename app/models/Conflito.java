@@ -1,11 +1,11 @@
 package models;
 
-import play.*;
 import play.data.validation.MaxSize;
 import play.data.validation.Required;
 import play.db.jpa.*;
 
 import javax.persistence.*;
+import utils.LinkForeignKey;
 
 import java.util.*;
 
@@ -36,6 +36,7 @@ public class Conflito extends Model {
     public String valoracion;
     
     @ManyToMany
+    @LinkForeignKey
     public Set<Afiliado> afiliados = new HashSet() ;
   
   

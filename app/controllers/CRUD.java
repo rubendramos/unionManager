@@ -1,18 +1,13 @@
 package controllers;
 
+import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import models.Enderezo;
-import models.Evento;
+import java.util.*;
 
 import play.Logger;
 import play.Play;
@@ -24,16 +19,12 @@ import play.data.validation.Required;
 import play.db.Model;
 import play.db.Model.Factory;
 import play.exceptions.TemplateNotFoundException;
-import play.i18n.Messages;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.Router;
 import play.utils.Java;
 
 import utils.*;
-
-import java.util.Random;
-import sun.rmi.transport.ObjectTable;
 
 public abstract class CRUD extends Controller {
 
@@ -70,19 +61,19 @@ public abstract class CRUD extends Controller {
                     orderBy, order);
         }
     }
-    
-   public static void listForeign(int page, String search, String searchFields,
-            String orderBy, String order,String cacheId) {
+
+    public static void listForeign(int page, String search, String searchFields,
+            String orderBy, String order, String cacheId) {
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);
         if (page < 1) {
             page = 1;
         }
-        
+
         Logger.debug("cacheid en listForeign", params.get("cacheId"));
-        
+
         Logger.debug("cacheid en listForeign", cacheId);
-        
+
         List<Model> objects = type.findPage(page, search, searchFields,
                 orderBy, order, (String) request.args.get("where"));
         Long count = type.count(search, searchFields,
@@ -90,12 +81,12 @@ public abstract class CRUD extends Controller {
         Long totalCount = type.count(null, null,
                 (String) request.args.get("where"));
         try {
-            render("CRUD/listForeign.html",type, objects, count, totalCount, page, orderBy, order);
+            render("CRUD/listForeign.html", type, objects, count, totalCount, page, orderBy, order);
         } catch (TemplateNotFoundException e) {
             render("CRUD/listForeign.html", type, objects, count, totalCount, page,
                     orderBy, order);
         }
-    }    
+    }
 
     public static void show(String id) throws Exception {
         ObjectType type = ObjectType.get(getControllerClass());
@@ -148,7 +139,7 @@ public abstract class CRUD extends Controller {
         notFoundIfNull(object);
 
         //borramos a cache
-      //  Cache.delete(cacheId);
+        //  Cache.delete(cacheId);
 
         try {
             render("CRUD/blank.html", type, object);
@@ -188,8 +179,7 @@ public abstract class CRUD extends Controller {
         notFoundIfNull(type);
         Model object = type.findById(id);
         notFoundIfNull(object);
-        Binder.bindBean(params.getRootParamNode(), "object", object);
-        String foreignKey = "";
+        Binder.bindBean(params.getRootParamNode(), "object", object);        
 
         if (params.get("_save") != null || params.get("_saveAndContinue") != null) {
             validation.valid(object);
@@ -209,26 +199,43 @@ public abstract class CRUD extends Controller {
                 redirect(request.controller + ".list");
             }
             redirect(request.controller + ".show", object._key());
-        } else if (params.get("_addForeignKey") != null || params.get("_newForeignKey") != null) {
+        } else if (params.get("_addForeignKey") != null || params.get("_newForeignKey") != null
+                || params.get("_deleteForeignKey") != null) {
 
             String campo = params.get("_campo");
+            String tipo=params.get("_tipo");
             ForeignKeyValues fkv = new ForeignKeyValues(object);
             fkv.setCampo(campo);
+            fkv.setNomeTipoFillo(tipo);
             fkv.setProcedencia(fkv.PROCEDENCIA_SHOW);
             fkv.setControladorPai(getControllerClass());
 
 
-            if (params.get("_addForeignKey") != null) {
-                fkv.setNomeTipoFillo(params.get("_addForeignKey"));
+            if (params.get("_addForeignKey") != null) {                
                 fkv.setTipoForeign(fkv.FOREIGN_EXISTE);
             }
 
-            if (params.get("_newForeignKey") != null) {
-                fkv.setNomeTipoFillo(params.get("_newForeignKey"));
+            if (params.get("_newForeignKey") != null) {            
                 fkv.setTipoForeign(fkv.FOREIGN_NOVA);
 
             }
 
+            if (params.get("_deleteForeignKey") != null) {   
+                fkv.setTipoForeign(fkv.FOREIGN_EXISTE);
+                
+                String[] toDelete = params.getAll("object.afiliados.id");
+                String[] AllMultiple = params.getAll("object_afiliados_Todos");
+
+                
+                if (toDelete.length == 1) {
+                    renderArgs.put("error", play.i18n.Messages.get("crud.delete.EmptySelect","aaa"));                    
+                } else {
+                    fkv.deleteValueForeign(AllMultiple);
+                }
+
+                render("CRUD/show.html", type, object);
+
+            }
 
             ForeignKeyCache fkc = new ForeignKeyCache(fkv);
 
@@ -244,8 +251,8 @@ public abstract class CRUD extends Controller {
 
         ForeignKeyCache fkc = (ForeignKeyCache) Cache.get(cacheId);
         ForeignKeyValues fkv = (ForeignKeyValues) fkc.getForeignKeyValues();
-        fkv.setControladorFillo(getControllerClass());     
-        fkv.fillFieldFromFillo(id);
+        fkv.setControladorFillo(getControllerClass());
+        fkv.addValueForeign(id);
 
         redirect(fkc.redirectPai());
     }
@@ -289,24 +296,23 @@ public abstract class CRUD extends Controller {
         if (params.get("_addForeignKey") != null || params.get("_newForeignKey") != null) {
 
             String campo = params.get("_campo");
+            String tipo = params.get("_tipo");
 
             ForeignKeyValues fkv = new ForeignKeyValues(object);
             fkv.setCampo(campo);
+            fkv.setNomeTipoFillo(tipo);
             fkv.setProcedencia(fkv.PROCEDENCIA_BLANK);
             fkv.setControladorPai(getControllerClass());
 
 
-            if (params.get("_addForeignKey") != null) {
-                fkv.setNomeTipoFillo(params.get("_addForeignKey"));
+            if (params.get("_addForeignKey") != null) {                
                 fkv.setTipoForeign(fkv.FOREIGN_EXISTE);
             }
-            if (params.get("_newForeignKey") != null) {
-                fkv.setNomeTipoFillo(params.get("_newForeignKey"));
+            if (params.get("_newForeignKey") != null) {                
                 fkv.setTipoForeign(fkv.FOREIGN_NOVA);
 
             }
 
-            Logger.debug("newForeignKey:" + fkv.getNomeTipoFillo() + "campo:" + fkv.getCampo() + "procedencia:" + fkv.getProcedencia() + "tipoForeign:" + fkv.getTipoForeign());
 
             ForeignKeyCache fkc = new ForeignKeyCache(fkv);
 
@@ -360,13 +366,13 @@ public abstract class CRUD extends Controller {
         object._save();
         flash.success(play.i18n.Messages.get("crud.created", type.modelName));
         if (params.get("_saveAndBackForeign") != null) {
- 
+
             ForeignKeyCache fkc = (ForeignKeyCache) Cache.get(params.get("cacheId"));
             ForeignKeyValues fkv = (ForeignKeyValues) fkc.getForeignKeyValues();
             ObjectType.get(getControllerClass());
             fkv.setControladorFillo(getControllerClass());
 
-            fkv.fillFieldFromFillo(object._key().toString());
+            fkv.addValueForeign(object._key().toString());
 
             redirect(fkc.redirectPai());
 
@@ -580,6 +586,7 @@ public abstract class CRUD extends Controller {
             @SuppressWarnings("deprecation")
             public ObjectField(Model.Property property, String pai) {
                 Field field = property.field;
+
                 this.property = property;
                 this.pai = pai;
                 if (CharSequence.class.isAssignableFrom(field.getType())) {
@@ -642,7 +649,15 @@ public abstract class CRUD extends Controller {
                     type = null;
                 }
                 name = field.getName();
-                tipo = field.getType().getSimpleName();
+
+                if (multiple) {
+                    tipo = field.toGenericString();
+                    tipo = tipo.substring(tipo.indexOf("<"), tipo.indexOf(">"));
+                    tipo = tipo.substring(tipo.indexOf(".") + 1);
+                } else {
+                    tipo = field.getType().getSimpleName();
+                }
+
                 sinatura = field.toString();
             }
 
@@ -704,13 +719,10 @@ public abstract class CRUD extends Controller {
 
     private static class ForeignKeyValues implements Serializable {
 
-        
         public final String PROCEDENCIA_BLANK = "blank";
         public final String PROCEDENCIA_SHOW = "show";
         public final String FOREIGN_NOVA = "nova";
-        public final String FOREIGN_EXISTE = "existe";        
-        
-        
+        public final String FOREIGN_EXISTE = "existe";
         private Class<? extends Model> fillo;
         private String nomeTipoFillo;
         private ObjectType tipoFillo;
@@ -722,7 +734,6 @@ public abstract class CRUD extends Controller {
         private String campo;
         private String procedencia;
         private String tipoForeign;
-    
 
         public ForeignKeyValues(Model pai) {
             this.pai = pai;
@@ -740,7 +751,7 @@ public abstract class CRUD extends Controller {
 
         }
 
-        public void fillFieldFromFillo(String idFillo) {
+        public void addValueForeign(String idFillo) {
 
             Object filloCache;
 
@@ -750,9 +761,90 @@ public abstract class CRUD extends Controller {
                 Model a = typeFillo.findById(idFillo);
                 filloCache = Class.forName(this.getNomeTipoFillo()).cast(a);
 
+
                 Field t = this.getPai().getClass().getDeclaredField(this.getCampo());
 
-                t.set(this.getPai(), filloCache);
+
+                if ("Set".equals(t.getType().getSimpleName())) {
+                    String type = "java.util.Set";
+                    String property = this.getCampo();
+                    Object value = new PropertyDescriptor(property, this.getPai().getClass()).getReadMethod().invoke(this.getPai());
+
+                    Class<? extends Set> theClass = Class.forName(type).asSubclass(Set.class);
+                    Set obj = theClass.cast(value);
+                    obj.add(filloCache);
+
+                    t.set(this.getPai(), obj);
+
+                } else {
+
+                    t.set(this.getPai(), filloCache);
+                }
+
+
+
+            } catch (IllegalAccessException ex) {
+                Logger.error(ex, "Erro ao pintar a paxina");
+            } catch (NoSuchFieldException ex) {
+                Logger.error(ex, "Erro ao pintar a paxina");
+            } catch (SecurityException ex) {
+                Logger.error(ex, "Erro ao pintar a paxina");
+            } catch (ClassNotFoundException ex) {
+                Logger.error(ex, "Erro ao pintar a paxina");
+            } catch (Exception ex) {
+                Logger.error(ex, "Erro ao pintar a paxina");
+            }
+        }
+
+        private Collection removeEmptyValues(String[] values) {
+
+            List<String> list = Arrays.asList(values);
+            List<String> result = new ArrayList<String>();
+
+            for (String str : list) {
+                if (str != null && !str.isEmpty()) {
+                    result.add(str);
+                }
+            }
+
+            return result;
+
+        }
+
+        public void deleteValueForeign(String[] idAllValues) {
+
+            Object filloCache;
+            String type = "java.util.Set";
+            String property = this.getCampo();
+            Collection todos = Arrays.asList(idAllValues);
+
+            try {
+
+                
+                
+                Class<? extends Set> theClass = Class.forName(type).asSubclass(Set.class);
+                //Class<? extends Model> modelClass = Class.forName(this.getNomeTipoFillo()).asSubclass(Model.class);
+                Object value = new PropertyDescriptor(property, this.getPai().getClass()).getReadMethod().invoke(this.getPai());
+                Set obj = theClass.cast(value);
+
+                ObjectType typeFillo = new ObjectType(this.getNomeTipoFillo());
+                Field t = this.getPai().getClass().getDeclaredField(this.getCampo());
+
+
+                for (Object id : todos) {
+                    Model a = typeFillo.findById(id.toString());
+                    filloCache = Class.forName(this.getNomeTipoFillo()).cast(a);
+                    if (obj.contains(filloCache)) {
+                        obj.remove(filloCache);
+                    } else {
+                        obj.add(filloCache);
+                    }
+
+                }
+
+
+                t.set(this.getPai(), obj);
+                
 
             } catch (IllegalAccessException ex) {
                 Logger.error(ex, "Erro ao pintar a paxina");
@@ -904,7 +996,7 @@ public abstract class CRUD extends Controller {
          * @param campo the campo to set
          */
         public void setCampo(String campo) {
-            this.campo = campo.substring(campo.indexOf(".")+1);
+            this.campo = campo.substring(campo.indexOf(".") + 1);
         }
 
         /**

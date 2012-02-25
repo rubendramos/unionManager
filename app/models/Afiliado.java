@@ -1,10 +1,9 @@
 package models;
  
-import java.text.DateFormat;
 import java.util.*;
 import javax.persistence.*;
+import utils.LinkForeignKey;
 
-import org.hibernate.annotations.ManyToAny;
  
 import play.db.jpa.*;
 import play.data.validation.*;
@@ -15,6 +14,7 @@ public class Afiliado extends Model {
     
     @Required
     @ManyToOne
+    @LinkForeignKey
     public Persoa persoa ;
     
     @Required

@@ -41,6 +41,7 @@ dataInicio=Data Inicio
 dataRemate=Data Remate
 valoracion=Valoración
 tipoConflito=Tipo conflito
+pepito=Afincado
 
 #Eventos
 tipoEvento=Tipo evento
@@ -92,6 +93,10 @@ crud.help.past = No pasado.
 crud.help.after = Despois %s. 
 crud.help.before = Antes %s. 
 crud.help.range = Entre %d e %d 
+
+crud.delete.EmptySelect= Para eliminar un elemento de %s debe selecionar un rexistro.
+crud.table.action=Acción
+crud.table.empty= Non hai elementos
 
  
 # play/modules/secure 
