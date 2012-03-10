@@ -33,7 +33,7 @@
                 </source-folder>
             </folders>
             <ide-actions>
-            	<action name="clean">
+                <action name="clean">
                     <script>${ant.script}</script>
                     <target>doNothing</target>
                     <property name="application.path">${application.path}</property>
@@ -65,13 +65,14 @@
                     <property name="application.path">${application.path}</property>
                 </action>
             </ide-actions>
+            <export>
+                <type>folder</type>
+                <location>nbproject/classes</location>
+                <script>${ant.script}</script>
+                <build-target>doNothing</build-target>
+            </export>
             <view>
                 <items>
-                    <source-folder style="packages">
-                        <label>app</label>
-                        <location>app</location>
-                        <excludes>views/**</excludes>
-                    </source-folder>
                     <source-folder style="tree">
                         <label>app/views</label>
                         <location>app/views</location>
@@ -84,11 +85,18 @@
                         <label>conf</label>
                         <location>conf</location>
                     </source-folder>
+                    <source-folder style="tree">
+                        <label>db</label>
+                        <location>db</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>app</label>
+                        <location>app</location>
+                    </source-folder>
                     <source-folder style="packages">
                         <label>test</label>
                         <location>test</location>
-                    </source-folder>   
-                    <source-folder style="tree"><label>db</label><location>db</location></source-folder>                 
+                    </source-folder>
                 </items>
                 <context-menu>
                     <ide-action name="run"/>
