@@ -14,7 +14,7 @@ import play.db.jpa.Model;
 import play.exceptions.UnexpectedException;
 
 
-	public class LinkForeignKeyCheck extends AbstractAnnotationCheck<LinkForeignKey> {
+	public class AddForeignKeyCheck extends AbstractAnnotationCheck<AddForeignKey> {
 	  final static String mes = "utils.LinkForeignKey";
 	  	  
 	

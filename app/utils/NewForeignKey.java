@@ -18,8 +18,8 @@ import play.db.jpa.GenericModel;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.PARAMETER})
-@Constraint(checkWith = LinkForeignKeyCheck.class)
-public @interface LinkForeignKey {
+@Constraint(checkWith = AddForeignKeyCheck.class)
+public @interface NewForeignKey {
     String value() default "";
-    String message() default LinkForeignKeyCheck.mes;
+    String message() default AddForeignKeyCheck.mes;
 }
