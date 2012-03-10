@@ -5,3 +5,72 @@
 #   email: bob@gmail.com
 #   password: secret
 #   fullname: Bob
+ComunidadeAutonoma(galicia):
+  descricion: galicia
+
+Provincia(Lugo):
+  descricion: Lugo
+  comunidade: galicia
+
+Localidade(localidadeRuben):
+  descricion: ruben
+  provincia: Lugo
+  comunidadeAutonoma: galicia
+  latitude: 0
+  lonxitude: 0
+  codigoPostal: 2
+ 
+Enderezo(enderezoRuben):
+  enderezo: enderezo ruben
+  localidade: localidadeRuben
+  concello: pp
+  pais: spain
+  
+Sexo(masculino):
+  descricion: H
+  
+Persoa(rubenpersoa):
+  email: rubendramos@gmail.com
+  nome: rubens
+  aplido1:  diaz
+  apelido2: ramos
+  dni:  11111111H
+  sexo: masculino
+  dataNacemento:  21/10/2010
+  enderezo: enderezoRuben    
+  
+Ramo(educacion):
+  descricion: educacion
+  
+Ocupacion(mestre):
+  descricion: mestre
+  ramo: educacion
+  
+Sindicato(santiago):
+  nome: santiago
+  cif: 76767676Z
+  acronimo: SOV
+  descricion: lalalala
+  ramo: educacion
+  dataAlta: 22/12/2010
+  dataBaxia: 10/10/2020
+  enderezo: enderezoRuben      
+      
+  
+Afiliado(rubenafiliado):
+  persoa: rubenpersoa
+  ocupacion:  mestre
+  ramo: educacion
+  dataAlta: 21/11/2010
+  dataBaixa:  22/11/2010
+  milita: true
+  carnetConfederado: qwqwqw
+  sindicado:  santiago  
+  
+User(ruben):
+  password: trinity
+  usuario:  rubendramos@gmail.com
+  afiliado: rubenafiliado
+  isAdmin:  true
+  isComite: true
+    
