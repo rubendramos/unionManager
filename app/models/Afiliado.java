@@ -1,10 +1,9 @@
 package models;
  
-import java.text.DateFormat;
 import java.util.*;
 import javax.persistence.*;
+import utils.AddForeignKey;
 
-import org.hibernate.annotations.ManyToAny;
  
 import play.db.jpa.*;
 import play.data.validation.*;
@@ -15,6 +14,7 @@ public class Afiliado extends Model {
     
     @Required
     @ManyToOne
+    @AddForeignKey
     public Persoa persoa ;
     
     @Required
@@ -38,9 +38,6 @@ public class Afiliado extends Model {
     @ManyToOne    
     public Sindicato sindicato;
     
-    
-    
-    
   
     public Afiliado(Persoa persoa,Ocupacion ocupacion,Ramo ramo, Date dataAlta, Date dataBaixa, 
     		boolean milita,String carnetConfederado,Sindicato sindicato){
@@ -57,7 +54,7 @@ public class Afiliado extends Model {
     
     
     public String toString() {
-        return this.persoa.nomeCompleto;
+        return persoa.dni+"-"+this.persoa.nomeCompleto;
     }
     
  

@@ -1,5 +1,6 @@
 package models;
  
+import controllers.CRUD;
 import java.text.DateFormat;
 import java.util.*;
 import javax.persistence.*;
@@ -42,6 +43,7 @@ public class Persoa extends Model {
     public Enderezo enderezo;    
     
     @MaxSize(50)
+    @CRUD.Hidden
     public String nomeCompleto;
     
     
@@ -72,7 +74,7 @@ public class Persoa extends Model {
     
     
     public String toString() {
-        return this.nomeCompleto;
+        return this.dni+" "+this.nomeCompleto;
     }
  
 }

@@ -8,6 +8,8 @@ import org.hibernate.annotations.ManyToAny;
  
 import play.db.jpa.*;
 import play.data.validation.*;
+import utils.AddForeignKey;
+import utils.NewForeignKey;
  
 @Entity
 public class Enderezo extends Model {
@@ -16,32 +18,29 @@ public class Enderezo extends Model {
     public String enderezo ;
     
     @Required
-    public String localidade;
-    
-    @Required
-    public String codigoPostal;
-       
+    @ManyToOne
+    @AddForeignKey
+    @NewForeignKey
+    public Localidade localidade;
+         
     @Required
     public String concello;
     
-    public String provincia;
-        
     public String pais;
    
   
-    public Enderezo(String enderezo,String localidade,String codigoPostal, String concello, String provincia, String pais){
+    public Enderezo(String enderezo,Localidade localidade,String codigoPostal, String concello,String pais){
     	this.enderezo=enderezo;
-    	this.localidade=localidade;
-    	this.codigoPostal=codigoPostal;
+    	this.localidade=localidade;    
     	this.concello=concello;
-    	this.provincia=provincia;
     	this.pais=pais;    	
     }
 
     
     
     public String toString() {
-        return this.enderezo +"-"+ this.localidade +"-"+ this.codigoPostal +"-"+ this.concello +"("+ provincia+")";
+        return this.enderezo +"-"+this.localidade.descricion +"-"+ this.concello +"-"+  this.localidade.codigoPostal+
+                " "+ localidade.provincia+" ("+localidade.comunidadeAutonoma+")";
     }
  
 }
