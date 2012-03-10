@@ -1,4 +1,6 @@
+#{extends 'CRUD/layout.html' /}
 #{set title:messages.get('crud.blank.title', type.modelName) /}
+
 %{ cacheIde = params["cacheId"] }%
 
 <div id="crudBlank" class="${type.name}">

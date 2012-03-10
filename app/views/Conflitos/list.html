@@ -10,15 +10,15 @@
     </div>
 
     <div id="crudListTable">
-        #{crud.table fields:['persoa','dataAlta','dataBaixa']}
-        #{crud.custom 'dataAlta'}
-        #{if (object.dataAlta!=null)}
-        ${object.dataAlta.format()}
+        #{crud.table fields:['tipoConflito','nome','descricion','dataInicio','dataRemate']}
+        #{crud.custom 'dataInicio'}
+        #{if (object.dataInicio!=null)}
+        ${object.dataInicio.format()}
         #{/if}
         #{/crud.custom}
-        #{crud.custom 'dataBaixa'}
-        #{if (object.dataBaixa!=null)}
-        ${object.dataBaixa.format()}
+        #{crud.custom 'dataRemate'}
+        #{if (object.dataRemate!=null)}
+        ${object.dataRemate.format()}
         #{/if}
         #{/crud.custom}
         #{/crud.table}
