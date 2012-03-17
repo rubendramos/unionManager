@@ -1,0 +1,84 @@
+@import url(crud.css);
+
+/** Custom CRUD **/
+
+#crud {
+	font-size: 110%;
+}
+
+#crud td a {
+	color: #650F62 !important;
+}
+
+#crud small {
+	font-size: 70%;
+}
+
+#crud #crudHeader {
+	background: none !important;
+	padding: 5px 0 !important;
+	height: 20px;
+	border-bottom: 1px dotted #cccccc;
+}
+
+#crud #crudHeader h1 a {
+	background: none !important;
+	font-size: 90%;
+	text-decoration: underline;
+	color: #333;
+}
+
+#crud #crudBreadcrumb {
+	position: relative;
+	top: -22px;
+	padding: 0;
+	font-size: 90%;
+	border: 0;
+	margin-right: 200px;
+}
+
+#crud #crudContent h2 {
+	margin-bottom: 10px;
+	font-size: 20px;
+	color: #000;
+}
+
+#crud #crudContent {
+	padding: 10px 0 !important;
+}
+
+#crud #crudContent table thead tr {
+	background: #9F459D;
+}
+
+#crud .crudNew a, #crud #crudListAdd a {
+	background: none;
+	color: #666 !important;
+	background: url(../images/add.png) top left no-repeat;
+	padding-left: 20px;
+	text-decoration: underline;
+}
+
+.objectForm label {
+	position: relative;
+	top: 4px;
+}
+
+.online, .offline {
+	font-size: 80%;
+}
+
+.online {
+	color: #1F9F09;
+}
+
+.offline {
+	color: #c00;
+}
+
+/** Admin index **/
+
+#crud #crudIndex h2 {
+	visibility: hidden;
+	font-size: 1px;
+}

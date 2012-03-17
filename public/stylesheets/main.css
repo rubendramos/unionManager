@@ -1,0 +1,121 @@
+
+/** Login **/
+
+#login {
+	margin : 50px auto;
+	width: 400px;
+}
+
+#login h2 {
+	text-align: center;
+	font-weight: normal;
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+#loginError {
+	text-align: center;
+	background: #CC0000;
+	color: #fff;
+	padding: 5px;
+	margin-bottom: 10px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+#login form {
+	background-color: white;
+	padding: 10px;
+	border : 8px solid #CCC;
+	text-align: right;
+}
+
+#login input {
+	display : block; 
+	width: 230px;
+	margin-bottom:5px;
+}
+
+#login label {
+	float: left; 
+	width: 100px; 
+	margin-right: 5px;
+	font-weight: bold;
+	color: #333;
+}
+
+#login .submit {
+	margin-top: 20px;
+	margin-left:105px;
+	padding:2px;
+	-moz-border-radius:10px;
+	width:100px;
+	cursor:pointer;
+}
+
+#crudHeader h1 {
+	color: black !important;
+	float: right;
+	padding: 5px;
+}
+
+
+/** Login **/
+
+#login {
+	margin : 50px auto;
+	width: 400px;
+}
+
+#login h2 {
+	text-align: center;
+	font-weight: normal;
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+#loginError {
+	text-align: center;
+	background: #CC0000;
+	color: #fff;
+	padding: 5px;
+	margin-bottom: 10px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+#login form {
+	background-color: white;
+	padding: 10px;
+	border : 8px solid #CCC;
+	text-align: right;
+}
+
+#login input {
+	display : block; 
+	width: 230px;
+	margin-bottom:5px;
+}
+
+#login label {
+	float: left; 
+	width: 100px; 
+	margin-right: 5px;
+	font-weight: bold;
+	color: #333;
+}
+
+#login .submit {
+	margin-top: 20px;
+	margin-left:105px;
+	padding:2px;
+	-moz-border-radius:10px;
+	width:100px;
+	cursor:pointer;
+}
+
+#crudHeader h1 {
+	color: black !important;
+	float: right;
+	padding: 5px;
+}
