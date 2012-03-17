@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.CRUD.ObjectType.ObjectField;
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.annotation.ElementType;
@@ -7,7 +8,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import models.Avisable;
+import models.Aviso;
 
 import play.Logger;
 import play.Play;
@@ -18,6 +23,7 @@ import play.data.validation.Password;
 import play.data.validation.Required;
 import play.db.Model;
 import play.db.Model.Factory;
+import play.db.jpa.GenericModel;
 import play.exceptions.TemplateNotFoundException;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -45,15 +51,51 @@ public abstract class CRUD extends Controller {
             String orderBy, String order) {
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);
+        String where = "";
         if (page < 1) {
             page = 1;
         }
-        List<Model> objects = type.findPage(page, search, searchFields,
-                orderBy, order, (String) request.args.get("where"));
-        Long count = type.count(search, searchFields,
-                (String) request.args.get("where"));
-        Long totalCount = type.count(null, null,
-                (String) request.args.get("where"));
+
+        List<ObjectField> fields = type.getFields();
+
+        for (ObjectField f : fields) {
+            if (f.filtro) {
+                String valor = "";
+                if (f.property.isRelation) {
+                    valor = (String) params.get("object." + f.name + ".id");
+                } else {
+                    valor = (String) params.get("object." + f.name);
+                    params.put("object." + f.name,valor);
+                }
+
+
+
+                if (valor != null && !"".contains(valor)) {
+                    if ("date".equals(f.type)) {
+                        //valor = "CONVERT ('" + valor + "', CURRENT_TIMESTAMP)";
+                        String date=Tools.dateToDateDataBaseFormat(valor);
+                        valor = f.property.name+"=convert('"+date+"',date)";
+
+                    }else{
+                        valor=f.property.name + " ='" + valor + "'";
+                    }
+                    if (!"".equals(where)) {
+                        where += " and ";
+                    }
+                    where += valor;
+                }
+            }
+        }
+
+        String where2 = (String) request.args.get("where");
+
+        if ("".equals(where)) {
+            where = null;
+        }
+
+        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, where);
+        Long count = type.count(search, searchFields,  where);
+        Long totalCount = type.count(null, null, (String) request.args.get("where"));
         try {
             render(type, objects, count, totalCount, page, orderBy, order);
         } catch (TemplateNotFoundException e) {
@@ -373,6 +415,15 @@ public abstract class CRUD extends Controller {
             }
         }
         object._save();
+
+
+        //Si o obxeto do modelo implementa a interface Avisable enviarase un 
+        //aviso de sistema asociado a un tipo de aviso específico neste caso o 1.
+        if (Avisable.class.isInstance(object)) {
+            Avisable ob = (Avisable) object;
+            ob.sendAviso("Alta novo Afiliado");
+        }
+
         flash.success(play.i18n.Messages.get("crud.created", type.modelName));
         if (params.get("_save") != null) {
             redirect(request.controller + ".list");
@@ -622,6 +673,7 @@ public abstract class CRUD extends Controller {
             public String pai = "unknown";
             public String tipo = "unknown";
             public String nomeCampo = "unknown";
+            public boolean filtro;
 
             @SuppressWarnings("deprecation")
             public ObjectField(Model.Property property, String pai) {
@@ -687,6 +739,9 @@ public abstract class CRUD extends Controller {
                 }
                 if (field.isAnnotationPresent(NewForeignKey.class)) {
                     newForeignKey = true;
+                }
+                if (field.isAnnotationPresent(AddFiltro.class)) {
+                    filtro = true;
                 }
                 if (java.lang.reflect.Modifier.isFinal(field.getModifiers())) {
                     type = null;
