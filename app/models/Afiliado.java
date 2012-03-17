@@ -9,7 +9,7 @@ import play.db.jpa.*;
 import play.data.validation.*;
  
 @Entity
-public class Afiliado extends Model {
+public class Afiliado extends Model implements Avisable {
  
     
     @Required
@@ -56,6 +56,20 @@ public class Afiliado extends Model {
     public String toString() {
         return persoa.dni+"-"+this.persoa.nomeCompleto;
     }
+
+    public String getAsunto() {
+        return "Afiliado "+ this.persoa.nomeCompleto;
+    }
+
+    public String getContido() {
+        return "Afiliado" + this.persoa.nomeCompleto;
+    }
+
+     public void sendAviso(String asunto){
+            Aviso aviso=Aviso.findById(Long.decode("1"));
+            aviso.setAsunto(asunto+": "+this.getAsunto());
+            aviso.setContido(this.getContido());            
+        }
     
  
  

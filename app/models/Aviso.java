@@ -17,10 +17,10 @@ public class Aviso extends Model {
     public TipoAviso tipoAviso;
         
     @Required 
-    public String asunto;
+    private String asunto;
     
     @Required
-    public String contido;
+    private String contido;
     
     @ManyToMany
     @AddForeignKey
@@ -59,7 +59,7 @@ public class Aviso extends Model {
     
     public String toString(){
         
-        return this.tipoAviso+" "+this.asunto+ "-"+ this.foiEnviado+"-"+ this.dataRealizacionAviso;
+        return this.tipoAviso+" "+this.getAsunto()+ "-"+ this.foiEnviado+"-"+ this.dataRealizacionAviso;
     
     }
         
@@ -73,6 +73,34 @@ public class Aviso extends Model {
         }
         return res;        
 
+    }
+
+    /**
+     * @return the asunto
+     */
+    public String getAsunto() {
+        return asunto;
+    }
+
+    /**
+     * @param asunto the asunto to set
+     */
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
+    }
+
+    /**
+     * @return the contido
+     */
+    public String getContido() {
+        return contido;
+    }
+
+    /**
+     * @param contido the contido to set
+     */
+    public void setContido(String contido) {
+        this.contido = contido;
     }
     
 
