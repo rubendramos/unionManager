@@ -722,9 +722,10 @@ public abstract class CRUD extends Controller {
                 }
                 if (Date.class.isAssignableFrom(field.getType())) {
                     type = "date";
+                    
                 }
                 if (property.isRelation) {
-                    type = "relation";
+                    type = "relation";                    
                 }
                 if (property.isMultiple) {
                     multiple = true;

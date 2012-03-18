@@ -5,6 +5,7 @@ import javax.persistence.*;
  
 import play.db.jpa.*;
 import play.data.validation.*;
+import utils.AddFiltro;
  
 @Entity
 public class Localidade extends Model {
@@ -16,10 +17,12 @@ public class Localidade extends Model {
     
     @Required
     @ManyToOne
+    @AddFiltro
     public Provincia provincia;    
     
     @Required
     @ManyToOne
+    @AddFiltro
     public ComunidadeAutonoma comunidadeAutonoma;
     
     public String latitude;

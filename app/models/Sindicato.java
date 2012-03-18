@@ -8,6 +8,7 @@ import org.hibernate.annotations.ManyToAny;
  
 import play.db.jpa.*;
 import play.data.validation.*;
+import utils.AddFiltro;
 import utils.AddForeignKey;
  
 @Entity
@@ -28,9 +29,11 @@ public class Sindicato extends Model {
     
     @Required
     @ManyToOne
+    @AddFiltro
     public Ramo ramo;
        
     @Required
+    @AddFiltro
     public Date dataAlta;
     
     public Date dataBaixa;

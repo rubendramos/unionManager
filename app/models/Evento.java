@@ -13,6 +13,7 @@ import play.data.binding.As;
 import javax.persistence.*;
 
 import java.util.*;
+import utils.AddFiltro;
 import utils.NewForeignKey;
 import utils.Tools;
 
@@ -21,6 +22,7 @@ public class Evento extends Model {
 
     @ManyToOne
     @Required
+    @AddFiltro
     public TipoEvento tipoEvento;
     
     @Required
@@ -37,6 +39,7 @@ public class Evento extends Model {
     @AddForeignKey
     public Enderezo lugar;
     
+    @AddFiltro
     public Date dataRealizacion;
     
     @MaxSize(5)

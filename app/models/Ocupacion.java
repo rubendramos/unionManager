@@ -5,6 +5,7 @@ import javax.persistence.*;
  
 import play.db.jpa.*;
 import play.data.validation.*;
+import utils.AddFiltro;
  
 @Entity
 public class Ocupacion extends Model {
@@ -17,6 +18,7 @@ public class Ocupacion extends Model {
 
     @Required
     @ManyToOne
+    @AddFiltro
     public Ramo ramo;    
     
   

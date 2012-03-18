@@ -8,6 +8,7 @@ import utils.AddForeignKey;
  
 import play.db.jpa.*;
 import play.data.validation.*;
+import utils.AddFiltro;
 import utils.Tools;
  
 @Entity
@@ -16,6 +17,7 @@ public class Documento extends Model {
     
     @Required
     @ManyToOne    
+    @AddFiltro
     public TipoDocumento tipoDocumento ;
     
     @Required    
@@ -28,6 +30,7 @@ public class Documento extends Model {
     
     
     @Required
+    @AddFiltro
     public Date dataCreacion;
     
     @MaxSize(100)

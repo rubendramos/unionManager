@@ -5,6 +5,7 @@ import javax.persistence.*;
  
 import play.db.jpa.*;
 import play.data.validation.*;
+import utils.AddFiltro;
 import utils.AddForeignKey;
  
 @Entity
@@ -17,6 +18,7 @@ public class Comite extends Model {
     
     @Required
     @ManyToOne
+    @AddFiltro
     public TipoComite tipoComite;
     
     @Required

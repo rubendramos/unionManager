@@ -4,6 +4,7 @@ import javax.persistence.*;
  
 import play.db.jpa.*;
 import play.data.validation.*;
+import utils.AddFiltro;
  
 @Entity
 public class Provincia extends Model {
@@ -15,6 +16,7 @@ public class Provincia extends Model {
     
     @Required
     @ManyToOne
+    @AddFiltro
     public ComunidadeAutonoma comunidade;
     
   

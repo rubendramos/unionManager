@@ -11,6 +11,7 @@ import utils.NewForeignKey;
 import java.util.*;
 import org.hibernate.annotations.Filter;
 import play.data.validation.Email;
+import utils.AddFiltro;
 import utils.Tools;
 
 @Entity
@@ -18,24 +19,32 @@ public class Contacto extends Model {
 
     @ManyToOne
     @Required
+    @AddFiltro
     public TipoContacto tipoContacto;
+    
     @Required
     @MaxSize(50)
     public String nome;
+    
     @Required
     @MaxSize(50)
     public String apelido1;
+    
     @MaxSize(50)
     public String apelido2;
+    
     @Email
     @Required
     @MaxSize(50)
     public String email;
+    
     @ManyToOne
     @AddForeignKey
     public Enderezo enderezo;
+    
     @MaxSize(9)
     public String telefono;
+    
     @MaxSize(9)
     public String telefonoMobil;
 

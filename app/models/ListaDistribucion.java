@@ -6,6 +6,7 @@ import javax.persistence.*;
  
 import play.db.jpa.*;
 import play.data.validation.*;
+import utils.AddFiltro;
 import utils.AddForeignKey;
  
 @Entity
@@ -15,6 +16,7 @@ public class ListaDistribucion extends Model {
     
     @Required
     @ManyToOne
+    @AddFiltro
     public TipoListaDistribucion tipoListaDistribucion;
 
     @Required

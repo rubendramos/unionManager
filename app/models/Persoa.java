@@ -7,6 +7,7 @@ import javax.persistence.*;
  
 import play.db.jpa.*;
 import play.data.validation.*;
+import utils.AddFiltro;
  
 @Entity
 public class Persoa extends Model {
@@ -29,6 +30,7 @@ public class Persoa extends Model {
     
     @Required
     @MaxSize(15)
+    @AddFiltro
     public String dni;
     
     @Required

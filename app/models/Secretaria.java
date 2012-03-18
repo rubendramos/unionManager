@@ -5,6 +5,7 @@ import javax.persistence.*;
  
 import play.db.jpa.*;
 import play.data.validation.*;
+import utils.AddFiltro;
 import utils.AddForeignKey;
  
 @Entity
@@ -14,7 +15,7 @@ public class Secretaria extends Model {
     @Required
     @ManyToOne
     @AddForeignKey
-    
+    @AddFiltro
     public TipoSecretaria tipoSecretaria;
     
     @Required

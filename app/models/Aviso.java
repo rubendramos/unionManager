@@ -6,6 +6,7 @@ import javax.persistence.*;
 import play.data.validation.Required;
 
 import play.db.jpa.*;
+import utils.AddFiltro;
 import utils.AddForeignKey;
 
 @Entity
@@ -14,6 +15,7 @@ public class Aviso extends Model {
     
     @Required
     @ManyToOne
+    @AddFiltro
     public TipoAviso tipoAviso;
         
     @Required 
@@ -33,6 +35,7 @@ public class Aviso extends Model {
     
     public boolean foiEnviado;
     
+    @AddFiltro
     public Date dataRealizacionAviso;
     
     public Date dataARealizarAviso;
