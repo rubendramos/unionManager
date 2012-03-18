@@ -20,3 +20,10 @@ function ChangeSelectByValue(ddlID, value, change) {
      
  }
  
+function limparFiltroData(id1,id2) {
+ini = document.getElementById(id1);
+fin = document.getElementById(id2);
+ini.value=""; 
+fin.value="";
+} 
+ 

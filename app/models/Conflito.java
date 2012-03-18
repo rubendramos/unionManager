@@ -18,7 +18,6 @@ public class Conflito extends Model {
 
     @Required
     @MaxSize(50)
-    @AddFiltro
     public String nome;
     
     @ManyToOne

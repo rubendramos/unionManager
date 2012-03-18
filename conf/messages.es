@@ -119,6 +119,10 @@ crud.foreignKey= Engadir
 crud.saveAndBack=Gravar e Voltar
 crud.back=Voltar
 
+crud.filtro.entreDatas=entre
+crud.filtro.limparDatas=Limpar
+crud.filtro.cadeaTexto=Cadea de texto
+
  
 # play/modules/secure 
 secure.username = Enderezo e-mail: 

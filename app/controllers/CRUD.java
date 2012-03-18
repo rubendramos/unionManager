@@ -11,6 +11,7 @@ import java.lang.reflect.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
 import models.Avisable;
 import models.Aviso;
 
@@ -50,51 +51,13 @@ public abstract class CRUD extends Controller {
     public static void list(int page, String search, String searchFields,
             String orderBy, String order) {
         ObjectType type = ObjectType.get(getControllerClass());
-        notFoundIfNull(type);
-        String where = "";
+        notFoundIfNull(type);        
         if (page < 1) {
             page = 1;
         }
 
-        List<ObjectField> fields = type.getFields();
-
-        for (ObjectField f : fields) {
-            if (f.filtro) {
-                String valor = "";
-                if (f.property.isRelation) {
-                    valor = (String) params.get("object." + f.name + ".id");
-                } else {
-                    valor = (String) params.get("object." + f.name);
-                    params.put("object." + f.name,valor);
-                }
-
-
-
-                if (valor != null && !"".contains(valor)) {
-                    if ("date".equals(f.type)) {
-                        //valor = "CONVERT ('" + valor + "', CURRENT_TIMESTAMP)";
-                        String date=Tools.dateToDateDataBaseFormat(valor);
-                        valor = f.property.name+"=convert('"+date+"',date)";
-
-                    }else{
-                        valor=f.property.name + " ='" + valor + "'";
-                    }
-                    if (!"".equals(where)) {
-                        where += " and ";
-                    }
-                    where += valor;
-                }
-            }
-        }
-
-        String where2 = (String) request.args.get("where");
-
-        if ("".equals(where)) {
-            where = null;
-        }
-
-        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, where);
-        Long count = type.count(search, searchFields,  where);
+        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, type.createWhereFilterClausule());
+        Long count = type.count(search, searchFields, type.createWhereFilterClausule());
         Long totalCount = type.count(null, null, (String) request.args.get("where"));
         try {
             render(type, objects, count, totalCount, page, orderBy, order);
@@ -622,6 +585,60 @@ public abstract class CRUD extends Controller {
             Factory factory = Model.Manager.factoryFor(entityClass);
             Object boundId = Binder.directBind(id, factory.keyType());
             return factory.findById(boundId);
+        }
+        
+        public String createWhereFilterClausule(){
+          String where="";
+         List<ObjectField> fields = this.getFields();
+         for (ObjectField f : fields) {
+            if (f.filtro) {
+                String valor = "";
+                if (f.property.isRelation) {
+                    valor = (String) params.get("object." + f.name + ".id");
+                } else if ("date".equals(f.type)) {
+
+                    String ini = (String) params.get("object." + f.name + ".ini");
+                    String fin = (String) params.get("object." + f.name + ".fin");
+
+                    if (ini != null && !"".equals(ini)) {
+                        if (fin != null && !"".equals(fin)) {
+                            valor = "between convert('" + Tools.dateToDateDataBaseFormat(ini) + "',date) and convert('" + Tools.dateToDateDataBaseFormat(fin) + "',date)";
+                        } else {
+                            valor = ">=convert('" + Tools.dateToDateDataBaseFormat(ini) + "',date)";
+                        }
+                    } else if (fin != null && !"".equals(fin)) {
+                        valor = "<=convert('" + Tools.dateToDateDataBaseFormat(fin) + "',date)";
+                    }
+
+
+                } else {
+                    valor = params.get("object." + f.name);
+
+                }
+
+
+
+                if (valor != null && !"".contains(valor)) {
+                    if ("date".equals(f.type)) {
+                        valor = f.property.name + " " + (String) valor;
+                    } else {
+                        valor = f.property.name + " ='" + (String) valor + "'";
+                    }
+                    if (!"".equals(where)) {
+                        where += " and ";
+                    }
+                    where += valor;
+                }
+            }
+        }
+
+
+        if ("".equals(where)) {
+            where = null;
+        }
+        
+        return where;
+        
         }
 
         public List<ObjectField> getFields() {

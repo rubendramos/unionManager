@@ -36724,3 +36724,72 @@ select conflito0_.id as id474_, conflito0_.dataInicio as dataInicio474_, conflit
 	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
 	at java.lang.Thread.run(Thread.java:662)
+03-18 13:21:41 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM CONFLITO WHERE DATAINICIO CONVERT[*]('2012-03-04',DATE) BETWEEN CONVERT('2012-03-18',DATE) "; SQL statement:
+select * FRom conflito where dataInicio convert('2012-03-04',date) between convert('2012-03-18',date) [42000-149]
+03-18 13:23:16 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Column "DATEINICIO" not found; SQL statement:
+select * FRom conflito where dataInicio>=convert('2012-03-18',date) and dateInicio<=convert('2012-03-18',date) [42122-149]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:327)
+	at org.h2.message.DbException.get(DbException.java:167)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:126)
+	at org.h2.expression.Comparison.optimize(Comparison.java:154)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:127)
+	at org.h2.command.dml.Select.prepare(Select.java:776)
+	at org.h2.command.Parser.prepare(Parser.java:202)
+	at org.h2.command.Parser.prepareCommand(Parser.java:214)
+	at org.h2.engine.Session.prepareLocal(Session.java:425)
+	at org.h2.engine.Session.prepareCommand(Session.java:374)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1056)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:165)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:153)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1322)
+	at org.h2.server.web.WebApp.query(WebApp.java:1010)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:973)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:976)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+03-18 13:25:00 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM CONFLITO WHERE DATAINICIO CONVERT[*]('2012-03-04',DATE) BETWEEN CONVERT('2012-03-18',DATE) "; SQL statement:
+select * from conflito where dataInicio convert('2012-03-04',date) between convert('2012-03-18',date) [42000-149]
+03-18 13:25:24 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Function "DATAINICIO" not found; SQL statement:
+select * from conflito where dataInicio (convert('2012-03-04',date)) between (convert('2012-03-18',date)) [90022-149]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:327)
+	at org.h2.message.DbException.get(DbException.java:167)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.command.Parser.readJavaFunction(Parser.java:2052)
+	at org.h2.command.Parser.readFunction(Parser.java:2096)
+	at org.h2.command.Parser.readTerm(Parser.java:2391)
+	at org.h2.command.Parser.readFactor(Parser.java:1978)
+	at org.h2.command.Parser.readSum(Parser.java:1965)
+	at org.h2.command.Parser.readConcat(Parser.java:1938)
+	at org.h2.command.Parser.readCondition(Parser.java:1803)
+	at org.h2.command.Parser.readAnd(Parser.java:1784)
+	at org.h2.command.Parser.readExpression(Parser.java:1776)
+	at org.h2.command.Parser.parseSelectSimple(Parser.java:1733)
+	at org.h2.command.Parser.parseSelectSub(Parser.java:1616)
+	at org.h2.command.Parser.parseSelectUnion(Parser.java:1461)
+	at org.h2.command.Parser.parseSelect(Parser.java:1449)
+	at org.h2.command.Parser.parsePrepared(Parser.java:401)
+	at org.h2.command.Parser.parse(Parser.java:275)
+	at org.h2.command.Parser.parse(Parser.java:247)
+	at org.h2.command.Parser.prepare(Parser.java:201)
+	at org.h2.command.Parser.prepareCommand(Parser.java:214)
+	at org.h2.engine.Session.prepareLocal(Session.java:425)
+	at org.h2.engine.Session.prepareCommand(Session.java:374)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1056)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:165)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:153)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1322)
+	at org.h2.server.web.WebApp.query(WebApp.java:1010)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:973)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:976)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+03-18 13:26:20 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM CONFLITO WHERE DATAINICIO BETWEEN CONVERT('2012-03-04',DATE)  CONVERT[*]('2012-03-18',DATE) "; expected "AND"; SQL statement:
+select * from conflito where dataInicio between convert('2012-03-04',date)  convert('2012-03-18',date) [42001-149]
