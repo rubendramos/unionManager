@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
+	<queryString>
 		<![CDATA[SELECT
      PERSOA."ID" AS PERSOA_ID,
      PERSOA."APELIDO1" AS PERSOA_APELIDO1,
@@ -105,37 +105,37 @@ FROM
 			<textField>
 				<reportElement x="0" y="0" width="81" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{PERSOA_APELIDO1}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PERSOA_APELIDO1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="81" y="0" width="81" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{PERSOA_APELIDO2}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PERSOA_APELIDO2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="162" y="0" width="81" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{PERSOA_DATANACEMENTO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PERSOA_DATANACEMENTO}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="243" y="0" width="81" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{PERSOA_DNI}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PERSOA_DNI}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="324" y="0" width="81" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{PERSOA_EMAIL}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PERSOA_EMAIL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="405" y="0" width="81" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{PERSOA_NOME}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PERSOA_NOME}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="486" y="0" width="81" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{PERSOA_NOMECOMPLETO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PERSOA_NOMECOMPLETO}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
