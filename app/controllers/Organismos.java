@@ -5,5 +5,5 @@ import play.mvc.*;
 
 @Check("admin")
 @With(Secure.class)
-public class Sindicatos extends CRUD {    
+public class Organismos extends CRUD {    
 }

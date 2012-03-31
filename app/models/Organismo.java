@@ -12,8 +12,12 @@ import utils.AddFiltro;
 import utils.AddForeignKey;
  
 @Entity
-public class Sindicato extends Model {
+public class Organismo extends Model {
  
+    
+    @Required
+    @ManyToOne
+    public TipoOrganismo tipoOrganismo ;    
     
     @Required    
     public String nome ;
@@ -47,9 +51,14 @@ public class Sindicato extends Model {
     @AddForeignKey    
     public Set<Comite> comite;
     
+    @ManyToMany
+    @AddForeignKey    
+    public Set<Organismo> organismosFillo;
+    
   
-    public Sindicato(String nome,String acronimo,String descricion,Ramo ramo, Date dataAlta, 
-            Date dataBaixa, Enderezo enderezo,Set<Comite> comite){
+    public Organismo(TipoOrganismo tipoOrganismo,String nome,String acronimo,String descricion,Ramo ramo, Date dataAlta, 
+            Date dataBaixa, Enderezo enderezo,Set<Comite> comite,Set<Organismo>organismosFillo){
+        this.tipoOrganismo=tipoOrganismo;
     	this.nome=nome;
     	this.acronimo=acronimo;
     	this.ramo=ramo;
@@ -57,6 +66,7 @@ public class Sindicato extends Model {
     	this.dataBaixa=dataBaixa;
     	this.enderezo=enderezo;
         this.comite=comite;
+        this.organismosFillo=organismosFillo;
     }
 
     
