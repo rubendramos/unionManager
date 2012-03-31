@@ -1,47 +1,7 @@
 #{extends 'main.html' /} #{set title:'Parte privada' /}
 
 
-<ul id="module">
-	<li class="${request.controller == 'Admin' ? 'selected' : ''}"><a
-		href="@{Privado.index()}">&{'modulo.xestion'}</a></li>
-</ul>
-
-
-<ul id="mainMenu">
-#{secure.check 'comite'}
-
-
-	<li class="${request.controller == 'Enderezos' ? 'selected' : ''}">
-		<a href="@{Enderezos.list()}">&{'menu.Enderezos'}</a>
-	</li>
-	<li class="${request.controller == 'Persoas' ? 'selected' : ''}">
-		<a href="@{Persoas.list()}">&{'menu.Persoas'}</a>
-	</li>
-	<li class="${request.controller == 'Afiliados' ? 'selected' : ''}">
-		<a href="@{Afiliados.list()}">&{'menu.Afiliados'}</a>
-	</li>
-
-	<li class="${request.controller == 'InformeAfiliados' ? 'selected' : ''}">
-		<a href="@{Informes.index()}">&{'menu.InformeAfiliados'}</a>
-	</li>
-	
-	<li class="${request.controller == 'Conflitos' ? 'selected' : ''}">
-		<a href="@{Conflitos.list()}">&{'menu.Conflitos'}</a>
-	</li>	
-	
-	<li class="${request.controller == 'Eventos' ? 'selected' : ''}">
-		<a href="@{Eventos.list()}">&{'menu.Eventos'}</a>
-	</li>	
-        
-#{/secure.check} 
-
-
-#{secure.check 'admin'}
-	<li class="${request.controller == 'Admin' ? 'selected' : ''}">
-		<a href="@{Admin.index()}"> &{'menu.Admin'}</a>
-	</li>
-#{/secure.check} 
-</ul>
+#{menu/}
 
 #{doLayout /}
 
