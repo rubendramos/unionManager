@@ -7,7 +7,7 @@
 	font-size: 90%;
 	color: #111;   
         position:relative;
-	top:-50px;
+	top:-100px;
 }
 
 /** Header **/
@@ -118,6 +118,49 @@
 #crud #crudContent table th {
 	text-align: left;
 	padding: 6px 5px;
+}
+
+#crud #crudContent table th.accion {
+	text-align: right;
+        width: 120px;
+	padding: 0px 0px;
+}
+
+#crud #crudContent table td.accion {
+	text-align: center;
+        width: 120px;
+        
+}
+
+#crud #crudContent table th.accion  a.add {
+	position: relative;
+        right: 5px;
+	background: #54BD06;
+	padding: 2px 8px;
+	font-size: 70%;
+	-moz-border-radius: 9px;
+	-webkit-border-radius: 9px;
+	color: #fff !important;
+	text-decoration: none;
+}
+
+#crud #crudContent table  td.accion a img.del {
+width:20px; 
+height:20px; 
+border:0;
+
+background: transparent url(/public/images/del.png) no-repeat center;
+border-style: none;
+
+}
+
+#crud #crudContent table  td.accion a img:hover {
+	opacity: .7;
+}
+
+
+#crud #crudContent table th  a:hover {
+	opacity: .8;
 }
 
 #crud #crudContent table td {
@@ -269,8 +312,9 @@ form .removeAttachment {
 }
 
 #crudListAdd a {
+        display: none;
 	margin: 0;
-	position: absolute;
+	position: relative;
 	top: 0;
 	right: 0;
 	background: #54BD06;
@@ -282,9 +326,7 @@ form .removeAttachment {
 	text-decoration: none;
 }
 
-#crudListAdd a:hover {
-	opacity: .8;
-}
+
 
 #crudListSearch {
 	padding: 4px 5px;
@@ -340,63 +382,18 @@ form .removeAttachment {
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	cursor: pointer;
+        display: none;
 }
 
 .crudDelete input:hover {
 	opacity: .7;
 }
 
-.crudAddButton input{
-width:32px; 
-height:32px; 
-border: none; 
-background: transparent url(/public/images/Add32.png) no-repeat center; 
-overflow: hidden; 
-text-indent: -999px; 
-font-size: 0; 
-display:block; 
-line-height: 0;
-position:relative;
-}
 
-.crudAddButton input:hover {
-	opacity: .7;
-}
-.crudDelButton input{
-width:32px; 
-height:32px; 
-border: none; 
-background: transparent url(/public/images/Del32.png) no-repeat center; 
-overflow: hidden; 
-text-indent: -999px; 
-font-size: 0; 
-display:block; 
-line-height: 0;
-}
-
-.crudDelButton input:hover {
-	opacity: .7;
-}
-
-.crudNewButton input{
-width:32px; 
-height:32px; 
-border: none; 
-background: transparent url(/public/images/New32.png) no-repeat center; 
-overflow: hidden; 
-text-indent: -999px; 
-font-size: 0; 
-display:block; 
-line-height: 0;
-}
-
-.crudNewButton input:hover {
-	opacity: .7;
-}
 
 
 #crud #crudContent .tableForeig {
-	width: 70%;
+	width: 60%;
 	border: 1px solid #ddd;
 	border-top: none;
         margin-top: 30px;
@@ -422,12 +419,24 @@ line-height: 0;
 
 #crud #crudContent .tableForeig th {
 	text-align: left;
-	padding: 6px 5px;
+	padding: 2px 2px;
+        
+}
+
+#crud #crudContent .tableForeig  th.accion {
+	text-align: right;
+	padding: 2px 2px;
+        width: 80px;
 }
 
 #crud #crudContent .tableForeig td {
 	text-align: left;
 	padding: 4px 5px;
+}
+
+#crud #crudContent .tableForeig td.accion {
+	text-align: right;
+        width: 80px;
 }
 
 #crud #crudContent .tableForeig td {
@@ -440,4 +449,87 @@ line-height: 0;
 
 #crud #crudContent .tableForeig tr:last-child td {
 	border-bottom: 1px solid #ddd;
+}
+
+
+
+
+.accion a{
+
+}
+
+
+#crud #crudContent .tableForeig  th.accion a {
+width:20px; 
+height:20px; 
+border-style: none;
+text-decoration: none;
+ 
+
+}
+
+#crud #crudContent .tableForeig  th.accion a img.add {
+width:20px; 
+height:20px; 
+border:0;
+background: transparent url(/public/images/add.png) no-repeat center;
+border-style: none;
+
+}
+
+#crud #crudContent .tableForeig  th.accion a img.new {
+width:20px; 
+height:20px; 
+border:0;
+background: transparent url(/public/images/new.png) no-repeat center;
+border-style: none;
+
+}
+
+#crud #crudContent .tableForeig  td.accion a img.del {
+width:20px; 
+height:20px; 
+border:0;
+background: transparent url(/public/images/del.png) no-repeat center;
+border-style: none;
+
+}
+
+#crud #crudContent .tableForeig  th.accion a img:hover {
+	opacity: .7;
+}
+
+#crud #crudContent .tableForeig  td.accion a img:hover {
+	opacity: .7;
+}
+
+.crudField  img.add{
+width:20px; 
+height:20px; 
+display: inline;
+position: relative;
+vertical-align: middle;
+background: transparent url(/public/images/add.png) no-repeat center; 
+
+}
+
+.crudField  img.add:hover {
+	opacity: .7;
+}
+
+.crudField  img.new{
+width:20px; 
+height:20px; 
+position: relative;
+vertical-align: middle;
+background: transparent url(/public/images/new.png) no-repeat center; 
+
+}
+
+.crudField  img.new:hover {
+	opacity: .7;
+}
+
+.crudForeignButton input{
+display:none; 
 }

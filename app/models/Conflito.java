@@ -46,7 +46,6 @@ public class Conflito extends Model {
     
     @ManyToMany
     @AddForeignKey
-    @NewForeignKey
     public Set<Evento> accions = new HashSet();
     
     @ManyToMany

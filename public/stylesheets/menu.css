@@ -15,7 +15,7 @@ background: url(/public/images/line/blank.gif);
 font-size:11px;
 width: 100%;
 z-index:500;
-top:-70px;
+top:-100px;
 }
 
 .pro_line2 .select {
