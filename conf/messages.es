@@ -66,6 +66,69 @@ dataCreacion=Data creación
 autor=Autor
 ficheiro=Adxunto
 
+#EntradaFondo
+tipoFondo= Tipo
+fondo=Fondo
+tipoGeneroFondo=Xénero
+titulo=Título
+anoEdicion=Ano edición
+autor=Autor
+ePrestable=Pódese prestar
+descricion=Descrición
+caratula=Carátula
+sinatura=Sinatura
+EntradaFondos=Entrada fondos
+
+#TipoFondos
+TipoFondos=Tipo fondos
+TipoFondo=Tipo fondo
+
+#TipoGeneroFondo
+TipoGeneroFondos=Xéneros 
+TipoGeneroFondo=Xénero
+
+#Fondo
+ePublico=Fondo público
+
+#PrestamoFondo
+PrestamoFondo=Préstamo fondo
+PrestamoFondos=Préstamo de fondos
+entradaFondo=Fondo
+dataPrestamo=Data do préstamo
+dataDevolucion=Data de devolución
+
+#PersoaPrestamoFondo
+PersoaPrestamoFondo=Préstamo da persoa
+PersoaPrestamoFondos=Préstamos da persoa
+prestamoFondo=Fondo
+persoa=Persoa
+
+#Apuntamentos
+TipoApuntamento=Tipo apuntamento
+TipoApuntamentos=Tipo de apuntamentos
+importe=Importe
+adxunto=Xustificante
+dataApuntamento=Data apuntamento
+tipoApuntamento=Tipo apuntamento
+
+#libroConta
+LibroConta=Libro de contas
+LibroContas=Libro de contas
+
+#TipoConcepto
+TipoConcepto=Concepto
+TipoConceptos=Tipo de Conceptos
+concepto=Concepto
+tipoConceptos=Tipo de Conceptos
+
+#follaConta
+follaConta=Folla de contas
+FollaConta=Folla de contas
+Follacontas=Folla de contas
+apuntamentos=Apuntes contabeis
+
+
+
 
 # play/modules/crud (administration) 
 crud.title = Administración 
@@ -132,6 +195,21 @@ secure.signin = Entrar agora
 secure.error = O usuario ou contrasinal son erroneos
 secure.title=Páxina de acceso a Union Manager
 
+#User
+User=Usuario
+password=Contrasinal
+afiliado=Afiliado
+
+isComite=Pertence ao comité
+isSecretario=S. Xeral
+isTesoureiro=S. Tesoureria
+isPropaganda=S. Propaganda
+isAccionSindical=S. Acción Sindical
+isFormacion=S. Formación
+isOrganizacion=S. Organizacion
+isAccionSocial=S. Acción Social
+isPermanecia=Fai permanecias
+
 
 
 
@@ -148,7 +226,13 @@ menu.InformeAfiliados=Informe de Afiliados
 menu.Admin=Área Administración
 menu.Conflitos=Conflitos
 menu.Eventos=Eventos
-
+menu.Tesoureria.LibroContas=Libro de Contas
+menu.Tesoureria.FollaContas=Folla de Contas
+menu.Tesoureria=Tesoureria
+menu.Permanencia=Permanencia
+menu.Inicio=Inicio
+menu.Informes=Informes
+menu.Informes.InformesAfiliados=Informes afiliados
 #Modulos
 modulo.administracion=Módulo de Administración
 modulo.Privado=Módulo privado.
