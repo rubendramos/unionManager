@@ -1,0 +1,5 @@
+Tasks TO DO
+
+1 Add rolles management. We have to do that the roll depends on "organismo" and "secretaria".
+2 Inprove usability. Adding a new foreignkey on transparent way to user. Frist save the new entity and the add
+to the father entity.
