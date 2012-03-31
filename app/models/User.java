@@ -27,8 +27,24 @@ public class User extends Model {
     public boolean isAdmin;
     
     public boolean isComite;    
-        
     
+    public boolean isSecretario;
+    
+    public boolean isTesoureiro;
+    
+    public boolean isPropaganda;
+    
+    public boolean isOrganizacion;
+    
+    public boolean isPermanecia;
+    
+    public boolean isAaccionSindical;
+    
+    public boolean isAccionSocial;
+    
+    public boolean isFormacion;
+    
+
     public User(String password, Afiliado afiliado) {
         this.password = password;
         this.afiliado= afiliado;       
@@ -39,8 +55,6 @@ public class User extends Model {
         return find("byUsuarioAndPassword", usuario, password).first();
         
     }
-    
-
     
     public String toString() {
         return this.afiliado.toString();

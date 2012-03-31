@@ -16,6 +16,9 @@ public class Seguridade extends Secure.Security {
         if("comite".equals(profile)) {
             return User.find("byUsuario", connected()).<User>first().isComite;
         }
+        if("tesoureria".equals(profile)) {
+            return User.find("byUsuario", connected()).<User>first().isTesoureiro;
+        }        
         return false;
     }    
     
