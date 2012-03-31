@@ -42,11 +42,11 @@ public class Afiliado extends Model implements Avisable {
     
     @Required
     @ManyToOne    
-    public Sindicato sindicato;
+    public Organismo sindicato;
     
   
     public Afiliado(Persoa persoa,Ocupacion ocupacion,Ramo ramo, Date dataAlta, Date dataBaixa, 
-    		boolean milita,String carnetConfederado,Sindicato sindicato){
+    		boolean milita,String carnetConfederado,Organismo sindicato){
     	this.persoa=persoa;
     	this.ocupacion=ocupacion;
     	this.ramo=ramo;

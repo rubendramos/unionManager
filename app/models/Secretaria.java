@@ -25,8 +25,7 @@ public class Secretaria extends Model {
     
     @Required
     public Date dataAlta;
-    
-    
+        
     public Date dataBaixa;
   
     public Secretaria(TipoSecretaria tipoSecretaria,Afiliado secretario,Date dataAlta,Date dataBaixa){

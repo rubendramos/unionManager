@@ -7,6 +7,7 @@ import play.db.jpa.*;
 import play.data.validation.*;
 import utils.AddFiltro;
 import utils.AddForeignKey;
+import utils.Tools;
  
 @Entity
 public class Comite extends Model {
@@ -19,7 +20,7 @@ public class Comite extends Model {
     @Required
     @ManyToOne
     @AddFiltro
-    public TipoComite tipoComite;
+    public TipoOrganismo tipoComite;
     
     @Required
     @ManyToMany
@@ -32,7 +33,7 @@ public class Comite extends Model {
     
     public Date dataBaixa;
     
-    public Comite(String descricion,TipoComite tipoComite,Set<Secretaria> secretaria,Date dataAlta,Date dataBaixa){
+    public Comite(String descricion,TipoOrganismo tipoComite,Set<Secretaria> secretaria,Date dataAlta,Date dataBaixa){
         this.descricion=descricion;
     	this.tipoComite=tipoComite;
         this.secretaria=secretaria;
@@ -41,7 +42,8 @@ public class Comite extends Model {
     }
       
     public String toString() {
-        return this.descricion+"-"+this.tipoComite+"("+ dataAlta+ this.dataBaixa==null ? ")": ")/"+this.dataBaixa+")";
+        String dataB=this.dataBaixa==null ? ")": ")/("+Tools.getLocaleDateFormat(this.dataBaixa)+")";
+        return this.tipoComite+" - "+this.descricion+"("+ Tools.getLocaleDateFormat(dataAlta)+dataB;
     }
  
 }
