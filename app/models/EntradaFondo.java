@@ -12,7 +12,7 @@ import play.data.validation.*;
 import utils.AddFiltro;
  
 @Entity
-public class EntradaFondo extends Model {
+public class EntradaFondo extends UnionModel {
  
     
     @Required
@@ -48,15 +48,11 @@ public class EntradaFondo extends Model {
         
     public boolean ePrestable;
     
-    public Blob caratula;
-    
-    @Required
-    @ManyToOne
-    public Fondo fondo;
+    public Blob caratula;       
     
   
     public EntradaFondo(TipoFondo tipoFondo,TipoGeneroFondo tipoGeneroFondo,String titulo, String anoEdicion, 
-            String autor,boolean ePrestable,String descricion,Fondo fondo,Blob caratula,String sinatura){
+            String autor,boolean ePrestable,String descricion,Blob caratula,String sinatura){
     	this.tipoFondo=tipoFondo;
     	this.tipoGeneroFondo=tipoGeneroFondo;
     	this.titulo=titulo;
@@ -65,7 +61,6 @@ public class EntradaFondo extends Model {
     	this.caratula= caratula;
     	this.descricion=descricion;
         this.ePrestable=ePrestable;
-    	this.fondo=fondo;
         this.sinatura=sinatura;
     }
 

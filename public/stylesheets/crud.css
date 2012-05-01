@@ -10,6 +10,7 @@
 	top:-100px;
 }
 
+
 /** Header **/
 
 #crud #crudHeader {
@@ -63,11 +64,13 @@
 }
 
 .flashError {
-	background: #c00;
+    margin-top: 20px;
+    background: #c00;
 }
 
 .flashSuccess {
-	background: #54BD06;
+    margin-top: 20px;
+    background: #54BD06;
 }
 
 /** Content **/
@@ -117,24 +120,22 @@
 
 #crud #crudContent table th {
 	text-align: left;
-	padding: 6px 5px;
+	padding: 4px 5px;
 }
 
 #crud #crudContent table th.accion {
-	text-align: right;
-        width: 120px;
-	padding: 0px 0px;
+	text-align: center;
+        width: 150px;	
 }
 
 #crud #crudContent table td.accion {
 	text-align: center;
-        width: 120px;
+        width: 150px;
         
 }
 
 #crud #crudContent table th.accion  a.add {
-	position: relative;
-        right: 5px;
+	position: relative;        
 	background: #54BD06;
 	padding: 2px 8px;
 	font-size: 70%;
@@ -233,6 +234,81 @@ label {
 	padding: 10px;
 }
 
+
+.crudButtons input{
+	color: #ffffff !important;
+	border:none;	
+	position: relative;
+	background: #000;
+	padding: 2px 20px;
+	font-size: 90%;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	cursor: pointer;	
+}
+.crudButtons a{
+	color: #ffffff !important;;
+        text-decoration: none;
+	border:none;	
+	position: relative;
+	background: #000;
+	padding: 2px 20px;
+	font-size: 90%;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	cursor: pointer;
+        
+}
+
+.crudButtons a:hover{
+	opacity: .7;
+}
+
+.crudButtons input:hover {
+	opacity: .7;
+}
+
+
+.crudButtonTableForeign {
+	width: 150px;
+        text-align: center;
+        
+	
+}
+
+.crudButtonTableForeign input.engadir {
+	color: #ffffff !important;
+	border:none;	
+	position: relative;
+	background: #000;
+	padding: 2px 20px;
+	font-size: 90%;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	cursor: pointer;
+}
+
+.crudButtonTableForeign input.engadir:hover {
+	opacity: .7;
+}
+
+.crudButtonTableForeign input.voltar {
+	color: #ffffff !important;
+	border:none;	
+	position: relative;
+	background: #c05555;;
+	padding: 2px 20px;
+	font-size: 90%;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+        min-width: 85px;
+	cursor: pointer;        
+}
+
+.crudButtonTableForeign input.voltar:hover {
+	opacity: .7;
+}
+
 .crudField .error {
 	color: #c00;
 	padding-left: 10px;
@@ -305,6 +381,24 @@ form .removeAttachment {
 	opacity: .8;
 }
 
+/** List search foreign**/
+
+#crudListForeign {
+	list-style: none;
+	width: 70%;
+	margin: 30px auto 20px;
+	padding: 10px 10px 10px;
+	position: relative;
+	min-height: 150px;
+	background: #ffffff;
+	-webkit-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
+	-moz-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+}
+
+
 /** List **/
 
 #crudList {
@@ -335,13 +429,39 @@ form .removeAttachment {
 }
 
 #crudListSearch input[type=text] {
-	width: 40%;
+	width: 10%;
+}
+
+#crudListSearch label {
+	display: block;
+	font-weight: bold;
+	width: 10%;
+	float: left;
+	color: #666;
+	cursor: pointer;
 }
 
 #crudListSearch a {
 	color: #111 !important;
 	font-size: 90%;
 }
+
+#crudListSearch input[type=submit] {
+	color: #ffffff;
+	border: none;
+	margin: 0;
+	position: relative;
+	background: #c05555;
+	padding: 2px 10px;
+	font-size: 90%;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	cursor: pointer;
+}
+
+#crudListSearch input[type=submit]:HOVER {
+	opacity:.7;
+	}
 
 #crudListPagination {
 	padding: 4px 5px;
@@ -431,7 +551,7 @@ form .removeAttachment {
 
 #crud #crudContent .tableForeig td {
 	text-align: left;
-	padding: 4px 5px;
+	padding: 2px 2px;
 }
 
 #crud #crudContent .tableForeig td.accion {
@@ -532,4 +652,19 @@ background: transparent url(/public/images/new.png) no-repeat center;
 
 .crudForeignButton input{
 display:none; 
+}
+
+.crudBlankForeign{
+	list-style: none;
+	width: 70%;
+	margin: 30px auto 20px;
+	padding: 10px 10px 10px;
+	position: relative;
+	min-height: 150px;
+	background: #ffffff;
+	-webkit-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
+	-moz-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
 }

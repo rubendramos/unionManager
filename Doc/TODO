@@ -1,5 +1,26 @@
-Tasks TO DO
+Tasks TODO
 
-1 Add rolles management. We have to do that the roll depends on "organismo" and "secretaria".
+1 Add rolles management. We have to do that  roll depends on "organismo" and "secretaria".
+
 2 Inprove usability. Adding a new foreignkey on transparent way to user. Frist save the new entity and the add
 to the father entity.
+
+3 User Management. Related secretaria with user and user profiles. 
+
+4 Related user wiht organizacion.
+
+5 Filter user to organizacion.
+
+6 Generate password. And send email.
+
+7 Init and generate bbdd data.
+
+8 Implement reports.
+
+9 Authomatic notifications.
+
+10 Permanencias.
+
+
+
+

@@ -15,7 +15,7 @@ import utils.AddFiltro;
 import utils.Tools;
 
 @Entity
-public class Contacto extends Model {
+public class Contacto extends UnionModel {
 
     @ManyToOne
     @Required

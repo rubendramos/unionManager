@@ -3,7 +3,7 @@ package controllers;
 import play.*;
 import play.mvc.*;
 
-@Check("admin")
+@Check("autenticado")
 @With(Secure.class)
 public class ComunidadeAutonomas extends CRUD {    
 }

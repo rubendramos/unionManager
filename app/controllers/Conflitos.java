@@ -2,7 +2,7 @@ package controllers;
 
 import play.mvc.*;
 
-@Check("admin")
+@Check("accionSindical")
 @With(Secure.class)
 public class Conflitos extends CRUD {    
 }

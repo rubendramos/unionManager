@@ -4,7 +4,7 @@
  */
 package models;
 
-import java.util.Set;
+
 
 /**
  *
@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public interface Avisable {
     
-    String getAsunto();
-    String getContido();
-    void sendAviso(String asunto);                 
+
+
+    void sendAviso();
 }

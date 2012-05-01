@@ -1,8 +1,8 @@
-#{extends 'CRUD/layout.html' /}
+#{extends 'CRUD/layoutSinMenu.html' /}
 #{set title:messages.get('crud.list.title', type.name) /}
 %{ cacheIde = params["cacheId"] }%
 
-<div id="crudList" class="${type.name}">
+<div id="crudListForeign" class="${type.name}">
 
     <h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
 

@@ -10,13 +10,12 @@ import java.util.*;
 import utils.AddForeignKey;
 
 @Entity
-public class LibroConta extends Model {
+public class LibroConta extends UnionModel {
     
     @Required
     @MaxSize(50)
     public String descricion;
-    
-    @Required
+        
     @AddForeignKey
     @ManyToMany
     public Set<FollaConta> follasContas;

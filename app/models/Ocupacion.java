@@ -8,7 +8,7 @@ import play.data.validation.*;
 import utils.AddFiltro;
  
 @Entity
-public class Ocupacion extends Model {
+public class Ocupacion extends UnionModel {
  
     
     @Required

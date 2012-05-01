@@ -10,7 +10,7 @@ import utils.AddFiltro;
 import utils.AddForeignKey;
 
 @Entity
-public class Aviso extends Model {
+public class Aviso extends UnionModel {
 
     
     @Required

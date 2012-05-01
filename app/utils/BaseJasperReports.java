@@ -13,19 +13,23 @@ import java.util.HashMap;
 	import net.sf.jasperreports.engine.JRExporterParameter;
 	import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
+import play.vfs.VirtualFile;
 
 	public class BaseJasperReports {
-	  //here should be jrxml and jasper files, 
-	  //you can generate them with iReports(I'm using netbeans plugin)
-	  // http://jasperforge.org/projects/ireport 
-	  static String REPORT_DEFINITION_PATH = "./app/reports/";
+	
+	  static String REPORT_DEFINITION_PATH = "/app/reports/";
 
 	  public static JasperPrint generateReport(String reportDefFile, Map reportParams) {	   
 		JasperPrint jrprint = null;
 	    try {
-	      String compiledFile = REPORT_DEFINITION_PATH + reportDefFile + ".jasper";
-	      JasperCompileManager.compileReportToFile(REPORT_DEFINITION_PATH + reportDefFile + ".jrxml", compiledFile);
-	      jrprint = JasperFillManager.fillReport(compiledFile, reportParams, play.db.DB.getConnection());	      
+                                    
+              InputStream compiledFile=VirtualFile.fromRelativePath(REPORT_DEFINITION_PATH + reportDefFile + ".jasper").inputstream();
+                            
+              //Engadimos como parametro o path as imaxes que se usan nos repotrs. Nos report temos que engadir este 
+              //parámetro na ruta as imaxes.
+              reportParams.put("REPORTS_DIR", play.vfs.VirtualFile.fromRelativePath(REPORT_DEFINITION_PATH).getName());
+              
+              jrprint = JasperFillManager.fillReport(compiledFile, reportParams, play.db.DB.getConnection());	      
 	    } catch (Exception e) {
 	      e.printStackTrace();
 	    }
@@ -49,5 +53,6 @@ import net.sf.jasperreports.engine.JasperReport;
 	  public static InputStream download_pdf(String docName,Map reportParams) {		    		    
 		    JasperPrint jrprint=utils.BaseJasperReports.generateReport(docName, reportParams);		    
 		    return utils.BaseJasperReports.exportToPdf(jrprint);		    
-		  }	  
+		  }	
+          		          
 	}

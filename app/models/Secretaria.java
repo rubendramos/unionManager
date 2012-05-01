@@ -9,7 +9,7 @@ import utils.AddFiltro;
 import utils.AddForeignKey;
  
 @Entity
-public class Secretaria extends Model {
+public class Secretaria extends UnionModel {
  
     
     @Required

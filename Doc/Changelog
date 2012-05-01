@@ -1,1 +1,6 @@
+24/04/2010 Add change password funcionality.
+18/04/2012 Every model that depends on organismo extend of UnionModel. 
+            Now, the fact, the app is independnt for every organismo.
 17/03/2012 Adding the possibility of use filters in search module.
+
+

@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-public class TipoConflito extends Model {
+public class TipoConflito extends UnionModel {
     
     @Required
     @MaxSize(50)

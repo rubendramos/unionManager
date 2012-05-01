@@ -7,7 +7,7 @@ import play.db.jpa.*;
 import play.data.validation.*;
  
 @Entity
-public class Sexo extends Model {
+public class Sexo extends UnionModel {
  
     
     @Required

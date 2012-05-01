@@ -12,7 +12,7 @@ import utils.AddFiltro;
 import utils.AddForeignKey;
  
 @Entity
-public class Organismo extends Model {
+public class Organismo extends UnionModel {
  
     
     @Required

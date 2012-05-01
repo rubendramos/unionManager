@@ -2,7 +2,7 @@ package controllers;
 
 import play.mvc.*;
 
-@Check("admin")
+@Check("comite")
 @With(Secure.class)
 public class Eventos extends CRUD {    
 }

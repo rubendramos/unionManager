@@ -12,7 +12,7 @@ import utils.AddForeignKey;
 import utils.NewForeignKey;
  
 @Entity
-public class Enderezo extends Model {
+public class Enderezo extends UnionModel {
 	    
     @Required
     public String enderezo ;

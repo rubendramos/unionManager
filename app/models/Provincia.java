@@ -7,7 +7,7 @@ import play.data.validation.*;
 import utils.AddFiltro;
  
 @Entity
-public class Provincia extends Model {
+public class Provincia extends UnionModel {
  
     
     @Required

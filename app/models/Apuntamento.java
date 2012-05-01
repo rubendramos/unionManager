@@ -12,7 +12,7 @@ import utils.AddFiltro;
 import utils.Tools;
 
 @Entity
-public class Apuntamento extends Model {
+public class Apuntamento extends UnionModel {
     
     @Required
     @ManyToOne

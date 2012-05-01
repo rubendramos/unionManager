@@ -82,6 +82,7 @@ EntradaFondos=Entrada fondos
 #TipoFondos
 TipoFondos=Tipo fondos
 TipoFondo=Tipo fondo
+entradas=Entradas no fondo...
 
 #TipoGeneroFondo
 TipoGeneroFondos=Xéneros 
@@ -123,11 +124,13 @@ tipoConceptos=Tipo de Conceptos
 
 #follaConta
 follaConta=Folla de contas
+follasContas=Folla de contas
 FollaConta=Folla de contas
 Follacontas=Folla de contas
 apuntamentos=Apuntes contabeis
 
-
+#tipoPrioridade
+prioridade=Prioridade
 
 
 # play/modules/crud (administration) 
@@ -162,23 +165,24 @@ crud.delete.error = Non se puido borrar o rexistro
 crud.search = Acadar 
 crud.none = (Nada) 
 crud.selectValue=(Escolla unha opción)
-crud.help.required = Obrigatorio. 
-crud.help.minlength = Tamaño mínimo %d. 
-crud.help.maxlength = Tamaño máximo %d. 
-crud.help.email = Enderezo e-mail valido 
-crud.help.dateformat = En formato dd/mm/yyyy. 
-crud.help.numeric = Numérico. 
-crud.help.min = Debe ser maior que %d. 
-crud.help.future = No futuro. 
-crud.help.past = No pasado. 
-crud.help.after = Despois %s. 
-crud.help.before = Antes %s. 
+crud.help.required = Obrigatorio.
+crud.help.minlength = Tamaño mínimo %d.
+crud.help.maxlength = Tamaño máximo %d.
+crud.help.email = Enderezo e-mail valido.
+crud.help.dateformat = En formato dd/mm/yyyy.
+crud.help.numeric = Numérico.
+crud.help.min = Debe ser maior que %d.
+crud.help.future = No futuro.
+crud.help.past = No pasado.
+crud.help.after = Despois %s.
+crud.help.before = Antes %s.
 crud.help.range = Entre %d e %d 
 
 crud.delete.EmptySelect= Para eliminar un elemento de %s debe selecionar un rexistro.
 crud.table.action=Acción
 crud.table.empty= Non hai elementos
-crud.foreignKey= Engadir
+crud.foreignKeyEngadir= Engadir
+crud.foreignKeyVoltar= Voltar
 crud.saveAndBack=Gravar e Voltar
 crud.back=Voltar
 
@@ -198,7 +202,13 @@ secure.title=Páxina de acceso a Union Manager
 #User
 User=Usuario
 password=Contrasinal
+passwordNova= Nova contrasinal
 afiliado=Afiliado
+retryPasswordNova=Repita nova contrasinal
+cambioPassword=Cambiar contrasinal
+user.passwordNovaNonCoincide=Os contrasinais non coinciden.
+user.passwordActualizada=A contrasinal cambiouse correctamente.
+
 
 isComite=Pertence ao comité
 isSecretario=S. Xeral
@@ -210,7 +220,13 @@ isOrganizacion=S. Organizacion
 isAccionSocial=S. Acción Social
 isPermanecia=Fai permanecias
 
+#Notificacion
 
+NotificacionInternas=Notificación
+NotificacionInterna=Notificación
+asunto=Asunto
+contido=Contido
+contactos=Avisar a...
 
 
 #Menu
@@ -224,15 +240,49 @@ menu.Usuarios=Usuarios
 menu.Sexos=Sexos
 menu.InformeAfiliados=Informe de Afiliados
 menu.Admin=Área Administración
+
 menu.Conflitos=Conflitos
 menu.Eventos=Eventos
-menu.Tesoureria.LibroContas=Libro de Contas
-menu.Tesoureria.FollaContas=Folla de Contas
-menu.Tesoureria=Tesoureria
-menu.Permanencia=Permanencia
+menu.tesoureria=Tesoureria
+menu.permanencia=Permanencia
 menu.Inicio=Inicio
 menu.Informes=Informes
-menu.Informes.InformesAfiliados=Informes afiliados
+menu.Informes.InformeAfiliados=Informe afiliados
+menu.password=Cambiar contrasinal
+
+menu.notificacionInterna=Notificación
+
+
+menu.tesoureria.LibroContas=Libro de Contas
+menu.tesoureria.FollaContas=Folla de Contas
+
+
+menu.propaganda=Propaganda
+menu.propaganda.fondos=Fondos
+menu.propaganda.entradas=Entradas
+menu.propaganda.TipoEntradas=Tipo entrada fondo
+
+menu.organizacion=Organización
+menu.organizacion.afiliados=Afiliación
+menu.secretariaXeral.enderezos=Enderezos
+
+menu.accionsindical=Acción sindical
+menu.accionsindical.conflitos=Conflitos
+menu.accionsindical.accions=Accións
+
+menu.configuracion=Configuración
+
+menu.secretariaXeral=Secretaría xeral
+menu.secretariaXeral.usuarios=Usuarios
+menu.secretariaXeral.comite=Comités
+menu.secretariaXeral.organizacion=Organización
+menu.secretariaXeral.secretaria=Secretarías
+menu.secretariaXeral.avisos=Avisos
+
+menu.configuracion.listasDistribucion=Listas de distribución
+menu.configuracion.contactos=Contactos
+
+
 #Modulos
 modulo.administracion=Módulo de Administración
 modulo.Privado=Módulo privado.

@@ -1,9 +1,9 @@
-#{extends 'CRUD/layout.html' /}
+#{extends 'CRUD/layoutSinMenu.html' /}
 #{set title:messages.get('crud.blank.title', type.modelName) /}
 
 %{ cacheIde = params["cacheId"] }%
 
-<div id="crudBlank" class="${type.name}">
+<div class="crudBlankForeign" class="${type.name}">
 
     <h2 id="crudBlankTitle">&{'crud.blank.title', type.modelName}</h2>
 
@@ -12,6 +12,7 @@
         #{crud.form /}
         <p class="crudButtons">
             <input type="submit" name="_saveAndBackForeign" value="&{'crud.saveAndBack', type.modelName}" />
+            <input type="submit" name="_backForeign" value="&{'crud.back', type.modelName}" />
             <input type="hidden" name="cacheId" value="${cacheIde}"/>  
         </p>
     #{/form}

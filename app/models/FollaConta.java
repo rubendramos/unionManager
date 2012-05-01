@@ -12,7 +12,7 @@ import utils.NewForeignKey;
 import utils.Tools;
 
 @Entity
-public class FollaConta extends Model {
+public class FollaConta extends UnionModel {
     
     @Required
     @MaxSize(50)

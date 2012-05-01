@@ -18,7 +18,7 @@ import utils.NewForeignKey;
 import utils.Tools;
 
 @Entity
-public class Evento extends Model {
+public class Evento extends UnionModel {
 
     @ManyToOne
     @Required

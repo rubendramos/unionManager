@@ -3,7 +3,7 @@ package controllers;
 import play.*;
 import play.mvc.*;
 
-@Check("admin")
+@Check("propaganda")
 @With(Secure.class)
 public class EntradaFondos extends CRUD {    
 }

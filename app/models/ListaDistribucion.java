@@ -10,7 +10,7 @@ import utils.AddFiltro;
 import utils.AddForeignKey;
  
 @Entity
-public class ListaDistribucion extends Model {
+public class ListaDistribucion extends UnionModel {
  
     
     

@@ -11,7 +11,7 @@ import utils.AddFiltro;
 import utils.AddForeignKey;
  
 @Entity
-public class Persoa extends Model {
+public class Persoa extends UnionModel {
  
     @Email
     @Required

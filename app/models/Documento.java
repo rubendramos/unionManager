@@ -12,7 +12,7 @@ import utils.AddFiltro;
 import utils.Tools;
  
 @Entity
-public class Documento extends Model {
+public class Documento extends UnionModel {
  
     
     @Required

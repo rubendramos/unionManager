@@ -10,9 +10,10 @@ import utils.AddForeignKey;
 import play.db.jpa.*;
 import play.data.validation.*;
 import utils.AddFiltro;
+import utils.NewForeignKey;
  
 @Entity
-public class Fondo extends Model {
+public class Fondo extends UnionModel {
  
    
     
@@ -26,19 +27,17 @@ public class Fondo extends Model {
  
     public boolean ePublico;
     
-    @Required
-    @ManyToOne
-    public Organismo sindicato;
-    
-    @Transient
+
+    @AddForeignKey
+    @NewForeignKey
+    @ManyToMany
     public Set<EntradaFondo> entradas;
     
   
-    public Fondo(String nome,boolean ePublico,String descricion,Organismo sindicato,Set<EntradaFondo> entradas){
+    public Fondo(String nome,boolean ePublico,String descricion,Set<EntradaFondo> entradas){
     	this.nome=nome;
     	this.descricion=descricion;
-        this.ePublico=ePublico;
-    	this.sindicato=sindicato;
+        this.ePublico=ePublico;    	
         this.entradas=entradas;
     }
 

@@ -4,19 +4,22 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.jamonapi.utils.Logger;
+import controllers.CRUD;
  
 import play.db.jpa.*;
 import play.data.validation.*;
 
  
 @Entity
-public class User extends Model {
+public class User extends UnionModel implements Avisable {
  
     
     @Required
+    @CRUD.Hidden
     public String password;
     
-    @Required    
+    @Required
+    @CRUD.Hidden
     public String usuario;
     
         
@@ -28,7 +31,7 @@ public class User extends Model {
     
     public boolean isComite;    
     
-    public boolean isSecretario;
+    public boolean isSecretariaXeral;
     
     public boolean isTesoureiro;
     
@@ -36,22 +39,18 @@ public class User extends Model {
     
     public boolean isOrganizacion;
     
-    public boolean isPermanecia;
+    public boolean isPermanencia;
     
-    public boolean isAaccionSindical;
+    public boolean isAccionSindical;
     
     public boolean isAccionSocial;
     
     public boolean isFormacion;
     
 
-    public User(String password, Afiliado afiliado) {
-        this.password = password;
-        this.afiliado= afiliado;       
-    }
+  
     
     public static User connect(String usuario, String password) {
-    	play.Logger.debug("usuariooooooooooooooooooo: "+usuario);
         return find("byUsuarioAndPassword", usuario, password).first();
         
     }
@@ -61,7 +60,15 @@ public class User extends Model {
     }
        
     public  String getSindicato() {
-        return this.afiliado.sindicato.toString();
+        return this.getOrganismo().toString();
     }
+    
+     public void sendAviso(){
+            Aviso aviso=Aviso.findById(Long.decode("1"));
+            aviso.setAsunto("Alta usuario");
+            aviso.setContido("Alta usuario");            
+        }
+
+   
  
 }

@@ -12,7 +12,7 @@ import play.data.validation.*;
 import utils.AddFiltro;
  
 @Entity
-public class PrestamoFondo extends Model {
+public class PrestamoFondo extends UnionModel {
  
     @Required
     @ManyToOne    

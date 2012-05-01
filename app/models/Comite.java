@@ -7,10 +7,11 @@ import play.db.jpa.*;
 import play.data.validation.*;
 import utils.AddFiltro;
 import utils.AddForeignKey;
+import utils.NewForeignKey;
 import utils.Tools;
  
 @Entity
-public class Comite extends Model {
+public class Comite extends UnionModel {
  
     
     @Required
@@ -24,7 +25,7 @@ public class Comite extends Model {
     
     @Required
     @ManyToMany
-    @AddForeignKey    
+    @AddForeignKey     
     public Set<Secretaria> secretaria;
     
     @Required

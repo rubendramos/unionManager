@@ -25,7 +25,8 @@ public class Informes extends  Controller {
 	    
 	    System.out.println(data);
 	    	       
-	    renderBinary(utils.BaseJasperReports.download_pdf("report3",reportParams),"report3.pdf");		    
+	    renderBinary(utils.BaseJasperReports.download_pdf("name2",reportParams),"name2.pdf");		    
+            
 	  }
   
   

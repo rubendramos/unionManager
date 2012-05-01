@@ -12,7 +12,7 @@ import play.data.validation.*;
 import utils.AddFiltro;
  
 @Entity
-public class Afiliado extends Model implements Avisable {
+public class Afiliado extends UnionModel implements Avisable {
  
     
     @Required
@@ -40,21 +40,18 @@ public class Afiliado extends Model implements Avisable {
     
     public String carnetConfederado;
     
-    @Required
-    @ManyToOne    
-    public Organismo sindicato;
+
     
   
     public Afiliado(Persoa persoa,Ocupacion ocupacion,Ramo ramo, Date dataAlta, Date dataBaixa, 
-    		boolean milita,String carnetConfederado,Organismo sindicato){
+    		boolean milita,String carnetConfederado){
     	this.persoa=persoa;
     	this.ocupacion=ocupacion;
     	this.ramo=ramo;
     	this.dataAlta=dataAlta;
     	this.dataBaixa=dataBaixa;
     	this.milita=milita;
-    	this.carnetConfederado=carnetConfederado;
-    	this.sindicato=sindicato;
+    	this.carnetConfederado=carnetConfederado;    	
     }
 
     
@@ -76,10 +73,12 @@ public class Afiliado extends Model implements Avisable {
     } 
    
 
-     public void sendAviso(String asunto){
+     public void sendAviso(){
             Aviso aviso=Aviso.findById(Long.decode("1"));
-            aviso.setAsunto(asunto+": "+this.getAsunto());
-            aviso.setContido(this.getContido());            
+            String asunto="Alta"+ this.organismo.acronimo+" "+ this.organismo.nome;
+            String contido="Vostede foi dado de alta no" + this.organismo.acronimo+" "+ this.organismo.nome;
+            aviso.setAsunto(asunto);
+            aviso.setContido(contido);            
         }
     
  

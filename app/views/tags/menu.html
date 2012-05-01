@@ -2,32 +2,83 @@
     <ul class="select">
         <li><a href="#nogo"><b>&{'menu.Inicio'}</b></a></li>
 
-        #{secure.check 'comite'}
-        <li><a href="#nogo"><b>&{'menu.Permanencia'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
+       #{secure.check 'permanencia'}
+        <li><a href="#nogo"><b>&{'menu.permanencia'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
             <!--[if lte IE 6]><table><tr><td><![endif]-->
             <ul class="sub">
-                <li><a href="@{Enderezos.list()}">&{'menu.Enderezos'}</a></li>
-                <li><a href="@{Persoas.list()}">&{'menu.Persoas'}</a></li>	
-                <li><a href="@{Conflitos.list()}">&{'menu.Conflitos'}</a></li>	
-                <li><a href="@{Eventos.list()}">&{'menu.Eventos'}</a></li>	
+                <li><a href="@{NotificacionInternas.list()}">&{'menu.notificacionInterna'}</a></li>	      
+            </ul>
+            <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+        </li>
+        #{/secure.check}         
+        
+        #{secure.check 'secretariaXeral'}
+        <li><a href="#nogo"><b>&{'menu.secretariaXeral'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
+            <!--[if lte IE 6]><table><tr><td><![endif]-->
+            <ul class="sub">
+                <li><a href="@{Organismos.list()}">&{'menu.secretariaXeral.organizacion'}</a></li>	
+                <li><a href="@{Comites.list()}">&{'menu.secretariaXeral.comite'}</a></li>
+                <li><a href="@{Secretarias.list()}">&{'menu.secretariaXeral.secretaria'}</a></li>
+                <li><a href="@{Avisos.list()}">&{'menu.secretariaXeral.avisos'}</a></li>
+                <li><a href="@{Users.list()}">&{'menu.secretariaXeral.usuarios'}</a></li>
 
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
         #{/secure.check} 
 
+
+         #{secure.check 'accionSindical'}
+        <li><a href="#nogo"><b>&{'menu.accionsindical'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
+            <!--[if lte IE 6]><table><tr><td><![endif]-->
+            <ul class="sub">
+                <li><a href="@{Conflitos.list()}">&{'menu.accionsindical.conflitos'}</a></li>
+                <li><a href="@{Eventos.list()}">&{'menu.accionsindical.accions'}</a></li>
+                <li><a href="@{Avisos.list()}">&{'menu.secretariaXeral.avisos'}</a></li>
+               
+            </ul>
+            <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+        </li>
+        #{/secure.check}
+        
+        #{secure.check 'organizacion'}
+        <li><a href="#nogo"><b>&{'menu.organizacion'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
+            <!--[if lte IE 6]><table><tr><td><![endif]-->
+            <ul class="sub">
+                <li><a href="@{Persoas.list()}">&{'menu.Persoas'}</a></li>	
+                <li><a href="@{Afiliados.list()}">&{'menu.organizacion.afiliados'}</a></li>
+                <li><a href="@{Eventos.list()}">&{'menu.Eventos'}</a></li>
+                <li><a href="@{Avisos.list()}">&{'menu.secretariaXeral.avisos'}</a></li>
+                <li><a href="@{Enderezos.list()}">&{'menu.secretariaXeral.enderezos'}</a></li>               
+            </ul>
+            <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+        </li>
+        #{/secure.check} 
+        
+        #{secure.check 'propaganda'}
+        <li><a href="#nogo"><b>&{'menu.propaganda'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
+            <!--[if lte IE 6]><table><tr><td><![endif]-->
+            <ul class="sub">
+                <li><a href="@{Fondos.list()}">&{'menu.propaganda.fondos'}</a></li>
+                <li><a href="@{EntradaFondos.list()}">&{'menu.propaganda.entradas'}</a></li>
+               
+            </ul>
+            <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+        </li>
+        #{/secure.check} 
 
         #{secure.check 'tesoureria'}
-        <li><a href="#nogo"><b>&{'menu.Tesoureria'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
+        <li><a href="#nogo"><b>&{'menu.tesoureria'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
             <!--[if lte IE 6]><table><tr><td><![endif]-->
             <ul class="sub">
-                <li><a href="@{LibroContas.list()}">&{'menu.Tesoureria.LibroContas'}</a></li>
-                <li><a href="@{FollaContas.list()}">&{'menu.Tesoureria.FollaContas'}</a></li>
+                <li><a href="@{LibroContas.list()}">&{'menu.tesoureria.LibroContas'}</a></li>
+                <li><a href="@{FollaContas.list()}">&{'menu.tesoureria.FollaContas'}</a></li>
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
-        #{/secure.check} 
-
+        #{/secure.check}         
+        
+        
         #{secure.check 'comite'}
         <li><a href="#nogo"><b>&{'menu.Informes'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
             <!--[if lte IE 6]><table><tr><td><![endif]-->
@@ -39,13 +90,30 @@
         </li>
         #{/secure.check} 
 
-
-        #{secure.check 'admin'}
         
+        #{secure.check 'autenticado'}
+        <li><a href="#nogo"><b>&{'menu.configuracion'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
+            <!--[if lte IE 6]><table><tr><td><![endif]-->
+            <ul class="sub">
+                <li><a href="@{ListaDistribucions.list()}">&{'menu.configuracion.listasDistribucion'}</a></li>
+                <li><a href="@{Contactos.list()}">&{'menu.configuracion.contactos'}</a></li>
+                <li><a href="@{Users.password()}">&{'menu.password'}</a></li>
+
+            </ul>
+            <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+        </li>
+        #{/secure.check}         
+        
+        
+
+        #{secure.check 'admin'}        
         <li><a href="@{Admin.index()}"><b>&{'menu.Admin'}</b><!--[if IE 7]><!--></a><!--<![endif]--></li>
         #{/secure.check} 
 
 
+        
+        
+        
         #{if session.username}
         
             <ul class="inOut">

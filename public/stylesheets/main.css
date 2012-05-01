@@ -5,7 +5,7 @@ html,body {
 }
 
 body {
-	width: 100%;
+	width: 99%;
 	
 }
 
@@ -465,20 +465,6 @@ form label {
 	content: ' >>';
 }
 
-/** Footer **/
-#footer {	
-	font-size: 70%;
-	padding: 10px 30px;
-	text-align: center;
-	color: #869AB1;
-	margin-top: 10px;
-
-}
-
-#footer a {
-	color: #869AB1;
-	font-weight: bold;
-}
 
 /** Admin **/
 .tags-list .tag {
@@ -719,12 +705,11 @@ tr.odd {
  * ------------------------------------------- */
 #footer
 {
-	color: rgba(190,190,190,0.6);
+	color: rgba(70,70,70,0.9);
 	position: relative;
 	bottom: 0px;
 	text-align: center;
-	width: 100%;   
-        min-height: 300px;
+	width: 100%;           
 	padding: 0px 0;
 	cursor: default;
 	font-size: 15px;
