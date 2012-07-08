@@ -148,8 +148,8 @@ body {
 	font-size: 80%;
 	background: #ffffff;
 	padding: 4px 20px;
-	-webkit-border-radius: 9px;
-	-moz-border-radius: 9px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
 #profile li.selected a {
@@ -163,9 +163,9 @@ body {
 	margin: 20px 0;
 	color: #3C4313;
 	position: relative;
-	-webkit-border-radius: 16px;
+	-webkit-border-radius: 4px;
 	-webkit-box-shadow: 0 2px 0 #93A045;
-	-moz-border-radius: 16px;
+	-moz-border-radius: 4px;
 }
 
 /** A little hacky to create arrows without images **/
@@ -204,8 +204,8 @@ body {
 	background: #000000;
 	background: -webkit-gradient(linear, left top, left 60%, from(#000000),
 		to(#ffffff) );
-	-webkit-border-radius: 16px;
-	-moz-border-radius: 16px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 	padding: 20px;
 	-webkit-box-shadow: 4px 4px 13px #000000;
 	-moz-box-shadow: 4px 4px 13px #000000;
@@ -218,8 +218,8 @@ body {
 	background: #000000;
 	border-style: none;
 	background: -webkit-gradient(linear, left top, left 60%, from(#000000),to(#ffffff) );
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 	-webkit-box-shadow: 4px 4px 13px #000000;
         -moz-box-shadow: 4px 4px 13px #000000;
 }
@@ -256,8 +256,8 @@ body {
 	background: #fff;
 	padding: 10px;
 	margin: 10px 0 50px 0;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 	-webkit-box-shadow: 0 2px 0 #BBBBBB;
 }
 
@@ -355,8 +355,8 @@ h3 span {
 	margin-bottom: 10px;
 	margin-left: 100px;
 	padding: 10px;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
 .comment .about {
@@ -376,8 +376,8 @@ h3 span {
 /** Form **/
 form {
 	padding: 10px;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
 form .error {
@@ -385,8 +385,8 @@ form .error {
 	color: #fff;
 	font-size: 90%;
 	padding: 3px 5px;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 	-webkit-box-shadow: 0 2px 0 #800;
 }
 
@@ -424,8 +424,8 @@ form label {
 	background: #67AD10;
 	color: #fff;
 	padding: 10px;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 	-webkit-box-shadow: 0 2px 0 #4E840B;
 }
 
@@ -491,8 +491,8 @@ form label {
 	font-size: 80%;
 	background: #000000;
 	padding: 2px 5px;
-	-webkit-border-radius: 9px;
-	-moz-border-radius: 9px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
 #mainMenu li.selected a {
@@ -535,8 +535,23 @@ tr.odd {
 	padding: 0;
 }
 
-#crudListTable {
+#crudListTableold {
 	margin: 10px 0;
+}
+
+#crudListTable {
+	list-style: none;
+	width: 98%;
+	margin: 30px auto 20px;
+	padding: 10px 10px 10px;
+	position: relative;
+	min-height: 150px;
+	background: #ffffff;
+	-webkit-box-shadow: rgba(0,0,0,0.2) 0 7px 20px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
+	-moz-box-shadow: rgba(0,0,0,0.2) 0 7px 20px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
+	border-radius: 10px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
 }
 
 .crudField,.objectForm {
@@ -574,8 +589,8 @@ tr.odd {
 }
 
 .crudField .tag.selected {
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
 .crudField .error {
@@ -626,8 +641,8 @@ tr.odd {
 
 #newPost a {
 	background: #C88116;
-	-webkit-border-radius: 12px;
-	-moz-border-radius: 12px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 	padding: 5px 10px;
 	font-size: 80%;
 	text-decoration: none;
@@ -638,8 +653,8 @@ tr.odd {
 
 #newPost a span {
 	background: #7D510E;
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 	padding: 0 5px 2px 5px;
 	position: relative;
 	top: -1px;
@@ -680,8 +695,8 @@ tr.odd {
 	-webkit-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
 	-moz-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
 	border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;	
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;	
 }
 
 

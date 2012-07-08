@@ -138,11 +138,31 @@
 	position: relative;        
 	background: #54BD06;
 	padding: 2px 8px;
-	font-size: 70%;
-	-moz-border-radius: 9px;
-	-webkit-border-radius: 9px;
+	font-size: 80%;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	color: #fff !important;
 	text-decoration: none;
+}
+
+#crud #crudContent table td.del {	
+        text-align: right;	
+}
+
+#crud #crudContent table td  a.del {
+	position: relative;
+        text-align: right;
+	background: #DA2c24;
+	padding: 2px 8px;        
+	font-size: 90%;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	color: #fff !important;
+	text-decoration: none;
+}
+
+#crud #crudContent table td  a.del:hover {
+	opacity: .8;
 }
 
 #crud #crudContent table  td.accion a img.del {
@@ -242,8 +262,8 @@ label {
 	background: #000;
 	padding: 2px 20px;
 	font-size: 90%;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	cursor: pointer;	
 }
 .crudButtons a{
@@ -254,8 +274,8 @@ label {
 	background: #000;
 	padding: 2px 20px;
 	font-size: 90%;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	cursor: pointer;
         
 }
@@ -271,10 +291,9 @@ label {
 
 .crudButtonTableForeign {
 	width: 150px;
-        text-align: center;
-        
-	
+        text-align: center;        	
 }
+
 
 .crudButtonTableForeign input.engadir {
 	color: #ffffff !important;
@@ -283,8 +302,8 @@ label {
 	background: #000;
 	padding: 2px 20px;
 	font-size: 90%;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	cursor: pointer;
 }
 
@@ -299,8 +318,8 @@ label {
 	background: #c05555;;
 	padding: 2px 20px;
 	font-size: 90%;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
         min-width: 85px;
 	cursor: pointer;        
 }
@@ -371,8 +390,8 @@ form .removeAttachment {
 	background: #54BD06;
 	padding: 2px 10px;
 	font-size: 90%;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	color: #fff !important;
 	text-decoration: none;
 }
@@ -394,10 +413,34 @@ form .removeAttachment {
 	-webkit-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
 	-moz-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
 	border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
+
+#onlyShow {
+	list-style: none;
+	width: 50%;
+	margin: 30px auto 20px;
+	padding: 10px 10px 10px;
+	position: relative;
+	min-height: 250px;
+	background: #ffffff;
+	-webkit-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
+	-moz-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
+	border-radius: 10px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+#fecharVenta {
+    width:20px; 
+    right: 10px;
+    position: absolute;
+    height:20px; 
+    border:0;
+    background: transparent url(/public/images/del.png) no-repeat center;
+    border-style: none;
+}
 
 /** List **/
 
@@ -414,8 +457,8 @@ form .removeAttachment {
 	background: #54BD06;
 	padding: 3px 10px;
 	font-size: 90%;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	color: #fff !important;
 	text-decoration: none;
 }
@@ -451,11 +494,11 @@ form .removeAttachment {
 	border: none;
 	margin: 0;
 	position: relative;
-	background: #c05555;
+	background: #6A6A6A;
 	padding: 2px 10px;
 	font-size: 90%;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	cursor: pointer;
 }
 
@@ -499,8 +542,8 @@ form .removeAttachment {
 	background: #c00;
 	padding: 2px 10px;
 	font-size: 90%;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	cursor: pointer;
         display: none;
 }
@@ -520,6 +563,7 @@ form .removeAttachment {
 	border-collapse: collapse;
 	tableForeig-layout: fixed;
 }
+
 
 
 
@@ -665,6 +709,6 @@ display:none;
 	-webkit-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
 	-moz-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
 	border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 }

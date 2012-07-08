@@ -26,4 +26,12 @@ fin = document.getElementById(id2);
 ini.value=""; 
 fin.value="";
 } 
+
+function confirmaEliminar(text,href) {
+if(confirm(text))  document.location.href = href;
+}
+
+function confirmaAccion(text,href) {
+if(confirm(text))  document.location.href = href;
+}
  
