@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="datosOrganismo" language="groovy" pageWidth="595" pageHeight="147" columnWidth="527" leftMargin="14" rightMargin="54" topMargin="7" bottomMargin="7">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ORGANISMO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SDATABAXIA" class="java.lang.String"/>
+	<parameter name="SDATAALTA" class="java.lang.String"/>
+	<parameter name="SDESCRICION" class="java.lang.String"/>
+	<parameter name="SCIF" class="java.lang.String"/>
+	<parameter name="SACRONIMO" class="java.lang.String"/>
+	<parameter name="SNOME" class="java.lang.String"/>
+	<parameter name="SWEB" class="java.lang.String"/>
+	<parameter name="SEMAIL" class="java.lang.String"/>
+	<parameter name="SDATOSORGANISMO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select org.acronimo acronimo ,org.nome nome ,org.cif cif, org.descricion,org.enderezo_id enderezoid,org.email,org.direccionweb web,
+org.dataAlta dataAlta,org.dataBaixa dataBaixa
+from organismo org
+where org.id=$P{ORGANISMO_ID};]]>
+	</queryString>
+	<field name="ACRONIMO" class="java.lang.String"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="CIF" class="java.lang.String"/>
+	<field name="DESCRICION" class="java.lang.String"/>
+	<field name="ENDEREZOID" class="java.lang.Long"/>
+	<field name="EMAIL" class="java.lang.String"/>
+	<field name="WEB" class="java.lang.String"/>
+	<field name="DATAALTA" class="java.sql.Timestamp"/>
+	<field name="DATABAIXA" class="java.sql.Timestamp"/>
+	<variable name="VTITLULO" class="java.lang.String">
+		<variableExpression><![CDATA[$P{SDATOSORGANISMO}+": "+$F{ACRONIMO}+" "+$F{NOME}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="93" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="1" y="51" width="525" height="9" backcolor="#F5F1F1"/>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="1" y="72" width="525" height="9" backcolor="#F5F1F1"/>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="1" y="31" width="525" height="9" backcolor="#F5F1F1"/>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="1" y="11" width="525" height="9" backcolor="#F5F1F1"/>
+			</frame>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="1" y="20" width="121" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ACRONIMO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="122" y="20" width="231" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="353" y="20" width="173" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CIF}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="40" width="526" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="60" width="232" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{EMAIL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="233" y="60" width="293" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{WEB}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement x="1" y="81" width="232" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAALTA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement x="233" y="81" width="293" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATABAIXA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="1" y="11" width="48" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SACRONIMO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="122" y="11" width="50" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SNOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="353" y="11" width="41" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SCIF}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="31" width="83" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SDESCRICION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="233" y="51" width="50" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SWEB}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="51" width="48" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SEMAIL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="72" width="70" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SDATAALTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="233" y="72" width="72" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SDATABAXIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="526" height="11" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{VTITLULO}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="526" height="92"/>
+			</rectangle>
+		</band>
+	</detail>
+</jasperReport>

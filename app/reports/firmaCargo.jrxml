@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="firmaCargo" language="groovy" pageWidth="555" pageHeight="28" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="AFILIADO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ORGANISMO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SSECRETARIA" class="java.lang.String"/>
+	<parameter name="SCARNECONF" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select per.nome||' '||per.apelido1||' '||per.apelido2 nome,tsec.descricion cargo, af.carnetconfederado nafilado
+from afiliado af,persoa per,secretaria sec,tiposecretaria tsec,comite com,comite_secretaria comsec
+where af.persoa_id=per.id
+and sec.id=comsec.secretaria_id
+and com.id=comsec.comite_id
+and com.databaixa is null
+and tsec.id=sec.tiposecretaria_id
+and sec.secretario_id=af.id
+and sec.databaixa  is  null
+and af.id=$P{AFILIADO_ID}
+and af.organismo_id=$P{ORGANISMO_ID};]]>
+	</queryString>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="CARGO" class="java.lang.String"/>
+	<field name="NAFILADO" class="java.lang.String"/>
+	<variable name="VCARGO" class="java.lang.String">
+		<variableExpression><![CDATA[$P{SSECRETARIA} +" "+$F{CARGO}+". "+$P{SCARNECONF}+" "+$F{NAFILADO}]]></variableExpression>
+	</variable>
+	<variable name="VNOME" class="java.lang.String">
+		<variableExpression><![CDATA[$F{NOME}+"."]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="381" y="12" width="174" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{VCARGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="381" y="0" width="174" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{VNOME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

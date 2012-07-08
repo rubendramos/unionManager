@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="librosdecontas" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="ORGANISMO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LIBRO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATAFIN" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATAINI" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REPORTS_DIR" class="java.lang.String"/>
+	<parameter name="TITULO" class="java.lang.String"/>
+	<parameter name="SUBTITULO" class="java.lang.String"/>
+	<parameter name="STOTAL" class="java.lang.String"/>
+	<parameter name="SIMPORTE" class="java.lang.String"/>
+	<parameter name="STIPO" class="java.lang.String"/>
+	<parameter name="SCONCEPTO" class="java.lang.String"/>
+	<parameter name="SDESCRICION" class="java.lang.String"/>
+	<parameter name="SDATA" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\T00159\\Escritorio\\softRuben\\unionManager\\app\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SFAX" class="java.lang.String"/>
+	<parameter name="STELEFONO" class="java.lang.String"/>
+	<parameter name="SACORREOS" class="java.lang.String"/>
+	<parameter name="SEMAIL" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select org.acronimo as acronimo, org.nome as nomeSindicato,lc.descricion descricionLibro,lc.dataalta dataAltaLibro,lc.dataBaixa dataBaixaLibro,
+fc.descricion descricionfolla,fc.dataAlta dataAltaFolla,fc.dataBaixa dataBaixaFolla,tap.descricion descricionTipoApuntamento,tc.descricion descricionTipoConcepto, ap.descricion descricionApuntamento,  CASE tap.id     WHEN 1 THEN ap.importe   ELSE ap.importe*(-1) END importeApuntamento,ap.dataApuntamento dataApuntamento, ap.dataRexistro dataRexistroApuntamento
+from libroconta lc, follaconta fc, libroconta_follaconta lcfc, follaconta_apuntamento fcap, apuntamento  ap, organismo org, tipoApuntamento tap,tipoConcepto  tc
+where lc.id=lcfc.libroconta_id
+and fc.id=lcfc.follascontas_id
+and fc.id=fcap.follaconta_id
+and ap.id=fcap.apuntamentos_id
+and org.id=lc.sindicato_id
+and tap.id=ap.tipoapuntamento_id
+and tc.id=ap.concepto_id
+and ($P{ORGANISMO_ID}=-1 or lc.organismo_id =$P{ORGANISMO_ID})
+and ($P{LIBRO_ID}=-1 or lc.id=$P{LIBRO_ID})
+and ($P{DATAFIN}='-1' or ap.dataapuntamento <=convert($P{DATAFIN},date))
+and ($P{DATAINI}='-1' or ap.dataapuntamento >=convert($P{DATAINI},date));]]>
+	</queryString>
+	<field name="ACRONIMO" class="java.lang.String"/>
+	<field name="NOMESINDICATO" class="java.lang.String"/>
+	<field name="DESCRICIONLIBRO" class="java.lang.String"/>
+	<field name="DATAALTALIBRO" class="java.sql.Timestamp"/>
+	<field name="DATABAIXALIBRO" class="java.sql.Timestamp"/>
+	<field name="DESCRICIONFOLLA" class="java.lang.String"/>
+	<field name="DATAALTAFOLLA" class="java.sql.Timestamp"/>
+	<field name="DATABAIXAFOLLA" class="java.sql.Timestamp"/>
+	<field name="DESCRICIONTIPOAPUNTAMENTO" class="java.lang.String"/>
+	<field name="DESCRICIONTIPOCONCEPTO" class="java.lang.String"/>
+	<field name="DESCRICIONAPUNTAMENTO" class="java.lang.String"/>
+	<field name="IMPORTEAPUNTAMENTO" class="java.lang.Double"/>
+	<field name="DATAAPUNTAMENTO" class="java.sql.Timestamp"/>
+	<field name="DATAREXISTROAPUNTAMENTO" class="java.sql.Timestamp"/>
+	<variable name="TotalSindicato" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTEAPUNTAMENTO}]]></variableExpression>
+	</variable>
+	<variable name="TotalLibro" class="java.lang.Number" resetType="Group" resetGroup="DESCRICIONLIBRO" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTEAPUNTAMENTO}]]></variableExpression>
+	</variable>
+	<variable name="totalFolla" class="java.lang.Number" resetType="Group" resetGroup="DESCRICIONFOLLA" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTEAPUNTAMENTO}]]></variableExpression>
+	</variable>
+	<variable name="sTotalFolla" class="java.lang.String">
+		<variableExpression><![CDATA[$P{STOTAL}+' '+$F{DESCRICIONFOLLA} +': ']]></variableExpression>
+	</variable>
+	<variable name="sTotalLibro" class="java.lang.String">
+		<variableExpression><![CDATA[$P{STOTAL}+' ' +$F{DESCRICIONLIBRO} +': ']]></variableExpression>
+	</variable>
+	<variable name="sTotalSindicato" class="java.lang.String">
+		<variableExpression><![CDATA[$P{STOTAL} +$F{ACRONIMO}+' '+$F{NOMESINDICATO} +': ']]></variableExpression>
+	</variable>
+	<variable name="sNomeSindi" class="java.lang.String">
+		<variableExpression><![CDATA[$F{ACRONIMO} + ' ' + $F{NOMESINDICATO}]]></variableExpression>
+	</variable>
+	<group name="NOMESINDICATO">
+		<groupExpression><![CDATA[$F{NOMESINDICATO}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<frame>
+					<reportElement mode="Opaque" x="-21" y="0" width="761" height="25" forecolor="#D0B48E" backcolor="#F2EBDF"/>
+					<textField pattern="" isBlankWhenNull="false">
+						<reportElement mode="Transparent" x="51" y="0" width="51" height="25" forecolor="#736343" backcolor="#F9F1E3"/>
+						<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+							<font fontName="Arial" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						</textElement>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{ACRONIMO}]]></textFieldExpression>
+					</textField>
+					<textField pattern="" isBlankWhenNull="false">
+						<reportElement mode="Transparent" x="102" y="0" width="384" height="25" forecolor="#736343" backcolor="#F9F1E3"/>
+						<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+							<font fontName="Arial" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						</textElement>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMESINDICATO}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<rectangle>
+					<reportElement mode="Opaque" x="1" y="0" width="25" height="25" backcolor="#B4B1AA"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Opaque" x="740" y="0" width="25" height="25" backcolor="#B4B1AA"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+			<band height="30">
+				<frame>
+					<reportElement mode="Opaque" x="-21" y="0" width="761" height="25" forecolor="#D0B48E" backcolor="#F2EBDF"/>
+				</frame>
+				<textField pattern="#,##0.00 €" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="626" y="0" width="114" height="25" forecolor="#736343" backcolor="#F9F1E3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="Arial" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Number"><![CDATA[$V{TotalSindicato}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="270" y="0" width="356" height="25" forecolor="#736343" backcolor="#F9F1E3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="Arial" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{sTotalSindicato}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Opaque" x="1" y="0" width="25" height="25" backcolor="#B4B1AA"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Opaque" x="740" y="0" width="25" height="25" backcolor="#B4B1AA"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="DESCRICIONLIBRO">
+		<groupExpression><![CDATA[$F{DESCRICIONLIBRO}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement style="SubTitle" x="45" y="0" width="675" height="20" backcolor="#F9F1E3"/>
+					<textElement>
+						<font size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONLIBRO}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Opaque" x="26" y="0" width="20" height="20" backcolor="#D9D6CD"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Opaque" x="720" y="0" width="20" height="20" backcolor="#D9D6CD"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+			<band height="24">
+				<textField pattern="#,##0.00 €" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="626" y="0" width="125" height="20" forecolor="#736343" backcolor="#F9F1E3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="Arial" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Number"><![CDATA[$V{TotalLibro}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="398" y="0" width="228" height="20" forecolor="#736343" backcolor="#F9F1E3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="Arial" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{sTotalLibro}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Opaque" x="26" y="0" width="20" height="20" backcolor="#D9D6CD"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Opaque" x="720" y="0" width="20" height="20" backcolor="#D9D6CD"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="DESCRICIONFOLLA">
+		<groupExpression><![CDATA[$F{DESCRICIONFOLLA}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<rectangle>
+					<reportElement mode="Opaque" x="46" y="1" width="14" height="14" backcolor="#EDECEB"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement style="SubTitle" mode="Opaque" x="58" y="1" width="648" height="14" backcolor="#F9F6F2"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONFOLLA}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="106" y="28" width="600" height="1"/>
+				</line>
+				<rectangle>
+					<reportElement mode="Opaque" x="706" y="1" width="14" height="14" backcolor="#EDECEB"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement mode="Transparent" x="106" y="15" width="66" height="13" forecolor="#736343" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{STIPO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="626" y="14" width="80" height="13" forecolor="#736343" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{SIMPORTE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="475" y="14" width="110" height="13" forecolor="#736343" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{SDATA}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="270" y="16" width="164" height="13" forecolor="#736343" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{SDESCRICION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="177" y="15" width="80" height="13" forecolor="#736343" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{SCONCEPTO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<frame>
+					<reportElement mode="Opaque" x="60" y="1" width="646" height="14" forecolor="#D0B48E" backcolor="#F9F6F2"/>
+				</frame>
+				<textField pattern="#,##0.00 €" isBlankWhenNull="false">
+					<reportElement mode="Opaque" x="626" y="0" width="80" height="15" forecolor="#736343" backcolor="#F9F6F2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Number"><![CDATA[$V{totalFolla}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Opaque" x="398" y="0" width="228" height="15" forecolor="#736343" backcolor="#F9F6F2"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="Arial" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{sTotalFolla}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Opaque" x="46" y="1" width="14" height="14" backcolor="#EDECEB"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Opaque" x="706" y="0" width="14" height="14" backcolor="#EDECEB"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="DESCRICIONAPUNTAMENTO">
+		<groupExpression><![CDATA[$F{DESCRICIONAPUNTAMENTO}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="99" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="140" height="84"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{REPORTS_DIR}+"/imaxes/logoPrincipal.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="140" y="0" width="473" height="36"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="24"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{TITULO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="36" width="473" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SUBTITULO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="86" width="802" height="1"/>
+			</line>
+			<subreport>
+				<reportElement x="613" y="0" width="189" height="84"/>
+				<subreportParameter name="ORGANISMO_ID">
+					<subreportParameterExpression><![CDATA[$P{ORGANISMO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SFAX">
+					<subreportParameterExpression><![CDATA[$P{SFAX}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="STELEFONO">
+					<subreportParameterExpression><![CDATA[$P{STELEFONO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SAPARTADOCORREOS">
+					<subreportParameterExpression><![CDATA[$P{SACORREOS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SEMAIL">
+					<subreportParameterExpression><![CDATA[$P{SEMAIL}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "enderezoCabeceira.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="106" y="0" width="600" height="12"/>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+					<reportElement style="Detail" x="369" y="0" width="125" height="12"/>
+					<textElement>
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAAPUNTAMENTO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="0" y="0" width="66" height="12"/>
+					<textElement>
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONTIPOAPUNTAMENTO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="164" y="0" width="164" height="12"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONAPUNTAMENTO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="71" y="0" width="80" height="12"/>
+					<textElement>
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONTIPOCONCEPTO}]]></textFieldExpression>
+				</textField>
+				<textField pattern=" #,##0.00 €">
+					<reportElement x="520" y="0" width="80" height="12"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Double"><![CDATA[$F{IMPORTEAPUNTAMENTO}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Transparent" x="-21" y="0" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement positionType="FixRelativeToBottom" x="21" y="1" width="802" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.5" lineColor="#999999"/>
+					</graphicElement>
+				</line>
+			</frame>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" forecolor="#736343"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="convocatoriaAsemblea" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     ASEMBLEA."ID" AS ASEMBLEA_ID,
+     ASEMBLEA."DATACELEBRACION" AS ASEMBLEA_DATACELEBRACION,
+     ASEMBLEA."TITULO" AS ASEMBLEA_TITULO,
+     ASEMBLEA."ORGANISMO_ID" AS ASEMBLEA_ORGANISMO_ID,
+     ASEMBLEA."CONVOCANTE_ID" AS ASEMBLEA_CONVOCANTE_ID,
+     ASEMBLEA."LUGARCELEBRACION_ID" AS ASEMBLEA_LUGARCELEBRACION_ID,
+     ASEMBLEA_PUNTOASEMBLEA."ASEMBLEA_ID" AS ASEMBLEA_PUNTOASEMBLEA_ASEMBLEA_ID,
+     ASEMBLEA_PUNTOASEMBLEA."ORDEDODIA_ID" AS ASEMBLEA_PUNTOASEMBLEA_ORDEDODIA_ID
+FROM
+     "PUBLIC"."ASEMBLEA" ASEMBLEA,
+     "PUBLIC"."ASEMBLEA_PUNTOASEMBLEA" ASEMBLEA_PUNTOASEMBLEA]]>
+	</queryString>
+	<field name="ASEMBLEA_TITULO" class="java.lang.String"/>
+	<field name="ASEMBLEA_DATACELEBRACION" class="java.sql.Timestamp"/>
+	<field name="ASEMBLEA_LUGARCELEBRACION_ID" class="java.lang.Long"/>
+	<field name="ASEMBLEA_PUNTOASEMBLEA_ASEMBLEA_ID" class="java.lang.Long"/>
+	<field name="ASEMBLEA_PUNTOASEMBLEA_ORDEDODIA_ID" class="java.lang.Long"/>
+	<field name="ASEMBLEA_ORGANISMO_ID" class="java.lang.Long"/>
+	<field name="ASEMBLEA_CONVOCANTE_ID" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

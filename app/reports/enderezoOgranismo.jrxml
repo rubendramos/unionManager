@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="enderezoOgranismo" language="groovy" pageWidth="595" pageHeight="136" columnWidth="528" leftMargin="13" rightMargin="54" topMargin="6" bottomMargin="6">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ORGANISMO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SCOMUNIDADE" class="java.lang.String"/>
+	<parameter name="SPROVINCIA" class="java.lang.String"/>
+	<parameter name="SCONCELLO" class="java.lang.String"/>
+	<parameter name="SCODIGOPOSTAL" class="java.lang.String"/>
+	<parameter name="SLOCALIDADE" class="java.lang.String"/>
+	<parameter name="SENDEREZO" class="java.lang.String"/>
+	<parameter name="TITULOENDEREZOORGANISMI" class="java.lang.String"/>
+	<parameter name="SFAX" class="java.lang.String"/>
+	<parameter name="STELEFONO" class="java.lang.String"/>
+	<parameter name="SAPARTADOCORREOS" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select org.acronimo,org.nome,org.email,org.direccionweb web,en.enderezo enderezo, en.concello concello,
+loc.descricion localidade,
+loc.codigopostal codigopostal,prv.descricion provincia,com.descricion comunidade,en.telefono,en.fax,en.apartadocorreos
+from enderezo en,localidade loc,provincia prv,comunidadeautonoma com,
+organismo org
+where org.enderezo_id=en.id
+and en.localidade_id=loc.id
+and loc.provincia_id=prv.id
+and loc.comunidadeautonoma_id =com.id
+and org.id=$P{ORGANISMO_ID};]]>
+	</queryString>
+	<field name="ACRONIMO" class="java.lang.String"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="EMAIL" class="java.lang.String"/>
+	<field name="WEB" class="java.lang.String"/>
+	<field name="ENDEREZO" class="java.lang.String"/>
+	<field name="CONCELLO" class="java.lang.String"/>
+	<field name="LOCALIDADE" class="java.lang.String"/>
+	<field name="CODIGOPOSTAL" class="java.lang.String"/>
+	<field name="PROVINCIA" class="java.lang.String"/>
+	<field name="COMUNIDADE" class="java.lang.String"/>
+	<field name="TELEFONO" class="java.lang.String"/>
+	<field name="FAX" class="java.lang.String"/>
+	<field name="APARTADOCORREOS" class="java.lang.String"/>
+	<variable name="FTITULO" class="java.lang.String">
+		<variableExpression><![CDATA[$P{TITULOENDEREZOORGANISMI}+": "+$F{ACRONIMO}+" "+$F{NOME}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="72" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="51" width="528" height="9" backcolor="#F0EDED"/>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="1" y="31" width="527" height="9" backcolor="#F0EDED"/>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="1" y="11" width="527" height="9" backcolor="#F0EDED"/>
+			</frame>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="20" width="200" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ENDEREZO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="40" width="200" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CONCELLO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="201" y="20" width="264" height="11"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOCALIDADE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="465" y="20" width="63" height="11"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CODIGOPOSTAL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="201" y="40" width="149" height="11"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROVINCIA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="349" y="40" width="179" height="11"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{COMUNIDADE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="60" width="151" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TELEFONO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="324" y="60" width="204" height="11"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APARTADOCORREOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="528" height="11" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{FTITULO}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="528" height="71"/>
+			</rectangle>
+			<textField>
+				<reportElement x="1" y="11" width="63" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SENDEREZO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="201" y="11" width="63" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SLOCALIDADE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="465" y="11" width="40" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SCODIGOPOSTAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="31" width="69" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SCONCELLO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="201" y="31" width="64" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SPROVINCIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="349" y="31" width="106" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SCOMUNIDADE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="152" y="60" width="172" height="11"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FAX}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="324" y="51" width="112" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SAPARTADOCORREOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="51" width="37" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SFAX}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="51" width="64" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{STELEFONO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

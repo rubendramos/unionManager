@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="eventosConflito" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="313"/>
+	<parameter name="ORGANISMO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="STIPOEVENTO" class="java.lang.String"/>
+	<parameter name="SNOMEEVENTO" class="java.lang.String"/>
+	<parameter name="SDESCRICIONEVENTO" class="java.lang.String"/>
+	<parameter name="SVALORACIONEVENTO" class="java.lang.String"/>
+	<parameter name="SDATAREALIZACION" class="java.lang.String"/>
+	<parameter name="SHORAEVENTO" class="java.lang.String"/>
+	<parameter name="SENDEREZO" class="java.lang.String"/>
+	<parameter name="STITULOEVENTO" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\T00159\\Escritorio\\softRuben\\unionManager\\app\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EVENTO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SSUBTITULOEVENTO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select teven.descricion tipoEvento ,even.nome nome  , even.horarealizacion horaevento,even.descricion descricionEvento,even.datarealizacion, even.valoracion valoracion,end.id enderezo_id,org.acronimo||' '||org.nome sidicato
+from  evento even,tipoevento teven,enderezo end,localidade loc,organismo org
+where ($P{EVENTO_ID}=-1 or even.id =$P{EVENTO_ID})
+and ($P{ORGANISMO_ID}=-1 or even.organismo_id =$P{ORGANISMO_ID})
+and org.id=even.organismo_id
+and teven.id=even.tipoevento_id
+and end.id=even.lugar_id
+and loc.id=end.localidade_id;
+
+]]>
+	</queryString>
+	<field name="TIPOEVENTO" class="java.lang.String"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="HORAEVENTO" class="java.lang.String"/>
+	<field name="DESCRICIONEVENTO" class="java.lang.String"/>
+	<field name="DATAREALIZACION" class="java.sql.Timestamp"/>
+	<field name="VALORACION" class="java.lang.String"/>
+	<field name="ENDEREZO_ID" class="java.lang.Long"/>
+	<field name="SIDICATO" class="java.lang.String"/>
+	<group name="sindicato">
+		<groupExpression><![CDATA[$F{SIDICATO}]]></groupExpression>
+		<groupHeader>
+			<band height="44">
+				<frame>
+					<reportElement mode="Opaque" x="4" y="25" width="547" height="12" backcolor="#CCCCCC"/>
+					<textField>
+						<reportElement x="0" y="0" width="139" height="12" forecolor="#FFFFFF"/>
+						<textElement>
+							<font fontName="Arial" size="10" isBold="true"/>
+						</textElement>
+						<textFieldExpression class="java.lang.String"><![CDATA[$P{STITULOEVENTO}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<frame>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="15" backcolor="#FF0000"/>
+					<textField>
+						<reportElement x="4" y="0" width="520" height="15" forecolor="#FFFFFF"/>
+						<textElement>
+							<font fontName="Arial" size="12" isBold="true"/>
+						</textElement>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{SIDICATO}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="23">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="15" backcolor="#FF0000"/>
+					<textField>
+						<reportElement x="6" y="0" width="545" height="15" forecolor="#FFFFFF"/>
+						<textElement textAlignment="Right">
+							<font fontName="Arial" size="12" isBold="true"/>
+						</textElement>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{SIDICATO}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="82">
+			<textField>
+				<reportElement x="0" y="29" width="555" height="32"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{STITULOEVENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="62" width="554" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SSUBTITULOEVENTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="5">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="90" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="7" y="0" width="540" height="10" backcolor="#000000"/>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="3" y="0" width="537" height="10" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="Arial" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{NOME}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="7" y="30" width="540" height="10" backcolor="#F9F7F7"/>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="7" y="10" width="540" height="10" backcolor="#F9F7F7"/>
+			</frame>
+			<textField>
+				<reportElement x="95" y="20" width="108" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="20" width="88" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TIPOEVENTO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="8" y="60" width="540" height="24"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{VALORACION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="40" width="103" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{HORAEVENTO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="8" y="40" width="93" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAREALIZACION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="10" width="88" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{STIPOEVENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="203" y="10" width="344" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SDESCRICIONEVENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="10" width="108" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SNOMEEVENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="96" y="30" width="107" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SHORAEVENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="203" y="30" width="344" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SENDEREZO}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement mode="Opaque" x="7" y="50" width="540" height="10" backcolor="#F9F7F7"/>
+			</frame>
+			<textField>
+				<reportElement x="8" y="50" width="540" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SVALORACIONEVENTO}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="7" y="0" width="540" height="84" forecolor="#000000"/>
+			</rectangle>
+			<subreport>
+				<reportElement x="203" y="40" width="344" height="10"/>
+				<subreportParameter name="ORGANISMO_ID">
+					<subreportParameterExpression><![CDATA[$P{ORGANISMO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SFAX"/>
+				<subreportParameter name="STELEFONO"/>
+				<subreportParameter name="SAPARTADOCORREOS"/>
+				<subreportParameter name="SEMAIL"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "LineaEnderezo.jasper"]]></subreportExpression>
+			</subreport>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="203" y="20" width="344" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{DESCRICIONEVENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="30" width="88" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SDATAREALIZACION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="2"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="23">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1"/>
+			</line>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="1" y="1" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="1" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="508" y="1" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

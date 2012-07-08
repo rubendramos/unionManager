@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fondos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="62"/>
+	<parameter name="STITULOENTRADA" class="java.lang.String"/>
+	<parameter name="SAUTORENTRADA" class="java.lang.String"/>
+	<parameter name="SDESCRICIONENTRADA" class="java.lang.String"/>
+	<parameter name="SENTRADAPRESTABLE" class="java.lang.String"/>
+	<parameter name="SANOEDICIONENTRADA" class="java.lang.String"/>
+	<parameter name="SFONDO" class="java.lang.String"/>
+	<parameter name="SSINATURAENTRADA" class="java.lang.String"/>
+	<parameter name="STIPOENTRADA" class="java.lang.String"/>
+	<parameter name="ORGANISMO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FONDO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIPOENTRADA_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select entfon.anoedicion anoEdicion,entfon.autor autor,entfon.descricion descricion,entfon.eprestable ePrestable,entfon.sinatura sinatura,entfon.titulo titulo,entfon.caratula caratula,
+fon.descricion descricionFondo,fon.epublico fondoPublico,fon.nome nomeFondo,tentfon.descricion tipoEntradaFondo
+from entradafondo entfon
+join tipoEntradafondo tentfon on entfon.tipoentradafondo_id=tentfon.id
+join fondo_entradafondo fentfon on fentfon.entradas_id=entfon.id
+join fondo fon on fentfon.fondo_id=fon.id
+where ($P{ORGANISMO_ID}=-1 or entfon.organismo_id =$P{ORGANISMO_ID})
+and ($P{FONDO_ID}=-1 or fon.id =$P{FONDO_ID})
+and ($P{TIPOENTRADA_ID}=-1 or tentfon.id =$P{TIPOENTRADA_ID});]]>
+	</queryString>
+	<field name="ANOEDICION" class="java.lang.String"/>
+	<field name="AUTOR" class="java.lang.String"/>
+	<field name="DESCRICION" class="java.lang.String"/>
+	<field name="EPRESTABLE" class="java.lang.Boolean"/>
+	<field name="SINATURA" class="java.lang.String"/>
+	<field name="TITULO" class="java.lang.String"/>
+	<field name="CARATULA" class="java.lang.String"/>
+	<field name="DESCRICIONFONDO" class="java.lang.String"/>
+	<field name="FONDOPUBLICO" class="java.lang.Boolean"/>
+	<field name="NOMEFONDO" class="java.lang.String"/>
+	<field name="TIPOENTRADAFONDO" class="java.lang.String"/>
+	<group name="fondo">
+		<groupExpression><![CDATA[$F{NOMEFONDO}]]></groupExpression>
+		<groupHeader>
+			<band height="13">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="12" backcolor="#FF9999"/>
+				</frame>
+				<textField>
+					<reportElement x="0" y="0" width="150" height="12"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMEFONDO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="505" y="0" width="50" height="12"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Boolean"><![CDATA[$F{FONDOPUBLICO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="150" y="0" width="355" height="12"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONFONDO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="8"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="36" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="61" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="3" width="64" height="57"/>
+			</rectangle>
+			<textField>
+				<reportElement x="64" y="50" width="68" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ANOEDICION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="31" width="491" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="505" y="50" width="50" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Boolean"><![CDATA[$F{EPRESTABLE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="132" y="50" width="373" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{SINATURA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="12" width="205" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TITULO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="3" width="64" height="57"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CARATULA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="12" width="200" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{AUTOR}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement mode="Opaque" x="64" y="3" width="491" height="9" backcolor="#F1EFEF"/>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="64" y="22" width="491" height="9" backcolor="#F1EFEF"/>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="64" y="41" width="491" height="9" backcolor="#F1EFEF"/>
+			</frame>
+			<textField>
+				<reportElement x="150" y="3" width="205" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{STITULOENTRADA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="3" width="200" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SAUTORENTRADA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="22" width="491" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SDESCRICIONENTRADA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="41" width="68" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SANOEDICIONENTRADA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="132" y="41" width="423" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SSINATURAENTRADA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="12" width="86" height="10" forecolor="#000000"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TIPOENTRADAFONDO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="3" width="86" height="9"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{STIPOENTRADA}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="3" width="555" height="57"/>
+			</rectangle>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

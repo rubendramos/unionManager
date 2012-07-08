@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LineaEnderezo" language="groovy" pageWidth="576" pageHeight="10" columnWidth="576" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="5.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ORGANISMO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SFAX" class="java.lang.String"/>
+	<parameter name="STELEFONO" class="java.lang.String"/>
+	<parameter name="SAPARTADOCORREOS" class="java.lang.String"/>
+	<parameter name="SEMAIL" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select org.acronimo,org.nome,org.email,en.enderezo enderezo, en.concello concello,
+loc.descricion localidade,
+loc.codigopostal codigopostal,prv.descricion provincia,com.descricion comunidade,en.telefono,en.fax,en.apartadocorreos
+from enderezo en,localidade loc,provincia prv,comunidadeautonoma com,
+organismo org
+where org.enderezo_id=en.id
+and en.localidade_id=loc.id
+and loc.provincia_id=prv.id
+and loc.comunidadeautonoma_id =com.id
+and org.id=$P{ORGANISMO_ID};]]>
+	</queryString>
+	<field name="ACRONIMO" class="java.lang.String"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="EMAIL" class="java.lang.String"/>
+	<field name="ENDEREZO" class="java.lang.String"/>
+	<field name="CONCELLO" class="java.lang.String"/>
+	<field name="LOCALIDADE" class="java.lang.String"/>
+	<field name="CODIGOPOSTAL" class="java.lang.String"/>
+	<field name="PROVINCIA" class="java.lang.String"/>
+	<field name="COMUNIDADE" class="java.lang.String"/>
+	<field name="TELEFONO" class="java.lang.String"/>
+	<field name="FAX" class="java.lang.String"/>
+	<field name="APARTADOCORREOS" class="java.lang.String"/>
+	<variable name="enderezo" class="java.lang.String">
+		<variableExpression><![CDATA[$F{ACRONIMO}+" "+$F{NOME}+" - "+$F{ENDEREZO}+" " +$F{LOCALIDADE}+" " +$F{CODIGOPOSTAL}+" "+$F{CONCELLO}+" - " +
+$F{PROVINCIA}+"."]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="576" height="10"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{enderezo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

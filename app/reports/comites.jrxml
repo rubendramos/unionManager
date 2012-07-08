@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comites" language="groovy" pageWidth="595" pageHeight="842" columnWidth="528" leftMargin="13" rightMargin="54" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\T00159\\Escritorio\\softRuben\\unionManager\\app\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ORGANISMO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SSECRETARIA" class="java.lang.String"/>
+	<parameter name="SDATAALTA" class="java.lang.String"/>
+	<parameter name="SDATABAXIA" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select cmt.id comiteid,cmt.descricion descricionComite, cmt.dataAlta dataAlta ,cmt.databaixa dataBaixa,tcmt.descricion tipoComite   from comite cmt,tipocomite tcmt,organismo_comite orgcom
+where cmt.tipocomite_id =tcmt.id
+and cmt.id=orgcom.comite_id
+and orgcom.organismo_id=$P{ORGANISMO_ID} ;]]>
+	</queryString>
+	<field name="COMITEID" class="java.lang.Long"/>
+	<field name="DESCRICIONCOMITE" class="java.lang.String"/>
+	<field name="DATAALTA" class="java.sql.Timestamp"/>
+	<field name="DATABAIXA" class="java.sql.Timestamp"/>
+	<field name="TIPOCOMITE" class="java.lang.String"/>
+	<sortField name="DATAALTA" order="Descending"/>
+	<detail>
+		<band height="49" splitType="Stretch">
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="528" height="48"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="528" height="11" backcolor="#000000"/>
+			</rectangle>
+			<subreport>
+				<reportElement x="81" y="21" width="311" height="17"/>
+				<subreportParameter name="COMITE_ID">
+					<subreportParameterExpression><![CDATA[$F{COMITEID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SSECRETARIA">
+					<subreportParameterExpression><![CDATA[$P{SSECRETARIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "secretarias.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="0" y="0" width="253" height="11" forecolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONCOMITE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="296" y="0" width="40" height="11" forecolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAALTA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="397" y="0" width="68" height="11" forecolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATABAIXA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="242" y="0" width="52" height="11" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SDATAALTA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="344" y="0" width="51" height="11" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SDATABAXIA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

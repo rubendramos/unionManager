@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="organismo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ORGANISMO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\T00159\\Escritorio\\softRuben\\unionManager\\app\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SSECRETARIA" class="java.lang.String"/>
+	<parameter name="SDATABAXIA" class="java.lang.String"/>
+	<parameter name="SDATAALTA" class="java.lang.String"/>
+	<parameter name="SDESCRICION" class="java.lang.String"/>
+	<parameter name="SCIF" class="java.lang.String"/>
+	<parameter name="SACRONIMO" class="java.lang.String"/>
+	<parameter name="SNOME" class="java.lang.String"/>
+	<parameter name="SWEB" class="java.lang.String"/>
+	<parameter name="SEMAIL" class="java.lang.String"/>
+	<parameter name="SDATOSORGANISMO" class="java.lang.String"/>
+	<parameter name="SCOMUNIDADE" class="java.lang.String"/>
+	<parameter name="SPROVINCIA" class="java.lang.String"/>
+	<parameter name="SCONCELLO" class="java.lang.String"/>
+	<parameter name="SCODIGOPOSTAL" class="java.lang.String"/>
+	<parameter name="SLOCALIDADE" class="java.lang.String"/>
+	<parameter name="SENDEREZO" class="java.lang.String"/>
+	<parameter name="TITULOENDEREZOORGANISMI" class="java.lang.String"/>
+	<parameter name="SFAX" class="java.lang.String"/>
+	<parameter name="STELEFONO" class="java.lang.String"/>
+	<parameter name="SAPARTADOCORREOS" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select org.acronimo acronimo ,org.nome nome ,org.cif cif, org.descricion,org.enderezo_id enderezoid,org.email,org.direccionweb web ,torg.descricion tipoorganismo from organismo org,tipoorganismo torg
+where org.tipoorganismo_id=torg.id
+and org.id=$P{ORGANISMO_ID};]]>
+	</queryString>
+	<field name="ACRONIMO" class="java.lang.String"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="CIF" class="java.lang.String"/>
+	<field name="DESCRICION" class="java.lang.String"/>
+	<field name="ENDEREZOID" class="java.lang.Long"/>
+	<field name="EMAIL" class="java.lang.String"/>
+	<field name="WEB" class="java.lang.String"/>
+	<field name="TIPOORGANISMO" class="java.lang.String"/>
+	<variable name="nomeSindi" class="java.lang.String">
+		<variableExpression><![CDATA[$F{TIPOORGANISMO}+": "+$F{ACRONIMO}+" "+$F{NOME}]]></variableExpression>
+	</variable>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<detail>
+		<band height="321" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="17" forecolor="#FFFFFF" backcolor="#CC0033"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{nomeSindi}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="229" width="555" height="51"/>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="SDATABAXIA">
+					<subreportParameterExpression><![CDATA[$P{SDATABAXIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ORGANISMO_ID">
+					<subreportParameterExpression><![CDATA[$P{ORGANISMO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SDATAALTA">
+					<subreportParameterExpression><![CDATA[$P{SDATAALTA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SSECRETARIA">
+					<subreportParameterExpression><![CDATA[$P{SSECRETARIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "comites.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="17" width="555" height="112"/>
+				<subreportParameter name="SNOME">
+					<subreportParameterExpression><![CDATA[$P{SNOME}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SACRONIMO">
+					<subreportParameterExpression><![CDATA[$P{SACRONIMO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SDESCRICION">
+					<subreportParameterExpression><![CDATA[$P{SDESCRICION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SWEB">
+					<subreportParameterExpression><![CDATA[$P{SWEB}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SEMAIL">
+					<subreportParameterExpression><![CDATA[$P{SEMAIL}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SDATOSORGANISMO">
+					<subreportParameterExpression><![CDATA[$P{SDATOSORGANISMO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SDATABAXIA">
+					<subreportParameterExpression><![CDATA[$P{SDATABAXIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ORGANISMO_ID">
+					<subreportParameterExpression><![CDATA[$P{ORGANISMO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SDATAALTA">
+					<subreportParameterExpression><![CDATA[$P{SDATAALTA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SCIF">
+					<subreportParameterExpression><![CDATA[$P{SCIF}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "datosOrganismo.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="0" y="129" width="555" height="100"/>
+				<subreportParameter name="ORGANISMO_ID">
+					<subreportParameterExpression><![CDATA[$P{ORGANISMO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SCOMUNIDADE">
+					<subreportParameterExpression><![CDATA[$P{SCOMUNIDADE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SPROVINCIA">
+					<subreportParameterExpression><![CDATA[$P{SPROVINCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SCONCELLO">
+					<subreportParameterExpression><![CDATA[$P{SCONCELLO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SCODIGOPOSTAL">
+					<subreportParameterExpression><![CDATA[$P{SCODIGOPOSTAL}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SLOCALIDADE">
+					<subreportParameterExpression><![CDATA[$P{SLOCALIDADE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SENDEREZO">
+					<subreportParameterExpression><![CDATA[$P{SENDEREZO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITULOENDEREZOORGANISMI">
+					<subreportParameterExpression><![CDATA[$P{TITULOENDEREZOORGANISMI}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SFAX">
+					<subreportParameterExpression><![CDATA[$P{SFAX}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="STELEFONO">
+					<subreportParameterExpression><![CDATA[$P{STELEFONO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SAPARTADOCORREOS">
+					<subreportParameterExpression><![CDATA[$P{SAPARTADOCORREOS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "enderezoOgranismo.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement positionType="Float" mode="Opaque" x="0" y="303" width="555" height="17" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" backcolor="#CC0033"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{nomeSindi}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="555" height="321" forecolor="#990000"/>
+				<graphicElement>
+					<pen lineStyle="Double"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="firmaLugarEData" language="groovy" pageWidth="555" pageHeight="13" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ENDEREZO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select loc.descricion localidade,sysdate dataActual from enderezo en,localidade loc
+where en.id=$P{ENDEREZO_ID}
+and en.localidade_id=loc.id;]]>
+	</queryString>
+	<field name="LOCALIDADE" class="java.lang.String"/>
+	<field name="DATAACTUAL" class="java.sql.Timestamp"/>
+	<variable name="VLUGAREDATA" class="java.lang.String">
+		<variableExpression><![CDATA[$F{LOCALIDADE}+", "]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="295" y="0" width="159" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{VLUGAREDATA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="424" y="0" width="131" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAACTUAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

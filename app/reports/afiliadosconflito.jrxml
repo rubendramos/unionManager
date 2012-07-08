@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="afiliadosconflito" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONFLITO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ORGANIZACION_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ORGANISMO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SNOMEAFILIADO" class="java.lang.String"/>
+	<parameter name="SDATAALTA" class="java.lang.String"/>
+	<parameter name="SDATABAIXA" class="java.lang.String"/>
+	<parameter name="STITULOAFILIADOSCONFLOTO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select per.dni, per.apelido1 ||' ' || per.apelido2||', ' ||per.nome nomeAfiliado, af.dataalta dataalta, af.databaixa databaixa from conflito conf,conflito_afiliado confaf,afiliado af,persoa per
+where
+($P{CONFLITO_ID}=-1 or conf.id =$P{CONFLITO_ID})
+and ($P{ORGANISMO_ID}=-1 or conf.organismo_id =$P{ORGANISMO_ID})
+and  confaf.afiliados_id =af.id
+and confaf.conflito_id =conf.id
+and af.persoa_id =per.id;]]>
+	</queryString>
+	<field name="DNI" class="java.lang.String"/>
+	<field name="NOMEAFILIADO" class="java.lang.String"/>
+	<field name="DATAALTA" class="java.sql.Timestamp"/>
+	<field name="DATABAIXA" class="java.sql.Timestamp"/>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="7" y="21" width="541" height="10" backcolor="#000000"/>
+			</frame>
+			<textField>
+				<reportElement x="421" y="21" width="127" height="10" forecolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SDATABAIXA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="21" width="140" height="10" forecolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SDATAALTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="21" width="271" height="10" forecolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SNOMEAFILIADO}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="5" width="555" height="12" forecolor="#CC0000" backcolor="#CCCCCC"/>
+				<textField>
+					<reportElement x="2" y="0" width="553" height="12" forecolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{STITULOAFILIADOSCONFLOTO}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement x="8" y="0" width="273" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMEAFILIADO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="281" y="0" width="140" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAALTA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="421" y="0" width="127" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATABAIXA}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="7" y="-10" width="541" height="20"/>
+			</rectangle>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="5"/>
+	</columnFooter>
+</jasperReport>

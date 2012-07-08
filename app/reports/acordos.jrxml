@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="acordos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SPUNTO" class="java.lang.String"/>
+	<parameter name="SACORDO" class="java.lang.String"/>
+	<parameter name="ASEMBLEA_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ORGANISMO_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIPOPUNTOASEMBLEA_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SFAX" class="java.lang.String"/>
+	<parameter name="STELEFONO" class="java.lang.String"/>
+	<parameter name="SAPARTADOCORREOS" class="java.lang.String"/>
+	<parameter name="SEMAIL" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\T00159\\Escritorio\\softRuben\\unionManager\\app\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="STITULO" class="java.lang.String"/>
+	<parameter name="SSUBTITULO" class="java.lang.String"/>
+	<parameter name="DATACELEBRACIONFIN" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATACELEBRACIONINI" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SOACORDOS" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="APETICIONDE_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select tpase.descricion tipoPuntoAsemblea,ase.datacelebracion dataAsemblea,ase.titulo tituloAsemblea, pase.descricion descricionPunto,pase.acordo,pase.apeticionde_id apetidionde_id,ase.id asembleaID,
+per.nome||' '||per.apelido1||' '||per.apelido2||'('||af.carnetconfederado||')' apeticionDe
+from
+asemblea ase join asemblea_puntoasemblea asepase on ase.id=asepase.asemblea_id
+join puntoasemblea pase on pase.id=asepase.ordedodia_id
+join organismo org on org.id=ase.organismo_id
+join tipopuntoasemblea tpase on tpase.id=pase.tipopuntoasemblea_id
+left join afiliado af on  pase.apeticionde_id =af.id
+left join  persoa per on per.id=af.persoa_id
+where
+($P{ASEMBLEA_ID}=-1 or ase.id =$P{ASEMBLEA_ID})
+and ($P{APETICIONDE_ID}=-1 or pase.apeticionde_id=$P{APETICIONDE_ID})
+and ($P{ORGANISMO_ID}=-1 or ase.organismo_id =$P{ORGANISMO_ID})
+and ($P{DATACELEBRACIONFIN}='-1' or ase.datacelebracion <=convert($P{DATACELEBRACIONFIN},date))
+and ($P{DATACELEBRACIONINI}='-1' or ase.datacelebracion >=convert($P{DATACELEBRACIONINI},date))
+and ($P{TIPOPUNTOASEMBLEA_ID}=-1 or tpase.id =$P{TIPOPUNTOASEMBLEA_ID})
+and ($P{SOACORDOS}=-1 or (pase.acordo !='' and pase.acordo is not null));]]>
+	</queryString>
+	<field name="TIPOPUNTOASEMBLEA" class="java.lang.String"/>
+	<field name="DATAASEMBLEA" class="java.sql.Timestamp"/>
+	<field name="TITULOASEMBLEA" class="java.lang.String"/>
+	<field name="DESCRICIONPUNTO" class="java.lang.String"/>
+	<field name="ACORDO" class="java.lang.String"/>
+	<field name="APETIDIONDE_ID" class="java.lang.Long"/>
+	<field name="ASEMBLEAID" class="java.lang.Long"/>
+	<field name="APETICIONDE" class="java.lang.String"/>
+	<sortField name="DATAASEMBLEA" order="Descending"/>
+	<group name="asemblea">
+		<groupExpression><![CDATA[$F{ASEMBLEAID}]]></groupExpression>
+		<groupHeader>
+			<band height="24">
+				<rectangle>
+					<reportElement x="0" y="0" width="555" height="24" backcolor="#CCCCCC"/>
+				</rectangle>
+				<frame>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="12" backcolor="#000000"/>
+					<textField pattern="EEEEE dd MMMMM yyyy">
+						<reportElement x="288" y="0" width="264" height="12" forecolor="#FFFFFF"/>
+						<textElement textAlignment="Right">
+							<font fontName="Arial"/>
+						</textElement>
+						<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAASEMBLEA}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<textField>
+					<reportElement x="1" y="0" width="288" height="12" forecolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{TITULOASEMBLEA}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="12" width="274" height="12"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{SPUNTO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="274" y="12" width="246" height="12"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{SACORDO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="13"/>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="67" splitType="Stretch">
+			<subreport>
+				<reportElement x="384" y="0" width="171" height="66"/>
+				<subreportParameter name="ORGANISMO_ID">
+					<subreportParameterExpression><![CDATA[$P{ORGANISMO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SFAX">
+					<subreportParameterExpression><![CDATA[$P{SFAX}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="STELEFONO">
+					<subreportParameterExpression><![CDATA[$P{STELEFONO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SAPARTADOCORREOS">
+					<subreportParameterExpression><![CDATA[$P{SAPARTADOCORREOS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SEMAIL">
+					<subreportParameterExpression><![CDATA[$P{SEMAIL}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "enderezoCabeceira.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="44" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="1" y="21" width="555" height="16"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SSUBTITULO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="555" height="21"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="18"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{STITULO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="16"/>
+				<subreportParameter name="ORGANISMO_ID">
+					<subreportParameterExpression><![CDATA[$P{ORGANISMO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "nomeSindiCabeceira.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="274" height="27"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="274" y="0" width="281" height="27" backcolor="#EBE7E7"/>
+			</rectangle>
+			<textField>
+				<reportElement x="274" y="0" width="281" height="27" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{ACORDO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="7" width="273" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONPUNTO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="0" width="113" height="7"/>
+				<textElement>
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TIPOPUNTOASEMBLEA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="114" y="0" width="160" height="7"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APETICIONDE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="11" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="0" width="554" height="1"/>
+			</line>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="1" y="1" width="100" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="1" width="80" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="1" width="40" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
