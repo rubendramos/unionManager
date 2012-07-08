@@ -20,6 +20,8 @@ public class NotificacionInternas extends CRUD {
             String orderBy, String order) {
         String where="";
         ObjectType type = ObjectType.get(getControllerClass());
+        orderBy="dataAlta";
+        order="DESC";
         notFoundIfNull(type);
         if (page < 1) {
             page = 1;
@@ -30,19 +32,19 @@ public class NotificacionInternas extends CRUD {
         //Filtramos sempre polo id do usuario
         User u=User.find("byUsuario", Seguridade.connected()).<User>first();
         if (where == null || "".equals(where)) {
-            where = " user_id=" + u.id;
+            where = " avisode_id=" + u.id;
         } else {
-            where = where + " and  user_id=" + u.id;
+            where = where + " and  avisode_id=" + u.id;
         }
         
         
         List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, where);
         Long count = type.count(search, searchFields, where);
-        Long totalCount = type.count(null, null, (String) request.args.get("where"));
+        Long totalCount = type.count(null, null, where);
         try {
             render(type, objects, count, totalCount, page, orderBy, order);
         } catch (TemplateNotFoundException e) {
-            render("CRUD/list.html", type, objects, count, totalCount, page,
+            render("NotificacionInternas/listSold.html", type, objects, count, totalCount, page,
                     orderBy, order);
         }
     }
@@ -52,38 +54,13 @@ public class NotificacionInternas extends CRUD {
         ObjectType type = ObjectType.get(getControllerClass());
         String where=type.createWhereFilterClausule();         
         User u=User.find("byUsuario", Seguridade.connected()).<User>first();
+        orderBy="dataAlta";
+        order="DESC";
         notFoundIfNull(type);
         if (page < 1) {
             page = 1;
         }
         
-//       List<NotificacionInterna> notifications=NotificacionInterna.findByContactoOld(u.id);
-//        
-//        if(notifications!=null && !notifications.isEmpty()){
-//                
-//        for(NotificacionInterna notificacions : notifications){            
-//            sNotificacions=sNotificacions +notificacions.id+",";
-//        }
-//        sNotificacions=sNotificacions.substring(0,sNotificacions.length()-1);
-//            //Filtramos sempre polo id do usuario
-//
-//            if (where == null || "".equals(where)) {
-//                where = " id in (" + sNotificacions +")";
-//            } else {
-//                where = where + "and  id in (" +sNotificacions+")";
-//            }
-//              List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, where);
-//        Long count = type.count(search, searchFields, where);
-//        Long totalCount = type.count(null, null, (String) request.args.get("where"));
-//        try {
-//            render(type, objects, count, totalCount, page, orderBy, order);
-//        } catch (TemplateNotFoundException e) {
-//            render("CRUD/listRecived.html", type, objects, count, totalCount, page,
-//                    orderBy, order);
-//        }
-//        }else{
-//            Privado.index();
-//        }
 
          if (where == null || "".equals(where)) {
                 where = "id in (select niu.notificacionInterna_id from NotificacionInterna_User niu where niu.contactos_id=" + u.id+")";
@@ -93,7 +70,7 @@ public class NotificacionInternas extends CRUD {
         
         List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, where);
         Long count = type.count(search, searchFields, where);
-        Long totalCount = type.count(null, null, (String) request.args.get("where"));
+        Long totalCount = type.count(null, null, where);
         try {
             //render(type, objects, count, totalCount, page, orderBy, order);
              render("NotificacionInternas/listRecived.html", type, objects, count, totalCount, page,
@@ -107,7 +84,66 @@ public class NotificacionInternas extends CRUD {
     }
   
   
+ public static void listRecivedNonLeidas(int page, String search, String searchFields,
+            String orderBy, String order) {
+        ObjectType type = ObjectType.get(getControllerClass());
+        String where=type.createWhereFilterClausule();         
+        User u=User.find("byUsuario", Seguridade.connected()).<User>first();
+        orderBy="dataAlta";
+        order="DESC";
+        notFoundIfNull(type);
+        if (page < 1) {
+            page = 1;
+        }
+        
+
+         if (where == null || "".equals(where)) {
+                where = "id in (select niu.notificacionInterna_id from NotificacionInterna_User niu where niu.contactos_id=" + u.id+" and niu.isLeido=false)";
+            } else {
+                where = where + "id in (select niu.notificacionInterna_id from NotificacionInterna_User niu where niu.contactos_id=" + u.id+" and niu.isLeido=false)";
+            }
+        
+        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, where);
+        Long count = type.count(search, searchFields, where);
+        Long totalCount = type.count(null, null, where);
+        try {
+            //render(type, objects, count, totalCount, page, orderBy, order);
+             render("NotificacionInternas/listRecivedNonLeidos.html", type, objects, count, totalCount, page,
+                    orderBy, order);
+        } catch (TemplateNotFoundException e) {
+            render("NotificacionInternas/listRecivedNonLeidos.html", type, objects, count, totalCount, page,
+                    orderBy, order);
+        }
+        
+       
+    }  
   
+  private static void marcarComoLeido(String id) throws Exception {
+        ObjectType type = ObjectType.get(getControllerClass());                     
+        NotificacionInterna ni=(NotificacionInterna)type.findById(id);
+        User u=User.find("byUsuario", Seguridade.connected()).<User>first();
+        NotificacionInterna_User notificacionUser=NotificacionInterna_User.findByContactoENotificacion(u.id,id);
+        notificacionUser.setIsLeido(true);
+        notificacionUser._save();
+    }
   
+   public static void macarLeidoERepintar(String id,String page, String search) throws Exception {
+   
+            marcarComoLeido(id);
+            listRecived(Integer.parseInt(page), search,null,null,null);            
+  
+   }
+   
+    public static void showNotificaion(String id) throws Exception {
+        ObjectType type = ObjectType.get(getControllerClass());
+        notFoundIfNull(type);
+        Model object = type.findById(id);
+        notFoundIfNull(object);
+        try {
+            render(type, object);
+        } catch (TemplateNotFoundException e) {
+            render("NotificacionInternas/notificacionInterna.html", type, object);
+        }
+    }   
     
 }

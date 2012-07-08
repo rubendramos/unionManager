@@ -37,6 +37,9 @@ public class Seguridade extends Secure.Security {
         if ("organizacion".equals(profile)) {
             return User.find("byUsuario", connected()).<User>first().isOrganizacion;
         }
+       if ("recibeNotificacions".equals(profile)) {
+            return User.find("byUsuario", connected()).<User>first().isRecibeNotificacions;
+        }        
         if ("autenticado".equals(profile)) {
             User u=User.find("byUsuario", connected()).<User>first();
             if(u!=null){
@@ -52,12 +55,16 @@ public class Seguridade extends Secure.Security {
     static Organismo organismo() {
         return User.find("byUsuario", connected()).<User>first().organismo;
     }
+    
+    static User usuario() {
+        return User.find("byUsuario", connected()).<User>first();
+    }    
 
     static void onDisconnected() {
         Application.index();
     }
 
     static void onAuthenticated() {
-        NotificacionInternas.listRecived(1, null, null, null, null);
+        NotificacionInternas.listRecivedNonLeidas(1, null, null, null, null);
     }
 }

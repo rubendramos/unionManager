@@ -104,6 +104,56 @@ public abstract class CRUD extends Controller {
         }
     }
 
+    public static void pecharEstado(String id, int page, String search, String searchFields,
+            String orderBy, String order) throws Exception {
+        ObjectType type = ObjectType.get(getControllerClass());
+        notFoundIfNull(type);
+        UnionSecureModel pai = (UnionSecureModel) type.findById(id);
+        notFoundIfNull(pai);
+
+        pai.pecharRecursivo();
+        Auditoria.facerAuditoria(pai, Seguridade.usuario(), play.i18n.Messages.get("generic.accionPechar",""), Seguridade.organismo());
+
+        if (page < 1) {
+            page = 1;
+        }
+
+        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, type.createWhereFilterClausule());
+        Long count = type.count(search, searchFields, type.createWhereFilterClausule());
+        Long totalCount = type.count(null, null, (String) request.args.get("where"));
+        try {
+            render(type.controllerName + "/list.html", objects, count, totalCount, page, orderBy, order);
+        } catch (TemplateNotFoundException e) {
+            render("CRUD/list.html", type, objects, count, totalCount, page,
+                    orderBy, order);
+        }
+    }
+
+    public static void abrirEstado(String id, int page, String search, String searchFields,
+            String orderBy, String order) throws Exception {
+        ObjectType type = ObjectType.get(getControllerClass());
+        notFoundIfNull(type);
+        UnionSecureModel object = (UnionSecureModel) type.findById(id);
+        notFoundIfNull(object);
+        object.abrirRecursivo();
+        Auditoria.facerAuditoria(object, Seguridade.usuario(),play.i18n.Messages.get("generic.accionAbrir",""), Seguridade.organismo());
+
+
+        if (page < 1) {
+            page = 1;
+        }
+
+        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, type.createWhereFilterClausule());
+        Long count = type.count(search, searchFields, type.createWhereFilterClausule());
+        Long totalCount = type.count(null, null, (String) request.args.get("where"));
+        try {
+            render(type.controllerName + "/list.html", objects, count, totalCount, page, orderBy, order);
+        } catch (TemplateNotFoundException e) {
+            render("CRUD/list.html", type, objects, count, totalCount, page,
+                    orderBy, order);
+        }
+    }
+
     public static void showFromCache(String cacheId) throws Exception {
 
 
@@ -158,6 +208,7 @@ public abstract class CRUD extends Controller {
         notFoundIfNull(type);
         Model object = type.findById(id);
         notFoundIfNull(object);
+        Field[] f = object.getClass().getFields();
         Object att = object.getClass().getField(field).get(object);
         if (att instanceof Model.BinaryField) {
             Model.BinaryField attachment = (Model.BinaryField) att;
@@ -181,12 +232,12 @@ public abstract class CRUD extends Controller {
     public static void save(String id) throws Exception {
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);
-        Organismo org=Seguridade.organismo();
-        
+        Organismo org = Seguridade.organismo();
+
         Model object = type.findById(id);
         notFoundIfNull(object);
-        
-        Binder.bindBean(params.getRootParamNode(), "object", object);        
+
+        Binder.bindBean(params.getRootParamNode(), "object", object);
         if (params.get("_save") != null || params.get("_saveAndContinue") != null) {
             validation.valid(object);
             if (validation.hasErrors()) {
@@ -199,9 +250,9 @@ public abstract class CRUD extends Controller {
                     render("CRUD/show.html", type, object);
                 }
             }
-            setUser(object);
-            setOrganismo(object,org);         
-            object._save();
+
+            saveUnion(object, org, play.i18n.Messages.get("generic.accionActualizar"));
+            
             flash.success(play.i18n.Messages.get("crud.saved", type.modelName));
             if (params.get("_save") != null) {
                 redirect(request.controller + ".list");
@@ -257,41 +308,136 @@ public abstract class CRUD extends Controller {
         }
     }
 
-    private static void setOrganismo(Model object, Organismo org) {
+    
+    private static void saveUnion(Model object,Organismo org, String accion) throws Exception{    
+            setDataModificacion(object);
+            setDataActual(object);
+            setUser(object);
+            setOrganismo(object, org);
+            setSecureEstado(object);
+            object._save();
+            Auditoria.facerAuditoria(object,User.find("byUsuario", Seguridade.connected()).<User>first(),accion,org);
+            actualizaMensaxeIdioma(object);
+            creaConvocaAsemblea(object, org);
+    }
+    
+    private static void creaConvocaAsemblea(Model object, Organismo org) {
         try {
-            Field t = object.getClass().getSuperclass().getDeclaredField("organismo");
+            if (object.getClass().getName().equals("models.Asemblea")) {
+
+                Field t = object.getClass().getDeclaredField("documentacionAsemblea");
+                Field t2 = object.getClass().getDeclaredField("ordeDoDia");
+
+                String type = "java.util.Set";
+                String property = "documentacionAsemblea";
+                String property2 = "ordeDoDia";
+
+                Object value = new PropertyDescriptor(property, object.getClass()).getReadMethod().invoke(object);
+                Object value2 = new PropertyDescriptor(property2, object.getClass()).getReadMethod().invoke(object);
+
+                Class<? extends Set> theClass = Class.forName(type).asSubclass(Set.class);
+                Class<? extends Set> theClass2 = Class.forName(type).asSubclass(Set.class);
+
+                Set obj = theClass.cast(value);
+                Set obj2 = theClass2.cast(value2);
+
+                t2.set(object, obj2);
+
+                Documento doc = ((Asemblea) object).creaConvocaAsemblea(org);
+                if (doc != null) {
+                    obj.add(doc);
+                }
+
+                t.set(object, obj);
+                object._save();
+
+            }
+        } catch (Exception ex) {
+            Logger.debug("Non implementa Asemblea");
+        }
+    }
+
+    private static void setOrganismo(Model object, Organismo org) {
+        Field t = null;
+        try {
+            if (object instanceof models.UnionSecureModel) {
+                t = object.getClass().getSuperclass().getSuperclass().getDeclaredField("organismo");
+            } else if (object instanceof models.UnionModel) {
+                t = object.getClass().getSuperclass().getDeclaredField("organismo");
+            }
             t.set(object, org);
         } catch (Exception ex) {
             Logger.debug("Non implementa UnionModel");
         }
     }
-    
+
+    private static void setSecureEstado(Model object) {
+        try {
+
+            if (object instanceof models.UnionSecureModel) {
+                Field t = object.getClass().getSuperclass().getDeclaredField("estado");
+                TipoEstado te = TipoEstado.findById(Long.parseLong("1"));
+                t.set(object, te);
+            }
+
+        } catch (Exception ex) {
+            Logger.debug("Non implementa UnionModel");
+        }
+    }
+
     private static void setUser(Model object) {
         try {
-            User user=User.find("byUsuario", Seguridade.connected()).<User>first();
+            User user = User.find("byUsuario", Seguridade.connected()).<User>first();
             Field t = object.getClass().getDeclaredField("user");
-            Field d = object.getClass().getDeclaredField("dataNotificacion");
             t.set(object, user);
-            d.set(object,Tools.getCurrentDate());
         } catch (Exception ex) {
             Logger.debug("Non implementa User");
         }
-    }    
+    }
+
+    private static void setDataActual(Model object) {
+        try {
+            Field d = object.getClass().getDeclaredField("dataAlta");
+            d.set(object, Tools.getCurrentDate());
+        } catch (Exception ex) {
+            Logger.debug("Non implementa dataActual");
+        }
+    }
+
+    private static void setDataModificacion(Model object) {
+        try {
+            Field d = object.getClass().getDeclaredField("dataModificacion");
+            d.set(object, Tools.getCurrentDate());
+        } catch (Exception ex) {
+            Logger.debug("Non implementa dataActual");
+        }
+    }
+
+    private static void actualizaMensaxeIdioma(Model object) {
+        try {
+
+            MensaxesIdioma menIdi = (MensaxesIdioma) Class.forName("models.MensaxesIdioma").cast(object);
+            LoadPropertiesFiles lpf=new LoadPropertiesFiles();
+            lpf.loadProperties(menIdi);
+        } catch (Exception ex) {
+            Logger.debug("Non implementa MensaxesIdioma");
+        }
+    }
     
-        private static void setPassEUser(Model object) {
-        try {     
-            
+    private static void setPassEUser(Model object) {
+        try {
+
             User user = (User) Class.forName("models.User").cast(object);
-            String email=user.afiliado.persoa.getEmail();
+            String email = user.afiliado.persoa.getEmail();
             Field p = object.getClass().getDeclaredField("password");
             Field u = object.getClass().getDeclaredField("usuario");
-            
+
             p.set(object, Tools.generatePassword());
             u.set(object, email);
         } catch (Exception ex) {
             Logger.debug("Non implementa User");
         }
-    }
+    }    
 
     private static String getSufixoCampo(String a, String b, String c) {
         String sufixoCampo = "";
@@ -353,8 +499,8 @@ public abstract class CRUD extends Controller {
         Constructor<?> constructor = type.entityClass.getDeclaredConstructor();
         constructor.setAccessible(true);
         Model object = (Model) constructor.newInstance();
-        Organismo org=Seguridade.organismo();
-        
+        Organismo org = Seguridade.organismo();
+
         Binder.bindBean(params.getRootParamNode(), "object", object);
         setPassEUser(object);
         if (params.get("_addForeignKey") != null || params.get("_newForeignKey") != null
@@ -418,16 +564,22 @@ public abstract class CRUD extends Controller {
                 render("CRUD/blank.html", type, object);
             }
         }
-        setUser(object);
-        setOrganismo(object,org);
-        object._save();
+       
+       saveUnion(object, org, play.i18n.Messages.get("generic.accionNovoAlta"));
 
 
         //Si o obxeto do modelo implementa a interface Avisable enviarase un 
         //aviso de sistema asociado a un tipo de aviso específico neste caso o 1.
-        if (Avisable.class.isInstance(object)) {
-            Avisable ob = (Avisable) object;
-            ob.sendAviso();
+        if (Notificable.class.isInstance(object)) {
+            Notificable ob = (Notificable) object;
+            NotificacionInterna ni = ob.getNotificacionInterna();
+            User u = User.find("byUsuario", Seguridade.connected()).<User>first();
+            ni.setAvisode(u);
+            ni.organismo = u.getOrganismo();
+            List users = User.usersNotificacions();
+            HashSet<User> usersComite = new HashSet<User>(users);
+            ni.setContactos(usersComite);
+            ni._save();
         }
 
         flash.success(play.i18n.Messages.get("crud.created", type.modelName));
@@ -447,7 +599,7 @@ public abstract class CRUD extends Controller {
         notFoundIfNull(type);
         ForeignKeyCache fkc = (ForeignKeyCache) Cache.get(params.get("cacheId"));
         Constructor<?> constructor = type.entityClass.getDeclaredConstructor();
-        Organismo org=Seguridade.organismo();
+        Organismo org = Seguridade.organismo();
         constructor.setAccessible(true);
         Model object = (Model) constructor.newInstance();
         Binder.bindBean(params.getRootParamNode(), "object", object);
@@ -464,10 +616,9 @@ public abstract class CRUD extends Controller {
                 }
             }
 
-
-            setUser(object);
-            setOrganismo(object,org);
-            object._save();
+            
+            saveUnion(object, org, play.i18n.Messages.get("generic.accionNovoAlta"));
+            
             flash.success(play.i18n.Messages.get("crud.created", type.modelName));
 
             ForeignKeyValues fkv = (ForeignKeyValues) fkc.getForeignKeyValues();
@@ -484,8 +635,11 @@ public abstract class CRUD extends Controller {
         notFoundIfNull(type);
         Model object = type.findById(id);
         notFoundIfNull(object);
+        Organismo org = Seguridade.organismo();
         try {
+            Auditoria.facerAuditoria(object,User.find("byUsuario", Seguridade.connected()).<User>first(),"Borrar",org);
             object._delete();
+
         } catch (Exception e) {
             flash.error(play.i18n.Messages.get("crud.delete.error",
                     type.modelName));
@@ -494,8 +648,6 @@ public abstract class CRUD extends Controller {
         flash.success(play.i18n.Messages.get("crud.deleted", type.modelName));
         redirect(request.controller + ".list");
     }
-   
-    
 
     protected static ObjectType createObjectType(
             Class<? extends Model> entityClass) {
@@ -609,18 +761,37 @@ public abstract class CRUD extends Controller {
                     + ".blank");
         }
 
+        private Field getOrganismoField() throws NoSuchFieldException {
+            Field t = null;
+            try {
+
+                //Filtramos sempre polo id do organismo
+                t = this.entityClass.getSuperclass().getDeclaredField("organismo");
+
+            } catch (NoSuchFieldException ex) {
+                try {
+                    t = this.entityClass.getSuperclass().getSuperclass().getDeclaredField("organismo");
+                    return t;
+                } catch (NoSuchFieldException ex2) {
+                    throw new NoSuchFieldException();
+                }
+            }
+            return t;
+
+        }
+
         public Long count(String search, String searchFields, String where) {
 
             try {
-                
+
                 //Filtramos sempre polo id do organismo
-                Field t = this.entityClass.getSuperclass().getDeclaredField("organismo");
+                Field t = getOrganismoField();
                 if (where == null || "".equals(where)) {
                     where = " organismo_id=" + Seguridade.organismo().id;
                 } else {
                     where = where + " and  organismo_id=" + Seguridade.organismo().id;
                 }
-                
+
             } catch (NoSuchFieldException ex) {
                 Logger.debug("Non implementa UnionModel");
             }
@@ -634,15 +805,15 @@ public abstract class CRUD extends Controller {
                 String searchFields, String orderBy, String order, String where) {
             int offset = (page - 1) * getPageSize();
             try {
-                
+
                 //Filtramos sempre polo id do organismo
-                Field t = this.entityClass.getSuperclass().getDeclaredField("organismo");
+                Field t = getOrganismoField();
                 if (where == null || "".equals(where)) {
                     where = " organismo_id=" + Seguridade.organismo().id;
                 } else {
                     where = where + " and  organismo_id=" + Seguridade.organismo().id;
                 }
-                
+
             } catch (NoSuchFieldException ex) {
                 Logger.debug("Non implementa UnionModel");
             }
@@ -697,7 +868,9 @@ public abstract class CRUD extends Controller {
                     if (valor != null && !"".contains(valor)) {
                         if ("date".equals(f.type)) {
                             valor = f.property.name + " " + (String) valor;
-                        } else {
+                        } else if("relation".equals(f.type)) {
+                            valor = f.property.name + " = " + (String) valor;
+                        } else{
                             valor = f.property.name + " like '%" + (String) valor + "%'";
                         }
                         if (!"".equals(where)) {
@@ -706,9 +879,9 @@ public abstract class CRUD extends Controller {
                         where += valor;
                     }
                 }
-            }          
-            
-            
+            }
+
+
             if ("".equals(where)) {
                 where = null;
             }
