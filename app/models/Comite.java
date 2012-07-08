@@ -11,7 +11,7 @@ import utils.NewForeignKey;
 import utils.Tools;
  
 @Entity
-public class Comite extends UnionModel {
+public class Comite extends UnionSecureModel {
  
     
     @Required

@@ -16,7 +16,9 @@ public class UnionModel extends Model  {
     @ManyToOne   
     @CRUD.Hidden
     public Organismo organismo;
-
+  
+    
+    
     /**
      * @return the organismo
      */
@@ -30,8 +32,4 @@ public class UnionModel extends Model  {
     public void setOrganismo(Organismo organismo) {
         this.organismo = organismo;
     }
-   
-    
-    
-   
 }

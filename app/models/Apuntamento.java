@@ -12,7 +12,7 @@ import utils.AddFiltro;
 import utils.Tools;
 
 @Entity
-public class Apuntamento extends UnionModel {
+public class Apuntamento extends UnionSecureModel {
     
     @Required
     @ManyToOne
@@ -29,9 +29,8 @@ public class Apuntamento extends UnionModel {
     @MaxSize(50)
     public String descricion;
     
-    @Required
-    @MaxSize(5)    
-    public String importe;
+    @Required       
+    public Float importe;
   
     
     @Required
@@ -45,7 +44,7 @@ public class Apuntamento extends UnionModel {
     public Date dataRexistro;
     public User usuarioApuntamento;
     
-    public Apuntamento(TipoApuntamento tipoApuntamento,TipoConcepto concepto,String descricion,String importe, 
+    public Apuntamento(TipoApuntamento tipoApuntamento,TipoConcepto concepto,String descricion,Float importe, 
             Blob adxunto,Date dataApuntamento, User usuarioApuntamento){
     	this.descricion=descricion;
         this.adxunto=adxunto;

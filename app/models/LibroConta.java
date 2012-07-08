@@ -10,7 +10,7 @@ import java.util.*;
 import utils.AddForeignKey;
 
 @Entity
-public class LibroConta extends UnionModel {
+public class LibroConta extends UnionSecureModel {
     
     @Required
     @MaxSize(50)
@@ -42,7 +42,7 @@ public class LibroConta extends UnionModel {
     }
       
     public String toString() {
-        return this.descricion+" - "+ this.follasContas+"-" +this.sindicato;
+        return this.descricion+" - "+ this.follasContas;
     }
 	
 }

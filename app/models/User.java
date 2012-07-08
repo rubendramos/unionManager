@@ -11,7 +11,7 @@ import play.data.validation.*;
 
  
 @Entity
-public class User extends UnionModel implements Avisable {
+public class User extends UnionModel {
  
     
     @Required
@@ -47,6 +47,8 @@ public class User extends UnionModel implements Avisable {
     
     public boolean isFormacion;
     
+    public boolean isRecibeNotificacions;
+    
 
   
     
@@ -69,6 +71,11 @@ public class User extends UnionModel implements Avisable {
             aviso.setContido("Alta usuario");            
         }
 
-   
+       public static List<User> usersNotificacions() {
+         String query = "from User t where t.isRecibeNotificacions=true";        
+        return find(query).fetch();
+        
+    } 
+     
  
 }

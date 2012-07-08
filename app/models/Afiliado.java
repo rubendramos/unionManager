@@ -12,14 +12,19 @@ import play.data.validation.*;
 import utils.AddFiltro;
  
 @Entity
-public class Afiliado extends UnionModel implements Avisable {
+public class Afiliado extends UnionModel {
  
     
     @Required
     @ManyToOne
     @AddForeignKey
     public Persoa persoa ;
-       
+ 
+    @Required
+    @ManyToOne
+    @AddFiltro
+    private TipoEstadoAfiliado estadoAfiliado ;
+    
     @Required
     @ManyToOne
     @AddFiltro
@@ -33,8 +38,11 @@ public class Afiliado extends UnionModel implements Avisable {
     @AddFiltro
     public Date dataAlta;
     
+ 
+    
+    
     @AddFiltro
-    public Date dataBaixa;
+    private Date dataBaixa;
         
     public boolean milita;
     
@@ -70,17 +78,35 @@ public class Afiliado extends UnionModel implements Avisable {
     
    public String getsPersoa() {
         return this.persoa.toString();
-    } 
-   
+    }
 
-     public void sendAviso(){
-            Aviso aviso=Aviso.findById(Long.decode("1"));
-            String asunto="Alta"+ this.organismo.acronimo+" "+ this.organismo.nome;
-            String contido="Vostede foi dado de alta no" + this.organismo.acronimo+" "+ this.organismo.nome;
-            aviso.setAsunto(asunto);
-            aviso.setContido(contido);            
-        }
-    
- 
+    /**
+     * @return the dataBaixa
+     */
+    public Date getDataBaixa() {
+        return dataBaixa;
+    }
+
+    /**
+     * @param dataBaixa the dataBaixa to set
+     */
+    public void setDataBaixa(Date dataBaixa) {
+        this.dataBaixa = dataBaixa;
+    }
+
+    /**
+     * @return the estado
+     */
+    public TipoEstadoAfiliado getEstadoAfiliado() {
+        return estadoAfiliado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstadoAfiliado(TipoEstadoAfiliado estadoAfiliado) {
+        this.estadoAfiliado = estadoAfiliado;
+    }
+  
  
 }

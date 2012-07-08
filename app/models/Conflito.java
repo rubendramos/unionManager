@@ -14,7 +14,7 @@ import utils.AddFiltro;
 import utils.Tools;
 
 @Entity
-public class Conflito extends UnionModel {
+public class Conflito extends UnionSecureModel {
 
     @Required
     @MaxSize(50)

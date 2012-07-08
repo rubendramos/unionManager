@@ -4,15 +4,23 @@
  */
 package models;
 
+import java.util.Set;
+import javax.persistence.Entity;
+
 
 
 /**
  *
  * @author ruben
  */
+
+
 public interface Avisable {
     
 
 
-    void sendAviso();
+    Enderezo getLugarCelebracion();
+    Set<Documento> getAdxuntos();
+    String getHoraCelebracion();
+    String getTitulo();
 }
