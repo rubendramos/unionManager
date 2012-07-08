@@ -1,0 +1,7 @@
+${aviso.asunto}.
+
+Estimado compañeiro:
+${aviso.contido}
+
+
+Un cordial saúdo.

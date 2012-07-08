@@ -1,0 +1,11 @@
+Convocatoria ${aviso.asemblea.titulo}
+
+Estimado compañeiro:
+
+A asemblea celebrarase en ${aviso.asemblea.lugarCelebracion}.
+o ${aviso.asemblea.dataCelebracion} ás ${aviso.asemblea.horaCelebracion}
+coa seguinte orde do día:
+
+${aviso.asemblea.ordeDoDia}
+
+Un cordial saúdo.

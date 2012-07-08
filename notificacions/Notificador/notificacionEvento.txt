@@ -1,0 +1,10 @@
+Convocatoria de ${aviso.evento.tipoEvento}.
+
+Estimado compañeiro:
+O vindeiro  celebrarase  ${aviso.evento.nome}:${aviso.evento.descricion} 
+
+O acto celebrarase en ${aviso.evento.lugar}.
+o ${aviso.evento.dataRealizacion} ás ${aviso.evento.horaRealizacion}
+
+
+Un cordial saúdo.
