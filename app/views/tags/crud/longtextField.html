@@ -1,0 +1,13 @@
+#{field 'object.' + _name}
+#{if _estado!=null && _estado.id==2}
+%{disabled='disabled'}%
+#{/if}
+
+    <label for="${field.id}">
+        &{_name}
+    </label>
+    <textarea ${disabled} id="${field.id}" cols="48" rows="5" class="${field.errorClass}" name="${field.name}">${params[field.name]?.escape()?.raw() ?: field.error?.message == 'validation.required' ? '' : _value?.escape()?.raw()}</textarea>
+    #{ifError field.name}
+        <span class="error">${field.error.raw()}</span>
+    #{/ifError}
+#{/field}

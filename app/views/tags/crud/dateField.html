@@ -1,0 +1,19 @@
+#{field 'object.' + _name}
+#{if _estado!=null && _estado.id==2}
+%{disabled='disabled'}%
+#{/if}
+
+    <label for="${field.id}">
+        &{_name}
+    </label>
+    <input ${disabled} id="${field.id}" class="${field.errorClass}" type="text" name="${field.name}" value="${_value?.format()}" size="10" />
+    #{ifError field.name}
+        <span class="error">${field.error.raw()}</span>
+    #{/ifError}
+
+#{if _estado==null || _estado.id==1}    
+ <script  type="text/javascript" charset="${_response_encoding}">
+        $(${field.id}).datepicker({dateFormat:'dd/mm/yy', showAnim:'fadeIn'})
+	</script>  
+  #{/if}        
+#{/field}

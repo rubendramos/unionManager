@@ -1,0 +1,24 @@
+#{field 'object.' + _name}
+    <label for="${field.id}">
+        &{_name} &{'crud.filtro.entreDatas'}
+    </label>
+    <input id="${field.id}_ini" class="${field.errorClass}" type="text" name="${field.name}.ini" value="${params[field.name+'.ini']?.escape()?.raw() ?: _value?.escape()?.raw()}" size="10" />
+    &{'crud.filtro.eDatas'}
+    <input id="${field.id}_fin" class="${field.errorClass}" type="text" name="${field.name}.fin" value="${params[field.name+'.fin']?.escape()?.raw() ?: _value?.escape()?.raw()}" size="10" />
+  
+    
+    <input  class="limparCampo" value="limpar" type="button" onclick="return limparFiltroData('${field.id}_ini','${field.id}_fin')"  />
+  
+  
+    #{ifError field.name}
+        <span class="error">${field.error.raw()}</span>
+    #{/ifError}
+    
+    
+ <script type="text/javascript" charset="${_response_encoding}">
+         $(${field.id}_ini).datepicker({dateFormat:'dd/mm/yy', showAnim:'fadeIn'})
+         $(${field.id}_fin).datepicker({dateFormat:'dd/mm/yy', showAnim:'fadeIn'})
+         
+                
+	</script>    
+#{/field}
