@@ -6,28 +6,46 @@ package jobs;
 
 import java.util.List;
 import models.Aviso;
+import models.TipoEstadoAviso;
 import notificacions.Notificador;
+import org.jboss.netty.handler.codec.frame.TooLongFrameException;
 import play.db.jpa.GenericModel;
 import play.jobs.Every;
 import play.jobs.Job;
+import utils.Tools;
 
 /**
  *
  * @author ruben
- **/
- 
- @Every("59min")
+ *
+ */
+@Every("3min")
 public class lanzaAvisosEventos extends Job {
-     
-       @Override
-  public void doJob() throws Exception {
-   List<Aviso> avisos= Aviso.findAll();
-           for(Aviso aviso: avisos){
-               if(!"Automático".equals(aviso.tipoAviso)){
-               Notificador.notificacionXenerica(aviso);
-               }
-           }
-           
-  }
-    
+
+    @Override
+    public void doJob() throws Exception {
+        TipoEstadoAviso tea;
+        Boolean envioCorrecto;
+        List<Aviso> avisos = Aviso.findAvisosAEnviar();
+
+        for (Aviso aviso : avisos) {
+            if (aviso.evento != null) {
+                envioCorrecto = Notificador.notificacionEvento(aviso);
+            } else if (aviso.asemblea != null){
+                envioCorrecto = Notificador.notificacionAsemblea(aviso);
+            }else{
+                envioCorrecto = Notificador.notificacionAviso(aviso);
+            }
+            
+            if (envioCorrecto) {
+                tea = (TipoEstadoAviso) TipoEstadoAviso.findById(Long.parseLong("2"));
+            } else {
+                tea = (TipoEstadoAviso) TipoEstadoAviso.findById(Long.parseLong("3"));
+            }
+            aviso.setDataRealizacionAviso(Tools.getCurrentDate());
+            aviso.setEstadoAviso(tea);
+            aviso._save();
+        }
+
+    }
 }
