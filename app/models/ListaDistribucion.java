@@ -44,5 +44,43 @@ public class ListaDistribucion extends UnionModel {
     public String toString() {
         return this.tipoListaDistribucion + "-"+this.descricion;
     }
+    
+    private static List<Contacto> getContactosAutomaticos(String query) {
+    List<Contacto> contactos= new ArrayList<Contacto>();    
+    List<Afiliado> afiliados=find(query).fetch();        
+    for(Afiliado af: afiliados){
+        Contacto c=new Contacto(new TipoContacto("1"),af.persoa.nome,af.persoa.apelido1, af.persoa.apelido2, af.persoa.email, af.persoa.enderezo,  "", "");
+        contactos.add(c);
+    }
+    return contactos;
+    }
+    
+    
+    public List<Contacto> getContactos(Long organismo){
+
+        if(this.id==1){
+            return getAfiliacion(organismo);
+        }else if(this.tipoListaDistribucion.id==2 && !"".equals(this.sentenciaSQL)){
+            return getContactosAutomaticos(this.sentenciaSQL);
+        }else{
+            return new ArrayList<Contacto>(this.contactos);
+        }        
+    }
+    
+public static List<Contacto> getAfiliacion(Long organismo) {
+    List<Contacto> contactos= new ArrayList<Contacto>();
+    String query="from Afiliado af where af.dataBaixa is null and af.estadoAfiliado=1 and af.organismo="+organismo.toString();
+    List<Afiliado> afiliados=find(query).fetch();        
+    for(Afiliado af: afiliados){
+        Contacto c=new Contacto(new TipoContacto("1"),af.persoa.nome,af.persoa.apelido1, af.persoa.apelido2, af.persoa.email, af.persoa.enderezo,  "", "");
+        contactos.add(c);
+    }
+    return contactos;
+    }    
  
+public static ListaDistribucion getListaAutomaticaAfiliados() {
+    return ListaDistribucion.findById(Long.parseLong("1"));
+} 
+
+
 }

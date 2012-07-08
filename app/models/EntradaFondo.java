@@ -18,7 +18,7 @@ public class EntradaFondo extends UnionModel {
     @Required
     @ManyToOne
     @AddFiltro
-    public TipoFondo tipoFondo;
+    public TipoEntradaFondo tipoEntradaFondo;
        
     @Required
     @ManyToOne
@@ -51,9 +51,9 @@ public class EntradaFondo extends UnionModel {
     public Blob caratula;       
     
   
-    public EntradaFondo(TipoFondo tipoFondo,TipoGeneroFondo tipoGeneroFondo,String titulo, String anoEdicion, 
+    public EntradaFondo(TipoEntradaFondo tipoEntradaFondo,TipoGeneroFondo tipoGeneroFondo,String titulo, String anoEdicion, 
             String autor,boolean ePrestable,String descricion,Blob caratula,String sinatura){
-    	this.tipoFondo=tipoFondo;
+    	this.tipoEntradaFondo=tipoEntradaFondo;
     	this.tipoGeneroFondo=tipoGeneroFondo;
     	this.titulo=titulo;
     	this.anoEdicion=anoEdicion;
@@ -67,7 +67,7 @@ public class EntradaFondo extends UnionModel {
     
     
     public String toString() {
-        return this.tipoFondo.toString()+"-"+this.tipoGeneroFondo.toString()+" - "+ this.titulo;
+        return this.tipoEntradaFondo.toString()+"-"+this.tipoGeneroFondo.toString()+" - "+ this.titulo;
     }
 
     

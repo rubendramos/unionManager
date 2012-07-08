@@ -13,10 +13,11 @@ import utils.AddForeignKey;
 @Entity
 public class Persoa extends UnionModel {
  
-    @Email
+   
     @Required
-    @MaxSize(50)
-    public String email;
+    @MaxSize(15)
+    @AddFiltro
+    public String dni;
     
     @Required
     @MaxSize(50)
@@ -28,11 +29,14 @@ public class Persoa extends UnionModel {
     
     @MaxSize(50)
     public String apelido2;
-    
+            
+    @Email
     @Required
-    @MaxSize(15)
-    @AddFiltro
-    public String dni;
+    @MaxSize(50)
+    public String email;
+        
+    @MaxSize(9)
+    public String telefonoMovil;        
     
     @Required
     @ManyToOne
@@ -55,7 +59,7 @@ public class Persoa extends UnionModel {
     
   
     public Persoa(String nome,String apelido1, String apelido2,String dni,String email,Sexo sexo,
-    		Date dataNacemento,Enderezo enderezo){
+    		Date dataNacemento,Enderezo enderezo,String telefonoMovil){
     	this.apelido1=apelido1;
     	this.apelido2=apelido2;
     	this.dni=dni;
@@ -64,7 +68,8 @@ public class Persoa extends UnionModel {
     	this.dataNacemento=dataNacemento;
     	this.sexo=sexo;
     	this.nome=nome;
-    	this.enderezo=enderezo;
+    	this.enderezo=enderezo;        
+        this.telefonoMovil=telefonoMovil;
     }
 
     

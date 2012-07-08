@@ -14,7 +14,6 @@ public class Secretaria extends UnionModel {
     
     @Required
     @ManyToOne
-    @AddForeignKey
     @AddFiltro
     public TipoSecretaria tipoSecretaria;
     

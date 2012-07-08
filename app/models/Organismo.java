@@ -35,7 +35,16 @@ public class Organismo extends UnionModel {
     @ManyToOne
     @AddFiltro
     public Ramo ramo;
-       
+    
+    @Email
+    @MaxSize(50)
+    public String email;
+    
+    
+    
+    @MaxSize(50)
+    public String direccionWeb;
+    
     @Required
     @AddFiltro
     public Date dataAlta;

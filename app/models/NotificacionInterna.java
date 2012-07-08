@@ -31,42 +31,73 @@ public class NotificacionInterna extends UnionModel {
     public Set<User> contactos;        
     
     @CRUD.Hidden
-    public Date dataNotificacion;
+    public Date dataAlta;
 
     @CRUD.Hidden
     @ManyToOne
-    public User user;
+    public User avisode;
     
     @Required
     @ManyToOne
     public TipoPrioridade prioridade;
     
+  
 
     public NotificacionInterna(){};
     
-    public NotificacionInterna(String asunto,String contido,Set<User> contactos, Date dataNotificacion,User user, TipoPrioridade prioridade){
+    public NotificacionInterna(String asunto,String contido,Set<User> contactos, Date dataAlta,User avisode, TipoPrioridade prioridade){
     	this.asunto=asunto;
     	this.contido=contido;
         this.contactos=contactos;
-        this.dataNotificacion=dataNotificacion;
-        this.user=user;
+        this.dataAlta=dataAlta;
+        this.avisode=avisode;
         this.prioridade=prioridade;
+       
     }
+    
     
     public String toString(){
         
-        return Tools.getLocaleDateFormat(this.dataNotificacion) +" - " + this.asunto;
+        return Tools.getLocaleDateFormat(this.dataAlta) +" - " + this.asunto;
     
     }
     
-public static List<NotificacionInterna> findByContactoOld(Long contactoId) {
-        String query = "from NotificacionInterna t  where t.contactos.id=" + contactoId;        
-        return find(query).fetch();
-    }     
-
+    
 
 public static List<NotificacionInterna> findByContacto(Long contactoId) {
-        String query = "select t from NotificacionInterna t, NotificacionInterna_User u where u.notificacionInterna_id=t.id and u.contactos_id=" + contactoId;        
+        String query = "select t from NotificacionInterna t, NotificacionInterna_User u where u.notificacionInterna_id=t.id and u.contactos_id=" + contactoId +" order by  t.dataalta desc";        
         return find(query).fetch();
-    } 
+    }
+
+
+
+    /**
+     * @return the contactos
+     */
+    public Set<User> getContactos() {
+        return contactos;
+    }
+
+    /**
+     * @param contactos the contactos to set
+     */
+    public void setContactos(Set<User> contactos) {
+        this.contactos = contactos;
+    }
+
+    /**
+     * @return the user
+     */
+    public User getAvisode() {
+        return avisode;
+    }
+
+    /**
+     * @param user the user to set
+     */
+    public void setAvisode(User avisode) {
+        this.avisode = avisode;
+    }
+
+   
 }

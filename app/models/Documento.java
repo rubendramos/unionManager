@@ -12,7 +12,7 @@ import utils.AddFiltro;
 import utils.Tools;
  
 @Entity
-public class Documento extends UnionModel {
+public class Documento extends UnionSecureModel {
  
     
     @Required
@@ -54,6 +54,22 @@ public class Documento extends UnionModel {
     public String toString() {
         return this.tipoDocumento+""+ this.nome+" "+Tools.getLocaleDateFormat(this.dataCreacion);
     }
+
+    /**
+     * @return the ficheiro
+     */
+    public Blob getFicheiro() {
+        return ficheiro;
+    }
+
+    /**
+     * @param ficheiro the ficheiro to set
+     */
+    public void setFicheiro(Blob ficheiro) {
+        this.ficheiro = ficheiro;
+    }
+
+   
     
  
  

@@ -18,7 +18,7 @@ import utils.NewForeignKey;
 import utils.Tools;
 
 @Entity
-public class Evento extends UnionModel {
+public class Evento extends UnionSecureModel implements Avisable {
 
     @ManyToOne
     @Required
@@ -49,10 +49,7 @@ public class Evento extends UnionModel {
     @MaxSize(500)
     public String valoracion;
     
-    @ManyToMany
-    @AddForeignKey
-    
-    public Set<Aviso> avisos = new HashSet() ;   
+  
     
     @ManyToMany
     @AddForeignKey
@@ -60,15 +57,13 @@ public class Evento extends UnionModel {
     public Set<Documento> documentacion = new HashSet() ;        
 
     public Evento(TipoEvento tipoEvento, Enderezo lugar, String nome, String descricion, Date dataRealizacion, 
-            String horaRealizacion, String valoracion, Set<Documento> documentacion,
-            Set<Aviso> avisos) {
+            String horaRealizacion, String valoracion, Set<Documento> documentacion) {
         this.tipoEvento = tipoEvento;
         this.lugar = lugar;
         this.nome = nome;
         this.descricion = descricion;
         this.dataRealizacion = dataRealizacion;
-        this.horaRealizacion = horaRealizacion;
-        this.avisos=avisos;
+        this.horaRealizacion = horaRealizacion;        
         this.valoracion = valoracion;
         this.documentacion=documentacion;
         
@@ -80,9 +75,24 @@ public class Evento extends UnionModel {
     }
     
     public String toString() {
-        
-        DateFormat dt= DateFormat.getDateInstance();
+                
         return this.tipoEvento.descricion + " " + this.nome + " " + Tools.getLocaleDateFormat(this.dataRealizacion);
+    }
+
+    public Enderezo getLugarCelebracion() {
+        return this.lugar;
+    }
+
+    public Set<Documento> getAdxuntos() {
+        return this.documentacion;
+    }
+
+    public String getHoraCelebracion() {
+        return this.horaRealizacion;
+    }
+
+    public String getTitulo() {
+        return this.nome;
     }
 
 }

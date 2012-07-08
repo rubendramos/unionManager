@@ -22,18 +22,29 @@ public class Enderezo extends UnionModel {
     @AddForeignKey
     @NewForeignKey
     public Localidade localidade;
-         
+    
     @Required
     public String concello;
-    
+        
     public String pais;
    
-  
-    public Enderezo(String enderezo,Localidade localidade,String codigoPostal, String concello,String pais){
+    @MaxSize(9)
+    public String telefono;
+    
+    @MaxSize(9)
+    public String fax;
+    
+    @MaxSize(9)
+    public String apartadoCorreos;
+    
+    public Enderezo(String enderezo,Localidade localidade,String codigoPostal, String concello,String pais,String telefono,String fax,String apartadoCorreos){
     	this.enderezo=enderezo;
     	this.localidade=localidade;    
     	this.concello=concello;
-    	this.pais=pais;    	
+    	this.pais=pais;    
+        this.telefono=telefono; 
+        this.fax=fax;
+        this.apartadoCorreos=apartadoCorreos;
     }
 
     

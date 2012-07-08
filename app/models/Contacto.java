@@ -58,6 +58,7 @@ public class Contacto extends UnionModel {
         this.enderezo = enderezo;
         this.telefono = telefono;
         this.telefonoMobil = telefonoMobil;
+        this.nome=nome;
     }
 
     public String toString() {
