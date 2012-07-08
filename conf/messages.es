@@ -1,305 +1,433 @@
-# You can specialize this file for each language.
-# For example, for French create a messages.fr file
-#
-
-#Persoa
-nome=Nome
-apelido1=Primeiro Apelido
-apelido2=Segundo apelido
-dni=Dni,Nif,Pasaporte...
-Sexo=Sexo
-email=Correo Electrónico
-dataNacemento=Data de Nacemento
-nomeCompleto=Nome Completo
-sexo=Sexo
-enderezo=Enderezo
-
-
-#Afiliado
-persoa=Persoa
-ocupacion=Ocupación
-ramo=Ramo
-dataAlta=Data de alta
-dataBaixa=Data de baixa
-milita=Milita
-carnetConfederado=Nº CC
-enderezo=Enderezo
-sindicato=Sindicato
-cif=Cif
-
-
-#Enderezo
-localidade=Localidade
-codigoPostal=Código Postal
-concello=Concello
-provincia=Provincia
-pais=Pais
-
-#Conflito
-descricion=Descrición
-afiliados=Afiliados
-dataInicio=Data Inicio
-dataRemate=Data Remate
-valoracion=Valoración
-tipoConflito=Tipo conflito
-pepito=Afincado
-
-#Eventos
-tipoEvento=Tipo evento
-lugar=Lugar celebración
-dataRealizacion=Data realización
-horaRealizacion=Hora realización
-conflito=Conflito
-documentacion=Documentación
-
-#Localidades
-deleteForeignKey_accions=Comunidade autonoma
-latitue=Latitude
-lonxitude=Lonxitude
-comunidadeAutonoma=Com. Autónomoa
-Localidade.descricion=Nome
-
-
-#documento
-tipoDocumento=Tipo documento
-dataCreacion=Data creación
-autor=Autor
-ficheiro=Adxunto
-
-#EntradaFondo
-tipoFondo= Tipo
-fondo=Fondo
-tipoGeneroFondo=Xénero
-titulo=Título
-anoEdicion=Ano edición
-autor=Autor
-ePrestable=Pódese prestar
-descricion=Descrición
-caratula=Carátula
-sinatura=Sinatura
-EntradaFondos=Entrada fondos
-
-#TipoFondos
-TipoFondos=Tipo fondos
-TipoFondo=Tipo fondo
-entradas=Entradas no fondo...
-
-#TipoGeneroFondo
-TipoGeneroFondos=Xéneros 
-TipoGeneroFondo=Xénero
-
-#Fondo
-ePublico=Fondo público
-
-#PrestamoFondo
-PrestamoFondo=Préstamo fondo
-PrestamoFondos=Préstamo de fondos
-entradaFondo=Fondo
-dataPrestamo=Data do préstamo
-dataDevolucion=Data de devolución
-
-#PersoaPrestamoFondo
-PersoaPrestamoFondo=Préstamo da persoa
-PersoaPrestamoFondos=Préstamos da persoa
-prestamoFondo=Fondo
-persoa=Persoa
-
-#Apuntamentos
-TipoApuntamento=Tipo apuntamento
-TipoApuntamentos=Tipo de apuntamentos
-importe=Importe
-adxunto=Xustificante
-dataApuntamento=Data apuntamento
-tipoApuntamento=Tipo apuntamento
-
-#libroConta
-LibroConta=Libro de contas
-LibroContas=Libro de contas
-
-#TipoConcepto
-TipoConcepto=Concepto
-TipoConceptos=Tipo de Conceptos
-concepto=Concepto
-tipoConceptos=Tipo de Conceptos
-
-#follaConta
-follaConta=Folla de contas
-follasContas=Folla de contas
-FollaConta=Folla de contas
-Follacontas=Folla de contas
-apuntamentos=Apuntes contabeis
-
-#tipoPrioridade
-prioridade=Prioridade
-
-
-# play/modules/crud (administration) 
-crud.title = Administración 
-crud.home = Inico 
+apelido1 = Primeiro Apelido
+apelido2 = Segundo apelido
+dni = Dni,Nif,Pasaporte...
+Sexo = Sexo
+email = Correo Electr\u00F3nico
+dataNacemento = Data de Nacemento
+nomeCompleto = Nome Completo
+sexo = Sexo
+enderezo = Enderezo
+persoa = Persoa
+ocupacion = Ocupaci\u00F3n
+ramo = Ramo
+dataAlta = Data alta
+dataBaixa = Data de baixa
+milita = Milita
+carnetConfederado = N\u00BA CC
+sindicato = Sindicato
+cif = Cif
+afiliado.facerBaixa = Dar de Baixa
+estadoAfiliado = Estado afiliado
+afiliado.accionFacerBaixa = Facer B
+afiliado.accion = Acci\u00F3n
+afiliado.accionFacerAlta = Facer Al
+afiliado.facerAlta = Facer Alta
+telefono = Tel\u00E9fono
+telefonoMobil = Tel\u00E9fono m\u00F3bil
+afiliado.fichaAfiliado = Ficha afil
+localidade = Localidade
+codigoPostal = C\u00F3digo Postal
+concello = Concello
+provincia = Provincia
+pais = Pais
+descricion = Descrici\u00F3n
+afiliados = Afiliados
+dataInicio = Data Inicio
+dataRemate = Data Remate
+valoracion = Valoraci\u00F3n
+tipoConflito = Tipo conflito
+pepito = Afincado
+tipoEvento = Tipo evento
+lugar = Lugar celebraci\u00F3n
+dataRealizacion = Data realizaci\u00F3n
+horaRealizacion = Hora realizaci\u00F3n
+conflito = Conflito
+documentacion = Documentaci\u00F3n
+evento = Evento
+deleteForeignKey_accions = Comunidautonoma
+latitue = Latitude
+lonxitude = Lonxitude
+comunidadeAutonoma = Com. Aut\u00F3nomoa
+Localidade.descricion = Nome
+tipoDocumento = Tipo documento
+dataCreacion = Data creaci\u00F3n
+autor = Autor
+ficheiro = Adxunto
+tipoFondo = Tipo
+fondo = Fondo
+tipoGeneroFondo = X\u00E9nero
+titulo = T\u00EDtulo
+anoEdicion = Ano edici\u00F3n
+ePrestable = P\u00F3dese prestar
+caratula = Car\u00E1tula
+sinatura = Sinatura
+EntradaFondos = Entrada fondos
+TipoFondos = Tipo fondos
+TipoFondo = Tipo fondo
+entradas = Entradas no fondo...
+TipoGeneroFondos = X\u00E9neros
+TipoGeneroFondo = X\u00E9nero
+ePublico = Fondo p\u00FAblico
+PrestamoFondo = Pr\u00E9stamo fondo
+PrestamoFondos = Pr\u00E9stamo de fondos
+entradaFondo = Fondo
+dataPrestamo = Data do pr\u00E9stamo
+dataDevolucion = Data de devoluci\u00F3n
+PersoaPrestamoFondo = Pr\u00E9stamo da pa
+PersoaPrestamoFondos = Pr\u00E9stamos dasoa
+prestamoFondo = Fondo
+TipoApuntamento = Tipo apuntamento
+TipoApuntamentos = Tipo de apuntame
+importe = Importe
+adxunto = Xustificante
+dataApuntamento = Data apuntamento
+tipoApuntamento = Tipo apuntamento
+LibroConta = Libro de contas
+LibroContas = Libro de contas
+libroConta = Libro de contas
+TipoConcepto = Concepto
+TipoConceptos = Tipo de Conceptos
+concepto = Concepto
+tipoConceptos = Tipo de Conceptos
+follaConta = Folla de contas
+follasContas = Folla de contas
+FollaConta = Folla de contas
+Follacontas = Folla de contas
+apuntamentos = Apuntes contabeis
+prioridade = Prioridade
+crud.title = Administraci\u00F3n
+crud.home = Inico
 crud.blank = Novo
-crud.index.title = Selecione o elemento a modificar 
-crud.index.objectType = Acceder ao elemento ... 
-crud.index.action = Acción... 
-crud.index.add = Engadir novo  
-crud.addNovo=Engadir novo &{%s}
-crud.add = Engadir &{%s} 
-crud.list.title = &{%s} 
-crud.list.size = %d &{%s} 
-crud.list.totalSize = %d total 
-crud.pagination.previous = « Aterior 
-crud.pagination.next = Seguente » 
-crud.pagination.last = Derradeiro »» 
-crud.pagination.first = «« Primeiro 
-crud.show.title = Modificar &{%s} 
-crud.save = Gardar 
-crud.saveAndContinue = Gardar e seguir modificando 
-crud.cancel = Cancelar 
-crud.hasErrors = Corrixa os errors 
-crud.blank.title = Engadir &{%s} 
-crud.saveAndAddAnother = Gardar e engadir outro 
-crud.delete = Eliminar &{%s} 
-crud.created = &{%s} foi creado 
-crud.saved = &{%s} gardouse correctamente 
-crud.deleted = &{%s} eliminouse corretamente 
-crud.delete.error = Non se puido borrar o rexistro 
-crud.search = Acadar 
-crud.none = (Nada) 
-crud.selectValue=(Escolla unha opción)
+crud.index.title = Selecione o elto a modificar
+crud.index.objectType = Acceder aemento ...
+crud.index.action = Acci\u00F3n...
+crud.index.add = Engadir novo
+crud.addNovo = Engadir novo &{%s}
+crud.add = Engadir &{%s}
+crud.list.title = &{%s}
+crud.list.size = %d &{%s}
+crud.list.totalSize = %d total
+crud.pagination.last = Derradeiro
+crud.show.title = Modificar &{%s}
+crud.save = Gardar
+crud.cancel = Cancelar
+crud.hasErrors = Corrixa os error
+crud.blank.title = Engadir &{%s}
+crud.delete = Eliminar &{%s}
+crud.created = &{%s} foi creado
+crud.delete.error = Non se puido ar o rexistro
+crud.search = Acadar
+crud.none = (Nada)
+crud.selectValue = (Escolla unha op)
 crud.help.required = Obrigatorio.
-crud.help.minlength = Tamaño mínimo %d.
-crud.help.maxlength = Tamaño máximo %d.
-crud.help.email = Enderezo e-mail valido.
-crud.help.dateformat = En formato dd/mm/yyyy.
-crud.help.numeric = Numérico.
-crud.help.min = Debe ser maior que %d.
+crud.help.minlength = Tama\u00F1o m\u00EDnid.
+crud.help.maxlength = Tama\u00F1o m\u00E1xid.
+crud.help.email = Enderezo e-mailido.
+crud.help.dateformat = En formatomm/yyyy.
+crud.help.numeric = Num\u00E9rico.
+crud.help.min = Debe ser maior qu.
 crud.help.future = No futuro.
 crud.help.past = No pasado.
 crud.help.after = Despois %s.
 crud.help.before = Antes %s.
-crud.help.range = Entre %d e %d 
-
-crud.delete.EmptySelect= Para eliminar un elemento de %s debe selecionar un rexistro.
-crud.table.action=Acción
-crud.table.empty= Non hai elementos
-crud.foreignKeyEngadir= Engadir
-crud.foreignKeyVoltar= Voltar
-crud.saveAndBack=Gravar e Voltar
-crud.back=Voltar
-
-crud.filtro.entreDatas=entre
-crud.filtro.eDatas=e
-crud.filtro.limparDatas=Limpar
-crud.filtro.cadeaTexto=Cadea de texto
-
- 
-# play/modules/secure 
-secure.username = Enderezo e-mail: 
-secure.password = Contrasinal: 
+crud.help.range = Entre %d e %d
+crud.avisoGardado = Gardouse avsio s. O envio realizarase en breves minutos.
+crud.table.action = Acci\u00F3n
+crud.table.empty = Non hai element
+crud.foreignKeyEngadir = Engadir
+crud.saveAndBack = Gravar e Voltar
+crud.back = Voltar
+crud.filtro.entreDatas = entre
+crud.filtro.eDatas = e
+crud.filtro.limparDatas = Limpar
+secure.username = Enderezo e-mail
+secure.password = Contrasinal:
 secure.signin = Entrar agora
-secure.error = O usuario ou contrasinal son erroneos
-secure.title=Páxina de acceso a Union Manager
-
-#User
-User=Usuario
-password=Contrasinal
-passwordNova= Nova contrasinal
-afiliado=Afiliado
-retryPasswordNova=Repita nova contrasinal
-cambioPassword=Cambiar contrasinal
-user.passwordNovaNonCoincide=Os contrasinais non coinciden.
-user.passwordActualizada=A contrasinal cambiouse correctamente.
-
-
-isComite=Pertence ao comité
-isSecretario=S. Xeral
-isTesoureiro=S. Tesoureria
-isPropaganda=S. Propaganda
-isAccionSindical=S. Acción Sindical
-isFormacion=S. Formación
-isOrganizacion=S. Organizacion
-isAccionSocial=S. Acción Social
-isPermanecia=Fai permanecias
-
-#Notificacion
-
-NotificacionInternas=Notificación
-NotificacionInterna=Notificación
-asunto=Asunto
-contido=Contido
-contactos=Avisar a...
-
-
-#Menu
-menu.sindicatos=Sindicatos
-menu.Afiliados=Afiliados
-menu.Enderezos=Enderezos
-menu.Persoas=Persoas
-menu.Ramos=Ramos
-menu.Ocupacións=Ocupacións
-menu.Usuarios=Usuarios
-menu.Sexos=Sexos
-menu.InformeAfiliados=Informe de Afiliados
-menu.Admin=Área Administración
-
-menu.Conflitos=Conflitos
-menu.Eventos=Eventos
-menu.tesoureria=Tesoureria
-menu.permanencia=Permanencia
-menu.Inicio=Inicio
-menu.Informes=Informes
-menu.Informes.InformeAfiliados=Informe afiliados
-menu.password=Cambiar contrasinal
-
-menu.notificacionInterna=Notificación
-
-
-menu.tesoureria.LibroContas=Libro de Contas
-menu.tesoureria.FollaContas=Folla de Contas
-
-
-menu.propaganda=Propaganda
-menu.propaganda.fondos=Fondos
-menu.propaganda.entradas=Entradas
-menu.propaganda.TipoEntradas=Tipo entrada fondo
-
-menu.organizacion=Organización
-menu.organizacion.afiliados=Afiliación
-menu.secretariaXeral.enderezos=Enderezos
-
-menu.accionsindical=Acción sindical
-menu.accionsindical.conflitos=Conflitos
-menu.accionsindical.accions=Accións
-
-menu.configuracion=Configuración
-
-menu.secretariaXeral=Secretaría xeral
-menu.secretariaXeral.usuarios=Usuarios
-menu.secretariaXeral.comite=Comités
-menu.secretariaXeral.organizacion=Organización
-menu.secretariaXeral.secretaria=Secretarías
-menu.secretariaXeral.avisos=Avisos
-
-menu.configuracion.listasDistribucion=Listas de distribución
-menu.configuracion.contactos=Contactos
-
-
-#Modulos
-modulo.administracion=Módulo de Administración
-modulo.Privado=Módulo privado.
-modulo.xestion= Módulo de Gestión
-
-
-#layout
-layout.footer=Web de xestión da CNT
-
-#Login
-login.in= Entrar
-login.out= Sair
-
-#Generic
-generic.footer=Web de xestión da C.N.T
-generic.usuario=Usuario
-generic.nesaxeBenvida=Wed de xestión dos sindicatos da Cnt, se vostede forma parte do comite do sindicato e non ten acceso a esta aplicación, póñase en contacto co secretario de organización. Para acceder prema en entrar. 
-
-
-
+secure.error = O usuario ou contral son erroneos
+secure.title = P\u00E1xina de acceso a U Manager
+User = Usuario
+password = Contrasinal
+passwordNova = Nova contrasinal
+afiliado = Afiliado
+retryPasswordNova = Repita nova contrasinal
+cambioPassword = Cambiar contrasinal
+user.passwordNovaNonCoincide = Os contrasinais non coinciden.
+user.passwordActualizada = A contrasinal cambiouse correctamente.
+isComite = Pertence ao comit\u00E9
+isSecretario = S. Xeral
+isTesoureiro = S. Tesoureria
+isPropaganda = S. Propaganda
+isAccionSindical = S. Acci\u00F3n Sindical
+isFormacion = S. Formaci\u00F3n
+isOrganizacion = S. Organizacion
+isAccionSocial = S. Acci\u00F3n Social
+isPermanecia = Fai permanecias
+NotificacionInternas = Notificaci\u00F3ns
+NotificacionInterna = Notificaci\u00F3n
+NotificacionInternasEnviadas = Notificaci\u00F3ns enviadas
+NotificacionInternaRecibidas = Notificaci\u00F3ns recibidas
+NotificacionInternaNonLeidas = Notificaci\u00F3ns non leidas
+asunto = Asunto
+contido = Contido
+contactos = Avisar a...
+NotificacionInterna.marcarLeida = Marcar leida
+NotificacionInterna.recibidas = Recibidas
+NotificacionInterna.enviadas = Enviadas
+dataModificacion = Data \u00FAltima modificaci\u00F3n
+NotificacionInterna.verNotificacion = Ver notificaci\u00F3n
+avisode = Aviso de
+ordeDoDia = Orde do d\u00EDa
+dataCelebracion = Data Celebraci\u00F3n
+lugarCelebracion = Lugar celebraci\u00F3n
+documentacionAsemblea = Documentaci\u00F3n da asemblea
+convocante = Convoca
+horaCelebracion = Hora celebracion
+acordo = Acordo
+tipoPuntoAsemblea = Tipo
+menu.sindicatos = Sindicatos
+menu.Afiliados = Afiliados
+menu.Enderezos = Enderezos
+menu.Persoas = Persoas
+menu.Ramos = Ramos
+menu.Ocupaci�ns = Ocupaci\u00F3ns
+menu.Usuarios = Usuarios
+menu.Sexos = Sexos
+menu.InformeAfiliados = Informe de Afiliados
+menu.Admin = \u00C1rea Administraci\u00F3n
+menu.Conflitos = Conflitos
+menu.Eventos = Eventos
+menu.tesoureria = Tesoureria
+menu.permanencia = Permanencia
+menu.Inicio = Inicio
+menu.Informes = Informes
+menu.Informes.Afiliados = Informe afiliados
+menu.Informes.Tesoureria = Informe tesourer\u00EDa
+menu.Informes.Conflitos = Informe conflitos
+menu.Informes.Eventos = Informe acci\u00F3ns
+menu.Informes.Acordos = Informe acordos
+menu.password = Cambiar contrasinal
+menu.notificacionInterna = Notificaci\u00F3n
+menu.tesoureria.LibroContas = Libro de Contas
+menu.tesoureria.FollaContas = Folla de Contas
+menu.propaganda = Propaganda
+menu.propaganda.fondos = Fondos
+menu.propaganda.entradas = Entradas
+menu.propaganda.TipoEntradas = Tipo entrada fondo
+menu.organizacion = Organizaci\u00F3n
+menu.organizacion.afiliados = Afiliaci\u00F3n
+menu.secretariaXeral.enderezos = Enderezos
+menu.accionsindical = Acci\u00F3n sindical
+menu.accionsindical.conflitos = Conflitos
+menu.accionsindical.accions = Acci\u00F3ns
+menu.configuracion = Configuraci\u00F3n
+menu.secretariaXeral = Secretar\u00EDa xeral
+menu.secretariaXeral.usuarios = Usuarios
+menu.secretariaXeral.comite = Comit\u00E9s
+menu.secretariaXeral.organizacion = Organizaci\u00F3n
+menu.secretariaXeral.secretaria = Secretar\u00EDas
+menu.secretariaXeral.avisos = Avisos
+menu.secretariaXeral.asembleas = Asembleas
+menu.configuracion.listasDistribucion = Listas de distribuci\u00F3n
+menu.configuracion.contactos = Contactos
+menu.consulta = Consulta
+modulo.administracion = M\u00F3dulo de Administraci\u00F3n
+modulo.Privado = M\u00F3dulo privado.
+modulo.xestion = M\u00F3dulo de Gesti\u00F3n
+accion = Acci\u00F3n
+estadoAviso = Estado
+dataARealizarAviso = Data a env\u00EDar
+dataRealizacionAviso = Data do env\u00EDo
+layout.footer = Web de xesti\u00F3n da CNT
+login.in = Entrar
+login.out = Sair
+identificador = Identificador
+dataAccion = Data acci\u00F3n
+usuario = Usuario
+tipoOrganismo = Tip organismo
+acronimo = Acr\u00F3nimo
+direccionWeb = Direcci\u00F3n web
+organismo.fichaOrganismo = Ficha
+organismo.ficha = Ficha
+informes.tesoureria = Informe Tesoureria
+informes.xerar = Xerar
+informes.titulo = Xeneraci\u00F3n de informes
+informe.tesoureria.nome = Informe tesourer\u00EDa
+informe.tesoureria.titulo = Informe de tesourer\u00EDa
+informe.tesoureria.subtituloEntreDatas = Entre as datas %s  e %s
+informe.tesoureria.subtituloDendeAData = Dende a data %s
+informe.tesoureria.subtituloAtaAData = Ata a data %s
+informe.tesoureria.total = Total
+informe.tesoureria.importe = Importe
+informe.tesoureria.tipo = Tipo
+informe.tesoureria.concepto = Concepto
+informe.tesoureria.descricion = Descripci\u00F3n
+informe.tesoureria.data = Data
+informe.afiliados.nome = Informe de afiliaci\u00F3n
+informe.afiliados.titulo = Informe de afiliac\u00F3n
+informe.afiliados.subtituloEntreDataAlta = Data de alta entre as datas %s  e %s
+informe.afiliados.subtituloDendeADataAlta = Data de alta dende a data %s
+informe.afiliados.subtituloAtaADataAlta = Data alta ata a data %s
+informe.afiliados.subtituloEntreDataBaixa = Data baixa entre as datas %s  e %s
+informe.afiliados.subtituloDendeADataBaixa = Data baixa dende a data %s
+informe.afiliados.subtituloAtaADataBaixa = Data baixa ata a data %s
+informe.afiliados.dni = DNI
+informe.afiliados.nomePersoa = Nome
+informe.afiliados.ramo = Ramo
+informe.afiliados.estado = Estado
+informe.afiliados.ocupacion = Ocupaci\u00F3n
+informe.afiliados.milita = Milita
+informe.afiliados.dataalta = Data alta
+informe.afiliados.databaixa = Data baixa
+informe.fichaAfiliado.titulo = Ficha de Afiliado
+informe.fichaAfiliado.dni = DNI
+informe.fichaAfiliado.nome = Nome
+informe.fichaAfiliado.apelido1 = Primeiro Apelido
+informe.fichaAfiliado.apelido2 = Segundo apelido
+informe.fichaAfiliado.dataNacemento = Data nacemento
+informe.fichaAfiliado.telefono = Tel\u00E9fono
+informe.fichaAfiliado.telefonoMobil = Tel\u00E9fono M\u00F3bil
+informe.fichaAfiliado.eMail = E-Mail
+informe.fichaAfiliado.ramo = Ramo
+informe.fichaAfiliado.estado = Estado
+informe.fichaAfiliado.ocupacion = Ocupaci\u00F3n
+informe.fichaAfiliado.milita = Milita
+informe.fichaAfiliado.dataalta = Data alta
+informe.fichaAfiliado.databaixa = Data baixa
+informe.fichaAfiliado.sexo = Sexo
+informe.fichaAfiliado.datosEnderezo = Enderezo
+informe.fichaAfiliado.datosSindicais = Datos sindicais
+informe.fichaAfiliado.datosPersoais = Datos persoais
+informe.fichaAfiliado.estadoAfiliacion = Estado
+informe.fichaAfiliado.sindicato = Sindicato
+informe.fichaOrganismo.descricion = Descrici\u00F3n
+informe.fichaOrganismo.tituloEnderezo = Enderezo
+informe.fichaOrganismo.datosOrganismo = Datos
+informe.fichaOrganismo.secretaria = Secretar\u00EDas
+informe.fichaOrganismo.titulo = Ficha dos tele\u00F1ecos
+informe.fichaOrganismo.cif = CIF
+informe.fichaOrganismo.nomeSindicato = Nome
+informe.fichaOrganismo.acronimoSindicato = Acr\u00F3nimo
+informe.fichaOrganismo.dataalta = Data alta
+informe.fichaOrganismo.databaixa = Data baixa
+informe.fichaOrganismo.web = P\u00E1xina web
+informe.fichaOrganismo.eMail = E-Mail
+informe.conflitos.nome = Informe de conflitos
+informe.conflitos.titulo = Informe de conflitos
+informe.conflitos.subtituloEntreDataAlta = Data de inicio entre as datas %s  e %s
+informe.conflitos.subtituloDendeADataAlta = Data de inicio dende a data %s
+informe.conflitos.subtituloAtaADataAlta = Data inicio ata a data %s
+informe.conflitos.subtituloEntreDataBaixa = Data remate entre as datas %s  e %s
+informe.conflitos.subtituloDendeADataBaixa = Data remate dende a data %s
+informe.conflitos.subtituloAtaADataBaixa = Data remate ata a data %s
+informe.conflitos.datainicio = Data de inicio
+informe.conflitos.dataremate = Data de remate
+informe.conflitos.tipoconflito = Tipo conflito
+informe.conflitos.descricionconflito = Descrici\u00F3n
+informe.conflitos.nomeconflito = Nome
+informe.fichaConflito.tituloDocumentos = Documentos do conflito
+informe.fichaConflito.descricionDocumento = Descrici\u00F3n
+informe.fichaConflito.nomeDocumento = Nome
+informe.fichaConflito.tipodocumento = Tipo documento
+informe.fichaConflito.tituloAfiliadosConfloto = Afiliados do conflito
+informe.fichaConflito.dataBaixa = Data baixa
+informe.fichaConflito.dataAlta = Data alta
+informe.fichaConflito.nomeAfiliado = Nome afiliado
+informe.fichaConflito.tipoEvento = Tipo evento
+informe.fichaConflito.nomeEvento = Nome evento
+informe.fichaConflito.descricionEvento = Descrici\u00F3n
+informe.fichaConflito.valoracionEvento = Valoraci\u00F3n
+informe.fichaConflito.dataRealizacionEvento = Data realizaci\u00F3n
+informe.fichaConflito.horaRealizacionEvento = Hora
+informe.fichaConflito.tituloEvento = Acci\u00F3ns realizadas
+informe.fichaConflito.tipoConflito = Tipo conflito
+informe.fichaConflito.nomeConflito = Nome
+informe.fichaConflito.descricionConflito = Descrici\u00F3n
+informe.fichaConflito.dataRemate = Data remate
+informe.fichaConflito.dataInicio = Data inicio
+informe.fichaConflito.valoracionConflito = Valoraci\u00F3n
+informe.fichaConflito.tituloConflito = Conflito
+informe.fichaConflito.tituloFichaConflito = Ficha de conflitos
+conflito.fichaConflito = Ficha conflito
+informe.fichaConflito.enderezo = Lugar celebraci\u00F3n
+informe.eventos.nome = Informe acci\u00F3ns
+informe.eventos.tipoEvento = Tipo acci\u00F3n
+informe.eventos.nomeEvento = Nome evento
+informe.eventos.descricionEvento = Descrici\u00F3n
+informe.eventos.valoracionEvento = Valoraci\u00F3n
+informe.eventos.dataRealizacionEvento = Data realizaci\u00F3n
+informe.eventos.horaRealizacionEvento = Hora
+informe.eventos.tituloEvento = Eventos realizados
+informe.eventos.enderezo = Lugar celebraci\u00F3n
+informe.eventos.subtituloEntreDataRealizacion = Data de realizaci\u00F3n entre as datas %s  e %s
+informe.eventos.subtituloDendeADataRealizacion = Data de realizaci\u00F3n dende a data %s
+informe.eventos.subtituloAtaADataRealizacion = Data de realizaci\u00F3n ata a data %s
+informe.asemblea.saudo = Saudos compa\u00F1eir@s:
+informe.asemblea.secretaria = Secretario/a
+informe.asemblea.convocatoria = Pola presente convoca-se %s para o vindeiro d\u00EDa %s  \u00E1s %s horas no local confederal.
+informe.asemblea.ordedia = A orde do d\u00EDa ser\u00E1:
+informe.asemblea.carneconf = C.C.
+informe.acordos.nome = Informe de acordos
+informe.acordos.tituloacordo = Acordos tomados
+informe.acordos.punto = Punto de asemblea
+informe.acordos.acordo = Acordo tomado
+informe.acordos.dataCelebracion = Data celebraci\u00F3n
+informe.acordos.tipoPuntoAsemblea = Tipo de punto
+soConAcordos = S\u00F3 puntos con acrodos
+informe.acordos.soAcordos = S\u00F3 puntos con acordos tomados
+informe.acordos.subtituloEntreDataRealizacion = Asembleas celebradas entre as datas %s  e  %s
+informe.acordos.subtituloDendeADataRealizacion = Asembleas celebradas dende a data %s
+informe.acordos.subtituloAtaADataRealizacion = Asembleas celebradas ata a data %s
+aPeticionDe = A petici\u00F3n de
+informe.generic.telefono = Telf.
+informe.generic.fax = Fax.
+informe.generic.apartadoCorreos = A.P.
+informe.generic.email = Email
+generic.footer = Web de xesti\u00F3n da C.N.T
+generic.usuario = Usuario
+generic.nesaxeBenvida = Wed de xesti\u00F3n dos sindicatos da Cnt,se vostede forma parte do comite do sindicato se non ten acceso a esta aplicaci\u00F3n,p\u00F3\u00F1ase en contacto co secretario de organizaci\u00F3n. Para acceder prema en entrar.
+generic.confirmaElimiar = Est\u00E1 seguro que desexa elimiar o elemento %s ?
+generic.confirmaAccionPechar = Desexa pechar a/o %s?
+generic.confirmaAccionAbir = Desexa reabrir a/o %s?
+generic.confirmaBaxia = Est\u00E1 segura que quere dar de baixa ao afiliado/a  %s ?
+generic.pecharEstado = Pechar %s
+generic.abrirEstado = Reabrir %s
+generic.confirmaAvisoAfiliacon = Confirma realizar aviso de %s a toda a afiliaci\u00F3n?
+generic.avisoAfiliacion = Realizar aviso de %s a toda a afiliaci\u00F3n.
+generic.accionPechar = Pechar %s
+generic.accionAbrir = Reabir %s
+generic.facerAviso = Mandar aviso
+generic.nonAdxunto = Non existe documento adxunto
+generic.accionBorrar = Eliminar
+generic.accionActualizar = Modificaci\u00F3n
+generic.accionNovoAlta = Nova alta
+generic.si = Si
+generic.no = Non
+informe.generic.enderezo = Enderezo
+informe.generic.codigoPostal = C.P.
+informe.generic.concello = Concello
+informe.generic.provincia = Provincia
+informe.generic.comunidade = Comunidade
+informe.generic.localidade = Localidade
+idioma = Idioma
+funcionalidade = Funcionalidade
+clave = Chave
+valor = Valor
+MensaxesIdiomas = Mensaxes idioma
+MensaxesIdioma = Mensaxe idioma
+nome = Nome
+idioma.cambiarIdioma = Cambiar idioma
+idioma.seleccionaIdioma = Selecciona idioma
+idioma.idiomaActualizado = Agora o idioma da aplicacion e o %s
+crud.saveAndAddAnother = Gardar e engadir outro
+crud.foreignKeyVoltar = Voltar
+crud.pagination.first = \u00AB\u00AB Primeiro
+crud.pagination.next = Seguinte \u00BB
+crud.pagination.previous = \u00AB Anterior
+menu.idiomas = Cambiar idioma
+crud.filtro.cadeaTexto = Cadea de texto
+crud.saved = &{%s} gardouse correctamente
+crud.deleted = &{%s} eliminouse correctamente
+crud.saveAndContinue = Gardar e seguir modificando
+crud.delete.EmptySelect = Para eliminar un elemento de %s debe selecionar un rexistro.
+menu.Informes.Fondos = informe de fondos
+informe.fondo.nome = Informe de Fondos
