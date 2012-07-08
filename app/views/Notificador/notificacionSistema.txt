@@ -1,3 +1,0 @@
-Ola:
-${aviso.asunto}
-${aviso.contido}

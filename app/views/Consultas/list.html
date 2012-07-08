@@ -10,7 +10,18 @@
     </div>
 
     <div id="crudListTable">
-        #{crud.table fields:['tipoEntradaFondo','tipoGeneroFondo','titulo','autor','ePrestable']/}
+        #{crud.table fields:['tipoConflito','ocupacion','dataAlta','dataModificacion']}
+        #{crud.custom 'dataAlta'}
+        #{if (object.dataAlta!=null)}
+        ${object.dataAlta.format()}
+        #{/if}
+        #{/crud.custom}  
+        #{crud.custom 'dataModificacion'}
+        #{if (object.dataModificacion!=null)}
+        ${object.dataModificacion.format()}
+        #{/if}
+        #{/crud.custom}  
+        #{/crud.table}
     </div>
 
     <div id="crudListPagination">

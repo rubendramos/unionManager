@@ -10,7 +10,7 @@
     </div>
 
     <div id="crudListTable">
-        #{crud.table fields:['tipoConflito','nome','descricion','dataInicio','dataRemate']}
+        #{crud.table fields:['tipoConflito','nome','descricion','dataInicio','dataRemate','conflito.fichaConflito']}
         #{crud.custom 'dataInicio'}
         #{if (object.dataInicio!=null)}
         ${object.dataInicio.format()}
@@ -21,6 +21,11 @@
         ${object.dataRemate.format()}
         #{/if}
         #{/crud.custom}
+        
+        #{crud.custom 'conflito.fichaConflito'}  
+          <a class="del" href="@{xeneraFichaConflito(object.id,page,search)}">&{'conflito.fichaConflito'}</a>               
+        #{/crud.custom}               
+        
         #{/crud.table}
     </div>
 

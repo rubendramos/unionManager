@@ -10,7 +10,7 @@
     </div>
 
     <div id="crudListTable">
-        #{crud.table fields:['persoa','dataAlta','dataBaixa']}
+        #{crud.tableNonEliminar fields:['persoa','dataAlta','dataBaixa','estadoAfiliado','afiliado.accionFacerBaixa']}
         #{crud.custom 'dataAlta'}
         #{if (object.dataAlta!=null)}
         ${object.dataAlta.format()}
@@ -21,7 +21,17 @@
         ${object.dataBaixa.format()}
         #{/if}
         #{/crud.custom}
-        #{/crud.table}
+              
+        #{crud.custom 'afiliado.accionFacerBaixa'}  
+          <a class="del" href="@{xeneraFichaAfiliado(object.id,page,search)}">&{'afiliado.fichaAfiliado'}</a>               
+        #{if (object.estadoAfiliado.id==1) }
+          <a class="del" href="javascript: confirmaEliminar('&{'generic.confirmaBaxia',object.persoa}','@{darDebaixaERepintar(object.id,page,search)}')">&{'afiliado.facerBaixa'}</a>        
+        #{/if}
+        #{if (object.estadoAfiliado.id==2) }
+          <a class="del" href="javascript: confirmaEliminar('&{'generic.confirmaAlta',object.persoa}','@{darDeAltaERepintar(object.id,page,search)}')">&{'afiliado.facerAlta'}</a>        
+        #{/if}
+        #{/crud.custom}            
+        #{/crud.tableNonEliminar}
     </div>
 
     <div id="crudListPagination">

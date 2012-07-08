@@ -3,23 +3,20 @@
 
 <div id="crudList" class="${type.name}">
 
-    <h2 id="crudListTitle">&{'NotificacionInternaRecibidas'}</h2>
+    <h2 id="crudListTitle">&{'NotificacionInternasEnviadas'}</h2>
 
     <div id="crudListSearch">
         #{crud.search /}
     </div>
 
     <div id="crudListTable">
-        #{crud.tableRecived fields:['dataAlta','asunto','avisode','accion']}
+        #{crud.tableSold fields:['dataAlta','asunto','contido']}
         #{crud.custom 'dataAlta'}
         #{if (object.dataAlta!=null)}
         ${object.dataAlta.format()}        
         #{/if}                                  
-        #{/crud.custom}  
-        #{crud.custom 'accion'}
-        #{a @showNotificaion().add('id',object._key())}&{'NotificacionInterna.verNotificacion'}#{/a} 
-        #{/crud.custom}               
-        #{/crud.tableRecived}
+        #{/crud.custom}       
+        #{/crud.tableSold}
      </div>
 
     <div id="crudListPagination">

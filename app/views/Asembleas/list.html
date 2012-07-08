@@ -10,22 +10,24 @@
     </div>
 
     <div id="crudListTable">
-        #{crud.table fields:['tipoEvento','nome','dataRealizacion','horaRealizacion','generic.facerAviso']}
-        #{crud.custom 'dataRealizacion'}
-        ${object.dataRealizacion.format()}
-        #{/crud.custom}
+        #{crud.table fields:['titulo','dataCelebracion','generic.facerAviso']}
+        #{crud.custom 'dataCelebracion'}
+        #{if (object.dataCelebracion!=null)}
+        ${object.dataCelebracion.format()}
+        #{/if}
+        #{/crud.custom}  
         #{crud.custom 'generic.facerAviso'}  
         
         #{if (object.estado==null || object.estado.id==1)}
-        <a class="del" href="javascript: confirmaAccion('&{'generic.confirmaAvisoAfiliacion',object}','@{mandarAvisoEvento(object.id,page,search)}')" title="&{'generic.avisoAfiliacion',object}">&{'generic.facerAviso'}</a>        
+        <a class="del" href="javascript: confirmaAccion('&{'generic.confirmaAvisoAfiliacion',object}','@{mandarAvisoAsemblea(object.id,page,search)}')" title="&{'generic.avisoAfiliacion',object}" >&{'generic.facerAviso'}</a>        
+       
+        
         #{/if}
         #{/crud.custom}    
 
-        
+
         #{/crud.table}
-    
     </div>
-  
 
     <div id="crudListPagination">
         #{crud.pagination /}

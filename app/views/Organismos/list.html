@@ -10,7 +10,11 @@
     </div>
 
     <div id="crudListTable">
-        #{crud.table fields:['tipoEntradaFondo','tipoGeneroFondo','titulo','autor','ePrestable']/}
+        #{crud.tableNonEliminar fields:['acronimo','nome','descricion','organismo.ficha']}                      
+        #{crud.custom 'organismo.ficha'}  
+          <a class="del" href="@{xeneraFichaOrganismo(object.id,page,search)}">&{'organismo.fichaOrganismo'}</a>             
+        #{/crud.custom}            
+        #{/crud.tableNonEliminar}
     </div>
 
     <div id="crudListPagination">

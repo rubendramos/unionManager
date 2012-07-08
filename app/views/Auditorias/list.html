@@ -10,7 +10,13 @@
     </div>
 
     <div id="crudListTable">
-        #{crud.table fields:['tipoEntradaFondo','tipoGeneroFondo','titulo','autor','ePrestable']/}
+        #{crud.tableNonEliminarNonAltas fields:['usuario','dataAccion','accion','identificador']}
+        #{crud.custom 'dataAccion'}
+        #{if (object.dataAccion!=null)}
+        ${object.dataAccion.format()}
+        #{/if}
+        #{/crud.custom}        
+        #{/crud.tableNonEliminarNonAltas}
     </div>
 
     <div id="crudListPagination">

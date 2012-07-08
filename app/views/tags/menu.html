@@ -1,12 +1,12 @@
 <div class="pro_line2">
     <ul class="select">
-        <li><a href="#nogo"><b>&{'menu.Inicio'}</b></a></li>
+        <li><a href="@{NotificacionInternas.listRecivedNonLeidas()}"><b>&{'menu.Inicio'}</b></a></li>
 
        #{secure.check 'permanencia'}
         <li><a href="#nogo"><b>&{'menu.permanencia'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
             <!--[if lte IE 6]><table><tr><td><![endif]-->
             <ul class="sub">
-                <li><a href="@{NotificacionInternas.list()}">&{'menu.notificacionInterna'}</a></li>	      
+                <li><a href="@{Consultas.list()}">&{'menu.consulta'}</a></li>	      
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
@@ -21,6 +21,7 @@
                 <li><a href="@{Secretarias.list()}">&{'menu.secretariaXeral.secretaria'}</a></li>
                 <li><a href="@{Avisos.list()}">&{'menu.secretariaXeral.avisos'}</a></li>
                 <li><a href="@{Users.list()}">&{'menu.secretariaXeral.usuarios'}</a></li>
+                <li><a href="@{Asembleas.list()}">&{'menu.secretariaXeral.asembleas'}</a></li>
 
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
@@ -35,6 +36,8 @@
                 <li><a href="@{Conflitos.list()}">&{'menu.accionsindical.conflitos'}</a></li>
                 <li><a href="@{Eventos.list()}">&{'menu.accionsindical.accions'}</a></li>
                 <li><a href="@{Avisos.list()}">&{'menu.secretariaXeral.avisos'}</a></li>
+                <li><a href="@{Informes.show('InformeConflitos')}">&{'menu.Informes.Conflitos'}</a></li>
+                <li><a href="@{Informes.show('InformeEventos')}">&{'menu.Informes.Eventos'}</a></li>
                
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
@@ -49,7 +52,10 @@
                 <li><a href="@{Afiliados.list()}">&{'menu.organizacion.afiliados'}</a></li>
                 <li><a href="@{Eventos.list()}">&{'menu.Eventos'}</a></li>
                 <li><a href="@{Avisos.list()}">&{'menu.secretariaXeral.avisos'}</a></li>
-                <li><a href="@{Enderezos.list()}">&{'menu.secretariaXeral.enderezos'}</a></li>               
+                <li><a href="@{Enderezos.list()}">&{'menu.secretariaXeral.enderezos'}</a></li>   
+                <li><a href="@{Asembleas.list()}">&{'menu.secretariaXeral.asembleas'}</a></li>
+                    <li><a href="@{Informes.show('InformeAfiliados')}">&{'menu.Informes.Afiliados'}</a></li>
+                    <li><a href="@{Informes.show('InformeAcordos')}">&{'menu.Informes.Acordos'}</a></li>
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
@@ -61,6 +67,7 @@
             <ul class="sub">
                 <li><a href="@{Fondos.list()}">&{'menu.propaganda.fondos'}</a></li>
                 <li><a href="@{EntradaFondos.list()}">&{'menu.propaganda.entradas'}</a></li>
+                <li><a href="@{Informes.show('InformeFondos')}">&{'menu.Informes.Fondos'}</a></li>
                
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
@@ -73,6 +80,8 @@
             <ul class="sub">
                 <li><a href="@{LibroContas.list()}">&{'menu.tesoureria.LibroContas'}</a></li>
                 <li><a href="@{FollaContas.list()}">&{'menu.tesoureria.FollaContas'}</a></li>
+                <li><a href="@{Informes.show('InformeTesoureria')}">&{'menu.Informes.Tesoureria'}</a></li>
+
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
@@ -88,7 +97,20 @@
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
+        
+        
         #{/secure.check} 
+        
+        #{secure.check 'recibeNotificacions'}
+        <li><a href="#nogo"><b>&{'NotificacionInternas'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
+            <!--[if lte IE 6]><table><tr><td><![endif]-->
+            <ul class="sub">
+                <li><a href="@{NotificacionInternas.listRecived()}">&{'NotificacionInterna.recibidas'}</a></li>
+                <li><a href="@{NotificacionInternas.list()}">&{'NotificacionInterna.enviadas'}</a></li>
+            </ul>
+            <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+        </li>
+        #{/secure.check}         
 
         
         #{secure.check 'autenticado'}
@@ -98,6 +120,7 @@
                 <li><a href="@{ListaDistribucions.list()}">&{'menu.configuracion.listasDistribucion'}</a></li>
                 <li><a href="@{Contactos.list()}">&{'menu.configuracion.contactos'}</a></li>
                 <li><a href="@{Users.password()}">&{'menu.password'}</a></li>
+                <li><a href="@{Idiomas.idiomas()}">&{'menu.idiomas'}</a></li>
 
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->

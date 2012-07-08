@@ -1,0 +1,34 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.list.title', type.name) /}
+
+
+<div id="onlyShow" class="${type.name}">
+<a href="javascript:history.back(-1)"><img id="fecharVenta" title="&{'crud.pecharventa'}"/></a>
+
+    <h1>&{'NotificacionInterna'}</h1>
+ 
+<div class="objectForm">
+
+     <p>
+        <strong>Enviado a:</strong> ${object.contactos}
+    </p>
+    <p>
+        <strong>Data:</strong> ${object.dataAlta}
+    </p>
+    <p>
+        <strong>Prioridade:</strong> ${object.prioridade}
+    </p>
+    
+    <p>
+        <strong>Asunto:</strong> ${object.asunto}
+    </p>
+
+    <p>
+        <strong>Contido:</strong>${object.contido}
+
+    </p>
+    </div>
+
+   
+
+  </div>

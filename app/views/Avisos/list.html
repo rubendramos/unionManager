@@ -1,0 +1,44 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.list.title', type.name) /}
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
+
+    <div id="crudListSearch">
+        #{crud.search /}
+    </div>
+
+    <div id="crudListTable">
+        #{crud.tableNonEliminar fields:['asunto','contido','estadoAviso','dataARealizarAviso','dataRealizacionAviso']}       
+        #{crud.custom 'contido'} 
+        #{if (object.evento!=null)}
+        ${object.evento.toString().length() > 30 ? object.evento.toString()[0..30] + '...' : object.evento} 
+        #{/if}
+        #{if (object.evento==null)}
+        ${object.contido.toString().length() > 30 ? object.contido.toString()[0..30] + '...' : object.contido} 
+        #{/if}
+        #{/crud.custom}
+                        
+        #{crud.custom 'dataARealizarAviso'}
+        #{if (object.dataARealizarAviso!=null)}
+        ${object.dataARealizarAviso.format()}
+        #{/if}
+        #{/crud.custom}  
+        #{crud.custom 'dataRealizacionAviso'}
+        #{if (object.dataRealizacionAviso!=null)}
+        ${object.dataRealizacionAviso.format()}
+        #{/if}
+        #{/crud.custom}  
+        #{/crud.tableNonEliminar}
+    </div>
+
+    <div id="crudListPagination">
+        #{crud.pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">&{'crud.add', type.modelName}</a>
+    </p>
+
+</div>

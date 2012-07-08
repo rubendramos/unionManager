@@ -1,30 +1,23 @@
-#{extends 'Privado/privado.html' /}
-
-<div id="informesPage">
-
-	<ul>Informes
-	</ul>
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.blank.title', type.modelName) /}
 
 
-	<ul id="informes">
-		<li
-			class="${request.controller == 'informeAfiliados' ? 'selected' : ''}">
-			<a href="@{Informes.informeAfiliados()}">Informe afiliados</a>
-		</li>
-	</ul>
 
-	<form action="informeAfiliados">
-		<div>
-			<p class="field">
-				<label for="data">Data:</label> <input type="text" id="data"
-					name="data" value="${data?.format('dd-MM-yyyy')}"> <span
-					class="error">${errors.forKey('data')}</span>
-			</p>
 
-			<p class="buttons">
-				<a href="@{Informes.index()}">Cancel</a> or <input type="submit"
-					value="Informe Afiliados" id="informeAfiliados">
-			</p>
-		</div>
-	</form>
+<div id="crudBlank" class="${type.name}">
+
+    <h2 id="crudBlankTitle">${object.nomeInforme}</h2>
+
+    <div class="objectForm">
+    #{form action:@informes(), enctype:'multipart/form-data'}
+        #{informes.formInformes /}
+        <input type="hidden" name="claseInforme" value="&{type.modelName}">
+        <p class="crudButtons">
+            ${val2}
+            <input type="submit" name="informe" value="&{'informes.xerar'} ${object.nomeInforme}" />
+          
+        </p>
+    #{/form}
+    </div>
+
 </div>
