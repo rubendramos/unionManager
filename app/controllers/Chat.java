@@ -14,24 +14,7 @@ public class Chat extends Controller {
         render();
     }
     
-    public static void enterDemo(@Required String user, @Required String demo) {        
-        if(validation.hasErrors()) {
-            flash.error("Please choose a nick name and the demonstration type…");
-            index();
-        }
-        
-        // Dispatch to the demonstration        
-        if(demo.equals("refresh")) {
-            Refresh.index(user);
-        }
-        if(demo.equals("longpolling")) {
-            LongPolling.room(user);
-        }
-        if(demo.equals("websocket")) {
-            WebSocket.room(user);
-        }        
-    }
-
+  
     public static void conversaComite() {
             User user = User.find("byUsuario", Seguridade.connected()).first();
             WebSocket.room(user.afiliado.persoa.nome);               
