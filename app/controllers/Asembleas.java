@@ -15,16 +15,27 @@ import utils.Tools;
 public class Asembleas extends CRUD {    
     
 
-public static void list(int page, String search, String searchFields,
+public static void list(int page,String where, String search,String from,String searchFields,
             String orderBy, String order) {
         ObjectType type = ObjectType.get(getControllerClass());
+        String whereClausule=null;
         notFoundIfNull(type);
         if (page < 1) {
             page = 1;
         }
    
-        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, type.createWhereFilterClausule());
-        Long count = type.count(search, searchFields, type.createWhereFilterClausule());
+        if(from!=null && "true".equals(from)){
+            if(where!=null && !"".equals(where)){
+            whereClausule=where;
+            }
+            type.setValuesFromSearch(where);       
+        
+        }else{
+            whereClausule=type.createWhereFilterClausule();
+        }
+        
+        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, whereClausule);
+        Long count = type.count(search, searchFields, whereClausule);
         Long totalCount = type.count(null, null, (String) request.args.get("where"));
         try {
             render(type, objects, count, totalCount, page, orderBy, order);
@@ -38,6 +49,8 @@ public static void list(int page, String search, String searchFields,
   public static void mandarAvisoAsemblea(String id,String page, String search) throws Exception {
         
       
+      ObjectType type = ObjectType.get(getControllerClass());
+      String where=type.createWhereFilterClausule();
       Asemblea asemblea=Asemblea.findById(Long.parseLong(id));
       TipoEstadoAviso tsa=TipoEstadoAviso.findById(Long.parseLong("1"));
       ListaDistribucion li= ListaDistribucion.getListaAutomaticaAfiliados();
@@ -48,7 +61,7 @@ public static void list(int page, String search, String searchFields,
       aviso.organismo=Seguridade.organismo();
       aviso._save();
       flash.success(play.i18n.Messages.get("crud.avisoGardado", asemblea.toString()));
-      list(Integer.parseInt(page), search, null, null, null);
+      list(Integer.parseInt(page), where,search, "false",null, null, null);
   
     }    
            

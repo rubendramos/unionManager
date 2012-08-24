@@ -9,6 +9,10 @@
         #{crud.search /}
     </div>
 
+    <div id="crudListPagination">
+        #{crud.paginationForeign /}
+    </div>    
+    
     <div id="crudListTable">
         #{crud.table fields:['tipoConflito','ocupacion','dataAlta','dataModificacion']}
         #{crud.custom 'dataAlta'}

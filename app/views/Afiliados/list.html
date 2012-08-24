@@ -9,8 +9,12 @@
         #{crud.search /}
     </div>
 
+    <div id="crudListPagination">
+        #{crud.paginationForeign /}
+    </div>    
+    
     <div id="crudListTable">
-        #{crud.tableNonEliminar fields:['persoa','dataAlta','dataBaixa','estadoAfiliado','afiliado.accionFacerBaixa']}
+        #{crud.tableNonEliminar fields:['persoa','dataAlta','dataBaixa','estadoAfiliado','afiliado.accion']}
         #{crud.custom 'dataAlta'}
         #{if (object.dataAlta!=null)}
         ${object.dataAlta.format()}
@@ -22,13 +26,13 @@
         #{/if}
         #{/crud.custom}
               
-        #{crud.custom 'afiliado.accionFacerBaixa'}  
-          <a class="del" href="@{xeneraFichaAfiliado(object.id,page,search)}">&{'afiliado.fichaAfiliado'}</a>               
+        #{crud.custom 'afiliado.accion'}  
+          <a class="pdf" href="@{xeneraFichaAfiliado(object.id,page,search)}"><img src="/public/images/line/transparentInputImage.png" class="pdf" title="&{'afiliado.fichaAfiliado'}"/></a>               
         #{if (object.estadoAfiliado.id==1) }
-          <a class="del" href="javascript: confirmaEliminar('&{'generic.confirmaBaxia',object.persoa}','@{darDebaixaERepintar(object.id,page,search)}')">&{'afiliado.facerBaixa'}</a>        
+        <input src="/public/images/line/transparentInputImage.png" class="afiliadosmenos"   type="image" title="&{'afiliado.facerBaixa'}  ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:confirmaAccionSubmitSearching('&{'generic.confirmaBaxia',object.persoa}','darDebaixaERepintar',${page},${object._key()})" value="" /> 
         #{/if}
         #{if (object.estadoAfiliado.id==2) }
-          <a class="del" href="javascript: confirmaEliminar('&{'generic.confirmaAlta',object.persoa}','@{darDeAltaERepintar(object.id,page,search)}')">&{'afiliado.facerAlta'}</a>        
+        <input src="/public/images/line/transparentInputImage.png" class="afiliadosmais" type="image" title="&{'afiliado.facerAlta'}  ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:confirmaAccionSubmitSearching('&{'generic.confirmaAlta',object.persoa}','darDeAltaERepintar',${page},${object._key()})" value="" /> 
         #{/if}
         #{/crud.custom}            
         #{/crud.tableNonEliminar}

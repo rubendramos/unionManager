@@ -30,6 +30,9 @@
 	<parameter name="TITULOENDEREZOORGANISMI" class="java.lang.String"/>
 	<parameter name="SDATOSORGANISMO" class="java.lang.String"/>
 	<parameter name="STITULO" class="java.lang.String"/>
+	<parameter name="SNOMEAFILIADO" class="java.lang.String"/>
+	<parameter name="STITCULOCOMPONENTES" class="java.lang.String"/>
+	<parameter name="STITCOMITE" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select org.acronimo acronimo ,org.nome nome ,org.cif cif, org.descricion,org.enderezo_id enderezoid,org.email,org.direccionweb web,
 orgorg.organismosfillo_id,org.dataAlta dataAlta,org.dataBaixa dataBaixa
@@ -86,24 +89,48 @@ where org.id=$P{ORGANISMO_ID};]]>
 			</line>
 			<subreport>
 				<reportElement x="-21" y="79" width="595" height="100"/>
+				<subreportParameter name="SAPARTADOCORREOS">
+					<subreportParameterExpression><![CDATA[$P{SAPARTADOCORREOS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SDATOSORGANISMO">
+					<subreportParameterExpression><![CDATA[$P{SDATOSORGANISMO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SFAX">
+					<subreportParameterExpression><![CDATA[$P{SFAX}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="ORGANISMO_ID">
 					<subreportParameterExpression><![CDATA[$P{ORGANISMO_ID}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SUBREPORT_DIR"/>
-				<subreportParameter name="SSECRETARIA">
-					<subreportParameterExpression><![CDATA[$P{SSECRETARIA}]]></subreportParameterExpression>
+				<subreportParameter name="SCONCELLO">
+					<subreportParameterExpression><![CDATA[$P{SCONCELLO}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SDATABAXIA">
-					<subreportParameterExpression><![CDATA[$P{SDATABAXIA}]]></subreportParameterExpression>
+				<subreportParameter name="SCOMUNIDADE">
+					<subreportParameterExpression><![CDATA[$P{SCOMUNIDADE}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SDATAALTA">
-					<subreportParameterExpression><![CDATA[$P{SDATAALTA}]]></subreportParameterExpression>
+				<subreportParameter name="STELEFONO">
+					<subreportParameterExpression><![CDATA[$P{STELEFONO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SNOMEAFILIADO">
+					<subreportParameterExpression><![CDATA[$P{SNOMEAFILIADO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SDESCRICION">
 					<subreportParameterExpression><![CDATA[$P{SDESCRICION}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="SWEB">
+					<subreportParameterExpression><![CDATA[$P{SWEB}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="SCIF">
 					<subreportParameterExpression><![CDATA[$P{SCIF}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="STITCULOCOMPONENTES">
+					<subreportParameterExpression><![CDATA[$P{STITCULOCOMPONENTES}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITULOENDEREZOORGANISMI">
+					<subreportParameterExpression><![CDATA[$P{TITULOENDEREZOORGANISMI}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="SCODIGOPOSTAL">
+					<subreportParameterExpression><![CDATA[$P{SCODIGOPOSTAL}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SACRONIMO">
 					<subreportParameterExpression><![CDATA[$P{SACRONIMO}]]></subreportParameterExpression>
@@ -111,44 +138,29 @@ where org.id=$P{ORGANISMO_ID};]]>
 				<subreportParameter name="SNOME">
 					<subreportParameterExpression><![CDATA[$P{SNOME}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SWEB">
-					<subreportParameterExpression><![CDATA[$P{SWEB}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="SEMAIL">
 					<subreportParameterExpression><![CDATA[$P{SEMAIL}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SDATOSORGANISMO">
-					<subreportParameterExpression><![CDATA[$P{SDATOSORGANISMO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SCOMUNIDADE">
-					<subreportParameterExpression><![CDATA[$P{SCOMUNIDADE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SPROVINCIA">
 					<subreportParameterExpression><![CDATA[$P{SPROVINCIA}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SCONCELLO">
-					<subreportParameterExpression><![CDATA[$P{SCONCELLO}]]></subreportParameterExpression>
+				<subreportParameter name="STITCOMITE">
+					<subreportParameterExpression><![CDATA[$P{STITCOMITE}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SCODIGOPOSTAL">
-					<subreportParameterExpression><![CDATA[$P{SCODIGOPOSTAL}]]></subreportParameterExpression>
+				<subreportParameter name="SDATABAXIA">
+					<subreportParameterExpression><![CDATA[$P{SDATABAXIA}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SLOCALIDADE">
 					<subreportParameterExpression><![CDATA[$P{SLOCALIDADE}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="SDATAALTA">
+					<subreportParameterExpression><![CDATA[$P{SDATAALTA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SSECRETARIA">
+					<subreportParameterExpression><![CDATA[$P{SSECRETARIA}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="SENDEREZO">
 					<subreportParameterExpression><![CDATA[$P{SENDEREZO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="TITULOENDEREZOORGANISMI">
-					<subreportParameterExpression><![CDATA[$P{TITULOENDEREZOORGANISMI}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SFAX">
-					<subreportParameterExpression><![CDATA[$P{SFAX}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="STELEFONO">
-					<subreportParameterExpression><![CDATA[$P{STELEFONO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SAPARTADOCORREOS">
-					<subreportParameterExpression><![CDATA[$P{SAPARTADOCORREOS}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "organismo.jasper"]]></subreportExpression>
@@ -159,24 +171,48 @@ where org.id=$P{ORGANISMO_ID};]]>
 		<band height="104" splitType="Stretch">
 			<subreport>
 				<reportElement x="-21" y="0" width="595" height="100"/>
+				<subreportParameter name="SAPARTADOCORREOS">
+					<subreportParameterExpression><![CDATA[$P{SAPARTADOCORREOS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SDATOSORGANISMO">
+					<subreportParameterExpression><![CDATA[$P{SDATOSORGANISMO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SFAX">
+					<subreportParameterExpression><![CDATA[$P{SFAX}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="ORGANISMO_ID">
 					<subreportParameterExpression><![CDATA[$F{ORGANISMOSFILLO_ID}.toString()]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SUBREPORT_DIR"/>
-				<subreportParameter name="SSECRETARIA">
-					<subreportParameterExpression><![CDATA[$P{SSECRETARIA}]]></subreportParameterExpression>
+				<subreportParameter name="SCONCELLO">
+					<subreportParameterExpression><![CDATA[$P{SCONCELLO}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SDATABAXIA">
-					<subreportParameterExpression><![CDATA[$P{SDATABAXIA}]]></subreportParameterExpression>
+				<subreportParameter name="SCOMUNIDADE">
+					<subreportParameterExpression><![CDATA[$P{SCOMUNIDADE}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SDATAALTA">
-					<subreportParameterExpression><![CDATA[$P{SDATAALTA}]]></subreportParameterExpression>
+				<subreportParameter name="STELEFONO">
+					<subreportParameterExpression><![CDATA[$P{STELEFONO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SNOMEAFILIADO">
+					<subreportParameterExpression><![CDATA[$P{SNOMEAFILIADO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SDESCRICION">
 					<subreportParameterExpression><![CDATA[$P{SDESCRICION}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="SWEB">
+					<subreportParameterExpression><![CDATA[$P{SWEB}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="SCIF">
 					<subreportParameterExpression><![CDATA[$P{SCIF}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="STITCULOCOMPONENTES">
+					<subreportParameterExpression><![CDATA[$P{STITCULOCOMPONENTES}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITULOENDEREZOORGANISMI">
+					<subreportParameterExpression><![CDATA[$P{TITULOENDEREZOORGANISMI}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="SCODIGOPOSTAL">
+					<subreportParameterExpression><![CDATA[$P{SCODIGOPOSTAL}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SACRONIMO">
 					<subreportParameterExpression><![CDATA[$P{SACRONIMO}]]></subreportParameterExpression>
@@ -184,44 +220,29 @@ where org.id=$P{ORGANISMO_ID};]]>
 				<subreportParameter name="SNOME">
 					<subreportParameterExpression><![CDATA[$P{SNOME}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SWEB">
-					<subreportParameterExpression><![CDATA[$P{SWEB}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="SEMAIL">
 					<subreportParameterExpression><![CDATA[$P{SEMAIL}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SDATOSORGANISMO">
-					<subreportParameterExpression><![CDATA[$P{SDATOSORGANISMO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SCOMUNIDADE">
-					<subreportParameterExpression><![CDATA[$P{SCOMUNIDADE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SPROVINCIA">
 					<subreportParameterExpression><![CDATA[$P{SPROVINCIA}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SCONCELLO">
-					<subreportParameterExpression><![CDATA[$P{SCONCELLO}]]></subreportParameterExpression>
+				<subreportParameter name="STITCOMITE">
+					<subreportParameterExpression><![CDATA[$P{STITCOMITE}.toString()]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SCODIGOPOSTAL">
-					<subreportParameterExpression><![CDATA[$P{SCODIGOPOSTAL}]]></subreportParameterExpression>
+				<subreportParameter name="SDATABAXIA">
+					<subreportParameterExpression><![CDATA[$P{SDATABAXIA}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SLOCALIDADE">
 					<subreportParameterExpression><![CDATA[$P{SLOCALIDADE}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="SDATAALTA">
+					<subreportParameterExpression><![CDATA[$P{SDATAALTA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SSECRETARIA">
+					<subreportParameterExpression><![CDATA[$P{SSECRETARIA}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="SENDEREZO">
 					<subreportParameterExpression><![CDATA[$P{SENDEREZO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="TITULOENDEREZOORGANISMI">
-					<subreportParameterExpression><![CDATA[$P{TITULOENDEREZOORGANISMI}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SFAX">
-					<subreportParameterExpression><![CDATA[$P{SFAX}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="STELEFONO">
-					<subreportParameterExpression><![CDATA[$P{STELEFONO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SAPARTADOCORREOS">
-					<subreportParameterExpression><![CDATA[$P{SAPARTADOCORREOS}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "organismo.jasper"]]></subreportExpression>

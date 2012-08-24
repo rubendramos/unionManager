@@ -22,6 +22,7 @@
                 <li><a href="@{Avisos.list()}">&{'menu.secretariaXeral.avisos'}</a></li>
                 <li><a href="@{Users.list()}">&{'menu.secretariaXeral.usuarios'}</a></li>
                 <li><a href="@{Asembleas.list()}">&{'menu.secretariaXeral.asembleas'}</a></li>
+                <li><a href="@{Empresas.list()}">&{'menu.secretariaXeral.empresas'}</a></li>
 
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
@@ -54,8 +55,9 @@
                 <li><a href="@{Avisos.list()}">&{'menu.secretariaXeral.avisos'}</a></li>
                 <li><a href="@{Enderezos.list()}">&{'menu.secretariaXeral.enderezos'}</a></li>   
                 <li><a href="@{Asembleas.list()}">&{'menu.secretariaXeral.asembleas'}</a></li>
-                    <li><a href="@{Informes.show('InformeAfiliados')}">&{'menu.Informes.Afiliados'}</a></li>
-                    <li><a href="@{Informes.show('InformeAcordos')}">&{'menu.Informes.Acordos'}</a></li>
+                <li><a href="@{Informes.show('InformeAfiliados')}">&{'menu.Informes.Afiliados'}</a></li>
+                <li><a href="@{Informes.show('InformeAcordos')}">&{'menu.Informes.Acordos'}</a></li>
+                <li><a href="@{Empresas.list()}">&{'menu.secretariaXeral.empresas'}</a></li>                
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
@@ -87,19 +89,7 @@
         </li>
         #{/secure.check}         
         
-        
-        #{secure.check 'comite'}
-        <li><a href="#nogo"><b>&{'menu.Informes'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
-            <!--[if lte IE 6]><table><tr><td><![endif]-->
-            <ul class="sub">
-                <li><a href="@{Informes.index()}">&{'menu.Informes.InformeAfiliados'}</a></li>
 
-            </ul>
-            <!--[if lte IE 6]></td></tr></table></a><![endif]-->
-        </li>
-        
-        
-        #{/secure.check} 
         
         #{secure.check 'recibeNotificacions'}
         <li><a href="#nogo"><b>&{'NotificacionInternas'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
@@ -131,6 +121,7 @@
 
         #{secure.check 'admin'}        
         <li><a href="@{Admin.index()}"><b>&{'menu.Admin'}</b><!--[if IE 7]><!--></a><!--<![endif]--></li>
+        <li><a href="@{Chat.conversaComite()}"  onClick="showPopupChat(this);return(false);"><b>&{'menu.chat'}</b><!--[if IE 7]><!--></a><!--<![endif]--></li>
         #{/secure.check} 
 
 

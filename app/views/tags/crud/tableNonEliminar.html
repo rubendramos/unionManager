@@ -14,7 +14,7 @@ _body.setProperty('fieldsHandler', fieldsHandler);
         <tr>
             %{ if(_fields) { }%
             %{ _fields.each() { }%
-            <th>
+            <th class="${_caller.type.getField(it)==null?'tipoAccion': _caller.type.getField(it).type}">
                 %{ if(!_sort || _sort.contains(it)) { }%
                 <a class="${_caller.orderBy == it ? (_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc') : ''}" href="@{list().remove('page').add('search', params.search).add('orderBy', it).add('order', (_caller.orderBy == it && _caller.order == 'ASC' ? 'DESC' : 'ASC'))}">
                     &{it}
@@ -25,16 +25,14 @@ _body.setProperty('fieldsHandler', fieldsHandler);
             </th>
             %{ } }%
             %{ } else { }%
-            <th>
+            <th class="${_caller.type.name==null?'tipoAccion': _caller.type.name}">
                 <a class="${_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc'}" href="@{list().remove('page').add('search', params.search).add('order', (_caller.order == 'DESC' ? 'ASC' : 'DESC'))}">
                     &{_caller.type.name}
                 </a>
             </th>
             %{ } }%
             <th class="accion" >
-                
-                <a   class="add"title="&{'crud.add', _caller.type.name}" href="@{blank()}">&{'crud.add', _caller.type.name}</a>
-               
+                <input class="add" type="button" title="&{'crud.add', _caller.type.name}"  onclick="javascript:accionSubmitSearching('blank',${_caller.page},null)" value="&{'crud.add', _caller.type.name}" />          
                 </th>
         </tr>
     </thead>
@@ -42,7 +40,7 @@ _body.setProperty('fieldsHandler', fieldsHandler);
     <tr class="${k % 2 ? 'even' : 'odd'}">
         %{ if(_fields) { }%
         %{ _fields.eachWithIndex() { field, i -> }%
-        <td >
+        <td class="${_caller.type.getField(field)==null?'tipoAccion': _caller.type.getField(field).type}">
             %{ if(fieldsHandler[field]) { }%
             %{
             def handler = fieldsHandler[field];
@@ -54,7 +52,7 @@ _body.setProperty('fieldsHandler', fieldsHandler);
             }%
             %{ } else { }%
             %{ if(i == 0) { }%
-            <a href="@{show(object._key())}">${object[field]?.toString()?.escape()?.raw() ?: '(no value)'}</a>
+            ${object[field]?.toString()?.escape()?.raw() ?: '(no value)'}
             %{ } else { }%
             %{ if(_caller.type.getField(field).type == 'file') { }%
             %{ if(object[field]) { }%
@@ -77,13 +75,15 @@ _body.setProperty('fieldsHandler', fieldsHandler);
         }%
         #{doBody body:handler /}
         %{ } else { }%
-        <td>
-            <a href="@{show(object._key())}">${object.toString()?.escape()?.raw() ?: '(no value)'}</a>                    
+       <td class="${_caller.type.name==null?'tipoAccion': _caller.type.name}">
+            ${object.toString()?.escape()?.raw() ?: '(no value)'}                   
         </td>                
         %{ } }%
 
         %{ } }%
-        <td >
+         <td class="accion">
+            <input src="/public/images/line/transparentInputImage.png" class='ver' type="image" title="&{'crud.ver',''}&{ _caller.type.name} ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:document.searching.page.value=${_caller.page};document.searching.id.value=${object._key()};document.searching.action='show';document.searching.submit()" value="" />          
+
         </td>
     </tr>
     %{ } }%

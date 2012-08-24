@@ -53,16 +53,27 @@ public class Afiliados extends CRUD {
     }  
   
   
- public static void list(int page, String search, String searchFields,
+ public static void list(int page, String where,String search,String from, String searchFields,
             String orderBy, String order) {
+     String whereClausule=null;
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);
         if (page < 1) {
             page = 1;
         }
+        
+          if(from!=null && "true".equals(from)){
+            if(where!=null && !"".equals(where)){
+            whereClausule=where;
+            }
+            type.setValuesFromSearch(where);       
+        
+        }else{
+            whereClausule=type.createWhereFilterClausule();
+        }
    
-        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, type.createWhereFilterClausule());
-        Long count = type.count(search, searchFields, type.createWhereFilterClausule());
+        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, whereClausule);
+        Long count = type.count(search, searchFields, whereClausule);
         Long totalCount = type.count(null, null, (String) request.args.get("where"));
         try {
             render(type, objects, count, totalCount, page, orderBy, order);
@@ -72,16 +83,18 @@ public class Afiliados extends CRUD {
         }
     }  
    public static void darDebaixaERepintar(String id,String page, String search) throws Exception {
-   
+            ObjectType type = ObjectType.get(getControllerClass());
+            String where=type.createWhereFilterClausule();
             darDeBaixaAfiliado(id);                        
-            list(Integer.parseInt(page), search,null,null,null);            
+            list(Integer.parseInt(page), where, search,"false",null,null,null);            
   
    } 
    
    public static void darDeAltaERepintar(String id,String page, String search) throws Exception {
-   
+            ObjectType type = ObjectType.get(getControllerClass());
+            String where=type.createWhereFilterClausule();
             darDeAltaAfiliado(id);                        
-            list(Integer.parseInt(page), search,null,null,null);            
+            list(Integer.parseInt(page), where,search,"false",null,null,null);            
   
    }   
 

@@ -30,14 +30,12 @@
                 &{_field.name}
 
             </th>
-            <th>                
-
-                </th>
+            
                 <th class="accion"> 
                     #{if _estado==null || _estado.id==1}
-                    <a  href="javascript:summitInputTypeSubmit('add${_field.nomeCampo}')"><img class="add" title="&{'crud.add',''}${_field.nomeCampo}" border="0"/> </a> 
+                    <a  class="img" href="javascript:summitInputTypeSubmit('add${_field.nomeCampo}')"><img src="/public/images/line/transparentInputImage.png" class="add" title="&{'crud.add',''}${_field.nomeCampo}" border="0"/> </a> 
                     #{if _field.newForeignKey}
-                    <a  href="javascript:summitInputTypeSubmit('addNovo${_field.nomeCampo}')"><img class="new" title="&{'crud.addNovo',''}${_field.nomeCampo}" border="0"/> </a>  
+                    <a  class="img" href="javascript:summitInputTypeSubmit('addNovo${_field.nomeCampo}')"><img src="/public/images/line/transparentInputImage.png" class="new" title="&{'crud.addNovo',''}${_field.nomeCampo}" border="0"/> </a>  
                     #{/if}
                     #{/if} 
              
@@ -77,10 +75,10 @@
         <td>
             <a  href="/${_field.tipo}s/show?id=${it._key()}">${it}</a>
         </td>
-        <td class="accion"></td>
+       
         <td class="accion">
             %{ if(_estado==null || _estado.id==1){}%
-            <a  href="javascript:deleteMultiSelecRegister('${field.id}',${it._key()}, true,'deleteForeignKey_${_field.nomeCampo}')"/>  <img class="del" title="&{'crud.delete',''}${_field.nomeCampo}" border="0"> </a> 
+            <a  href="javascript:deleteMultiSelecRegister('${field.id}',${it._key()}, true,'deleteForeignKey_${_field.nomeCampo}')"/>  <img src="/public/images/line/transparentInputImage.png" class="del" title="&{'crud.delete',''}${_field.nomeCampo}" border="0"> </a> 
             %{}}%
         </td>            
         %{ } }%
@@ -198,9 +196,9 @@ if (!(selected==false)){
     %{}}%
 </select>
 #{if _estado==null || _estado.id==1}
-   <a  href="javascript:summitInputTypeSubmit('add${_field.nomeCampo}')"><img class="add" title="&{'crud.add',''}${_field.nomeCampo}" border="0"/> </a>                 
+   <a class="img" href="javascript:summitInputTypeSubmit('add${_field.nomeCampo}')"><img src="/public/images/line/transparentInputImage.png" class="add" title="&{'crud.add',''}${_field.nomeCampo}" border="0"/> </a>                 
    #{if _field.newForeignKey}
-    <a  href="javascript:summitInputTypeSubmit('addNovo${_field.nomeCampo}')"><img class="new" title="&{'crud.addNovo',''}${_field.nomeCampo}" border="0"/> </a>                          
+    <a class="img" href="javascript:summitInputTypeSubmit('addNovo${_field.nomeCampo}')"><img src="/public/images/line/transparentInputImage.png" class="new" title="&{'crud.addNovo',''}${_field.nomeCampo}" border="0"/> </a>                          
     #{/if}   
 #{/if} 
 
@@ -210,7 +208,7 @@ if (!(selected==false)){
     </p>
     #{if _field.newForeignKey}
     <p class="crudForeignButton">    
-    <input type="submit" id="addNovo${_field.nomeCampo}" name="_newForeignKey" value="&{'crud.index.add',''}${_field.nomeCampo}"	 />
+    <input type="submit" id="addNovo${_field.nomeCampo}" name="_newForeignKey" value="&{'crud.addNovo',''}${_field.nomeCampo}"	 />
     </p>
     #{/if}    
     <input type="hidden" name="_campo_${_field.nomeCampo}" value="${field.name}"	 />

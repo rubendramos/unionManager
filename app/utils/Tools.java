@@ -51,6 +51,16 @@ public class Tools {
 
     }
 
+    public static String getFormatTimeStamp(Long time){
+        java.text.SimpleDateFormat timeStampFormat = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return timeStampFormat.format(new Date(time));
+    }
+    
+    public static String getFormatHour(Long time){
+        java.text.SimpleDateFormat timeStampFormat = new java.text.SimpleDateFormat("HH:mm");
+        return timeStampFormat.format(new Date(time));
+    }
+    
     public static String dateToDateDataBaseFormat(String dateString) {
 
         java.text.SimpleDateFormat dataBaseFormatDate = new java.text.SimpleDateFormat("yyyy-MM-dd");

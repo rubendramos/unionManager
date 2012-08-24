@@ -47,26 +47,38 @@ public abstract class CRUD extends Controller {
         render("CRUD/index.html");
     }
 
-    public static void list(int page, String search, String searchFields,
-            String orderBy, String order) {
+    public static void list(int page, String where, String search, String from, String searchFields,
+            String orderBy, String order) throws Exception {
         ObjectType type = ObjectType.get(getControllerClass());
+        String whereClausule = null;
+
         notFoundIfNull(type);
+
         if (page < 1) {
             page = 1;
         }
 
-        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, type.createWhereFilterClausule());
-        Long count = type.count(search, searchFields, type.createWhereFilterClausule());
+        if (from != null && "true".equals(from)) {
+            if (where != null && !"".equals(where)) {
+                whereClausule = where;
+            }
+            type.setValuesFromSearch(where);
+
+        } else {
+            whereClausule = type.createWhereFilterClausule();
+        }
+
+        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, whereClausule);
+        Long count = type.count(search, searchFields, whereClausule);
         Long totalCount = type.count(null, null, (String) request.args.get("where"));
         try {
             render(type, objects, count, totalCount, page, orderBy, order);
         } catch (TemplateNotFoundException e) {
-            render("CRUD/list.html", type, objects, count, totalCount, page,
-                    orderBy, order);
+            render("CRUD/list.html", type, objects, count, totalCount, page, orderBy, order);
         }
     }
 
-    public static void listForeign(int page, String search, String searchFields,
+    public static void listForeign(int page, String where, String search, String from, String searchFields,
             String orderBy, String order, String cacheId) {
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);
@@ -92,15 +104,21 @@ public abstract class CRUD extends Controller {
         }
     }
 
-    public static void show(String id) throws Exception {
+    public static void show(String id, String page, String where) throws Exception {
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);
+
+        if (where == null || "".equals(where)) {
+            where = type.createWhereFilterClausule();
+        }
+        String search = params.get("search");
+
         Model object = type.findById(id);
         notFoundIfNull(object);
         try {
-            render(type, object);
+            render(type, object, page, where, search);
         } catch (TemplateNotFoundException e) {
-            render("CRUD/show.html", type, object);
+            render("CRUD/show.html", type, object, page, where, search);
         }
     }
 
@@ -112,7 +130,7 @@ public abstract class CRUD extends Controller {
         notFoundIfNull(pai);
 
         pai.pecharRecursivo();
-        Auditoria.facerAuditoria(pai, Seguridade.usuario(), play.i18n.Messages.get("generic.accionPechar",""), Seguridade.organismo());
+        Auditoria.facerAuditoria(pai, Seguridade.usuario(), play.i18n.Messages.get("generic.accionPechar", ""), Seguridade.organismo());
 
         if (page < 1) {
             page = 1;
@@ -136,7 +154,7 @@ public abstract class CRUD extends Controller {
         UnionSecureModel object = (UnionSecureModel) type.findById(id);
         notFoundIfNull(object);
         object.abrirRecursivo();
-        Auditoria.facerAuditoria(object, Seguridade.usuario(),play.i18n.Messages.get("generic.accionAbrir",""), Seguridade.organismo());
+        Auditoria.facerAuditoria(object, Seguridade.usuario(), play.i18n.Messages.get("generic.accionAbrir", ""), Seguridade.organismo());
 
 
         if (page < 1) {
@@ -154,52 +172,71 @@ public abstract class CRUD extends Controller {
         }
     }
 
-    public static void showFromCache(String cacheId) throws Exception {
+    public static void showFromCache(int page, String where, String search, String from, String searchFields,
+            String orderBy, String order, String cacheId) throws Exception {
 
 
-
+        ObjectType type = null;
+        Model object = null;
         ForeignKeyCache fkc = (ForeignKeyCache) Cache.get(cacheId);
-        ForeignKeyValues fkv = (ForeignKeyValues) fkc.getForeignKeyValues();
+
+        if (fkc != null) {
 
 
+            ForeignKeyValues fkv = (ForeignKeyValues) fkc.getForeignKeyValues();
 
-        Model object = fkv.getPai();
-        ObjectType type = fkv.getTipoPai();
-        String pp = type.getListAction().toString();
-        notFoundIfNull(object);
+            object = fkv.getPai();
+            type = fkv.getTipoPai();
+            String pp = type.getListAction().toString();
+            notFoundIfNull(object);
+            //Agora as variables de cache borranse cada 3 minutos
+            //Cache.delete(cacheId);
 
-        //borramos a cache
-        Cache.delete(cacheId);
+            try {
+                render("CRUD/show.html", type, object, page, where, search, from);
+            } catch (TemplateNotFoundException e) {
+                Logger.error(e, "Erro aopintar dende a chache");
+            }
 
-        try {
-            render("CRUD/show.html", type, object);
-        } catch (TemplateNotFoundException e) {
-            Logger.error(e, "Erro aopintar dende a chache");
+        } else {
+            flash.error(play.i18n.Messages.get("crud.cache.error"));
+            render("errors/cache.html");
         }
     }
 
-    public static void createFromCache(String cacheId) throws Exception {
+    public static void createFromCache(int page, String where, String search, String from, String searchFields,
+            String orderBy, String order, String cacheId) throws Exception {
 
 
 
         ForeignKeyCache fkc = (ForeignKeyCache) Cache.get(cacheId);
-        ForeignKeyValues fkv = (ForeignKeyValues) fkc.getForeignKeyValues();
+
+        if (fkc != null) {
+
+            ForeignKeyValues fkv = (ForeignKeyValues) fkc.getForeignKeyValues();
 
 
 
-        Model object = fkv.getPai();
-        ObjectType type = fkv.getTipoPai();
-        String pp = type.getListAction().toString();
-        notFoundIfNull(object);
+            Model object = fkv.getPai();
+            ObjectType type = fkv.getTipoPai();
+            String pp = type.getListAction().toString();
+            notFoundIfNull(object);
 
-        //borramos a cache
-        //  Cache.delete(cacheId);
+            //Agora as variables de cache borranse cada 3 minutos
+            //Cache.delete(cacheId);
 
-        try {
-            render("CRUD/blank.html", type, object);
-        } catch (TemplateNotFoundException e) {
-            Logger.error(e, "Erro aopintar dende a chache");
+            try {
+                render("CRUD/blank.html", type, object, page, where, search, from, cacheId);
+            } catch (TemplateNotFoundException e) {
+                Logger.error(e, "Erro aopintar dende a chache");
+            }
+
+        } else {
+
+            flash.error(play.i18n.Messages.get("crud.cache.error"));
+            render("errors/cache.html");
         }
+
     }
 
     @SuppressWarnings("deprecation")
@@ -236,6 +273,10 @@ public abstract class CRUD extends Controller {
 
         Model object = type.findById(id);
         notFoundIfNull(object);
+        String where = params.get("where");
+        String search = params.get("search");
+        String page = params.get("page");
+        String listFromForm = params.get("from");
 
         Binder.bindBean(params.getRootParamNode(), "object", object);
         if (params.get("_save") != null || params.get("_saveAndContinue") != null) {
@@ -245,19 +286,19 @@ public abstract class CRUD extends Controller {
                         play.i18n.Messages.get("crud.hasErrors"));
                 try {
                     render(request.controller.replace(".", "/") + "/show.html",
-                            type, object);
+                            type, object, page, where, search, listFromForm);
                 } catch (TemplateNotFoundException e) {
-                    render("CRUD/show.html", type, object);
+                    render("CRUD/show.html", type, object, page, where, search, listFromForm);
                 }
             }
 
             saveUnion(object, org, play.i18n.Messages.get("generic.accionActualizar"));
-            
+
             flash.success(play.i18n.Messages.get("crud.saved", type.modelName));
             if (params.get("_save") != null) {
-                redirect(request.controller + ".list");
+                redirect(request.controller + ".list", page, where, search, listFromForm);
             }
-            redirect(request.controller + ".show", object._key());
+            redirect(request.controller + ".show", object._key(), page, where, search, listFromForm);
         } else if (params.get("_addForeignKey") != null || params.get("_newForeignKey") != null
                 || params.get("_deleteForeignKey") != null) {
 
@@ -271,6 +312,10 @@ public abstract class CRUD extends Controller {
             fkv.setNomeTipoFillo(tipo);
             fkv.setProcedencia(fkv.PROCEDENCIA_SHOW);
             fkv.setControladorPai(getControllerClass());
+            fkv.setWhere(where);
+            fkv.setPage(page);
+            fkv.setSearch(search);
+            fkv.setFrom(listFromForm);
 
 
             if (params.get("_addForeignKey") != null) {
@@ -295,32 +340,32 @@ public abstract class CRUD extends Controller {
                     fkv.deleteValueForeign(AllMultiple);
                 }
 
-                render("CRUD/show.html", type, object);
+                render("CRUD/show.html", type, object, page, where, search, listFromForm);
 
             }
 
             ForeignKeyCache fkc = new ForeignKeyCache(fkv);
 
-            Cache.set(fkc.getId(), fkc);
+            Cache.set(fkc.getId(), fkc,"3mn");
             params.put("cacheId", fkc.getId());
 
-            redirect(fkc.redirectFillo());
+            fkc.redirectFillo();
         }
     }
 
-    
-    private static void saveUnion(Model object,Organismo org, String accion) throws Exception{    
-            setDataModificacion(object);
-            setDataActual(object);
-            setUser(object);
-            setOrganismo(object, org);
-            setSecureEstado(object);
-            object._save();
-            Auditoria.facerAuditoria(object,User.find("byUsuario", Seguridade.connected()).<User>first(),accion,org);
-            actualizaMensaxeIdioma(object);
-            creaConvocaAsemblea(object, org);
+    private static void saveUnion(Model object, Organismo org, String accion) throws Exception {
+        setDataModificacion(object);
+        setDataActual(object);
+        setUser(object);
+        setAvisode(object);
+        setOrganismo(object, org);
+        setSecureEstado(object);
+        object._save();
+        Auditoria.facerAuditoria(object, User.find("byUsuario", Seguridade.connected()).<User>first(), accion, org);
+        actualizaMensaxeIdioma(object);
+        creaConvocaAsemblea(object, org);
     }
-    
+
     private static void creaConvocaAsemblea(Model object, Organismo org) {
         try {
             if (object.getClass().getName().equals("models.Asemblea")) {
@@ -395,6 +440,16 @@ public abstract class CRUD extends Controller {
         }
     }
 
+    private static void setAvisode(Model object) {
+        try {
+            User user = User.find("byUsuario", Seguridade.connected()).<User>first();
+            Field t = object.getClass().getDeclaredField("avisode");
+            t.set(object, user);
+        } catch (Exception ex) {
+            Logger.debug("Non implementa NotificacionInterna");
+        }
+    }
+
     private static void setDataActual(Model object) {
         try {
             Field d = object.getClass().getDeclaredField("dataAlta");
@@ -417,13 +472,13 @@ public abstract class CRUD extends Controller {
         try {
 
             MensaxesIdioma menIdi = (MensaxesIdioma) Class.forName("models.MensaxesIdioma").cast(object);
-            LoadPropertiesFiles lpf=new LoadPropertiesFiles();
+            LoadPropertiesFiles lpf = new LoadPropertiesFiles();
             lpf.loadProperties(menIdi);
         } catch (Exception ex) {
             Logger.debug("Non implementa MensaxesIdioma");
         }
     }
-    
+
     private static void setPassEUser(Model object) {
         try {
 
@@ -437,7 +492,7 @@ public abstract class CRUD extends Controller {
         } catch (Exception ex) {
             Logger.debug("Non implementa User");
         }
-    }    
+    }
 
     private static String getSufixoCampo(String a, String b, String c) {
         String sufixoCampo = "";
@@ -458,36 +513,78 @@ public abstract class CRUD extends Controller {
 
 
         ForeignKeyCache fkc = (ForeignKeyCache) Cache.get(cacheId);
-        ForeignKeyValues fkv = (ForeignKeyValues) fkc.getForeignKeyValues();
-        fkv.setControladorFillo(getControllerClass());
-        fkv.addValueForeign(id);
 
-        redirect(fkc.redirectPai());
+        if (fkc != null) {
+            ForeignKeyValues fkv = (ForeignKeyValues) fkc.getForeignKeyValues();
+            fkv.setControladorFillo(getControllerClass());
+
+
+            String where = fkv.getWhere();
+            String search = fkv.getSearch();
+            String page = fkv.getPage();
+            String listFromForm = fkv.getFrom();
+
+
+            params.put("where", where);
+            params.put("search", search);
+            params.put("from", listFromForm);
+            params.put("page", page);
+
+            fkv.addValueForeign(id);
+
+            fkc.redirectPai();
+        } else {
+            flash.error(play.i18n.Messages.get("crud.cache.error"));
+            render("errors/cache.html");
+        }
+
     }
 
-    public static void blank() throws Exception {
+    public static void blank(int page, String where, String search, String from) throws Exception {
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);
+
+
+        String whereClausule = null;
+
+
+
+
+        if (from != null && "true".equals(from)) {
+
+            type.setValuesFromSearch(where);
+
+        } else {
+            where = type.createWhereFilterClausule();
+        }
+
+        //String where=type.createWhereFilterClausule();
+
         Constructor<?> constructor = type.entityClass.getDeclaredConstructor();
         constructor.setAccessible(true);
         Model object = (Model) constructor.newInstance();
         try {
-            render(type, object);
+            render(type, object, page, where, search);
         } catch (TemplateNotFoundException e) {
-            render("CRUD/blank.html", type, object);
+            render("CRUD/blank.html", type, object, page, where, search);
         }
     }
 
-    public static void blankForeign() throws Exception {
+    public static void blankForeign(int page, String where, String search, String from, String searchFields,
+            String orderBy, String order, String cacheId) throws Exception {
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);
+
         Constructor<?> constructor = type.entityClass.getDeclaredConstructor();
         constructor.setAccessible(true);
         Model object = (Model) constructor.newInstance();
+
+
+
         try {
             render(type, object);
         } catch (TemplateNotFoundException e) {
-            render("CRUD/blankForeign.html", type, object);
+            render("CRUD/blankForeign.html", type, object, page, where, search, from);
         }
     }
 
@@ -500,6 +597,11 @@ public abstract class CRUD extends Controller {
         constructor.setAccessible(true);
         Model object = (Model) constructor.newInstance();
         Organismo org = Seguridade.organismo();
+
+        String where = params.get("where");
+        String search = params.get("search");
+        String page = params.get("page");
+        String from = params.get("from");
 
         Binder.bindBean(params.getRootParamNode(), "object", object);
         setPassEUser(object);
@@ -540,17 +642,17 @@ public abstract class CRUD extends Controller {
                     fkv.deleteValueForeign(AllMultiple);
                 }
 
-                render("CRUD/blank.html", type, object);
+                render("CRUD/blank.html", type, object, page, where, search, from);
 
             }
 
 
             ForeignKeyCache fkc = new ForeignKeyCache(fkv);
 
-            Cache.set(fkc.getId(), fkc);
+            Cache.set(fkc.getId(), fkc,"3mn");
             params.put("cacheId", fkc.getId());
 
-            redirect(fkc.redirectFillo());
+            fkc.redirectFillo();
 
         }
 
@@ -559,13 +661,13 @@ public abstract class CRUD extends Controller {
             renderArgs.put("error", play.i18n.Messages.get("crud.hasErrors"));
             try {
                 render(request.controller.replace(".", "/") + "/blank.html",
-                        type, object);
+                        type, object, page, where, search, from);
             } catch (TemplateNotFoundException e) {
-                render("CRUD/blank.html", type, object);
+                render("CRUD/blank.html", type, object, page, where, search, from);
             }
         }
-       
-       saveUnion(object, org, play.i18n.Messages.get("generic.accionNovoAlta"));
+
+        saveUnion(object, org, play.i18n.Messages.get("generic.accionNovoAlta"));
 
 
         //Si o obxeto do modelo implementa a interface Avisable enviarase un 
@@ -584,20 +686,24 @@ public abstract class CRUD extends Controller {
 
         flash.success(play.i18n.Messages.get("crud.created", type.modelName));
         if (params.get("_save") != null) {
-            redirect(request.controller + ".list");
+            redirect(request.controller + ".list", page, where, search, from);
         }
         if (params.get("_saveAndAddAnother") != null) {
-            redirect(request.controller + ".blank");
+            redirect(request.controller + ".blank", page, where, search, from);
         }
 
 
-        redirect(request.controller + ".show", object._key());
+        redirect(request.controller + ".show", object._key(), page, where, search, from);
     }
 
     public static void createForeign() throws Exception {
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);
         ForeignKeyCache fkc = (ForeignKeyCache) Cache.get(params.get("cacheId"));
+        
+        
+        if (fkc!=null){
+        ForeignKeyValues fkv = (ForeignKeyValues) fkc.getForeignKeyValues();
         Constructor<?> constructor = type.entityClass.getDeclaredConstructor();
         Organismo org = Seguridade.organismo();
         constructor.setAccessible(true);
@@ -616,37 +722,55 @@ public abstract class CRUD extends Controller {
                 }
             }
 
-            
+
             saveUnion(object, org, play.i18n.Messages.get("generic.accionNovoAlta"));
-            
+
             flash.success(play.i18n.Messages.get("crud.created", type.modelName));
 
-            ForeignKeyValues fkv = (ForeignKeyValues) fkc.getForeignKeyValues();
+
             ObjectType.get(getControllerClass());
             fkv.setControladorFillo(getControllerClass());
             fkv.addValueForeign(object._key().toString());
+
+
         }
-        redirect(fkc.redirectPai());
+
+
+
+        fkc.redirectPai();
+        }else{
+            flash.error(play.i18n.Messages.get("crud.cache.error"));
+            render("errors/cache.html");
+        }
 
     }
 
     public static void delete(String id) throws Exception {
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);
+        String where = type.createWhereFilterClausule();
         Model object = type.findById(id);
+        String search = params.get("search");
+        String page = params.get("page");
+
         notFoundIfNull(object);
         Organismo org = Seguridade.organismo();
         try {
-            Auditoria.facerAuditoria(object,User.find("byUsuario", Seguridade.connected()).<User>first(),"Borrar",org);
+            Auditoria.facerAuditoria(object, User.find("byUsuario", Seguridade.connected()).<User>first(), "Borrar", org);
             object._delete();
 
         } catch (Exception e) {
-            flash.error(play.i18n.Messages.get("crud.delete.error",
-                    type.modelName));
-            redirect(request.controller + ".show", object._key());
+
+            if (e instanceof javax.persistence.PersistenceException) {
+                flash.error(play.i18n.Messages.get("crud.delete.constraintViolationError", type.modelName));
+            } else {
+                flash.error(play.i18n.Messages.get("crud.delete.error", type.modelName));
+            }
+            redirect(request.controller + ".list", object._key(), page, where, search, "true");
+
         }
         flash.success(play.i18n.Messages.get("crud.deleted", type.modelName));
-        redirect(request.controller + ".list");
+        redirect(request.controller + ".list", page, where, search, "true");
     }
 
     protected static ObjectType createObjectType(
@@ -787,9 +911,9 @@ public abstract class CRUD extends Controller {
                 //Filtramos sempre polo id do organismo
                 Field t = getOrganismoField();
                 if (where == null || "".equals(where)) {
-                    where = " organismo_id=" + Seguridade.organismo().id;
+                    where = " organismo_id='" + Seguridade.organismo().id + "'";
                 } else {
-                    where = where + " and  organismo_id=" + Seguridade.organismo().id;
+                    where = where + " and  organismo_id='" + Seguridade.organismo().id + "'";
                 }
 
             } catch (NoSuchFieldException ex) {
@@ -809,9 +933,9 @@ public abstract class CRUD extends Controller {
                 //Filtramos sempre polo id do organismo
                 Field t = getOrganismoField();
                 if (where == null || "".equals(where)) {
-                    where = " organismo_id=" + Seguridade.organismo().id;
+                    where = " organismo_id='" + Seguridade.organismo().id + "'";
                 } else {
-                    where = where + " and  organismo_id=" + Seguridade.organismo().id;
+                    where = where + " and  organismo_id='" + Seguridade.organismo().id + "'";
                 }
 
             } catch (NoSuchFieldException ex) {
@@ -835,9 +959,88 @@ public abstract class CRUD extends Controller {
             return factory.findById(boundId);
         }
 
+        private String recoverValuesFromString(ObjectField f, String where, String dataIniFin) {
+            String valor = "";
+            String clave = f.property.name;
+            int ini = 0;
+            int fin = 0;
+            if (where.indexOf(clave) != -1) {
+                if (f.property.isRelation) {
+
+                    ini = where.indexOf("='", where.indexOf(clave)) + 2;
+                    fin = where.indexOf("'", where.indexOf("='", where.indexOf(clave)) + 2);
+
+                    if (fin == -1) {
+                        fin = where.length();
+                    }
+                    valor = where.substring(ini, fin);
+
+                } else if ("date".equals(f.type)) {
+                    if (where.indexOf("between convert(") != -1) {
+                        if ("ini".equals(dataIniFin)) {
+                            ini = where.indexOf("between convert('", where.indexOf(clave)) + 17;
+                            fin = where.indexOf("'", ini);
+                        }
+
+                        if ("fin".equals(dataIniFin)) {
+                            ini = where.indexOf("and convert('", where.indexOf(clave)) + 13;
+                            fin = where.indexOf("'", ini);
+                        }
+                    } else {
+                        if ("ini".equals(dataIniFin)) {
+                            ini = where.indexOf(">=convert('", where.indexOf(clave)) + 11;
+                            fin = where.indexOf("'", ini);
+                        }
+
+                        if ("fin".equals(dataIniFin)) {
+                            ini = where.indexOf("<=convert('", where.indexOf(clave)) + 11;
+                            fin = where.indexOf("'", ini);
+                        }
+
+                    }
+                    valor = where.substring(ini, fin);
+                    valor = Tools.getLocaleDateFormat(Tools.getDataBaseDateFormat(valor));
+
+                } else {
+                    ini = where.indexOf("like '%", where.indexOf(clave)) + 7;
+                    fin = where.indexOf("%'", where.indexOf(clave)) + 7;
+                    valor = where.substring(ini, fin);
+
+                }
+
+            }
+
+            return valor;
+        }
+
+        public void setValuesFromSearch(String where) {
+            List<ObjectField> fields = this.getFields();
+
+            if (where != null) {
+                for (ObjectField f : fields) {
+                    if (f.filtro) {
+
+                        if (f.property.isRelation) {
+                            params.put("object." + f.name + ".id", recoverValuesFromString(f, where, null));
+
+                        } else if ("date".equals(f.type)) {
+
+                            params.put("object." + f.name + ".ini", recoverValuesFromString(f, where, "ini"));
+                            params.put("object." + f.name + ".fin", recoverValuesFromString(f, where, "fin"));
+
+                        } else {
+                            params.put("object." + f.name, recoverValuesFromString(f, where, null));
+
+                        }
+                    }
+                }
+            }
+        }
+
         public String createWhereFilterClausule() {
             String where = "";
             List<ObjectField> fields = this.getFields();
+
             for (ObjectField f : fields) {
                 if (f.filtro) {
                     String valor = "";
@@ -868,9 +1071,9 @@ public abstract class CRUD extends Controller {
                     if (valor != null && !"".contains(valor)) {
                         if ("date".equals(f.type)) {
                             valor = f.property.name + " " + (String) valor;
-                        } else if("relation".equals(f.type)) {
-                            valor = f.property.name + " = " + (String) valor;
-                        } else{
+                        } else if ("relation".equals(f.type)) {
+                            valor = f.property.name + " ='" + (String) valor + "'";
+                        } else {
                             valor = f.property.name + " like '%" + (String) valor + "%'";
                         }
                         if (!"".equals(where)) {
@@ -1051,20 +1254,44 @@ public abstract class CRUD extends Controller {
             return this.foreignKeyValues;
         }
 
-        public String redirectFillo() {
+        public void redirectFillo() {
+
+            String where = params.get("where");
+            String search = params.get("search");
+            String page = params.get("page");
+            String from = params.get("from");
+            String cacheId = params.get("cacheId");
+
+            this.getForeignKeyValues().setWhere(where);
+            this.getForeignKeyValues().setPage(page);
+            this.getForeignKeyValues().setSearch(search);
+            this.getForeignKeyValues().setFrom(from);
+
 
             if (this.getForeignKeyValues().getTipoForeign().equals(this.getForeignKeyValues().FOREIGN_NOVA)) {
-                return "/" + this.getForeignKeyValues().getFillo().getSimpleName() + "s/blankForeign?cacheId=" + this.getId();
+                redirect(this.getForeignKeyValues().getFillo().getSimpleName() + "s" + ".blankForeign", page, where, search, from, null, null, null, cacheId);
+
             } else {
-                return "/" + this.getForeignKeyValues().getFillo().getSimpleName() + "s/listForeign?cacheId=" + this.getId();
+                redirect(this.getForeignKeyValues().getFillo().getSimpleName() + "s" + ".listForeign", page, where, search, from, null, null, null, cacheId);
             }
         }
 
-        public String redirectPai() {
+        public void redirectPai() {
+
+            String where = this.getForeignKeyValues().getWhere();
+            String search = this.getForeignKeyValues().getSearch();
+            String page = this.getForeignKeyValues().getPage();
+            String from = this.getForeignKeyValues().getFrom();
+            String cacheId = params.get("cacheId");
+            params.put("where", where);
+            params.put("search", search);
+            params.put("from", from);
+            params.put("page", page);
+
             if (this.getForeignKeyValues().getProcedencia().equals(this.getForeignKeyValues().PROCEDENCIA_SHOW)) {
-                return "/" + this.getForeignKeyValues().getPai().getClass().getSimpleName() + "s/showFromcache?cacheId=" + this.getId();
+                redirect(this.getForeignKeyValues().getControladorPai().getSimpleName() + ".showFromcache", page, where, search, from, null, null, null, cacheId);
             } else {
-                return "/" + this.getForeignKeyValues().getPai().getClass().getSimpleName() + "s/createFromCache?cacheId=" + this.getId();
+                redirect(this.getForeignKeyValues().getControladorPai().getSimpleName() + ".createFromCache", page, where, search, from, null, null, null, cacheId);
             }
 
         }
@@ -1077,9 +1304,7 @@ public abstract class CRUD extends Controller {
 
         public String toString() {
             return "id: " + this.id
-                    + " ForeigKeyValues: " + this.foreignKeyValues.toString()
-                    + " RedirecFillo: " + this.redirectFillo()
-                    + " RedirecPai: " + this.redirectPai();
+                    + " ForeigKeyValues: " + this.foreignKeyValues.toString();
         }
     }
 
@@ -1100,6 +1325,10 @@ public abstract class CRUD extends Controller {
         private String campo;
         private String procedencia;
         private String tipoForeign;
+        private String where;
+        private String page;
+        private String search;
+        private String from;
 
         public ForeignKeyValues(Model pai) {
             this.pai = pai;
@@ -1262,6 +1491,7 @@ public abstract class CRUD extends Controller {
         public void setNomeTipoFillo(String nomeTipoFillo) {
             this.nomeTipoFillo = "models." + nomeTipoFillo;
             setFillo(this.nomeTipoFillo);
+
         }
 
         /**
@@ -1391,6 +1621,62 @@ public abstract class CRUD extends Controller {
          */
         public void setTipoForeign(String tipoForeign) {
             this.tipoForeign = tipoForeign;
+        }
+
+        /**
+         * @return the where
+         */
+        public String getWhere() {
+            return where;
+        }
+
+        /**
+         * @param where the where to set
+         */
+        public void setWhere(String where) {
+            this.where = where;
+        }
+
+        /**
+         * @return the page
+         */
+        public String getPage() {
+            return page;
+        }
+
+        /**
+         * @param page the page to set
+         */
+        public void setPage(String page) {
+            this.page = page;
+        }
+
+        /**
+         * @return the search
+         */
+        public String getSearch() {
+            return search;
+        }
+
+        /**
+         * @param search the search to set
+         */
+        public void setSearch(String search) {
+            this.search = search;
+        }
+
+        /**
+         * @return the from
+         */
+        public String getFrom() {
+            return from;
+        }
+
+        /**
+         * @param from the from to set
+         */
+        public void setFrom(String from) {
+            this.from = from;
         }
     }
 }

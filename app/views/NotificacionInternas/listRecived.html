@@ -8,17 +8,33 @@
     <div id="crudListSearch">
         #{crud.search /}
     </div>
+       
+    <div id="crudListPagination">
+        #{crud.pagination /}
+    </div>    
+    
 
     <div id="crudListTable">
-        #{crud.tableRecived fields:['dataAlta','asunto','avisode','accion']}
+        #{crud.tableRecived fields:['asunto','avisode','dataAlta','prioridade']}
         #{crud.custom 'dataAlta'}
         #{if (object.dataAlta!=null)}
         ${object.dataAlta.format()}        
         #{/if}                                  
         #{/crud.custom}  
-        #{crud.custom 'accion'}
-        #{a @showNotificaion().add('id',object._key())}&{'NotificacionInterna.verNotificacion'}#{/a} 
-        #{/crud.custom}               
+        #{crud.custom 'prioridade'}
+        #{if (object.prioridade!=null)}
+        #{if (object.prioridade.id==1)}
+        <img src="/public/images/line/transparentInputImage.png" class="prioridadeAlta" title="&{object.prioridade}"/>        
+        #{/if}                                  
+        #{if (object.prioridade.id==2)}
+        <img src="/public/images/line/transparentInputImage.png" class="prioridadeMedia" title="&{object.prioridade}"/>        
+        #{/if}                                  
+        #{if (object.prioridade.id==3)}
+        <img src="/public/images/line/transparentInputImage.png" class="prioridadeBaixa" title="&{object.prioridade}"/>        
+        #{/if}                                          
+        #{/if}           
+        #{/crud.custom}        
+                            
         #{/crud.tableRecived}
      </div>
 

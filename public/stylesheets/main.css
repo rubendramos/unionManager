@@ -194,10 +194,11 @@ body {
 }
 
 #title h2 {
-	font-size: 26px;
+	font-size: 24px;
 	margin: 0;
 	font-weight: normal;
 }
+
 
 /** Main content **/
 #main {
@@ -440,6 +441,18 @@ form label {
 	margin-bottom: 30px;
 }
 
+
+#pagination input {
+	color: #869AB1;
+	font-size: 90%;
+}
+
+#pagination input previous {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
 #pagination a {
 	color: #869AB1;
 	font-size: 90%;
@@ -535,14 +548,14 @@ tr.odd {
 	padding: 0;
 }
 
-#crudListTableold {
+#crudListTable {
 	margin: 10px 0;
 }
 
-#crudListTable {
+#crudListTableodl {
 	list-style: none;
 	width: 98%;
-	margin: 30px auto 20px;
+	margin: 10px auto 10px;
 	padding: 10px 10px 10px;
 	position: relative;
 	min-height: 150px;
@@ -552,6 +565,97 @@ tr.odd {
 	border-radius: 10px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
+}
+
+#crudListTable a img.pdf {
+width:20px; 
+height:20px; 
+border:0;
+text-align: right;
+background: transparent url(/public/images/pdf.png) no-repeat center;
+border-style: none;
+vertical-align: sub;
+}
+
+#crudListTable input.afiliadosmais {
+width:20px; 
+height:20px; 
+border:0;
+text-align: right;
+background: transparent url(/public/images/afiliadosmais.png) no-repeat center;
+border-style: none;
+vertical-align: sub;
+}
+
+#crudListTable input.afiliadosmenos {
+width:20px; 
+height:20px; 
+border:0;
+text-align: right;
+background: transparent url(/public/images/afiliadosmenos.png) no-repeat center;
+border-style: none;
+vertical-align: sub;
+}
+
+#crudListTable  input.sendMail {
+width:20px; 
+height:20px; 
+border:0;
+text-align: right;
+background: transparent url(/public/images/ecorreo.jpg) no-repeat center;
+border-style: none;
+vertical-align: sub;
+
+}
+
+#crudListTable a img.check {
+width:20px; 
+height:20px; 
+border:0;
+text-align: right;
+background: transparent url(/public/images/Check.png) no-repeat center;
+border-style: none;
+vertical-align: sub;
+}
+
+#crudListTable a img.read {
+width:20px; 
+height:20px; 
+border:0;
+text-align: right;
+background: transparent url(/public/images/read.png) no-repeat center;
+border-style: none;
+vertical-align: sub;
+}
+
+#crudListTable  img.prioridadeAlta {
+width:15px; 
+height:15px; 
+border:0;
+text-align: right;
+background: #ff0000;
+border-style: none;
+vertical-align: sub;
+}
+
+#crudListTable  img.prioridadeMedia {
+width:15px; 
+height:15px; 
+border:0;
+text-align: right;
+background: #ffaa00;
+border-style: none;
+vertical-align: sub;
+}
+
+#crudListTable  img.prioridadeBaixa {
+width:15px; 
+height:15px; 
+border:0;
+text-align: right;
+background: #ffff00;
+border-style: none;
+vertical-align: sub;
 }
 
 .crudField,.objectForm {

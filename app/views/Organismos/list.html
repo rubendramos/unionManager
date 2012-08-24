@@ -8,12 +8,18 @@
     <div id="crudListSearch">
         #{crud.search /}
     </div>
+       
+    <div id="crudListPagination">
+        #{crud.pagination /}
+    </div>    
+    
 
     <div id="crudListTable">
         #{crud.tableNonEliminar fields:['acronimo','nome','descricion','organismo.ficha']}                      
         #{crud.custom 'organismo.ficha'}  
-          <a class="del" href="@{xeneraFichaOrganismo(object.id,page,search)}">&{'organismo.fichaOrganismo'}</a>             
-        #{/crud.custom}            
+          <a class="pdf" href="@{xeneraFichaOrganismo(object.id,page,search)}"><img src="/public/images/line/transparentInputImage.png" class="pdf" title="&{'organismo.fichaOrganismo'}"/></a>               
+
+          #{/crud.custom}            
         #{/crud.tableNonEliminar}
     </div>
 

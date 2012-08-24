@@ -1,4 +1,4 @@
-#{form action:@list().remove('page'), method:'POST'}
+#{form action:@list().remove('page'), method:'POST', name:'searching'}
 
 %{
     if(_object) {
@@ -18,6 +18,9 @@
         _body.setProperty('fieldsHandler', fieldsHandler);
         _body.toString(); // we skeep the real result ...
     }
+    
+    bText="false";
+    bsearch="false"
 }%
 
 
@@ -51,8 +54,9 @@
         #{/ifnot}
 
        #{if field.filtro}
+        %{ bsearch="true";}%
         #{if field.type == 'text'}
-            #{crud.textField name:field.name, value:(currentObject ? currentObject[field.name] : null) /}
+            #{crud.textField name:field.name, value:(currentObject ? currentObject[field.name] : null) /}            
         #{/if}
 
         #{if field.type == 'password'}
@@ -64,7 +68,7 @@
         #{/if}
 
         #{if field.type == 'longtext'}
-            #{crud.longtextField name:field.name, value:(currentObject ? currentObject[field.name] : null) /}
+            #{crud.longtextField name:field.name, value:(currentObject ? currentObject[field.name] : null) /}            
         #{/if}
 
         #{if field.type == 'number'}
@@ -93,26 +97,37 @@
             #{crud.hiddenField name:field.name, value:(currentObject ? currentObject[field.name] : null) /}
         #{/if}
         
- <span class="crudHelp">
+    <span class="crudHelp">
         &{am}           
     </span>        
         #{/if}
-
+        
+    #{if field.type == 'text'}
+    %{ bText="true";}%
+    %{ bsearch="true";}%
+    #{/if}        
+    
     %{ } }%
 
-</div>
-
+</div> 
 #{/list}
     
-
+    <input type="hidden" name="page"/>
+    <input type="hidden" name="id"/>
     #{if _fields}
         <input type="hidden" name="searchFields" value="${_fields.toString().substring(1, _fields.toString().length()-1).replace(',', '')}" />
     #{/if}
     
+    %{ if(bText.equals("true")) { }%
     <label>
         &{'crud.filtro.cadeaTexto'}
-    </label>
-    <input type="text" name="search" value="${params.search?.escape()?.raw()}" /> <input type="submit" value="&{'crud.search'}" />
+    </label>    
+    <input type="text" name="search" value="${params.search?.escape()?.raw()}" /> 
+     %{} }%
+     %{ if(bsearch.equals("true")) { }%
+        <input type="submit" value="&{'crud.search'}" />
+     %{} }%
+    
     #{if _caller.totalCount!=_caller.count}
         (<a href="@{list()}">&{'crud.list.totalSize', _caller.totalCount}</a>)
     #{/if}

@@ -34,4 +34,44 @@ if(confirm(text))  document.location.href = href;
 function confirmaAccion(text,href) {
 if(confirm(text))  document.location.href = href;
 }
+
+
+function confirmaAccionSubmitSearching(text,accion,page,id) {
+if(confirm(text)) {
+    document.searching.page.value=page;
+    document.searching.id.value=id;
+    document.searching.action=accion;
+    document.searching.submit();  
+} 
+return null;
+}
+
+function accionSubmitSearching(accion,page,id) {
+
+    document.searching.page.value=page;
+    document.searching.id.value=id;
+    document.searching.action=accion;    
+    document.searching.submit();  
+}
+
+
+
+function submitAccionSave(save,saveAndContinue) {
+    
+    document.searching._save.value=save;
+    document.searching._saveAndContinue.value=saveAndContinue;  
+    document.searching.submit();  
+}
+
+function submitAccion(accion) {
+
+    document.searching.action=accion;
+    document.searching.submit();  
+}
+
+function showPopupChat(url) {
+newwindow=window.open(url,'name','height=690,width=520,top=100,left=550,location=0');
+if (window.focus) {newwindow.focus()}
+}
+
  

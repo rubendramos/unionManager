@@ -20,8 +20,10 @@ public class NotificacionInternas extends CRUD {
             String orderBy, String order) {
         String where="";
         ObjectType type = ObjectType.get(getControllerClass());
+        if(orderBy==null || "".equals(orderBy)){
         orderBy="dataAlta";
         order="DESC";
+        }
         notFoundIfNull(type);
         if (page < 1) {
             page = 1;
@@ -54,8 +56,10 @@ public class NotificacionInternas extends CRUD {
         ObjectType type = ObjectType.get(getControllerClass());
         String where=type.createWhereFilterClausule();         
         User u=User.find("byUsuario", Seguridade.connected()).<User>first();
+        if(orderBy==null || "".equals(orderBy)){
         orderBy="dataAlta";
         order="DESC";
+        }
         notFoundIfNull(type);
         if (page < 1) {
             page = 1;
@@ -89,8 +93,10 @@ public class NotificacionInternas extends CRUD {
         ObjectType type = ObjectType.get(getControllerClass());
         String where=type.createWhereFilterClausule();         
         User u=User.find("byUsuario", Seguridade.connected()).<User>first();
+        if(orderBy==null || "".equals(orderBy)){
         orderBy="dataAlta";
         order="DESC";
+        }
         notFoundIfNull(type);
         if (page < 1) {
             page = 1;
@@ -122,7 +128,7 @@ public class NotificacionInternas extends CRUD {
         ObjectType type = ObjectType.get(getControllerClass());                     
         NotificacionInterna ni=(NotificacionInterna)type.findById(id);
         User u=User.find("byUsuario", Seguridade.connected()).<User>first();
-        NotificacionInterna_User notificacionUser=NotificacionInterna_User.findByContactoENotificacion(u.id,id);
+        NotificacionInterna_User notificacionUser=NotificacionInterna_User.findByContactoENotificacion(u.id,Long.valueOf(id));
         notificacionUser.setIsLeido(true);
         notificacionUser._save();
     }
@@ -130,7 +136,7 @@ public class NotificacionInternas extends CRUD {
    public static void macarLeidoERepintar(String id,String page, String search) throws Exception {
    
             marcarComoLeido(id);
-            listRecived(Integer.parseInt(page), search,null,null,null);            
+            listRecivedNonLeidas(Integer.parseInt(page), search,null,null,null);            
   
    }
    

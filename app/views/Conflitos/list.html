@@ -9,6 +9,10 @@
         #{crud.search /}
     </div>
 
+    <div id="crudListPagination">
+        #{crud.paginationForeign /}
+    </div>    
+    
     <div id="crudListTable">
         #{crud.table fields:['tipoConflito','nome','descricion','dataInicio','dataRemate','conflito.fichaConflito']}
         #{crud.custom 'dataInicio'}
@@ -23,8 +27,10 @@
         #{/crud.custom}
         
         #{crud.custom 'conflito.fichaConflito'}  
-          <a class="del" href="@{xeneraFichaConflito(object.id,page,search)}">&{'conflito.fichaConflito'}</a>               
-        #{/crud.custom}               
+                       
+          <a class="pdf" href="@{xeneraFichaConflito(object.id,page,search)}"><img src="/public/images/line/transparentInputImage.png" class="pdf" title="&{'conflito.fichaConflito'}"/></a>               
+
+          #{/crud.custom}               
         
         #{/crud.table}
     </div>

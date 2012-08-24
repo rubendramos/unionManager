@@ -1,11 +1,21 @@
 %{ nbPages = _caller.count.page(controllers.CRUD.getPageSize()) }%
+%{ nrowsPage = controllers.CRUD.getPageSize() 
+   startRow=nrowsPage*(_caller.page-1)+1
+   endRow=nrowsPage*(_caller.page-1)+nrowsPage
+}%
 
 <p class="crudCount">
-    &{'crud.list.size', _caller.count, _caller.type.name}
+    &{'crud.list.size', _caller.count, _caller.type.name} 
+    #{if nbPages > 1}
+    &{'crud.list.rowSize', startRow, endRow} 
+    #{/if}
 </p>
 
 #{if nbPages > 1}
     <p class="crudPages">
+
+
+
 
         %{
             limit = (_limit != null ? _limit : 10)
@@ -23,15 +33,18 @@
             }
         }%
 
+        
         #{if _caller.page > 1}
-            <span class="previous">
-                #{a @list().add('page', _caller.page-1).add('search', _caller.params.search).add('orderBy', _caller.orderBy).add('order', _caller.order)}&{'crud.pagination.previous'}#{/a}
+            <span >
+                <input  type="button" onclick="javascript:document.searching.page.value=${_caller.page-1};document.searching.submit()" value="&{'crud.pagination.previous'}" />
+
             </span>
         #{/if}
 
         #{if start > 1}
-            <span class="first">
-                #{a @list().add('page', 1).add('search', _caller.params.search).add('orderBy', _caller.orderBy).add('order', _caller.order)}&{'crud.pagination.first'}#{/a}
+            <span >
+                <input type="button" onclick="javascript:document.searching.page.value=1;document.searching.submit()" value="&{'crud.pagination.first'}" />
+
             </span>
         #{/if}
 
@@ -41,20 +54,20 @@
                     <strong>${i}</strong>
                 #{/if}
                 #{else}
-                    #{a @list().add('page', i).add('search', _caller.params.search).add('orderBy', _caller.orderBy).add('order', _caller.order)}${i}#{/a}
+                <input type="button" onclick="javascript:document.searching.page.value=${i};document.searching.submit()" value="${i}" />
                 #{/else}
             </span>
         %{ } }%
 
         #{if end < nbPages}
-            <span class="last">
-                #{a @list().add('page', nbPages).add('search', _caller.params.search).add('orderBy', _caller.orderBy).add('order', _caller.order)}&{'crud.pagination.last'}#{/a}
+            <span >
+                <input  type="button" onclick="javascript:document.searching.page.value=${nbPages};document.searching.submit()" value="&{'crud.pagination.last'}" />               
             </span>
         #{/if}
 
         #{if _caller.page < nbPages}
-            <span class="next">
-                #{a @list().add('page', _caller.page+1).add('search', _caller.params.search).add('orderBy', _caller.orderBy).add('order', _caller.order)}&{'crud.pagination.next'}#{/a}
+            <span >
+                <input type="button" onclick="javascript:document.searching.page.value=${_caller.page+1};document.searching.submit()" value="&{'crud.pagination.next'}" />
             </span>
         #{/if}
 

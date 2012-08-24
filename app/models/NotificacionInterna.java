@@ -65,7 +65,7 @@ public class NotificacionInterna extends UnionModel {
     
 
 public static List<NotificacionInterna> findByContacto(Long contactoId) {
-        String query = "select t from NotificacionInterna t, NotificacionInterna_User u where u.notificacionInterna_id=t.id and u.contactos_id=" + contactoId +" order by  t.dataalta desc";        
+        String query = "select t from NotificacionInterna t, NotificacionInterna_User u where u.notificacionInterna_id=t.id and u.contactos_id='" + contactoId +"' order by  t.dataalta desc";        
         return find(query).fetch();
     }
 

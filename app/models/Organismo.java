@@ -10,6 +10,7 @@ import play.db.jpa.*;
 import play.data.validation.*;
 import utils.AddFiltro;
 import utils.AddForeignKey;
+import utils.NewForeignKey;
  
 @Entity
 public class Organismo extends UnionModel {
@@ -55,10 +56,17 @@ public class Organismo extends UnionModel {
     @ManyToOne
     public Enderezo enderezo;
     
-    @Required
+   
     @ManyToMany
     @AddForeignKey    
     public Set<Comite> comite;
+    
+    
+   
+    @ManyToMany
+    @AddForeignKey  
+    @NewForeignKey
+    public Set<ComponenteOrganismo> componentes;
     
     @ManyToMany
     @AddForeignKey    
@@ -66,7 +74,7 @@ public class Organismo extends UnionModel {
     
   
     public Organismo(TipoOrganismo tipoOrganismo,String nome,String acronimo,String descricion,Ramo ramo, Date dataAlta, 
-            Date dataBaixa, Enderezo enderezo,Set<Comite> comite,Set<Organismo>organismosFillo){
+            Date dataBaixa, Enderezo enderezo,Set<Comite> comite,Set<Organismo>organismosFillo,Set<ComponenteOrganismo> componentes){
         this.tipoOrganismo=tipoOrganismo;
     	this.nome=nome;
     	this.acronimo=acronimo;
@@ -76,6 +84,7 @@ public class Organismo extends UnionModel {
     	this.enderezo=enderezo;
         this.comite=comite;
         this.organismosFillo=organismosFillo;
+        this.componentes=componentes;
     }
 
     

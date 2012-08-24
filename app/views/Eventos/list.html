@@ -9,6 +9,10 @@
         #{crud.search /}
     </div>
 
+    <div id="crudListPagination">
+        #{crud.pagination /}
+    </div>    
+    
     <div id="crudListTable">
         #{crud.table fields:['tipoEvento','nome','dataRealizacion','horaRealizacion','generic.facerAviso']}
         #{crud.custom 'dataRealizacion'}
@@ -17,7 +21,7 @@
         #{crud.custom 'generic.facerAviso'}  
         
         #{if (object.estado==null || object.estado.id==1)}
-        <a class="del" href="javascript: confirmaAccion('&{'generic.confirmaAvisoAfiliacion',object}','@{mandarAvisoEvento(object.id,page,search)}')" title="&{'generic.avisoAfiliacion',object}">&{'generic.facerAviso'}</a>        
+        <input src="/public/images/line/transparentInputImage.png" class="sendMail"   type="image" title="&{'generic.avisoAfiliacion',object}"  ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:confirmaAccionSubmitSearching('&{'generic.confirmaAvisoAfiliacion',object}','mandarAvisoEvento',${page},${object._key()})" value="" /> 
         #{/if}
         #{/crud.custom}    
 

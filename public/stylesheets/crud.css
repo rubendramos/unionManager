@@ -70,7 +70,8 @@
 
 .flashSuccess {
     margin-top: 20px;
-    background: #54BD06;
+    background: #91AACA;
+    font-weight: bold;
 }
 
 /** Content **/
@@ -82,20 +83,41 @@
 #crud #crudContent h2 {
 	color: #333;
 	font-weight: normal;
-	margin-top: 10px;
+	margin-top: 5px;
+        margin-bottom: 0px;
+}
+
+#crud #crudContent h2.red{
+	position: relative;        
+	background: #ff2222;
+        font-size: 24px;
+	padding: 2px 8px;
+        margin-bottom: 5px;
+
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	color: #fff !important;
+	
 }
 
 #crud #crudContent a {
 	color: #444;
 }
 
+#crud #crudContent a.img {
+	color: #444;
+        text-decoration : none;
+}
+
 /** Tables **/
 
+#crud #crudContent table tbody tr:hover { background: #B8D4F8; }
+#crud #crudContent .tableForeig tr.even:hover { background: #B8D4F8; }
 
 
 
 #crud #crudContent table {
-	width: 100%;
+	min-width: 100%;
 	border: 1px solid #ddd;
 	border-top: none;
 	border-collapse: collapse;
@@ -120,29 +142,99 @@
 
 #crud #crudContent table th {
 	text-align: left;
-	padding: 4px 5px;
+	
 }
+
+#crud #crudContent table th.date {
+	text-align: left;
+        width: 10%;	
+}
+
+#crud #crudContent table td.date {
+	text-align: left;
+        max-width: 10%;
+        width: auto;	
+}
+
+#crud #crudContent table th.text {
+	text-align: left;
+        
+        max-width: 60%;
+        min-width: 20%;
+        width: auto;
+
+}
+
+#crud #crudContent table td.text {
+	text-align: left;
+        max-width: 60%;
+        min-width: 20%;
+        width: auto;
+}
+
+#crud #crudContent table th.relation {
+	text-align: left;
+    
+        width: auto;
+}
+
+#crud #crudContent table td.relation {
+	text-align: left;       
+       
+        width: auto;
+}
+
+#crud #crudContent table th.tipoAccion {
+	text-align: center;
+        max-width: 10%;
+        width: auto;	
+}
+
+#crud #crudContent table td.tipoAccion {
+	text-align: center;
+        max-width: 10%;
+        width: auto;	
+}
+
 
 #crud #crudContent table th.accion {
 	text-align: center;
-        width: 150px;	
+        width: 200px;	
 }
 
 #crud #crudContent table td.accion {
 	text-align: center;
-        width: 150px;
+        width: 200px;
         
 }
 
 #crud #crudContent table th.accion  a.add {
 	position: relative;        
-	background: #54BD06;
-	padding: 2px 8px;
-	font-size: 80%;
+	background: #91AACA;
+	padding: 1px 4px;
+	font-size: 75%;        
 	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+	-webkit-border-radius: 2px;
 	color: #fff !important;
 	text-decoration: none;
+        vertical-align: sub;
+}
+
+#crud #crudContent table th.accion  input.add {
+	position: relative;        
+	background: #91AACA;
+	padding: 1px 4px;
+	font-size: 80%;
+        cursor:pointer;
+        border:0px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 2px;
+	color: #fff !important;
+	text-decoration: none;
+}
+
+#crud #crudContent table th.accion  input.add:hover {
+	opacity: .8;
 }
 
 #crud #crudContent table td.del {	
@@ -172,6 +264,64 @@ border:0;
 
 background: transparent url(/public/images/del.png) no-repeat center;
 border-style: none;
+vertical-align: sub;
+
+}
+
+#crud #crudContent table td.accion  input.lock:hover {
+	opacity: .8;
+}
+
+#crud #crudContent table  td.accion input.lock{
+width:20px; 
+height:20px; 
+border:0;
+
+background: transparent url(/public/images/lock.png) no-repeat center;
+border-style: none;
+vertical-align: sub;
+
+}
+
+#crud #crudContent table td  input.unlock:hover {
+	opacity: .8;
+}
+
+#crud #crudContent table  td.accion input.unlock{
+width:20px; 
+height:20px; 
+border:0;
+
+background: transparent url(/public/images/unlock.png) no-repeat center;
+border-style: none;
+vertical-align: sub;
+
+
+}
+
+#crud #crudContent table td  botton.ver:hover {
+	opacity: .8;
+}
+
+
+
+#crud #crudContent table  td.accion input.ver  {
+width:20px; 
+height:20px; 
+border:0;
+background: transparent url(/public/images/ver.png) no-repeat center;
+border-style: none;
+vertical-align: sub;
+
+}
+
+#crud #crudContent table  td.accion input.delete  {
+width:20px; 
+height:20px; 
+border:0;
+background: transparent url(/public/images/del.png) no-repeat center;
+border-style: none;
+vertical-align: sub;
 
 }
 
@@ -186,7 +336,7 @@ border-style: none;
 
 #crud #crudContent table td {
 	text-align: left;
-	padding: 4px 5px;
+	padding: 0px 0px;
 }
 
 #crud #crudContent table td {
@@ -471,6 +621,8 @@ form .removeAttachment {
 	background: #efefef;
 }
 
+
+
 #crudListSearch input[type=text] {
 	width: 10%;
 }
@@ -507,6 +659,7 @@ form .removeAttachment {
 	}
 
 #crudListPagination {
+        margin-top: 10px;
 	padding: 4px 5px;
 	border: 1px solid #ddd;
 	background: #efefef;
@@ -519,11 +672,29 @@ form .removeAttachment {
 	margin: 0;
 }
 
+
 #crudListPagination .crudPages {
 	margin: 0;
 	position: absolute;
 	right: 5px;
 	top: 4px;
+}
+
+#crudListPagination input[type=button]:HOVER {
+	opacity:.7;
+	}
+
+#crudListPagination input[type=button] {
+	color: #ffffff;
+	border: none;
+	margin: 0;
+	position: relative;
+	background: #6A6A6A;
+	padding: 2px 3px;
+	font-size: 90%;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	cursor: pointer;
 }
 
 /** Show **/
@@ -556,12 +727,25 @@ form .removeAttachment {
 
 
 #crud #crudContent .tableForeig {
-	width: 60%;
+        min-width: 60%;
+	max-width: 60%;
+        width:auto;
 	border: 1px solid #ddd;
 	border-top: none;
         margin-top: 30px;
 	border-collapse: collapse;
 	tableForeig-layout: fixed;
+        list-style: none;		
+	position: relative;
+	min-height: 150px;
+	background: #ffffff;
+	-webkit-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
+	-moz-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
+	border-radius: 10px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;    
+                
+	            
 }
 
 
@@ -584,18 +768,20 @@ form .removeAttachment {
 #crud #crudContent .tableForeig th {
 	text-align: left;
 	padding: 2px 2px;
+        width: 90%;
         
 }
 
 #crud #crudContent .tableForeig  th.accion {
 	text-align: right;
 	padding: 2px 2px;
-        width: 80px;
+        width: 50px;
 }
 
 #crud #crudContent .tableForeig td {
 	text-align: left;
 	padding: 2px 2px;
+        width: 90%;
 }
 
 #crud #crudContent .tableForeig td.accion {
@@ -658,6 +844,8 @@ background: transparent url(/public/images/del.png) no-repeat center;
 border-style: none;
 
 }
+
+
 
 #crud #crudContent .tableForeig  th.accion a img:hover {
 	opacity: .7;

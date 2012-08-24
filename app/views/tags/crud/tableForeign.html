@@ -1,4 +1,8 @@
-%{ cacheIde = params["cacheId"] }%
+%{ cacheIde = params["cacheId"] 
+   where = params["where"] 
+   page = params["page"] 
+   search=params["search"]
+}%
 %{
 // Eval fields tags
 def fieldsHandler = [:]
@@ -15,7 +19,7 @@ _body.setProperty('fieldsHandler', fieldsHandler);
         <tr>
             %{ if(_fields) { }%
             %{ _fields.each() { }%
-            <th>
+            <th class="${_caller.type.getField(it)==null?'tipoAccion': _caller.type.getField(it).type}">
                 %{ if(!_sort || _sort.contains(it)) { }%
                 <a class="${_caller.orderBy == it ? (_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc') : ''}" href="@{list().remove('page').add('search', params.search).add('orderBy', it).add('order', (_caller.orderBy == it && _caller.order == 'ASC' ? 'DESC' : 'ASC'))}">
                     &{it}
@@ -26,7 +30,7 @@ _body.setProperty('fieldsHandler', fieldsHandler);
             </th>
             %{ } }%
             %{ } else { }%
-            <th>
+            <th class="${_caller.type.name==null?'tipoAccion': _caller.type.name}">
                 <a class="${_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc'}" href="@{list().remove('page').add('search', params.search).add('order', (_caller.order == 'DESC' ? 'ASC' : 'DESC'))}">
                     &{_caller.type.name}
                 </a>
@@ -35,7 +39,11 @@ _body.setProperty('fieldsHandler', fieldsHandler);
             <th class="crudButtonTableForeign">
                 #{form @backForeignKey('null',cacheIde)}          
                 <input class="voltar" type="submit" value="&{'crud.foreignKeyVoltar'}"/>  
-                <input type="hidden" name="cacheId" value="${cacheIde}"/>                            
+                <input type="hidden" name="cacheId" value="${cacheIde}"/>  
+                <input type="hidden" name="page" value="${page}">            
+                <input type="hidden" name="where" value="${where}">
+                <input type="hidden" name="search" value="${search}">
+                <input type="hidden" name="from" value="true">
             #{/form}    
             </th>
         </tr>
@@ -44,7 +52,7 @@ _body.setProperty('fieldsHandler', fieldsHandler);
     <tr class="${k % 2 ? 'even' : 'odd'}">
         %{ if(_fields) { }%
         %{ _fields.eachWithIndex() { field, i -> }%
-        <td>
+        <td class="${_caller.type.getField(field)==null?'tipoAccion': _caller.type.getField(field).type}">
             %{ if(fieldsHandler[field]) { }%
             %{
             def handler = fieldsHandler[field];
@@ -79,7 +87,7 @@ _body.setProperty('fieldsHandler', fieldsHandler);
         }%
         #{doBody body:handler /}
         %{ } else { }%
-        <td >
+       <td class="${_caller.type.name==null?'tipoAccion': _caller.type.name}">
             ${object.toString()?.escape()?.raw() ?: '(no value)'}                 
         </td>                
         %{ } }%
@@ -90,6 +98,11 @@ _body.setProperty('fieldsHandler', fieldsHandler);
       
                 <input class="engadir" type="submit" value="&{'crud.foreignKeyEngadir'}"/>  
                 <input type="hidden" name="cacheId" value="${cacheIde}"/>  
+                <input type="hidden" name="id" value="${object._key()}"/>  
+                <input type="hidden" name="page" value="${page}">            
+                <input type="hidden" name="where" value="${where}">
+                <input type="hidden" name="search" value="${search}">
+                <input type="hidden" name="from" value="true">
             #{/form}                
         </td>
        

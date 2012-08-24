@@ -14,21 +14,19 @@ _body.setProperty('fieldsHandler', fieldsHandler);
         <tr>
             %{ if(_fields) { }%
             %{ _fields.each() { }%
-            <th>
+             <th class="${_caller.type.getField(it)==null?'tipoAccion': _caller.type.getField(it).type}">
                     &{it}
             </th>
             %{ } }%
             %{ } else { }%
-            <th>
+             <th class="${_caller.type.name==null?'tipoAccion': _caller.type.name}">
                 <a class="${_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc'}" href="@{list().remove('page').add('search', params.search).add('order', (_caller.order == 'DESC' ? 'ASC' : 'DESC'))}">
                     &{_caller.type.name}
                 </a>
             </th>
             %{ } }%
-            <th class="accion">
-                
-                <a   class="add"title="&{'crud.add', _caller.type.name}" href="@{blank()}">&{'crud.add', _caller.type.name}</a>
-               
+            <th class="accion">                
+                <input class="add" type="button" title="&{'crud.add', _caller.type.name}"  onclick="javascript:accionSubmitSearching('blank',${_caller.page},null)" value="&{'crud.add', _caller.type.name}" />                         
                 </th>
         </tr>
     </thead>
@@ -48,7 +46,7 @@ _body.setProperty('fieldsHandler', fieldsHandler);
             }%
             %{ } else { }%
             %{ if(i == 0) { }%
-            <a href="@{show(object._key())}">${object[field]?.toString()?.escape()?.raw() ?: '(no value)'}</a>
+            ${object[field]?.toString()?.escape()?.raw() ?: '(no value)'}
             %{ } else { }%
             %{ if(_caller.type.getField(field).type == 'file') { }%
             %{ if(object[field]) { }%
@@ -71,14 +69,14 @@ _body.setProperty('fieldsHandler', fieldsHandler);
         }%
         #{doBody body:handler /}
         %{ } else { }%
-        <td>
+        <td class="${_caller.type.name==null?'tipoAccion': _caller.type.name}">
             <a href="@{show(object._key())}">${object.toString()?.escape()?.raw() ?: '(no value)'}</a>                    
         </td>                
         %{ } }%
 
         %{ } }%
         <td class="accion">
-            <a href="@{showNotificaion(object._key())}">&{'NotificacionInterna.verNotificacion'}</a>                    
+            <a href="@{showNotificaion(object._key())}"><img src="/public/images/line/transparentInputImage.png" class="read" title="&{'NotificacionInterna.verNotificacion'}"/></a>                    
         </td>
     </tr>
     %{ } }%

@@ -26,7 +26,9 @@ public class Organismos extends CRUD {
             reportParams.put("SACRONIMO",play.i18n.Messages.get("informe.fichaOrganismo.acronimoSindicato"));
             reportParams.put("SDATAALTA",play.i18n.Messages.get("informe.fichaOrganismo.dataalta"));
             reportParams.put("SDATABAXIA",play.i18n.Messages.get("informe.fichaOrganismo.databaixa"));
-            
+            reportParams.put("SNOMEAFILIADO",play.i18n.Messages.get("informe.fichaOrganismo.nomeAfiliados"));
+            reportParams.put("STITCULOCOMPONENTES",play.i18n.Messages.get("informe.fichaOrganismo.titulocomponentes"));
+                    reportParams.put("STITCOMITE",play.i18n.Messages.get("informe.fichaOrganismo.titComites"));
             reportParams.put("SEMAIL",play.i18n.Messages.get("informe.fichaOrganismo.eMail"));
             reportParams.put("SWEB",play.i18n.Messages.get("informe.fichaOrganismo.web"));
             

@@ -3,7 +3,7 @@
 %{ cacheIde = params["cacheId"] }%
 
 <div id="crudListForeign" class="${type.name}">
-<a href="javascript:history.back(-1)"><img id="fecharVenta" title="&{'crud.pecharventa'}"/></a>
+<a href="javascript:history.back(-1)"><img src="/public/images/line/transparentInputImage.png" id="fecharVenta" title="&{'crud.pecharventa'}"/></a>
 
     <h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
 
@@ -11,6 +11,10 @@
         #{crud.searchForeign /}
     </div>
 
+    <div id="crudListPagination">
+        #{crud.paginationForeign /}
+    </div>    
+    
     <div id="crudListTable">
         #{crud.tableForeign /}
     </div>

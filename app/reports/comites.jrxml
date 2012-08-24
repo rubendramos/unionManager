@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comites" language="groovy" pageWidth="595" pageHeight="842" columnWidth="528" leftMargin="13" rightMargin="54" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comites" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="63"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\T00159\\Escritorio\\softRuben\\unionManager\\app\\reports\\"]]></defaultValueExpression>
@@ -12,6 +12,7 @@
 	<parameter name="SSECRETARIA" class="java.lang.String"/>
 	<parameter name="SDATAALTA" class="java.lang.String"/>
 	<parameter name="SDATABAXIA" class="java.lang.String"/>
+	<parameter name="STITCOMITE" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select cmt.id comiteid,cmt.descricion descricionComite, cmt.dataAlta dataAlta ,cmt.databaixa dataBaixa,tcmt.descricion tipoComite   from comite cmt,tipocomite tcmt,organismo_comite orgcom
 where cmt.tipocomite_id =tcmt.id
@@ -24,16 +25,30 @@ and orgcom.organismo_id=$P{ORGANISMO_ID} ;]]>
 	<field name="DATABAIXA" class="java.sql.Timestamp"/>
 	<field name="TIPOCOMITE" class="java.lang.String"/>
 	<sortField name="DATAALTA" order="Descending"/>
+	<columnHeader>
+		<band height="12">
+			<frame>
+				<reportElement mode="Opaque" x="2" y="0" width="550" height="12" forecolor="#CC0000" backcolor="#CCCCCC"/>
+			</frame>
+			<textField>
+				<reportElement x="9" y="0" width="543" height="12" forecolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{STITCOMITE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
 	<detail>
-		<band height="49" splitType="Stretch">
+		<band height="46" splitType="Stretch">
 			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="528" height="48"/>
+				<reportElement stretchType="RelativeToBandHeight" x="7" y="7" width="535" height="38"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="0" width="528" height="11" backcolor="#000000"/>
+				<reportElement x="7" y="7" width="535" height="11" backcolor="#000000"/>
 			</rectangle>
 			<subreport>
-				<reportElement x="81" y="21" width="311" height="17"/>
+				<reportElement x="97" y="23" width="418" height="17"/>
 				<subreportParameter name="COMITE_ID">
 					<subreportParameterExpression><![CDATA[$F{COMITEID}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -44,37 +59,37 @@ and orgcom.organismo_id=$P{ORGANISMO_ID} ;]]>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "secretarias.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement x="0" y="0" width="253" height="11" forecolor="#FFFFFF"/>
+				<reportElement x="9" y="7" width="263" height="11" forecolor="#FFFFFF"/>
 				<textElement>
 					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONCOMITE}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="296" y="0" width="40" height="11" forecolor="#FFFFFF"/>
-				<textElement>
-					<font fontName="Arial" size="9" isBold="true"/>
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement x="317" y="7" width="94" height="11" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAALTA}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="397" y="0" width="68" height="11" forecolor="#FFFFFF"/>
-				<textElement>
-					<font fontName="Arial" size="9" isBold="true"/>
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement x="462" y="7" width="80" height="11" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATABAIXA}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="242" y="0" width="52" height="11" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
-				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="Arial" size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				<reportElement mode="Transparent" x="272" y="7" width="45" height="11" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{SDATAALTA}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="344" y="0" width="51" height="11" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
-				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="Arial" size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				<reportElement mode="Transparent" x="411" y="7" width="51" height="11" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{SDATABAXIA}]]></textFieldExpression>
 			</textField>

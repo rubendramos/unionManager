@@ -9,6 +9,10 @@
         #{crud.search /}
     </div>
 
+    <div id="crudListPagination">
+        #{crud.paginationForeign /}
+    </div>    
+    
     <div id="crudListTable">
         #{crud.tableNonEliminar fields:['asunto','contido','estadoAviso','dataARealizarAviso','dataRealizacionAviso']}       
         #{crud.custom 'contido'} 

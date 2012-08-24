@@ -10,6 +10,7 @@ import utils.AddForeignKey;
 import play.db.jpa.*;
 import play.data.validation.*;
 import utils.AddFiltro;
+import utils.NewForeignKey;
  
 @Entity
 public class Afiliado extends UnionModel {
@@ -42,9 +43,14 @@ public class Afiliado extends UnionModel {
     
     
     @AddFiltro
-    private Date dataBaixa;
+    public Date dataBaixa;
         
     public boolean milita;
+    
+    
+    @ManyToOne
+    @AddFiltro
+    public Empresa empresa ;
     
     public String carnetConfederado;
     
@@ -52,14 +58,16 @@ public class Afiliado extends UnionModel {
     
   
     public Afiliado(Persoa persoa,Ocupacion ocupacion,Ramo ramo, Date dataAlta, Date dataBaixa, 
-    		boolean milita,String carnetConfederado){
+    		boolean milita,String carnetConfederado,Empresa empresa){
     	this.persoa=persoa;
     	this.ocupacion=ocupacion;
     	this.ramo=ramo;
     	this.dataAlta=dataAlta;
     	this.dataBaixa=dataBaixa;
     	this.milita=milita;
-    	this.carnetConfederado=carnetConfederado;    	
+    	this.carnetConfederado=carnetConfederado;    
+        this.empresa=empresa;
+               
     }
 
     

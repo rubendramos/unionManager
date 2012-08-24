@@ -8,8 +8,11 @@ GET     /                                       Application.index
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
-# Map static resources from the /app/public folder to the /public path
-GET     /public/                                staticDir:public
+
+
+# WebSocket 
+GET     /websocket/room                         WebSocket.room
+WS      /websocket/room/socket                  WebSocket.ChatRoomSocket.join  
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
@@ -21,7 +24,24 @@ GET     /public/                                staticDir:public
 
 # Parte privada
 GET     /privado/?                                Privado.index
-*       /privado                                  module:crud
+*       /privado                                   module:crud
 # Administration
+
 GET     /admin/?                                Admin.index
 *       /admin                                  module:crud
+
+
+# Refresh demo
+GET     /refresh                                Refresh.index
+GET     /refresh/room                           Refresh.room
+POST    /refresh/room                           Refresh.say
+GET     /refresh/room/leave                     Refresh.leave          
+
+# Long polling demo
+GET     /longpolling/room                       LongPolling.room
+GET     /longpolling/room/messages              LongPolling.waitMessages
+POST    /longpolling/room/messages              LongPolling.say  
+GET     /longpolling/room/leave                 LongPolling.leave    
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public

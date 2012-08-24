@@ -29,6 +29,9 @@
 	<parameter name="SFAX" class="java.lang.String"/>
 	<parameter name="STELEFONO" class="java.lang.String"/>
 	<parameter name="SAPARTADOCORREOS" class="java.lang.String"/>
+	<parameter name="STITCULOCOMPONENTES" class="java.lang.String"/>
+	<parameter name="SNOMEAFILIADO" class="java.lang.String"/>
+	<parameter name="STITCOMITE" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select org.acronimo acronimo ,org.nome nome ,org.cif cif, org.descricion,org.enderezo_id enderezoid,org.email,org.direccionweb web ,torg.descricion tipoorganismo from organismo org,tipoorganismo torg
 where org.tipoorganismo_id=torg.id
@@ -49,7 +52,7 @@ and org.id=$P{ORGANISMO_ID};]]>
 		<band splitType="Stretch"/>
 	</title>
 	<detail>
-		<band height="321" splitType="Stretch">
+		<band height="398" splitType="Stretch">
 			<textField>
 				<reportElement mode="Opaque" x="0" y="0" width="555" height="17" forecolor="#FFFFFF" backcolor="#CC0033"/>
 				<textElement>
@@ -58,8 +61,11 @@ and org.id=$P{ORGANISMO_ID};]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$V{nomeSindi}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement stretchType="RelativeToTallestObject" x="0" y="229" width="555" height="51"/>
+				<reportElement positionType="Float" x="0" y="229" width="555" height="81" isRemoveLineWhenBlank="true"/>
 				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="STITCOMITE">
+					<subreportParameterExpression><![CDATA[$P{STITCOMITE}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="SDATABAXIA">
 					<subreportParameterExpression><![CDATA[$P{SDATABAXIA}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -76,7 +82,7 @@ and org.id=$P{ORGANISMO_ID};]]>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "comites.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="17" width="555" height="112"/>
+				<reportElement x="0" y="17" width="555" height="112"/>
 				<subreportParameter name="SNOME">
 					<subreportParameterExpression><![CDATA[$P{SNOME}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -111,7 +117,7 @@ and org.id=$P{ORGANISMO_ID};]]>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "datosOrganismo.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="0" y="129" width="555" height="100"/>
+				<reportElement positionType="Float" x="0" y="129" width="555" height="100"/>
 				<subreportParameter name="ORGANISMO_ID">
 					<subreportParameterExpression><![CDATA[$P{ORGANISMO_ID}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -149,18 +155,38 @@ and org.id=$P{ORGANISMO_ID};]]>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "enderezoOgranismo.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement positionType="Float" mode="Opaque" x="0" y="303" width="555" height="17" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" backcolor="#CC0033"/>
+				<reportElement positionType="Float" mode="Opaque" x="0" y="381" width="555" height="17" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" backcolor="#CC0033"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$V{nomeSindi}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="555" height="321" forecolor="#990000"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="555" height="398" forecolor="#990000"/>
 				<graphicElement>
 					<pen lineStyle="Double"/>
 				</graphicElement>
 			</rectangle>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="313" width="555" height="65" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="SDATABAIXA">
+					<subreportParameterExpression><![CDATA[$P{SDATABAXIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SDATAALTA">
+					<subreportParameterExpression><![CDATA[$P{SDATAALTA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SNOMEAFILIADO">
+					<subreportParameterExpression><![CDATA[$P{SNOMEAFILIADO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="STITCULOCOMPONENTES">
+					<subreportParameterExpression><![CDATA[$P{STITCULOCOMPONENTES}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ORGANISMO_ID">
+					<subreportParameterExpression><![CDATA[$P{ORGANISMO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "componentesOrganismo.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 </jasperReport>

@@ -74,7 +74,21 @@ public class Persoa extends UnionModel {
 
     
     public String getNomeCompleto() {
-        return apelido1+" "+ apelido2+", "+ nome;
+        String sApelido1="";
+        String sApelido2="";
+        String sNome="";
+        if(apelido1!=null && !"".equals(apelido1)){
+            sApelido1=apelido1;
+        }
+        
+        if(apelido2!=null && !"".equals(apelido2)){
+            sApelido2=" "+apelido2;
+        }        
+        
+        if(nome!=null && !"".equals(nome)){
+            sNome=", "+nome;
+        }                
+        return sApelido1+sApelido2+sNome;
     } 
     
     public String getEmail() {
@@ -83,7 +97,7 @@ public class Persoa extends UnionModel {
     
     
     public String toString() {
-        return this.dni+" "+this.nomeCompleto;
+        return this.nomeCompleto;
     }
  
 }

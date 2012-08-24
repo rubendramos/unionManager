@@ -15,16 +15,16 @@ import utils.Tools;
 @Entity
 public class NotificacionInterna_User extends Model {
 
-   @Id  
-   public String notificacionInterna_id;
+   @Id 
+   public Long notificacionInterna_id;
    @Id
-   public String contactos_id;     
+   public Long contactos_id;     
    @CRUD.Hidden
    public boolean isLeido;
     
 
     
-    public NotificacionInterna_User(String notificacionInterna_id,String contactos_id,boolean isLeido){
+    public NotificacionInterna_User(Long notificacionInterna_id,Long contactos_id,boolean isLeido){
     	this.notificacionInterna_id=notificacionInterna_id;
     	this.contactos_id=contactos_id;
         this.isLeido=isLeido;
@@ -33,12 +33,14 @@ public class NotificacionInterna_User extends Model {
     
     
  public static List<NotificacionInterna_User> findByContacto(Long contactoId) {
-        String query = "from NotificacionInterna_User t  where t.contactos_id=" + contactoId;        
+        String query = "from NotificacionInterna_User t  where t.contactos_id=" + contactoId+"";
         return find(query).fetch();
     }   
  
-  public static NotificacionInterna_User findByContactoENotificacion(Long contactoId,String notificacion) {
-        String query = "from NotificacionInterna_User t  where t.contactos_id=" + contactoId + " and t.notificacionInterna_id="+notificacion;        
+ 
+ 
+  public static NotificacionInterna_User findByContactoENotificacion(Long contactoId,Long notificacionId) {
+        String query = "from NotificacionInterna_User t  where t.contactos_id=" + contactoId + " and t.notificacionInterna_id="+notificacionId;        
         return find(query).first();
     }  
 

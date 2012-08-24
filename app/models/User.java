@@ -58,7 +58,7 @@ public class User extends UnionModel {
     }
     
     public String toString() {
-        return this.afiliado.toString();
+        return this.afiliado.persoa.toString();
     }
        
     public  String getSindicato() {

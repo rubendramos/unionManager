@@ -1,0 +1,98 @@
+#{extends 'Chat/Main.html' /}
+#{set title:'Chat room' /}
+
+<div id="thread">   
+    <script type="text/html" id="message_tmpl">
+
+        <div id="top"> 
+              <p id="members">
+             &{'chat.membersChat'} :<%= event.members %>   
+             </p>
+        </div>
+    <div > 
+     <div>         
+        <% if(event.type == 'message') { %>
+            <div class="message <%= event.user == '${user}' ? 'you' : '' %>">
+                <h2><%= event.user %> <%= event.time %> </h2> 
+                <p>
+                    <%= event.text %>                                        
+                </p>
+            </div>
+        <% } %>
+        <% if(event.type == 'join') { %>
+            <div class="message notice">
+                <h2></h2>
+                <p>
+                    <%= event.user %> &{'chat.uniuseAoChat'} - <%= event.time %> 
+                </p>
+            </div>
+        <% } %>
+        <% if(event.type == 'leave') { %>
+            <div class="message notice">
+                <h2>  </h2>
+                <p>
+                      <%= event.user %> &{'chat.deixouAoChat'}- <%= event.time %>
+                </p>
+            </div>
+        <% } %>
+        <% if(event.type == 'quit') { %>
+            <div class="message important">
+                <h2>  </h2>
+                <p>
+                    &{'chat.dexconexionChat'}- <%= event.time %>
+                </p>
+            </div>
+        <% } %>
+       </div>
+        </div>
+    </script>
+    
+ 
+</div>
+    
+<div id="newMessage">
+    <input type="text" id="message" maxlength="53" autocomplete="off">
+    <input type="submit" value="send" id="send">
+</div>
+
+
+<script type="text/javascript">
+
+    // Create a socket
+    var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket;
+    var socket = new WS('@@{WebSocket.ChatRoomSocket.join(user)}');
+ 
+    // Message received on the socket
+    socket.onmessage = function(event) {
+        var parts = /^([^:]+):([^:]+):([^:]+):([^#]+)(#(.*))?$/.exec(event.data)        
+        display({
+            type: parts[1],
+            user: parts[2],
+            text: parts[6],
+            time: parts[4],           
+            members: parts[3]
+        })          
+    }
+    
+  // Display a message
+    var display = function(event) {
+        $('#thread').append(tmpl('message_tmpl', {event: event}));
+        $('#thread').scrollTo('max')              
+    }       
+    
+    $('#send').click(function(e) {
+        var message = $('#message').val()
+        $('#message').val('')
+        socket.send(message)
+    });
+    
+    $('#message').keypress(function(e) {
+        if(e.charCode == 13 || e.keyCode == 13) {
+            $('#send').click()
+            e.preventDefault()
+        }
+    })
+    
+    
+    
+</script>
