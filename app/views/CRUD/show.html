@@ -1,0 +1,54 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.show.title', type.modelName) /}
+
+%{if(object instanceof models.UnionSecureModel){
+            valueEstado=object['estado'];
+        }
+
+}%
+
+
+
+<div id="crudShow" class="${type.name}">
+
+    <h2 id="crudShowTitle">&{'crud.show.title', type.modelName}</h2>
+
+    <div class="objectForm">
+        
+
+        #{form action:@save(object._key()), enctype:'multipart/form-data', name:'searching'}
+            <input type="hidden" name="page" value="${page}">            
+            <input type="hidden" name="where" value="${where}">
+            <input type="hidden" name="search" value="${search}">
+            <input type="hidden" name="from" value="true">
+        #{crud.form /}
+
+      <p class="crudButtons">
+            #{if (valueEstado==null || valueEstado.id==1)}
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+            #{/if}
+
+            <input type="button" onClick="javascript:submitAccion('list')" value="&{'crud.voltarABusqueda'}" />
+           
+            
+          
+     #{/form}
+    
+     
+       
+      
+    
+    
+    
+       </p>
+    
+    </div>
+    
+    #{form @delete(object._key())}
+        <p class="crudDelete">
+            <input type="submit" value="&{'crud.delete', type.modelName}" />
+        </p>
+    #{/form}
+
+</div>
