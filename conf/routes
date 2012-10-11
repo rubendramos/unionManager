@@ -12,7 +12,10 @@ GET     /favicon.ico                            404
 
 # WebSocket 
 GET     /websocket/room                         WebSocket.room
-WS      /websocket/room/socket                  WebSocket.ChatRoomSocket.join  
+WS      /websocket/room/socket                  WebSocket.ChatRoomSocket.join 
+
+WS      /progresssocket/progress        ProgressSocket.progress
+
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
@@ -20,15 +23,16 @@ WS      /websocket/room/socket                  WebSocket.ChatRoomSocket.join
 
 # Import Secure routes
 *       /                 module:secure
+*       /data                 module:secure
 
 
 # Parte privada
-GET     /privado/?                                Privado.index
-*       /privado                                   module:crud
+GET     /privado/?                             Privado.index
+*       /privado                               module:crud
 # Administration
 
-GET     /admin/?                                Admin.index
-*       /admin                                  module:crud
+GET     /admin/?                               Admin.index
+*       /admin                                 module:crud
 
 
 # Refresh demo
@@ -42,6 +46,9 @@ GET     /longpolling/room                       LongPolling.room
 GET     /longpolling/room/messages              LongPolling.waitMessages
 POST    /longpolling/room/messages              LongPolling.say  
 GET     /longpolling/room/leave                 LongPolling.leave    
+
+
+GET     /cuotas/{id}{isPagado}       Cuotas.updateCuota
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
