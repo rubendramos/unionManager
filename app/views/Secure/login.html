@@ -1,36 +1,112 @@
-#{extends 'main.html' /} #{set title:'Login' /}
+<!DOCTYPE html>
 
+<html id="loginHtml">
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta charset="${_response_encoding}">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/secure.css'}" />
+        
+
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/jquery-ui-1.8.13.custom.css'}">
+        <link type="text/css" rel="stylesheet" media="screen" href="@{'/public/stylesheets/prettify.css'}">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/demo.css'}">
+	<script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+        <script src="@{'/public/javascripts/jquery-ui-1.8.13.custom.min.js'}" type="text/javascript" charset="utf-8"></script>
+        <script src="@{'/public/javascripts/prettify.js'}" type="text/javascript" charset="utf-8"></script>
+   #{get 'moreScripts'/}
+        <script src="@{'/public/javascripts/progressbar.js'}" type="text/javascript" charset="utf-8"></script>
+ 
+
+    </head>
+    
+  
+    <body id="loginBody">
+        
+        
+    
 <div id="login">
-	
-	<h1>&{'secure.title'}</h1>
-		
-	#{form @authenticate()}
-		
-		#{if flash.error}
-			<p class="error">
-				&{flash.error}
-			</p>
-		#{/if}
-		#{if flash.success}
-			<p class="success">
-				&{flash.success}
-			</p>
-		#{/if}
-	
-		<p id="username-field">
-			<label for="username">&{'secure.username'}</label>
-			<input type="text" name="username" id="username" value="${flash.username}" />
-		</p>
-		<p id="password-field">
-			<label for="password">&{'secure.password'}</label>
-			<input type="password" name="password" id="password" value="" />
-		</p>
-		<p id="remember-field">
-			<input type="checkbox" name="remember" id="remember" value="true" ${flash.remember ? 'checked="true"' : ''} />
-			<label for="remember">&{'secure.remember'}</label>
-		</p>
-		<p id="signin-field">
-			<input type="submit" id="signin" value="&{'secure.signin'}" />
-		</p>
-	#{/form}
+  
+
+    #{form @authenticate()}
+
+
+    #{if flash.success}
+    <p class="success">
+        &{flash.success}
+    </p>
+    #{/if}
+    <p id="loginTitle">&{'secure.title'}</p>
+    <p id="loginlogo"/>
+
+    <p class="error">
+        #{if flash.error}
+            &{flash.error}
+        #{/if}
+    </p>
+
+
+    <p id="username-field">
+        <label for="username">&{'secure.username'}</label>
+        <input type="text" name="username" id="username" value="${flash.username}" />
+    </p>
+    <p id="password-field">
+        <label for="password">&{'secure.password'}</label>
+        <input type="password" name="password" id="password" value="" />
+    </p>   
+ 
+    <p class="forgotPassword">
+        <a class="forgotPassword" href="@{Password.forgotPassword()}">&{'secure.forgotPassword'}</a>    
+        
+    </p>    
+    
+    <p id="signin-field">
+        <input type="submit" id="signin" value="&{'secure.signin'}" />
+    </p>
+ 
+    #{/form}
 </div>
+        
+ #{if processId}
+<div class="overlay" id="overlay">
+<div class="overlayContend" id="overlayContend">
+    
+    <div class="overlayMsg overred" id="overlayMsg">
+       <p class="fontwhite">       
+          &{'inicio.primeiravez1'}
+       </p>
+    </div>
+    <div class="overlayMsg overblue" id="overlayMsg2">
+       <p class="fontwhite">     
+           &{'inicio.primeiravez2'}
+
+       </p>
+    </div>
+    <div class="overlayMsg overwhite" id="overlayMsg3">
+       <p class="fontblack">       
+            &{'inicio.primeiravez3'}   
+       </p>
+    </div>
+    <div class="overlayMsg overgreen" id="overlayMsg4">
+       <p class="fontblack">        
+            &{'inicio.primeiravez4'} 
+       </p>
+    </div>
+    
+        <div class="overlayError error" id="overlayError">
+       <p class="fontError">        
+           &{'inicio.primeiravezError'}            
+       </p>
+    </div>
+    <div id="progressbar" data-url='@@{ProgressSocket.progress(processId)}'></div>
+</div>
+</div>
+#{/if}
+
+
+    </body>
+  
+    </html>
+
+    
+    

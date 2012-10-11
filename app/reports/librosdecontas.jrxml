@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="librosdecontas" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="255"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -34,8 +34,8 @@
 	<parameter name="SCONCEPTO" class="java.lang.String"/>
 	<parameter name="SDESCRICION" class="java.lang.String"/>
 	<parameter name="SDATA" class="java.lang.String"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\T00159\\Escritorio\\softRuben\\unionManager\\app\\reports\\"]]></defaultValueExpression>
+	<parameter name="SUBREPORTS_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SFAX" class="java.lang.String"/>
 	<parameter name="STELEFONO" class="java.lang.String"/>
@@ -49,7 +49,7 @@ where lc.id=lcfc.libroconta_id
 and fc.id=lcfc.follascontas_id
 and fc.id=fcap.follaconta_id
 and ap.id=fcap.apuntamentos_id
-and org.id=lc.sindicato_id
+and org.id=lc.organismo_id
 and tap.id=ap.tipoapuntamento_id
 and tc.id=ap.concepto_id
 and ($P{ORGANISMO_ID}=-1 or lc.organismo_id =$P{ORGANISMO_ID})
@@ -361,7 +361,7 @@ and ($P{DATAINI}='-1' or ap.dataapuntamento >=convert($P{DATAINI},date));]]>
 					<subreportParameterExpression><![CDATA[$P{SEMAIL}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "enderezoCabeceira.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORTS_DIR} + "/enderezoCabeceira.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</title>

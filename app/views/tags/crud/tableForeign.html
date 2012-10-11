@@ -21,7 +21,8 @@ _body.setProperty('fieldsHandler', fieldsHandler);
             %{ _fields.each() { }%
             <th class="${_caller.type.getField(it)==null?'tipoAccion': _caller.type.getField(it).type}">
                 %{ if(!_sort || _sort.contains(it)) { }%
-                <a class="${_caller.orderBy == it ? (_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc') : ''}" href="@{list().remove('page').add('search', params.search).add('orderBy', it).add('order', (_caller.orderBy == it && _caller.order == 'ASC' ? 'DESC' : 'ASC'))}">
+                <a class="${_caller.orderBy == it ? (_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc') : ''}" href="@{listForeign().remove('page').add('search', params.search).add('cacheId',cacheIde).add('orderBy', it).add('order', (_caller.orderBy == it && _caller.order == 'ASC' ? 'DESC' : 'ASC'))}">
+                
                     &{it}
                 </a>
                 %{ } else { }%
@@ -31,7 +32,8 @@ _body.setProperty('fieldsHandler', fieldsHandler);
             %{ } }%
             %{ } else { }%
             <th class="${_caller.type.name==null?'tipoAccion': _caller.type.name}">
-                <a class="${_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc'}" href="@{list().remove('page').add('search', params.search).add('order', (_caller.order == 'DESC' ? 'ASC' : 'DESC'))}">
+                <a class="${_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc'}" href="@{listForeign().remove('page').add('cacheId',cacheIde).add('search', params.search).add('order', (_caller.order == 'DESC' ? 'ASC' : 'DESC'))}">
+                
                     &{_caller.type.name}
                 </a>
             </th>
@@ -39,7 +41,7 @@ _body.setProperty('fieldsHandler', fieldsHandler);
             <th class="crudButtonTableForeign">
                 #{form @backForeignKey('null',cacheIde)}          
                 <input class="voltar" type="submit" value="&{'crud.foreignKeyVoltar'}"/>  
-                <input type="hidden" name="cacheId" value="${cacheIde}"/>  
+                  
                 <input type="hidden" name="page" value="${page}">            
                 <input type="hidden" name="where" value="${where}">
                 <input type="hidden" name="search" value="${search}">
@@ -97,8 +99,8 @@ _body.setProperty('fieldsHandler', fieldsHandler);
             #{form @backForeignKey(object._key(),cacheIde)}
       
                 <input class="engadir" type="submit" value="&{'crud.foreignKeyEngadir'}"/>  
-                <input type="hidden" name="cacheId" value="${cacheIde}"/>  
-                <input type="hidden" name="id" value="${object._key()}"/>  
+                
+                
                 <input type="hidden" name="page" value="${page}">            
                 <input type="hidden" name="where" value="${where}">
                 <input type="hidden" name="search" value="${search}">

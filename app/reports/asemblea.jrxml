@@ -8,8 +8,8 @@
 	</parameter>
 	<parameter name="SCARNECONF" class="java.lang.String"/>
 	<parameter name="SSECRETARIA" class="java.lang.String"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\T00159\\Escritorio\\softRuben\\unionManager\\app\\reports\\"]]></defaultValueExpression>
+	<parameter name="SUBREPORTS_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SSAUDO" class="java.lang.String"/>
 	<parameter name="SCONVOCATORIADIA" class="java.lang.String"/>
@@ -65,7 +65,7 @@ and asempasem.ordedodia_id=pasem.id]]>
 						<subreportParameterExpression><![CDATA[$P{SSECRETARIA}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "firmaCargo.jasper"]]></subreportExpression>
+					<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORTS_DIR} + "/firmaCargo.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupFooter>
@@ -75,7 +75,7 @@ and asempasem.ordedodia_id=pasem.id]]>
 			<line>
 				<reportElement x="0" y="98" width="555" height="1"/>
 			</line>
-			<subreport>
+			<subreport isUsingCache="false">
 				<reportElement x="361" y="3" width="194" height="95"/>
 				<subreportParameter name="ORGANISMO_ID">
 					<subreportParameterExpression><![CDATA[$F{ORGANISMOID}.toString()]]></subreportParameterExpression>
@@ -93,7 +93,7 @@ and asempasem.ordedodia_id=pasem.id]]>
 					<subreportParameterExpression><![CDATA[$P{SEMAIL}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "enderezoCabeceira.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORTS_DIR} + "/enderezoCabeceira.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</title>
@@ -105,7 +105,7 @@ and asempasem.ordedodia_id=pasem.id]]>
 					<subreportParameterExpression><![CDATA[$F{ENDEREZOID}.toString()]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "firmaLugarEData.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORTS_DIR} + "/firmaLugarEData.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</pageHeader>

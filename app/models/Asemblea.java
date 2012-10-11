@@ -15,7 +15,7 @@ import utils.NewForeignKey;
 import utils.Tools;
  
 @Entity
-public class Asemblea extends UnionSecureModel {
+public class Asemblea extends UnionSecureModel implements Avisable {
  
     
     @Required    
@@ -112,5 +112,24 @@ public class Asemblea extends UnionSecureModel {
                   
 
    
+    }
+
+    public String getAsunto() {
+        return play.i18n.Messages.get("aviso.asemblea.asunto", this.titulo);
+    }
+
+    public Set<ListaDistribucion> getContactos() {
+        HashSet<ListaDistribucion> contactos=new HashSet<ListaDistribucion>();
+        ListaDistribucion ld=(ListaDistribucion)ListaDistribucion.getListaAutomaticaAfiliados(organismo);
+        contactos.add(ld);
+        return contactos;
+    }
+
+    public Set<Documento> getAdxuntos() {
+        return this.documentacionAsemblea;
+    }
+
+    public String getContido() {
+        return play.i18n.Messages.get("aviso.asemblea.contido",Tools.getLocaleDateFormat(this.dataCelebracion), this.horaCelebracion, this.lugarCelebracion);
     }
 }

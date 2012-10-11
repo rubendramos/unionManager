@@ -1,28 +1,40 @@
 <div class="pro_line2">
     <ul class="select">
-        <li><a href="@{NotificacionInternas.listRecivedNonLeidas()}"><b>&{'menu.Inicio'}</b></a></li>
-
-       #{secure.check 'permanencia'}
+        
+        
+        
+       #{if session.username && controllers.Secure.Security.invoke("check", 'recibeNotificacions')}
+  
+                <li><a href="@{NotificacionInternas.listRecivedNonLeidas()}"><b>&{'menu.Inicio'}</b></a></li>
+        #{/if}
+        #{else}
+                <li><a href="@{Privado.Index()}"><b>&{'menu.Inicio'}</b></a></li>
+        #{/else}
+        
+        #{secure.check 'permanencia'}
         <li><a href="#nogo"><b>&{'menu.permanencia'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
             <!--[if lte IE 6]><table><tr><td><![endif]-->
             <ul class="sub">
-                <li><a href="@{Consultas.list()}">&{'menu.consulta'}</a></li>	      
+                #{secure.checkFuncionalidade 'Consultas'}   <li><a href="@{Consultas.list()}">&{'menu.consulta'}</a></li>#{/secure.checkFuncionalidade}    
+                #{if session.username && !controllers.Secure.Security.invoke("check", 'tesoureria')}
+                #{secure.checkFuncionalidade 'Apuntamentos'}<li><a href="@{Apuntamentos.list()}">&{'menu.tesoureria.Apuntamentos'}</a></li>#{/secure.checkFuncionalidade}
+                 #{/if}
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
         #{/secure.check}         
-        
+
         #{secure.check 'secretariaXeral'}
         <li><a href="#nogo"><b>&{'menu.secretariaXeral'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
             <!--[if lte IE 6]><table><tr><td><![endif]-->
             <ul class="sub">
-                <li><a href="@{Organismos.list()}">&{'menu.secretariaXeral.organizacion'}</a></li>	
-                <li><a href="@{Comites.list()}">&{'menu.secretariaXeral.comite'}</a></li>
-                <li><a href="@{Secretarias.list()}">&{'menu.secretariaXeral.secretaria'}</a></li>
-                <li><a href="@{Avisos.list()}">&{'menu.secretariaXeral.avisos'}</a></li>
-                <li><a href="@{Users.list()}">&{'menu.secretariaXeral.usuarios'}</a></li>
-                <li><a href="@{Asembleas.list()}">&{'menu.secretariaXeral.asembleas'}</a></li>
-                <li><a href="@{Empresas.list()}">&{'menu.secretariaXeral.empresas'}</a></li>
+                #{secure.checkFuncionalidade 'Afiliados'}<li><a href="@{Afiliados.list()}">&{'menu.organizacion.afiliados'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Conflitos'}<li><a href="@{Conflitos.list()}">&{'menu.accionsindical.conflitos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Asembleas'}<li><a href="@{Asembleas.list()}">&{'menu.secretariaXeral.asembleas'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Organismos'}<li><a href="@{Organismos.list()}">&{'menu.secretariaXeral.organizacion'}</a></li>#{/secure.checkFuncionalidade}	
+                #{secure.checkFuncionalidade 'Comites'}<li><a href="@{Comites.list()}">&{'menu.secretariaXeral.comite'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Secretarias'}<li><a href="@{Secretarias.list()}">&{'menu.secretariaXeral.secretaria'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Users'}<li><a href="@{Users.list()}">&{'menu.secretariaXeral.usuarios'}</a></li>#{/secure.checkFuncionalidade}
 
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
@@ -30,47 +42,35 @@
         #{/secure.check} 
 
 
-         #{secure.check 'accionSindical'}
+        #{secure.check 'accionSindical'}
         <li><a href="#nogo"><b>&{'menu.accionsindical'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
             <!--[if lte IE 6]><table><tr><td><![endif]-->
             <ul class="sub">
-                <li><a href="@{Conflitos.list()}">&{'menu.accionsindical.conflitos'}</a></li>
-                <li><a href="@{Eventos.list()}">&{'menu.accionsindical.accions'}</a></li>
-                <li><a href="@{Avisos.list()}">&{'menu.secretariaXeral.avisos'}</a></li>
-                <li><a href="@{Informes.show('InformeConflitos')}">&{'menu.Informes.Conflitos'}</a></li>
-                <li><a href="@{Informes.show('InformeEventos')}">&{'menu.Informes.Eventos'}</a></li>
-               
+                #{secure.checkFuncionalidade 'Conflitos'}<li><a href="@{Conflitos.list()}">&{'menu.accionsindical.conflitos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Eventos'}<li><a href="@{Eventos.list()}">&{'menu.accionsindical.accions'}</a></li>#{/secure.checkFuncionalidade}               
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
         #{/secure.check}
-        
+
         #{secure.check 'organizacion'}
         <li><a href="#nogo"><b>&{'menu.organizacion'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
             <!--[if lte IE 6]><table><tr><td><![endif]-->
             <ul class="sub">
-                <li><a href="@{Persoas.list()}">&{'menu.Persoas'}</a></li>	
-                <li><a href="@{Afiliados.list()}">&{'menu.organizacion.afiliados'}</a></li>
-                <li><a href="@{Eventos.list()}">&{'menu.Eventos'}</a></li>
-                <li><a href="@{Avisos.list()}">&{'menu.secretariaXeral.avisos'}</a></li>
-                <li><a href="@{Enderezos.list()}">&{'menu.secretariaXeral.enderezos'}</a></li>   
-                <li><a href="@{Asembleas.list()}">&{'menu.secretariaXeral.asembleas'}</a></li>
-                <li><a href="@{Informes.show('InformeAfiliados')}">&{'menu.Informes.Afiliados'}</a></li>
-                <li><a href="@{Informes.show('InformeAcordos')}">&{'menu.Informes.Acordos'}</a></li>
-                <li><a href="@{Empresas.list()}">&{'menu.secretariaXeral.empresas'}</a></li>                
+                #{secure.checkFuncionalidade 'Asembleas'}<li><a href="@{Asembleas.list()}">&{'menu.secretariaXeral.asembleas'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Eventos'}<li><a href="@{Eventos.list()}">&{'menu.Eventos'}</a></li>#{/secure.checkFuncionalidade}
+
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
         #{/secure.check} 
-        
+
         #{secure.check 'propaganda'}
         <li><a href="#nogo"><b>&{'menu.propaganda'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
             <!--[if lte IE 6]><table><tr><td><![endif]-->
             <ul class="sub">
-                <li><a href="@{Fondos.list()}">&{'menu.propaganda.fondos'}</a></li>
-                <li><a href="@{EntradaFondos.list()}">&{'menu.propaganda.entradas'}</a></li>
-                <li><a href="@{Informes.show('InformeFondos')}">&{'menu.Informes.Fondos'}</a></li>
-               
+                #{secure.checkFuncionalidade 'Fondos'} <li><a href="@{Fondos.list()}">&{'menu.propaganda.fondos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'EntradaFondos'}<li><a href="@{EntradaFondos.list()}">&{'menu.propaganda.entradas'}</a></li>#{/secure.checkFuncionalidade}
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
@@ -80,68 +80,146 @@
         <li><a href="#nogo"><b>&{'menu.tesoureria'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
             <!--[if lte IE 6]><table><tr><td><![endif]-->
             <ul class="sub">
-                <li><a href="@{LibroContas.list()}">&{'menu.tesoureria.LibroContas'}</a></li>
-                <li><a href="@{FollaContas.list()}">&{'menu.tesoureria.FollaContas'}</a></li>
-                <li><a href="@{Informes.show('InformeTesoureria')}">&{'menu.Informes.Tesoureria'}</a></li>
+                #{secure.checkFuncionalidade 'LibroContas'}<li><a href="@{LibroContas.list()}">&{'menu.tesoureria.LibroContas'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'FollaContas'}<li><a href="@{FollaContas.list()}">&{'menu.tesoureria.FollaContas'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Apuntamentos'}<li><a href="@{Apuntamentos.list()}">&{'menu.tesoureria.Apuntamentos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Cuotas'}<li><a href="@{Cuotas.list()}">&{'menu.tesoureria.cuotas'}</a></li>#{/secure.checkFuncionalidade}
 
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
         #{/secure.check}         
-        
 
-        
+
+        #{secure.check 'comite'}
+        <li><a href="#nogo"><b>&{'menu.comite'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
+            <!--[if lte IE 6]><table><tr><td><![endif]-->
+            <ul class="sub">
+                #{secure.checkFuncionalidade 'Persoas'}<li><a href="@{Persoas.list()}">&{'menu.Persoas'}</a></li>#{/secure.checkFuncionalidade}	
+                #{secure.checkFuncionalidade 'Avisos'}<li><a href="@{Avisos.list()}">&{'menu.secretariaXeral.avisos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Eventos'}<li><a href="@{Eventos.list()}">&{'menu.Eventos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Empresas'}<li><a href="@{Empresas.list()}">&{'menu.secretariaXeral.empresas'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'ListaDistribucions'}<li><a href="@{ListaDistribucions.list()}">&{'menu.configuracion.listasDistribucion'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Contactos'}<li><a href="@{Contactos.list()}">&{'menu.configuracion.contactos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Enderezos'}<li><a href="@{Enderezos.list()}">&{'menu.secretariaXeral.enderezos'}</a></li>   #{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Documentos'}<li><a href="@{Documentos.list()}">&{'menu.documentos'}</a></li>   #{/secure.checkFuncionalidade}
+
+            </ul>
+            <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+        </li>
+        #{/secure.check}         
+
+
+        #{secure.check 'informes'}
+        <li><a href="#nogo"><b>&{'menu.Informes'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
+            <!--[if lte IE 6]><table><tr><td><![endif]-->
+            <ul class="sub">
+                #{secure.checkFuncionalidade 'Informes'}<li><a href="@{Informes.show('InformeConflitos')}">&{'menu.Informes.Conflitos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Informes'}<li><a href="@{Informes.show('InformeEventos')}">&{'menu.Informes.Eventos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Informes'}<li><a href="@{Informes.show('InformeAfiliados')}">&{'menu.Informes.Afiliados'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Informes'}<li><a href="@{Informes.show('InformeAcordos')}">&{'menu.Informes.Acordos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Informes'}<li><a href="@{Informes.show('InformeFondos')}">&{'menu.Informes.Fondos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Informes'}<li><a href="@{Informes.show('InformeTesoureria')}">&{'menu.Informes.Tesoureria'}</a></li>#{/secure.checkFuncionalidade}
+
+            </ul>
+            <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+        </li>
+        #{/secure.check}         
+
         #{secure.check 'recibeNotificacions'}
         <li><a href="#nogo"><b>&{'NotificacionInternas'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
             <!--[if lte IE 6]><table><tr><td><![endif]-->
             <ul class="sub">
-                <li><a href="@{NotificacionInternas.listRecived()}">&{'NotificacionInterna.recibidas'}</a></li>
-                <li><a href="@{NotificacionInternas.list()}">&{'NotificacionInterna.enviadas'}</a></li>
+                #{secure.checkFuncionalidade 'NotificacionInternas'}<li><a href="@{NotificacionInternas.listRecived()}">&{'NotificacionInterna.recibidas'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'NotificacionInternas'}<li><a href="@{NotificacionInternas.list()}">&{'NotificacionInterna.enviadas'}</a></li>#{/secure.checkFuncionalidade}
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
+        #{/secure.check}    
+
+        #{secure.check 'chat'}
+        #{secure.checkFuncionalidade 'Chat'}<li><a href="@{Chat.conversaComite()}"  onClick="showPopupChat(this);return(false);"><b>&{'menu.chat'}</b><!--[if IE 7]><!--></a><!--<![endif]--></li>#{/secure.checkFuncionalidade}
         #{/secure.check}         
 
+
+    #{secure.check 'admin'}
+        <li><a href="#nogo"><b>&{'menu.Admin'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
+            <!--[if lte IE 6]><table><tr><td><![endif]-->
+            <ul class="sub">
+                #{secure.checkFuncionalidade 'Users'}<li><a href="@{Users.list()}">&{'menu.secretariaXeral.usuarios'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Permisos'}<li><a href="@{Permisos.list()}">&{'menu.permisos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Funcionalidades'}<li><a href="@{Funcionalidades.list()}">&{'menu.funcionalidades'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'MensaxesIdiomas'}<li><a href="@{MensaxesIdiomas.list()}">&{'menu.mensaxesIdioma'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Idiomas'}<li><a href="@{Idiomas.list()}">&{'menu.idioma'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Auditorias'}<li><a href="@{Auditorias.list()}">&{'menu.auditoria'}</a></li>#{/secure.checkFuncionalidade}
+
+            </ul>
+            <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+        </li>
+        #{/secure.check}   
         
+   #{secure.check 'admin'}
+        <li><a href="#nogo"><b>&{'menu.PrincipalesFun'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
+            <!--[if lte IE 6]><table><tr><td><![endif]-->
+            <ul class="sub">
+                #{secure.checkFuncionalidade 'Afiliados'}<li><a href="@{Afiliados.list()}">&{'menu.organizacion.afiliados'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Persoas'}<li><a href="@{Persoas.list()}">&{'menu.Persoas'}</a></li>#{/secure.checkFuncionalidade}	
+                #{secure.checkFuncionalidade 'Avisos'}<li><a href="@{Avisos.list()}">&{'menu.secretariaXeral.avisos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Eventos'}<li><a href="@{Eventos.list()}">&{'menu.Eventos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Empresas'}<li><a href="@{Empresas.list()}">&{'menu.secretariaXeral.empresas'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'ListaDistribucions'}<li><a href="@{ListaDistribucions.list()}">&{'menu.configuracion.listasDistribucion'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Contactos'}<li><a href="@{Contactos.list()}">&{'menu.configuracion.contactos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Enderezos'}<li><a href="@{Enderezos.list()}">&{'menu.secretariaXeral.enderezos'}</a></li>   #{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Documentos'}<li><a href="@{Documentos.list()}">&{'menu.documentos'}</a></li>   #{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Conflitos'}<li><a href="@{Conflitos.list()}">&{'menu.accionsindical.conflitos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Asembleas'}<li><a href="@{Asembleas.list()}">&{'menu.secretariaXeral.asembleas'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Organismos'}<li><a href="@{Organismos.list()}">&{'menu.secretariaXeral.organizacion'}</a></li>#{/secure.checkFuncionalidade}	
+                #{secure.checkFuncionalidade 'Comites'}<li><a href="@{Comites.list()}">&{'menu.secretariaXeral.comite'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Secretarias'}<li><a href="@{Secretarias.list()}">&{'menu.secretariaXeral.secretaria'}</a></li>#{/secure.checkFuncionalidade}
+
+            </ul>
+            <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+        </li>
+        #{/secure.check}        
         #{secure.check 'autenticado'}
         <li><a href="#nogo"><b>&{'menu.configuracion'}</b><!--[if IE 7]><!--></a><!--<![endif]-->
             <!--[if lte IE 6]><table><tr><td><![endif]-->
             <ul class="sub">
-                <li><a href="@{ListaDistribucions.list()}">&{'menu.configuracion.listasDistribucion'}</a></li>
-                <li><a href="@{Contactos.list()}">&{'menu.configuracion.contactos'}</a></li>
-                <li><a href="@{Users.password()}">&{'menu.password'}</a></li>
-                <li><a href="@{Idiomas.idiomas()}">&{'menu.idiomas'}</a></li>
+                #{secure.checkFuncionalidade 'seleccionaidioma'}<li><a href="@{Idiomas.seleccionaIdioma()}">&{'menu.idiomas'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Password'}<li><a href="@{Password.Password()}">&{'menu.changePassword'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'OrganismoSeleccion'}<li><a href="@{Organismos.OrganismoSeleccion()}">&{'menu.organismo'}</a></li>#{/secure.checkFuncionalidade}
 
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
-        #{/secure.check}         
-        
-        
-
+        #{/secure.check}   
         #{secure.check 'admin'}        
-        <li><a href="@{Admin.index()}"><b>&{'menu.Admin'}</b><!--[if IE 7]><!--></a><!--<![endif]--></li>
-        <li><a href="@{Chat.conversaComite()}"  onClick="showPopupChat(this);return(false);"><b>&{'menu.chat'}</b><!--[if IE 7]><!--></a><!--<![endif]--></li>
+        #{secure.checkFuncionalidade 'Admin'}<li><a href="@{Admin.index()}"><b>&{'menu.AdminTablas'}</b><!--[if IE 7]><!--></a><!--<![endif]--></li>#{/secure.checkFuncionalidade}
         #{/secure.check} 
 
-
+  
         
+        #{secure.check 'autenticado'}
+        #{secure.checkFuncionalidade 'Documentacions'}
+        <li><a href="@{Documentacions.documentacion()}"><b>&{'menu.documentacion'}</b></a></li>  
+        #{/secure.checkFuncionalidade}
+        #{/secure.check} 
         
         
         #{if session.username}
-        
-            <ul class="inOut">
-                <li class="inOut"> <a  href="@{Secure.logout()}"><b>&{'login.out'}</b><!--[if IE 7]><!--></a><!--<![endif]--></li>
-            
 
-    #{/if}
-    #{else}
-    
-        
+        <ul class="inOut">
+            <li class="inOut"> <a  href="@{Secure.logout()}"><b>&{'login.out'}</b><!--[if IE 7]><!--></a><!--<![endif]--></li>
+
+
+            #{/if}
+            #{else}
+
+
             <li class="inOut"><a  href="@{Privado.index()}"><b>&{'login.in'}</b><!--[if IE 7]><!--></a><!--<![endif]--></li>  
-        
-       
-#{/else}
-</ul>
+
+
+            #{/else}
+        </ul>
     </ul>
 </div>

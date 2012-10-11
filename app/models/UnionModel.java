@@ -6,13 +6,11 @@ import play.data.validation.Required;
 
  
 import play.db.jpa.*;
+import utils.AddFiltro;
  
 @MappedSuperclass
 public class UnionModel extends Model  {
- 
-    
-    
-    
+     
     @ManyToOne   
     @CRUD.Hidden
     public Organismo organismo;

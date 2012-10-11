@@ -15,13 +15,18 @@ public class Idioma extends Model {
     @MaxSize(50)
     public String descricion;
     
+    @Required
+    @MaxSize(2)
+    public String sufixo;
   
-    public Idioma(String descricion){
+    public Idioma(String descricion,String sufixo){
     	this.descricion=descricion;
+        this.sufixo=sufixo;
     }
+    
       
     public String toString() {
-        return this.descricion;
+        return this.descricion+"-"+this.sufixo;
     }
 	
 }

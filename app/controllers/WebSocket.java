@@ -1,7 +1,10 @@
 package controllers;
 
+import java.util.ArrayList;
 import models.ChatRoom;
+import models.informes.Rooms;
 import play.Logger;
+import play.Play;
 import play.libs.F.Either;
 import play.libs.F.EventStream;
 import static play.libs.F.Matcher.ClassOf;
@@ -17,15 +20,22 @@ import utils.Tools;
 
 public class WebSocket extends Controller {
     
-    public static void room(String user) {
-        render(user);
+    
+    
+    public static void room(String user,String idOrganismo) {
+        render(user,idOrganismo);
     }
+    
 
     public static class ChatRoomSocket extends WebSocketController {
         
-        public static void join(String user) {
+        public static void join(String user,String idOrganismo) {
             
-            ChatRoom room = ChatRoom.get();
+            String chatLogPath=Play.configuration.getProperty("chatLog.path");
+            String chatLogFile="chatLog"+idOrganismo+".txt";
+            
+            
+            ChatRoom room = Rooms.getRoom(idOrganismo);
             
             // Socket connected, join the chat room
             EventStream<ChatRoom.Event> roomMessagesStream = room.join(user);
@@ -45,6 +55,7 @@ public class WebSocket extends Controller {
                     room.leave(user);
                     outbound.send("quit:ok");
                     disconnect();
+                    Rooms.deleteRoom(idOrganismo);
                 }
                 
                 // Case: TextEvent received on the socket
@@ -56,22 +67,28 @@ public class WebSocket extends Controller {
                 // Case: Someone joined the room
                 for(ChatRoom.Join joined: ClassOf(ChatRoom.Join.class).match(e._2)) {
                     outbound.send("join:%s:%s:%s", joined.user,joined.membros,Tools.getFormatTimeStamp(joined.timestamp));
+                    Tools.writeMessageInFile(chatLogPath,chatLogFile,joined.user+ " " + play.i18n.Messages.get("chat.uniuseAoChat")+ " " +Tools.getFormatTimeStamp(joined.timestamp));
                 }
                 
                 // Case: New message on the chat room
                 for(ChatRoom.Message message: ClassOf(ChatRoom.Message.class).match(e._2)) {
                     outbound.send("message:%s:%s:%s#%s", message.user, message.membros,Tools.getFormatHour(message.timestamp),message.text);
+                    Tools.writeMessageInFile(chatLogPath,chatLogFile,message.user+ "(" + Tools.getFormatHour(message.timestamp)+ ") :" + message.text);
+                    
                 }
                 
                 // Case: Someone left the room
                 for(ChatRoom.Leave left: ClassOf(ChatRoom.Leave.class).match(e._2)) {
                     outbound.send("leave:%s:%s:%s", left.user,left.membros,Tools.getFormatTimeStamp(left.timestamp));
+                    Tools.writeMessageInFile(chatLogPath,chatLogFile,left.user+ " " + play.i18n.Messages.get("chat.deixouAoChat")+ " " +Tools.getFormatTimeStamp(left.timestamp));
+
                 }
                 
                 // Case: The socket has been closed
                 for(WebSocketClose closed: SocketClosed.match(e._1)) {
                     room.leave(user);
                     disconnect();
+                    Rooms.deleteRoom(idOrganismo);
                 }
                 
             }

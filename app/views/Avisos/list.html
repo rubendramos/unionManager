@@ -16,12 +16,7 @@
     <div id="crudListTable">
         #{crud.tableNonEliminar fields:['asunto','contido','estadoAviso','dataARealizarAviso','dataRealizacionAviso']}       
         #{crud.custom 'contido'} 
-        #{if (object.evento!=null)}
-        ${object.evento.toString().length() > 30 ? object.evento.toString()[0..30] + '...' : object.evento} 
-        #{/if}
-        #{if (object.evento==null)}
         ${object.contido.toString().length() > 30 ? object.contido.toString()[0..30] + '...' : object.contido} 
-        #{/if}
         #{/crud.custom}
                         
         #{crud.custom 'dataARealizarAviso'}

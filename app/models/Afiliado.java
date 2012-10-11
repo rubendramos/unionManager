@@ -3,7 +3,9 @@ package models;
 import controllers.CRUD.Hidden;
 import java.util.*;
 import javax.persistence.*;
+import notificacions.Notificador;
 import org.hibernate.annotations.Filter;
+import play.Play;
 import utils.AddForeignKey;
 
  
@@ -19,12 +21,18 @@ public class Afiliado extends UnionModel {
     @Required
     @ManyToOne
     @AddForeignKey
+    @NewForeignKey
     public Persoa persoa ;
- 
+          
     @Required
     @ManyToOne
     @AddFiltro
     private TipoEstadoAfiliado estadoAfiliado ;
+    
+    @Required
+    @ManyToOne
+    @AddFiltro
+    public TipoCuota tipoCuotaAfiliado ;
     
     @Required
     @ManyToOne
@@ -39,9 +47,6 @@ public class Afiliado extends UnionModel {
     @AddFiltro
     public Date dataAlta;
     
- 
-    
-    
     @AddFiltro
     public Date dataBaixa;
         
@@ -49,7 +54,8 @@ public class Afiliado extends UnionModel {
     
     
     @ManyToOne
-    @AddFiltro
+    @AddForeignKey
+    @NewForeignKey
     public Empresa empresa ;
     
     public String carnetConfederado;
@@ -116,5 +122,20 @@ public class Afiliado extends UnionModel {
         this.estadoAfiliado = estadoAfiliado;
     }
   
- 
+    public static List<Afiliado>  getListaAfiliadosAlta(){
+        TipoEstadoAfiliado tea=TipoEstadoAfiliado.findById(Long.parseLong("1"));
+        return  find("byEstadoAfiliado", tea).fetch();        
+    }
+
+    public  boolean mandarEmailAltaAfiliado(Afiliado af,User u) throws Exception { 
+     return Notificador.notificacionAltaAfiliado(af, play.i18n.Messages.get("mensaxe.asunto.altaAfiliado"), play.i18n.Messages.get("mensaxe.corpo.altaAfiliado"),u.firma); 
+       
+    }   
+     
+     public  boolean mandarEmailBaixaAfiliado(Afiliado af,User u) throws Exception {      
+     return Notificador.notificacionBaixaAfiliado(af, play.i18n.Messages.get("mensaxe.asunto.baixaUsuario"), play.i18n.Messages.get("mensaxe.corpo.baixaAfiliado"),u.firma); 
+       
+    }  
+    
+    
 }

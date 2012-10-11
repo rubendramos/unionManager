@@ -31,6 +31,9 @@ _body.setProperty('fieldsHandler', fieldsHandler);
                 </a>
             </th>
             %{ } }%
+   <th class="accion" >
+
+                </th>            
         </tr>
     </thead>
     %{ _caller.objects.eachWithIndex() { object, k -> }%
@@ -49,7 +52,7 @@ _body.setProperty('fieldsHandler', fieldsHandler);
             }%
             %{ } else { }%
             %{ if(i == 0) { }%
-            <a href="@{show(object._key())}">${object[field]?.toString()?.escape()?.raw() ?: '(no value)'}</a>
+            ${object[field]?.toString()?.escape()?.raw() ?: '(no value)'}
             %{ } else { }%
             %{ if(_caller.type.getField(field).type == 'file') { }%
             %{ if(object[field]) { }%
@@ -78,6 +81,11 @@ _body.setProperty('fieldsHandler', fieldsHandler);
         %{ } }%
 
         %{ } }%
+        
+         <td class="accion">
+            <input src="/public/images/line/transparentInputImage.png" class='ver' type="image" title="&{'crud.ver',''}&{ _caller.type.name} ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:document.searching.page.value=${_caller.page};document.searching.id.value=${object._key()};document.searching.action='show';document.searching.submit()" value="" />          
+
+        </td>        
     </tr>
     %{ } }%
 </table>

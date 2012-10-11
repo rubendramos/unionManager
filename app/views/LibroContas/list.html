@@ -10,7 +10,7 @@
     </div>
 
     <div id="crudListTable">
-        #{crud.table fields:['descricion','sindicato','dataAlta','dataBaixa']}
+        #{crud.table fields:['descricion','dataAlta','dataBaixa']}
         #{crud.custom 'dataAlta'}
         #{if (object.dataAlta!=null)}
         ${object.dataAlta.format()}

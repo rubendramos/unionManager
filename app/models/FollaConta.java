@@ -40,5 +40,51 @@ public class FollaConta extends UnionSecureModel {
     public String toString() {
         return this.descricion;
     }
-	
+
+     public static FollaConta createFollaContasAfiliacion(Mes mes, Ano ano,Organismo organismo){
+        String descricion=play.i18n.Messages.get("follaContas.follaContasMesAfiliados", mes.descricion,ano.descricion);               
+        FollaConta fc=new FollaConta(descricion, null, Tools.getCurrentDate(), null);
+        TipoEstado te=TipoEstado.findById(Long.parseLong("1"));
+        HashSet<Apuntamento> ap=new HashSet<Apuntamento>();
+        fc.apuntamentos=ap;
+        fc.setOrganismo(organismo);
+        fc.setEstado(te);
+        fc._save();    
+        return fc;
+    }
+     
+    public static FollaConta getFollaContasAfiliacion(Organismo organismo,Mes mes, Ano ano){
+        String descricion=play.i18n.Messages.get("follaContas.follaContasMesAfiliados", mes,ano);                       
+        FollaConta fc=FollaConta.find("byDescricionAndOrganismo",descricion, organismo).first();
+        if(fc==null){
+           fc= createFollaContasAfiliacion(mes,ano,organismo);
+        }
+        return fc;
+    }    
+    
+     public static FollaConta createFollaContasPermanencia(User u,Organismo organismo){
+        String descricion=play.i18n.Messages.get("follaContas.follaContasPermanencia", u.afiliado.persoa.nomeCompleto);                       
+        LibroConta lc=LibroConta.getLibroContasPermanencia(organismo);
+        Set<FollaConta> follasconta=lc.follasContas;
+        FollaConta fc=new FollaConta(descricion, null, Tools.getCurrentDate(), null);
+        TipoEstado te=TipoEstado.findById(Long.parseLong("1"));
+        HashSet<Apuntamento> ap=new HashSet<Apuntamento>();
+        fc.apuntamentos=ap;
+        fc.setOrganismo(organismo);
+        fc.setEstado(te);
+        fc._save();    
+        follasconta.add(fc);
+        lc._save();
+        return fc;
+    }
+     
+    public static FollaConta getFollaContasPermanencia(Organismo organismo,User u){
+        String descricion=play.i18n.Messages.get("follaContas.follaContasPermanencia", u.afiliado.persoa.nomeCompleto);                       
+        FollaConta fc=FollaConta.find("byDescricionAndOrganismo",descricion, organismo).first();
+        if(fc==null){
+           fc= createFollaContasPermanencia(u,organismo);
+        }
+        return fc;
+    }    
+    
 }

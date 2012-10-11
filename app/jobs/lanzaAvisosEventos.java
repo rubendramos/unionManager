@@ -19,7 +19,7 @@ import utils.Tools;
  * @author ruben
  *
  */
-@Every("3min")
+@Every("1min")
 public class lanzaAvisosEventos extends Job {
 
     @Override
@@ -29,13 +29,8 @@ public class lanzaAvisosEventos extends Job {
         List<Aviso> avisos = Aviso.findAvisosAEnviar();
 
         for (Aviso aviso : avisos) {
-            if (aviso.evento != null) {
-                envioCorrecto = Notificador.notificacionEvento(aviso);
-            } else if (aviso.asemblea != null){
-                envioCorrecto = Notificador.notificacionAsemblea(aviso);
-            }else{
-                envioCorrecto = Notificador.notificacionAviso(aviso);
-            }
+            
+            envioCorrecto = Notificador.notificacionAviso(aviso);            
             
             if (envioCorrecto) {
                 tea = (TipoEstadoAviso) TipoEstadoAviso.findById(Long.parseLong("2"));

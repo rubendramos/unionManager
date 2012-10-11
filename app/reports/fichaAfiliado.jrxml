@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fichaAfiliado" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="227"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -46,8 +46,8 @@
 	<parameter name="SNO" class="java.lang.String"/>
 	<parameter name="SFAX" class="java.lang.String"/>
 	<parameter name="SACORREOS" class="java.lang.String"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\T00159\\Escritorio\\softRuben\\unionManager\\app\\reports\\"]]></defaultValueExpression>
+	<parameter name="SUBREPORTS_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select per.nome nome,per.apelido1 apelido1,per.apelido2 apelido2,per.dni dni ,per.datanacemento dataNacemento,en.telefono telefono,per.telefonomovil telefonoMovil, ram.descricion ramo ,ocu.descricion ocupacion,org.acronimo acronimo,org.nome nomeSindicato,org.id organismoID,tea.descricion estadoAfiliacion,af.dataalta dataAlta,af.dataBaixa dataBaixa,af.milita milita,per.email email, sexo.descricion sexo,en.enderezo enderezo, en.concello concello,loc.descricion localidade,loc.codigopostal codigopostal,prv.descricion provincia,com.descricion comunidade
@@ -521,7 +521,7 @@ and af.id=$P{AFILIADO_ID};]]>
 					<subreportParameterExpression><![CDATA[$V{organismoIDChar}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "enderezoCabeceira.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORTS_DIR} + "/enderezoCabeceira.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

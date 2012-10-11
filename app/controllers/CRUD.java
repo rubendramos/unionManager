@@ -1,5 +1,6 @@
 package controllers;
 
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import controllers.CRUD.ObjectType.ObjectField;
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
@@ -13,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import models.*;
+import org.hibernate.Session;
+import org.jfree.util.ObjectTable;
 
 import play.Logger;
 import play.Play;
@@ -24,6 +27,7 @@ import play.data.validation.Required;
 import play.db.Model;
 import play.db.Model.Factory;
 import play.db.jpa.GenericModel;
+import play.db.jpa.JPA;
 import play.exceptions.TemplateNotFoundException;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -50,6 +54,12 @@ public abstract class CRUD extends Controller {
     public static void list(int page, String where, String search, String from, String searchFields,
             String orderBy, String order) throws Exception {
         ObjectType type = ObjectType.get(getControllerClass());
+
+
+        //Activamos os filtros
+        ((Session) JPA.em().getDelegate()).enableFilter("listadistribucion");
+
+
         String whereClausule = null;
 
         notFoundIfNull(type);
@@ -71,6 +81,9 @@ public abstract class CRUD extends Controller {
         List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, whereClausule);
         Long count = type.count(search, searchFields, whereClausule);
         Long totalCount = type.count(null, null, (String) request.args.get("where"));
+
+
+
         try {
             render(type, objects, count, totalCount, page, orderBy, order);
         } catch (TemplateNotFoundException e) {
@@ -85,6 +98,10 @@ public abstract class CRUD extends Controller {
         if (page < 1) {
             page = 1;
         }
+
+        //Desactivamos filtros para a lista de foreign
+        ((Session) JPA.em().getDelegate()).disableFilter("listadistribucion");
+        ((Session) JPA.em().getDelegate()).enableFilter("permiso");
 
         Logger.debug("cacheid en listForeign", params.get("cacheId"));
 
@@ -191,6 +208,9 @@ public abstract class CRUD extends Controller {
             notFoundIfNull(object);
             //Agora as variables de cache borranse cada 3 minutos
             //Cache.delete(cacheId);
+            if (fkc.getIdPai() == null) {
+                params.remove("cacheId");
+            }
 
             try {
                 render("CRUD/show.html", type, object, page, where, search, from);
@@ -224,9 +244,17 @@ public abstract class CRUD extends Controller {
 
             //Agora as variables de cache borranse cada 3 minutos
             //Cache.delete(cacheId);
+            if (fkc.getIdPai() == null) {
+                params.remove("cacheId");
+            }
+
 
             try {
-                render("CRUD/blank.html", type, object, page, where, search, from, cacheId);
+                if (fkc.idPai != null) {
+                    render("CRUD/blankForeign.html", type, object, page, where, search, from, cacheId);
+                } else {
+                    render("CRUD/blank.html", type, object, page, where, search, from, cacheId);
+                }
             } catch (TemplateNotFoundException e) {
                 Logger.error(e, "Erro aopintar dende a chache");
             }
@@ -271,7 +299,7 @@ public abstract class CRUD extends Controller {
         notFoundIfNull(type);
         Organismo org = Seguridade.organismo();
 
-        Model object = type.findById(id);
+        Model object = (Model) type.findById(id);
         notFoundIfNull(object);
         String where = params.get("where");
         String search = params.get("search");
@@ -279,6 +307,8 @@ public abstract class CRUD extends Controller {
         String listFromForm = params.get("from");
 
         Binder.bindBean(params.getRootParamNode(), "object", object);
+
+
         if (params.get("_save") != null || params.get("_saveAndContinue") != null) {
             validation.valid(object);
             if (validation.hasErrors()) {
@@ -346,7 +376,7 @@ public abstract class CRUD extends Controller {
 
             ForeignKeyCache fkc = new ForeignKeyCache(fkv);
 
-            Cache.set(fkc.getId(), fkc,"3mn");
+            Cache.set(fkc.getId(), fkc, "3mn");
             params.put("cacheId", fkc.getId());
 
             fkc.redirectFillo();
@@ -357,12 +387,18 @@ public abstract class CRUD extends Controller {
         setDataModificacion(object);
         setDataActual(object);
         setUser(object);
-        setAvisode(object);
+        setUserApuntamento(object);
+        setNotificacionDe(object);
         setOrganismo(object, org);
+        setAvisoFirma(object);
+        setNomeFicheiroAdxunto(object);
         setSecureEstado(object);
+        setRollAutenticado(object);
         object._save();
         Auditoria.facerAuditoria(object, User.find("byUsuario", Seguridade.connected()).<User>first(), accion, org);
+        setOrganismoPai(object, org);
         actualizaMensaxeIdioma(object);
+        setApuntamentoPermanencia(object, org);
         creaConvocaAsemblea(object, org);
     }
 
@@ -416,6 +452,29 @@ public abstract class CRUD extends Controller {
         }
     }
 
+    private static void setOrganismoPai(Model object, Organismo org) {
+        Set<Organismo> orgFillos;
+        try {
+
+            if (object instanceof models.Organismo) {
+                Organismo newOrg = (Organismo) object;
+                if (newOrg.id != org.id) {
+                    if (org.organismosFillo != null) {
+                        orgFillos = org.organismosFillo;
+                    } else {
+                        orgFillos = new HashSet<Organismo>();
+                    }
+
+                    orgFillos.add((Organismo) object);
+                    org.organismosFillo = orgFillos;
+                    org._save();
+                }
+            }
+        } catch (Exception ex) {
+            Logger.debug("Non implementa Organismo");
+        }
+    }
+
     private static void setSecureEstado(Model object) {
         try {
 
@@ -430,6 +489,26 @@ public abstract class CRUD extends Controller {
         }
     }
 
+    private static void setRollAutenticado(Model object) {
+        try {
+
+            if (object instanceof models.User) {
+                User u = (User) object;
+                Permiso permisoAutenticado = Permiso.findById(Long.parseLong("11"));
+                //Set<models.Permiso> permisos=new Set<models.Permiso>();
+                Set<models.Permiso> permisos = u.getPermisos();
+                if (!permisos.contains(permisoAutenticado)) {
+                    permisos.add(permisoAutenticado);
+                }
+                Field t = object.getClass().getSuperclass().getDeclaredField("permisos");
+                t.set(object, permisos);
+            }
+
+        } catch (Exception ex) {
+            Logger.debug("Non implementa user");
+        }
+    }
+
     private static void setUser(Model object) {
         try {
             User user = User.find("byUsuario", Seguridade.connected()).<User>first();
@@ -440,7 +519,57 @@ public abstract class CRUD extends Controller {
         }
     }
 
-    private static void setAvisode(Model object) {
+    private static void setUserApuntamento(Model object) {
+        try {
+            User user = User.find("byUsuario", Seguridade.connected()).<User>first();
+            Field t = object.getClass().getDeclaredField("usuarioApuntamento");
+            t.set(object, user);
+        } catch (Exception ex) {
+            Logger.debug("Non implementa apuntamento");
+        }
+    }
+
+    private static void setApuntamentoPermanencia(Model object, Organismo org) {
+        try {
+            if (object instanceof models.Apuntamento) {
+                User user = User.find("byUsuario", Seguridade.connected()).<User>first();
+                boolean permisoPermanencia = user.tenPermiso("Permanencia");
+                boolean permisoTesoureria = user.tenPermiso("Tesoureria");
+                if (permisoPermanencia && !permisoTesoureria) {
+                    FollaConta fc = FollaConta.getFollaContasPermanencia(org, user);
+                    Set<Apuntamento> apuntamentos = fc.apuntamentos;
+                    Apuntamento ap = (Apuntamento) object;
+                    apuntamentos.add(ap);
+                    fc._save();
+                }
+            }
+
+        } catch (Exception ex) {
+            Logger.debug("Non implementa apuntamento");
+        }
+    }
+
+    private static void deleteApuntamentoPermanencia(Model object, Organismo org) {
+        try {
+            if (object instanceof models.Apuntamento) {
+                User user = User.find("byUsuario", Seguridade.connected()).<User>first();
+                boolean permisoPermanencia = user.tenPermiso("Permanencia");
+                boolean permisoTesoureria = user.tenPermiso("Tesoureria");
+                if (permisoPermanencia && !permisoTesoureria) {
+                    FollaConta fc = FollaConta.getFollaContasPermanencia(org, user);
+                    Set<Apuntamento> apuntamentos = fc.apuntamentos;
+                    Apuntamento ap = (Apuntamento) object;
+                    apuntamentos.remove(ap);
+                    fc._save();
+                }
+            }
+
+        } catch (Exception ex) {
+            Logger.debug("Non implementa apuntamento");
+        }
+    }
+
+    private static void setNotificacionDe(Model object) {
         try {
             User user = User.find("byUsuario", Seguridade.connected()).<User>first();
             Field t = object.getClass().getDeclaredField("avisode");
@@ -450,10 +579,39 @@ public abstract class CRUD extends Controller {
         }
     }
 
+    private static void setAvisoFirma(Model object) {
+        try {
+            User user = User.find("byUsuario", Seguridade.connected()).<User>first();
+            Field t = object.getClass().getDeclaredField("firma");
+            t.set(object, user);
+        } catch (Exception ex) {
+            Logger.debug("Non implementa Aviso");
+        }
+    }
+
+    private static void setNomeFicheiroAdxunto(Model object) {
+        try {
+
+            Field t = object.getClass().getDeclaredField("nomeFicheiroAdxunto");
+            Documento doc = (Documento) object;
+            // doc.ficheiro.set(new FileInputStream(photo), MimeTypes.getContentType(photo.getName()));
+
+            String nomeFicheiroAduxunto = doc.ficheiro.getFile().getName();
+            t.set(object, nomeFicheiroAduxunto);
+        } catch (Exception ex) {
+            Logger.debug("Non implementa documento");
+        }
+    }
+
     private static void setDataActual(Model object) {
         try {
+
+
             Field d = object.getClass().getDeclaredField("dataAlta");
-            d.set(object, Tools.getCurrentDate());
+            Date data = (Date) d.get(object);
+            if (data == null || "".equals(data.toString())) {
+                d.set(object, Tools.getCurrentDate());
+            }
         } catch (Exception ex) {
             Logger.debug("Non implementa dataActual");
         }
@@ -473,7 +631,7 @@ public abstract class CRUD extends Controller {
 
             MensaxesIdioma menIdi = (MensaxesIdioma) Class.forName("models.MensaxesIdioma").cast(object);
             LoadPropertiesFiles lpf = new LoadPropertiesFiles();
-            lpf.loadProperties(menIdi);
+            lpf.loadMenasxeIdiomaProperties(menIdi);
         } catch (Exception ex) {
             Logger.debug("Non implementa MensaxesIdioma");
         }
@@ -532,7 +690,10 @@ public abstract class CRUD extends Controller {
 
             fkv.addValueForeign(id);
 
+
             fkc.redirectPai();
+
+
         } else {
             flash.error(play.i18n.Messages.get("crud.cache.error"));
             render("errors/cache.html");
@@ -579,6 +740,41 @@ public abstract class CRUD extends Controller {
         constructor.setAccessible(true);
         Model object = (Model) constructor.newInstance();
 
+        try {
+            render(type, object);
+        } catch (TemplateNotFoundException e) {
+            render("CRUD/blankForeign.html", type, object, page, where, search, from);
+        }
+    }
+
+    public static void blankForeignError(int page, String where, String search, String from, String searchFields,
+            String orderBy, String order, String cacheId, String redirect) throws Exception {
+        ObjectType type = ObjectType.get(getControllerClass());
+        notFoundIfNull(type);
+
+        Constructor<?> constructor = type.entityClass.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        Model object = null;
+        ForeignKeyCache fkc = null;
+
+        if (cacheId != null) {
+            if (redirect.equals("fillo")) {
+                fkc = (ForeignKeyCache) Cache.get(params.get("cacheId"));
+            } else if (redirect.equals("pai")) {
+                fkc = (ForeignKeyCache) Cache.get(((ForeignKeyCache) Cache.get(params.get("cacheId"))).idPai);
+            }
+            ForeignKeyValues fkv = fkc.getForeignKeyValues();
+            object = fkv.filloModel;
+
+        } else {
+            object = (Model) constructor.newInstance();
+        }
+
+
+        validation.valid(object);
+        if (validation.hasErrors()) {
+            renderArgs.put("error", play.i18n.Messages.get("crud.hasErrors"));
+        }
 
 
         try {
@@ -589,14 +785,25 @@ public abstract class CRUD extends Controller {
     }
 
     public static void create() throws Exception {
+        boolean avisoEnviado = true;
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);
+        ForeignKeyCache fkcPai = null;
+        ForeignKeyCache fkcf = null;
+        ForeignKeyValues fkv = null;
+        ForeignKeyCache fkc = null;
 
+        fkcf = (ForeignKeyCache) Cache.get(params.get("cacheId"));
+        if (fkcf != null) {
+
+            fkcPai = (ForeignKeyCache) Cache.get(fkcf.idPai);
+        }
 
         Constructor<?> constructor = type.entityClass.getDeclaredConstructor();
         constructor.setAccessible(true);
         Model object = (Model) constructor.newInstance();
         Organismo org = Seguridade.organismo();
+        User u = User.find("byUsuario", Seguridade.connected()).<User>first();
 
         String where = params.get("where");
         String search = params.get("search");
@@ -604,9 +811,12 @@ public abstract class CRUD extends Controller {
         String from = params.get("from");
 
         Binder.bindBean(params.getRootParamNode(), "object", object);
+
+
         setPassEUser(object);
         if (params.get("_addForeignKey") != null || params.get("_newForeignKey") != null
                 || params.get("_deleteForeignKey") != null) {
+
 
 
             String sufixoCampo = getSufixoCampo(params.get("_addForeignKey"), params.get("_deleteForeignKey"), params.get("_newForeignKey"));
@@ -615,11 +825,12 @@ public abstract class CRUD extends Controller {
             String campo = params.get("_campo" + sufixoCampo);
             String tipo = params.get("_tipo" + sufixoCampo);
 
-            ForeignKeyValues fkv = new ForeignKeyValues(object);
+            fkv = new ForeignKeyValues(object);
             fkv.setCampo(campo);
             fkv.setNomeTipoFillo(tipo);
             fkv.setProcedencia(fkv.PROCEDENCIA_BLANK);
             fkv.setControladorPai(getControllerClass());
+
 
 
             if (params.get("_addForeignKey") != null) {
@@ -647,76 +858,96 @@ public abstract class CRUD extends Controller {
             }
 
 
-            ForeignKeyCache fkc = new ForeignKeyCache(fkv);
+            fkc = new ForeignKeyCache(fkv);
 
-            Cache.set(fkc.getId(), fkc,"3mn");
             params.put("cacheId", fkc.getId());
+            if (fkcf != null) {
+                ForeignKeyValues fkvf = fkcf.getForeignKeyValues();
+                fkvf.setControladorFillo(getControllerClass());
+                if (fkv.getNomeTipoFillo().equals(fkvf.getNomeTipoFillo())) {
+                    fkc.setIdePai(fkcf.getIdPai());
+                } else {
+                    fkc.setIdePai(fkcf.getId());
+                }
+                Cache.set(fkcf.getId(), fkcf, "33mn");
+            }
+            Cache.set(fkc.getId(), fkc, "33mn");
 
             fkc.redirectFillo();
 
-        }
+        } else if (params.get("_backForeign") != null) {
+            if (fkcf.getIdPai() != null) {
+                ForeignKeyValues fkvf = fkcf.getForeignKeyValues();
+                if (fkvf.getControladorFillo() == null) {
+                    fkvf.setControladorFillo(getControllerClass());
+                }
 
-        validation.valid(object);
-        if (validation.hasErrors()) {
-            renderArgs.put("error", play.i18n.Messages.get("crud.hasErrors"));
-            try {
-                render(request.controller.replace(".", "/") + "/blank.html",
-                        type, object, page, where, search, from);
-            } catch (TemplateNotFoundException e) {
-                render("CRUD/blank.html", type, object, page, where, search, from);
+                if (fkvf.getControladorPai().getName().equals(getControllerClass().getName())) {
+                    params.put("cacheId", fkcPai.id);
+                    fkcPai.redirectPai();
+                } else {
+                    params.put("cacheId", fkcf.id);
+                    fkcf.redirectPai();
+                }
+
+
+
+
+            } else {
+                //params.remove("cacheId");
+                fkcf.redirectPai();
+
             }
-        }
 
-        saveUnion(object, org, play.i18n.Messages.get("generic.accionNovoAlta"));
+        } else if (fkcf != null) {
+            // ForeignKeyValues fkv = (ForeignKeyValues) fkcf.getForeignKeyValues();
+            // type = ObjectType.get(fkv.controladorFillo);
+            // constructor = type.entityClass.getDeclaredConstructor();
+            //  constructor.setAccessible(true);
+            //  object = (Model) constructor.newInstance();
+            //  org = Seguridade.organismo();
 
+            // constructor.setAccessible(true);
+            //  
+            //   Binder.bindBean(params.getRootParamNode(), "object", object);
 
-        //Si o obxeto do modelo implementa a interface Avisable enviarase un 
-        //aviso de sistema asociado a un tipo de aviso específico neste caso o 1.
-        if (Notificable.class.isInstance(object)) {
-            Notificable ob = (Notificable) object;
-            NotificacionInterna ni = ob.getNotificacionInterna();
-            User u = User.find("byUsuario", Seguridade.connected()).<User>first();
-            ni.setAvisode(u);
-            ni.organismo = u.getOrganismo();
-            List users = User.usersNotificacions();
-            HashSet<User> usersComite = new HashSet<User>(users);
-            ni.setContactos(usersComite);
-            ni._save();
-        }
+            setPassEUser(object);
 
-        flash.success(play.i18n.Messages.get("crud.created", type.modelName));
-        if (params.get("_save") != null) {
-            redirect(request.controller + ".list", page, where, search, from);
-        }
-        if (params.get("_saveAndAddAnother") != null) {
-            redirect(request.controller + ".blank", page, where, search, from);
-        }
-
-
-        redirect(request.controller + ".show", object._key(), page, where, search, from);
-    }
-
-    public static void createForeign() throws Exception {
-        ObjectType type = ObjectType.get(getControllerClass());
-        notFoundIfNull(type);
-        ForeignKeyCache fkc = (ForeignKeyCache) Cache.get(params.get("cacheId"));
-        
-        
-        if (fkc!=null){
-        ForeignKeyValues fkv = (ForeignKeyValues) fkc.getForeignKeyValues();
-        Constructor<?> constructor = type.entityClass.getDeclaredConstructor();
-        Organismo org = Seguridade.organismo();
-        constructor.setAccessible(true);
-        Model object = (Model) constructor.newInstance();
-        Binder.bindBean(params.getRootParamNode(), "object", object);
-        setPassEUser(object);
-        if (params.get("_saveAndBackForeign") != null) {
             validation.valid(object);
             if (validation.hasErrors()) {
                 renderArgs.put("error", play.i18n.Messages.get("crud.hasErrors"));
                 try {
-                    render(request.controller.replace(".", "/") + "/blankForeign.html",
-                            type, object);
+                    // render(request.controller.replace(".", "/") + "/blankForeignError.html",type, object);
+                    // fkcf.redirectFillo();
+                    //render(type, object);
+
+                    ForeignKeyValues fkvf = fkcf.getForeignKeyValues();
+                    if (fkcPai != null) {
+                        ForeignKeyValues fkvp = fkcPai.getForeignKeyValues();
+
+                        if (fkvf.getControladorPai().getName().equals(getControllerClass().getName())) {
+                            fkvp.setTipoForeign(fkvp.FOREIGN_VALIDATION_ERROR);
+                            fkvp.setFilloModel(object);
+                            params.put("redirect", "pai");
+                            fkcPai.redirectFillo();
+
+                        } else {
+                            fkvf.setTipoForeign(fkvf.FOREIGN_VALIDATION_ERROR);
+                            fkvf.setFilloModel(object);
+                            params.put("redirect", "fillo");
+                            fkcf.redirectFillo();
+                        }
+                    } else {
+                        fkvf.setTipoForeign(fkvf.FOREIGN_VALIDATION_ERROR);
+                        fkvf.setFilloModel(object);
+                        params.put("redirect", "fillo");
+                        fkcf.redirectFillo();
+
+                    }
+
+
+                    //render("CRUD/blankForeign.html", type, page, where, search, from, fkc.id);
+                    //render("CRUD/blankForeign.html", type, object, page, where, search, from);
                 } catch (TemplateNotFoundException e) {
                     render("CRUD/blankForeign.html", type, object);
                 }
@@ -727,36 +958,142 @@ public abstract class CRUD extends Controller {
 
             flash.success(play.i18n.Messages.get("crud.created", type.modelName));
 
+            if (fkcf.getIdPai() != null) {
+                ForeignKeyValues fkvf = fkcf.getForeignKeyValues();
+                ForeignKeyValues fkvp = fkcPai.getForeignKeyValues();
 
-            ObjectType.get(getControllerClass());
-            fkv.setControladorFillo(getControllerClass());
-            fkv.addValueForeign(object._key().toString());
 
+
+                if (fkvf.getControladorFillo() == null) {
+                    fkvf.setControladorFillo(getControllerClass());
+                }
+
+                if (fkvf.getControladorPai().getName().equals(getControllerClass().getName())) {
+                    fkvp.addValueForeign(object._key().toString());
+                    params.put("cacheId", fkcPai.id);
+                    fkcPai.redirectPai();
+                } else {
+                    fkvf.addValueForeign(object._key().toString());
+                    params.put("cacheId", fkcf.id);
+                    fkcf.redirectPai();
+                }
+
+
+
+
+            } else {
+                //params.remove("cacheId");
+                ForeignKeyValues fkvf = fkcf.getForeignKeyValues();
+                if (fkvf.getControladorFillo() == null) {
+                    fkvf.setControladorFillo(getControllerClass());
+                }
+                fkvf.addValueForeign(object._key().toString());
+                fkcf.redirectPai();
+
+            }
+
+
+
+        } else {
+
+            validation.valid(object);
+            if (validation.hasErrors()) {
+                renderArgs.put("error", play.i18n.Messages.get("crud.hasErrors"));
+                try {
+                    render(request.controller.replace(".", "/") + "/blank.html",
+                            type, object, page, where, search, from);
+                } catch (TemplateNotFoundException e) {
+                    render("CRUD/blank.html", type, object, page, where, search, from);
+                }
+            }
+
+            saveUnion(object, org, play.i18n.Messages.get("generic.accionNovoAlta"));
+
+
+            //Si o obxeto do modelo implementa a interface notificable enviarase un 
+            //aviso de sistema asociado a un tipo de aviso específico neste caso o 1.
+            if (Notificable.class.isInstance(object)) {
+                Notificable ob = (Notificable) object;
+                NotificacionInterna ni = ob.getNotificacionInterna();
+                ni.setAvisode(u);
+                //ni.organismo = u.organismo;
+                List users = User.usersNotificacions(u.organismo.id);
+                HashSet<User> usersComite = new HashSet<User>(users);
+
+                ni.setContactos(usersComite);
+                ni._save();
+            }
+
+            if (User.class.isInstance(object)) {
+                User uAlta = (User) object;
+                uAlta.enviarNotificacionInternaAlta();
+                if (!uAlta.mandarEmailAltaUsuario(u)) {
+                    avisoEnviado = false;
+                }
+            }
+
+            if (Afiliado.class.isInstance(object)) {
+                Afiliado aAlta = (Afiliado) object;
+                if (!aAlta.mandarEmailAltaAfiliado(aAlta, u)) {
+                    avisoEnviado = false;
+                }
+
+            }
+
+            if (avisoEnviado) {
+                flash.success(play.i18n.Messages.get("crud.created", type.modelName));
+            } else {
+                flash.success(play.i18n.Messages.get("crud.createdNonAvisado", type.modelName));
+            }
+
+
+            if (params.get("_save") != null) {
+                redirect(request.controller + ".list", page, where, search, from);
+            }
+            if (params.get("_saveAndAddAnother") != null) {
+                redirect(request.controller + ".blank", page, where, search, from);
+            }
+
+
+            redirect(request.controller + ".show", object._key(), page, where, search, from);
 
         }
 
-
-
-        fkc.redirectPai();
-        }else{
-            flash.error(play.i18n.Messages.get("crud.cache.error"));
-            render("errors/cache.html");
-        }
 
     }
 
     public static void delete(String id) throws Exception {
+        boolean avisoEnviado = true;
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);
         String where = type.createWhereFilterClausule();
         Model object = type.findById(id);
         String search = params.get("search");
         String page = params.get("page");
+        User u = User.find("byUsuario", Seguridade.connected()).<User>first();
 
         notFoundIfNull(object);
         Organismo org = Seguridade.organismo();
         try {
-            Auditoria.facerAuditoria(object, User.find("byUsuario", Seguridade.connected()).<User>first(), "Borrar", org);
+            if (User.class.isInstance(object)) {
+                User uAlta = (User) object;
+                if (!uAlta.mandarEmailBaixaUsuario(u)) {
+                    avisoEnviado = false;
+                }
+
+            }
+
+            if (Afiliado.class.isInstance(object)) {
+                Afiliado aBaixa = (Afiliado) object;
+
+                if (!aBaixa.mandarEmailBaixaAfiliado(aBaixa, u)) {
+                    avisoEnviado = false;
+                }
+            }
+
+
+            Auditoria.facerAuditoria(object, u, "Borrar", org);
+            deleteApuntamentoPermanencia(object, org);
             object._delete();
 
         } catch (Exception e) {
@@ -766,10 +1103,16 @@ public abstract class CRUD extends Controller {
             } else {
                 flash.error(play.i18n.Messages.get("crud.delete.error", type.modelName));
             }
-            redirect(request.controller + ".list", object._key(), page, where, search, "true");
+            redirect(request.controller + ".list", page, where, search, "true");
 
         }
-        flash.success(play.i18n.Messages.get("crud.deleted", type.modelName));
+
+        if (!avisoEnviado) {
+            flash.success(play.i18n.Messages.get("crud.deletedNonAvisado", type.modelName));
+        } else {
+            flash.success(play.i18n.Messages.get("crud.deleted", type.modelName));
+        }
+
         redirect(request.controller + ".list", page, where, search, "true");
     }
 
@@ -888,20 +1231,22 @@ public abstract class CRUD extends Controller {
         private Field getOrganismoField() throws NoSuchFieldException {
             Field t = null;
             try {
-
-                //Filtramos sempre polo id do organismo
-                t = this.entityClass.getSuperclass().getDeclaredField("organismo");
-
-            } catch (NoSuchFieldException ex) {
+                t = this.entityClass.getDeclaredField("organismo");
+                return t;
+            } catch (NoSuchFieldException exa) {
                 try {
-                    t = this.entityClass.getSuperclass().getSuperclass().getDeclaredField("organismo");
+                    //Filtramos sempre polo id do organismo
+                    t = this.entityClass.getSuperclass().getDeclaredField("organismo");
                     return t;
-                } catch (NoSuchFieldException ex2) {
-                    throw new NoSuchFieldException();
+                } catch (NoSuchFieldException exb) {
+                    try {
+                        t = this.entityClass.getSuperclass().getSuperclass().getDeclaredField("organismo");
+                        return t;
+                    } catch (NoSuchFieldException exc) {
+                        throw new NoSuchFieldException();
+                    }
                 }
             }
-            return t;
-
         }
 
         public Long count(String search, String searchFields, String where) {
@@ -910,12 +1255,13 @@ public abstract class CRUD extends Controller {
 
                 //Filtramos sempre polo id do organismo
                 Field t = getOrganismoField();
-                if (where == null || "".equals(where)) {
-                    where = " organismo_id='" + Seguridade.organismo().id + "'";
-                } else {
-                    where = where + " and  organismo_id='" + Seguridade.organismo().id + "'";
+                if (Seguridade.organismo() != null && !"".equals(Seguridade.organismo().id)) {
+                    if (where == null || "".equals(where)) {
+                        where = " organismo_id='" + Seguridade.organismo().id + "'";
+                    } else {
+                        where = where + " and  organismo_id='" + Seguridade.organismo().id + "'";
+                    }
                 }
-
             } catch (NoSuchFieldException ex) {
                 Logger.debug("Non implementa UnionModel");
             }
@@ -931,11 +1277,14 @@ public abstract class CRUD extends Controller {
             try {
 
                 //Filtramos sempre polo id do organismo
-                Field t = getOrganismoField();
-                if (where == null || "".equals(where)) {
-                    where = " organismo_id='" + Seguridade.organismo().id + "'";
-                } else {
-                    where = where + " and  organismo_id='" + Seguridade.organismo().id + "'";
+
+                if (Seguridade.organismo() != null && !"".equals(Seguridade.organismo().id)) {
+                    Field t = getOrganismoField();
+                    if (where == null || "".equals(where)) {
+                        where = " organismo_id='" + Seguridade.organismo().id + "'";
+                    } else {
+                        where = where + " and  organismo_id='" + Seguridade.organismo().id + "'";
+                    }
                 }
 
             } catch (NoSuchFieldException ex) {
@@ -1100,7 +1449,12 @@ public abstract class CRUD extends Controller {
                 ObjectField of = new ObjectField(f, this.modelName);
                 if (of.type != null) {
                     if (of.type.equals("hidden")) {
-                        hiddenFields.add(of);
+                        User user = User.find("byUsuario", Seguridade.connected()).<User>first();
+                        if (of.name.equals("organismo") && user.tenPermiso("Admin")) {
+                            fields.add(of);
+                        } else {
+                            hiddenFields.add(of);
+                        }
                     } else {
                         fields.add(of);
                     }
@@ -1137,7 +1491,7 @@ public abstract class CRUD extends Controller {
             public String name;
             public boolean multiple;
             public boolean required;
-            public boolean addForeignKey;
+            public boolean addForeignKey;            
             public boolean newForeignKey;
             public String pai = "unknown";
             public String tipo = "unknown";
@@ -1147,6 +1501,7 @@ public abstract class CRUD extends Controller {
             @SuppressWarnings("deprecation")
             public ObjectField(Model.Property property, String pai) {
                 Field field = property.field;
+                User user = User.find("byUsuario", Seguridade.connected()).<User>first();
 
                 this.property = property;
                 this.pai = pai;
@@ -1161,12 +1516,22 @@ public abstract class CRUD extends Controller {
                     if (field.isAnnotationPresent(Password.class)) {
                         type = "password";
                     }
+                    if (field.isAnnotationPresent(PlayHora.class)) {
+                        type = "hora";
+                    }                    
                 }
                 if (Number.class.isAssignableFrom(field.getType())
                         || field.getType().equals(double.class)
                         || field.getType().equals(int.class)
                         || field.getType().equals(long.class)) {
+                    
+                if (field.isAnnotationPresent(PlayCurrency.class)) {
+                    type = "playCurrency";
+                } else{
                     type = "number";
+                }                     
+                    
+                
                 }
                 if (Boolean.class.isAssignableFrom(field.getType())
                         || field.getType().equals(boolean.class)) {
@@ -1207,6 +1572,8 @@ public abstract class CRUD extends Controller {
                 if (field.isAnnotationPresent(AddForeignKey.class)) {
                     addForeignKey = true;
                 }
+                
+              
                 if (field.isAnnotationPresent(NewForeignKey.class)) {
                     newForeignKey = true;
                 }
@@ -1240,6 +1607,7 @@ public abstract class CRUD extends Controller {
 
         private String id;
         private ForeignKeyValues foreignKeyValues;
+        private String idPai;
 
         public ForeignKeyCache(ForeignKeyValues foreignKeyValues) {
             this.id = generateCache();
@@ -1248,6 +1616,14 @@ public abstract class CRUD extends Controller {
 
         public String getId() {
             return this.id;
+        }
+
+        public void setIdePai(String idPai) {
+            this.idPai = idPai;
+        }
+
+        public String getIdPai() {
+            return this.idPai;
         }
 
         public ForeignKeyValues getForeignKeyValues() {
@@ -1261,6 +1637,7 @@ public abstract class CRUD extends Controller {
             String page = params.get("page");
             String from = params.get("from");
             String cacheId = params.get("cacheId");
+            String redirect = params.get("redirect");
 
             this.getForeignKeyValues().setWhere(where);
             this.getForeignKeyValues().setPage(page);
@@ -1270,6 +1647,9 @@ public abstract class CRUD extends Controller {
 
             if (this.getForeignKeyValues().getTipoForeign().equals(this.getForeignKeyValues().FOREIGN_NOVA)) {
                 redirect(this.getForeignKeyValues().getFillo().getSimpleName() + "s" + ".blankForeign", page, where, search, from, null, null, null, cacheId);
+
+            } else if (this.getForeignKeyValues().getTipoForeign().equals(this.getForeignKeyValues().FOREIGN_VALIDATION_ERROR)) {
+                redirect(this.getForeignKeyValues().getFillo().getSimpleName() + "s" + ".blankForeignError", page, where, search, from, null, null, null, cacheId, redirect);
 
             } else {
                 redirect(this.getForeignKeyValues().getFillo().getSimpleName() + "s" + ".listForeign", page, where, search, from, null, null, null, cacheId);
@@ -1314,11 +1694,13 @@ public abstract class CRUD extends Controller {
         public final String PROCEDENCIA_SHOW = "show";
         public final String FOREIGN_NOVA = "nova";
         public final String FOREIGN_EXISTE = "existe";
+        public final String FOREIGN_VALIDATION_ERROR = "validationError";
         private Class<? extends Model> fillo;
         private String nomeTipoFillo;
         private ObjectType tipoFillo;
         private Class<? extends Controller> controladorFillo;
         private Model pai;
+        private Model filloModel;
         private String nomeTipoPai;
         private ObjectType tipoPai;
         private Class<? extends Controller> controladorPai;
@@ -1677,6 +2059,20 @@ public abstract class CRUD extends Controller {
          */
         public void setFrom(String from) {
             this.from = from;
+        }
+
+        /**
+         * @return the filloModel
+         */
+        public Model getFilloModel() {
+            return filloModel;
+        }
+
+        /**
+         * @param filloModel the filloModel to set
+         */
+        public void setFilloModel(Model filloModel) {
+            this.filloModel = filloModel;
         }
     }
 }

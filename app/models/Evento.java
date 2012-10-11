@@ -13,9 +13,7 @@ import play.data.binding.As;
 import javax.persistence.*;
 
 import java.util.*;
-import utils.AddFiltro;
-import utils.NewForeignKey;
-import utils.Tools;
+import utils.*;
 
 @Entity
 public class Evento extends UnionSecureModel implements Avisable {
@@ -43,6 +41,7 @@ public class Evento extends UnionSecureModel implements Avisable {
     public Date dataRealizacion;
     
     @MaxSize(5)
+    @PlayHora
     public String horaRealizacion;
     
     @Lob
@@ -83,16 +82,25 @@ public class Evento extends UnionSecureModel implements Avisable {
         return this.lugar;
     }
 
+       public String getAsunto() {
+        return play.i18n.Messages.get("aviso.evento.asunto", this.nome);
+    }
+
+    public Set<ListaDistribucion> getContactos() {
+        HashSet<ListaDistribucion> contactos=new HashSet<ListaDistribucion>();
+        ListaDistribucion ld=(ListaDistribucion)ListaDistribucion.getListaAutomaticaAfiliados(organismo);
+        contactos.add(ld);
+        return contactos;
+    }
+
     public Set<Documento> getAdxuntos() {
         return this.documentacion;
     }
 
-    public String getHoraCelebracion() {
-        return this.horaRealizacion;
+    public String getContido() {
+        return play.i18n.Messages.get("aviso.evento.contido",Tools.getLocaleDateFormat(this.dataRealizacion), this.horaRealizacion, this.lugar,this.descricion);
     }
 
-    public String getTitulo() {
-        return this.nome;
-    }
+  
 
 }

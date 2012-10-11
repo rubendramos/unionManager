@@ -15,10 +15,10 @@ public class Privado extends Controller {
     static void setConnectedUser() {
         if(Seguridade.isConnected()) {
             User user = User.find("byUsuario", Seguridade.connected()).first();
-            renderArgs.put("user", user.afiliado.toString());
+            renderArgs.put("user", user.toString());
         }
     }
- 
+     
     public static void index() {
         render();
     }

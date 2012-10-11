@@ -18,9 +18,8 @@ import javax.persistence.Entity;
 public interface Avisable {
     
 
-
-    Enderezo getLugarCelebracion();
+    String getAsunto();
+    Set<ListaDistribucion>  getContactos();
     Set<Documento> getAdxuntos();
-    String getHoraCelebracion();
-    String getTitulo();
+    String getContido();
 }

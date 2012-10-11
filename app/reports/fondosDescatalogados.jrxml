@@ -23,8 +23,8 @@
 	<parameter name="ATTACHMENT_DIR" class="java.lang.String"/>
 	<parameter name="SSI" class="java.lang.String"/>
 	<parameter name="SNO" class="java.lang.String"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\T00159\\Escritorio\\softRuben\\unionManager\\app\\reports\\"]]></defaultValueExpression>
+	<parameter name="SUBREPORTS_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SFAX" class="java.lang.String"/>
 	<parameter name="STELEFONO" class="java.lang.String"/>

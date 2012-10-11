@@ -1,0 +1,12 @@
+#{extends 'jqueryui/layout.html'/}
+#{set title:'Progress bar'/}
+
+
+<div class="demo">
+#{if processId}
+<p>Job ${processId} progress:</p>
+<div id="progressbar" data-url="@@{jqueryui.ProgressSocket.progress(processId)}"></div>
+#{/if}
+</div>
+
+

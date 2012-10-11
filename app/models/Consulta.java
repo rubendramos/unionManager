@@ -61,19 +61,14 @@ public class Consulta extends UnionSecureModel implements Notificable{
     @Lob
     @MaxSize(500)
     public String descricion;               
-    
-    @ManyToMany
-    @AddForeignKey
-    @NewForeignKey
-    public Set<Documento> documentacion = new HashSet();
-    
+       
     
     @Lob
     @MaxSize(500)
     public String resposta;     
 
     public Consulta(String dni, String nome, String apelido1, String apelido2,TipoConflito tipoConflito, Ramo ramo,
-            Date dataAlta, String descricion, Set<Documento> documentacion,Ocupacion ocupacion, Date dataModifiacion,String reposta){
+            Date dataAlta, String descricion,Ocupacion ocupacion, Date dataModifiacion,String reposta){
         this.tipoConflito = tipoConflito;
         this.nome = nome;
         this.descricion = descricion;
@@ -82,8 +77,7 @@ public class Consulta extends UnionSecureModel implements Notificable{
         this.ramo = ramo;
         this.ocupacion = ocupacion;
         this.dataAlta = dataAlta;
-        this.dataModificacion = dataModifiacion;
-        this.documentacion = documentacion;
+        this.dataModificacion = dataModifiacion;        
         this.dni = dni;
         this.resposta=resposta;
     }

@@ -1,0 +1,215 @@
+%{
+// Eval fields tags
+def fieldsHandler = [:]
+if(_body) {
+_body.setProperty('fieldsHandler', fieldsHandler);
+}%
+#{doBody as:'skip' /}
+%{
+}
+}%
+
+<table>
+    <thead>
+        <tr>
+            %{ if(_fields) { }%                
+            %{ _fields.each() { }%
+            %{if (_caller.type.getField(it)==null){}%
+            <th class="${_caller.type.getField(it)==null?'tipoAccion': _caller.type.getField(it).type}">
+                %{ if(!_sort || _sort.contains(it)) { }%
+                <a class="${_caller.orderBy == it ? (_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc') : ''}" href="@{list().remove('page').add('search', params.search).add('orderBy', it).add('order', (_caller.orderBy == it && _caller.order == 'ASC' ? 'DESC' : 'ASC'))}">
+                   &{it}                         
+                </a>
+                %{ } else { }%
+                &{it}               
+                %{ } }%
+            </th>
+            %{}else if (_caller.type.getField(it).name!='organismo'){}%
+            <th class="${_caller.type.getField(it)==null?'tipoAccion': _caller.type.getField(it).type}">
+                %{ if(!_sort || _sort.contains(it)) { }%
+                <a class="${_caller.orderBy == it ? (_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc') : ''}" href="@{list().remove('page').add('search', params.search).add('orderBy', it).add('order', (_caller.orderBy == it && _caller.order == 'ASC' ? 'DESC' : 'ASC'))}">
+                   &{it}                         
+                </a>
+                %{ } else { }%
+                &{it}               
+                %{ } }%
+            </th>
+            %{ } else if (_caller.type.getField(it).name=='organismo'){ }%
+            %{if (session.username && controllers.Secure.Security.invoke("check", "admin")){}%
+            
+              <th class="${_caller.type.getField(it)==null?'tipoAccion': _caller.type.getField(it).type}">
+                %{ if(!_sort || _sort.contains(it)) { }%
+                <a class="${_caller.orderBy == it ? (_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc') : ''}" href="@{list().remove('page').add('search', params.search).add('orderBy', it).add('order', (_caller.orderBy == it && _caller.order == 'ASC' ? 'DESC' : 'ASC'))}">
+                   &{it}                         
+                </a>
+                %{ } else { }%
+                &{it}               
+                %{ } }%
+            </th>
+            %{ } }%
+            %{ } }%
+            %{ } }%
+            %{ } else { }%
+            <th class="${_caller.type.name==null?'tipoAccion': _caller.type.name}">
+                <a class="${_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc'}" href="@{list().remove('page').add('search', params.search).add('order', (_caller.order == 'DESC' ? 'ASC' : 'DESC'))}">
+                    &{_caller.type.name}
+                </a>
+            </th>
+            %{ } }%
+            <th class="accion">
+                <input class="add" type="button" title="&{'crud.add', _caller.type.name}"  onclick="javascript:accionSubmitSearching('blank',${_caller.page},null)" value="&{'crud.add', _caller.type.name}" />          
+              </th>
+        </tr>
+    </thead>
+    %{ _caller.objects.eachWithIndex() { object, k -> 
+        if(object instanceof models.UnionSecureModel){
+            valueEstado=object['estado'];
+        }
+    
+    }%
+    <tr class="${k % 2 ? 'even' : 'odd'}">
+        %{ if(_fields) { }%
+        %{ _fields.eachWithIndex() { field, i -> }%
+        
+        
+    
+        %{if (_caller.type.getField(field)==null){}%
+        <td class="${_caller.type.getField(field)==null?'tipoAccion': _caller.type.getField(field).type}">
+            
+            %{ if(fieldsHandler[field]) { }%
+            %{
+            def handler = fieldsHandler[field];
+            handler.setProperty('object', object);
+            }%
+            #{doBody body:handler /}
+            %{
+            handler.setProperty('object', null);
+            }%
+            %{ } else { }%
+            %{ if(i == 0) { }%
+            ${object[field]?.toString()?.escape()?.raw() ?: '(no value)'}
+           
+          
+      
+            %{ } else { }%
+            %{ if(_caller.type.getField(field).type == 'file') { }%
+            %{ if(object[field]) { }%
+            <a class="currentAttachment" href="@{attachment(object.id, field)}">${object[field].filename} (${object[field].get().size().formatSize()})</a>
+
+            %{ } else { }%
+
+            %{ } }%
+            %{ } else if (_caller.type.getField(field)==null && _caller.type.getField(field).name!='organismo'){ }%
+            ${object[field]?.escape()?.raw()}
+            %{ } }%
+            %{ } }%
+            %{ } }%
+        </td>
+         %{} else if (_caller.type.getField(field).name!='organismo'){}%
+        <td class="${_caller.type.getField(field)==null?'tipoAccion': _caller.type.getField(field).type}">
+            
+            %{ if(fieldsHandler[field]) { }%
+            %{
+            def handler = fieldsHandler[field];
+            handler.setProperty('object', object);
+            }%
+            #{doBody body:handler /}
+            %{
+            handler.setProperty('object', null);
+            }%
+            %{ } else { }%
+            %{ if(i == 0) { }%
+            ${object[field]?.toString()?.escape()?.raw() ?: '(no value)'}
+           
+          
+      
+            %{ } else { }%
+            %{ if(_caller.type.getField(field).type == 'file') { }%
+            %{ if(object[field]) { }%
+            <a class="currentAttachment" href="@{attachment(object.id, field)}">${object[field].filename} (${object[field].get().size().formatSize()})</a>
+
+            %{ } else { }%
+
+            %{ } }%
+            %{ } else if (_caller.type.getField(field)!=null && _caller.type.getField(field).name!='organismo'){ }%
+            ${object[field]?.escape()?.raw()}
+            %{ } }%
+            %{ } }%
+            %{ } }%
+        </td>
+        
+         %{ } else if (_caller.type.getField(field).name=='organismo'){ }%
+         %{if (session.username && controllers.Secure.Security.invoke("check", "admin")){}%
+         <td class="${_caller.type.getField(field)==null?'tipoAccion': _caller.type.getField(field).type}">
+            
+            %{ if(fieldsHandler[field]) { }%
+            %{
+            def handler = fieldsHandler[field];
+            handler.setProperty('object', object);
+            }%
+            #{doBody body:handler /}
+            %{
+            handler.setProperty('object', null);
+            }%
+            %{ } else { }%
+            %{ if(i == 0) { }%
+            ${object[field]?.toString()?.escape()?.raw() ?: '(no value)'}
+           
+          
+      
+            %{ } else { }%
+            %{ if(_caller.type.getField(field).type == 'file') { }%
+            %{ if(object[field]) { }%
+            <a class="currentAttachment" href="@{attachment(object.id, field)}">${object[field].filename} (${object[field].get().size().formatSize()})</a>
+
+            %{ } else { }%
+
+            %{ } }%
+            %{ } else { }%
+            ${object[field]?.escape()?.raw()}
+            %{ } }%
+            %{ } }%
+            %{ } }%
+        </td>
+        
+        %{ } }%
+        %{ } }%
+         
+        %{ } }%
+        
+        
+        %{ } else { }%
+        %{ if(fieldsHandler['default']) { }%
+        %{
+        def handler = fieldsHandler['default'];
+        handler.setProperty('object', object);
+        }%
+        #{doBody body:handler /}
+        %{ } else { }%
+        <td class="${_caller.type.name==null?'tipoAccion': _caller.type.name}">
+            ${object.toString()?.escape()?.raw() ?: '(no value)'}                    
+         </td> 
+        %{ } }%
+        %{ } }%
+   
+        
+        <td class="accion">
+            <input src="/public/images/line/transparentInputImage.png" class='ver' type="image" title="&{'crud.ver',''}&{ _caller.type.name} ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:accionSubmitSearching('show',${_caller.page},${object._key()})" value="" />          
+        %{ if(valueEstado!=null){ }%
+          %{ if(valueEstado.id==1){ }%
+            <input src="/public/images/line/transparentInputImage.png" class="delete" type="image" title="&{'crud.delete',''}&{ _caller.type.name} ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:confirmaAccionSubmitSearching('&{'generic.confirmaElimiar',object}','delete',${_caller.page},${object._key()})" value="" /> 
+            <input src="/public/images/line/transparentInputImage.png" class="lock" type="image" title="&{'generic.pecharEstado', _caller.type.name}"  onclick="javascript:confirmaAccionSubmitSearching('&{'generic.confirmaAccionPechar',object}','pecharEstado',${_caller.page},${object._key()})" value="" /> 
+            %{ } else { }%
+            #{secure.check 'secretariaXeral'}  
+            <input src="/public/images/line/transparentInputImage.png" class="unlock" type="image" title="&{'generic.abrirEstado', _caller.type.name}"  onclick="javascript:confirmaAccionSubmitSearching('&{'generic.confirmaAccionAbir',object}','abrirEstado',${_caller.page},${object._key()})" value="" /> 
+            #{/secure.check}
+            %{ } }%
+           %{ } else { }%
+            <input src="/public/images/line/transparentInputImage.png" class="delete" type="image" title="&{'crud.delete',''}&{ _caller.type.name} ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:confirmaAccionSubmitSearching('&{'generic.confirmaElimiar',object}','delete',${_caller.page},${object._key()})" value="" /> 
+
+            %{ } }%
+            
+        </td>
+    </tr>
+    %{ } }%
+</table>

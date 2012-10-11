@@ -7,7 +7,7 @@ import play.db.jpa.*;
 import play.data.validation.*;
  
 @Entity
-public class Ramo extends UnionModel {
+public class Ramo extends Model {
  
     
     @Required

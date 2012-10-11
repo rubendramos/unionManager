@@ -7,6 +7,7 @@
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/secure.css'}" />
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/menu.css'}" />
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/ui-lightness/jquery-ui-1.7.2.custom.css'}" />
         
         #{get 'moreStyles' /}
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
@@ -16,38 +17,33 @@
         <script src="@{'/public/javascripts/jquery-ui-1.7.2.custom.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
         <script src="@{'/public/javascripts/javascriptPropio.js'}" type="text/javascript" charset="${_response_encoding}"></script>
         <script src="@{'/public/javascripts/jquery.editinplace.packed.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/ui-lightness/jquery-ui-1.7.2.custom.css'}" />
 
+
+
+        
         #{get 'moreScripts' /}
     </head>
 
+    
+            
     <div id="unionDefault">
 
-        <ul id="logo">
-            <li>
-                <img src="@{'/public/images/logo.png'}"  id="logo" />
-            </li>
-        </ul>
+
 
         #{if session.username}
-
-       <ul >
+        <div id="logo"></div>          
+        
+        <ul>
             <li id="sindicato">${session.sindicato}</li>
         </ul>	        
         
         
-        <ul >
+        <ul>
             <li id="usuario"><b> &{'generic.usuario'}:</b>${session.user}</li>
         </ul>
 
         #{/if}
-        #{else}
-
-        <ul id="entrarSair">
-            <li> <a href="@{Privado.index()}">&{'login.in'}</a></li>
-        </ul>
-
-        #{/else}
+       
         
          
         <body>
@@ -56,7 +52,10 @@
 
         </body>
 
-        <footer id="footer">  </footer>
+        
     </div>
+    #{if session.username}
     <footer id="footer"> &{'generic.footer'}</footer>
+    <div id="logope"/>    
+    #{/if}
 </html>

@@ -9,24 +9,21 @@ import play.db.jpa.*;
 import play.data.validation.*;
 import utils.AddFiltro;
 import utils.AddForeignKey;
+import utils.NewForeignKey;
  
 @Entity
 public class Persoa extends UnionModel {
  
-   
     @Required
-    @MaxSize(15)
-    @AddFiltro
+    @MaxSize(15)    
     public String dni;
     
     @Required
     @MaxSize(50)
     public String nome;
-    
     @Required
     @MaxSize(50)
     public String apelido1;
-    
     @MaxSize(50)
     public String apelido2;
             
@@ -48,6 +45,7 @@ public class Persoa extends UnionModel {
     @Required
     @ManyToOne
     @AddForeignKey
+    @NewForeignKey
     public Enderezo enderezo;    
     
     @MaxSize(50)
@@ -88,7 +86,7 @@ public class Persoa extends UnionModel {
         if(nome!=null && !"".equals(nome)){
             sNome=", "+nome;
         }                
-        return sApelido1+sApelido2+sNome;
+        return (sApelido1+sApelido2+sNome).toLowerCase().trim();
     } 
     
     public String getEmail() {

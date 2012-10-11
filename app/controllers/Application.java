@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.Secure.Security;
 import play.*;
 import play.mvc.*;
 
@@ -10,7 +11,12 @@ import models.*;
 public class Application extends Controller {
 
     public static void index() {
-        render();
-    }
+        if(Security.isConnected()){
+            Seguridade.onAuthenticated();
+        }else{
+        
+            render();
+        }
 
+}
 }

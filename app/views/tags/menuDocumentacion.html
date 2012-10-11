@@ -1,0 +1,28 @@
+<div class="pro_line2">
+    <ul class="select">
+        
+ 
+        #{secure.check 'autenticado'}
+        #{secure.checkFuncionalidade 'Documentacions'}
+        <li><a href="@{Documentacions.documentacion()}"><b>&{'menu.documentacion'}</b></a></li>  
+        #{/secure.checkFuncionalidade}
+        #{/secure.check} 
+        
+        
+        #{if session.username}
+
+        <ul class="inOut">
+            <li class="inOut"> <a  href="@{Secure.logout()}"><b>&{'login.out'}</b><!--[if IE 7]><!--></a><!--<![endif]--></li>
+
+
+            #{/if}
+            #{else}
+
+
+            <li class="inOut"><a  href="@{Privado.index()}"><b>&{'login.in'}</b><!--[if IE 7]><!--></a><!--<![endif]--></li>  
+
+
+            #{/else}
+        </ul>
+    </ul>
+</div>

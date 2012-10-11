@@ -1,8 +1,10 @@
 package utils;
 
+import controllers.Seguridade;
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.TreeMap;
+import models.User;
 import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.AbstractAnnotationCheck;
 import net.sf.oval.context.FieldContext;
@@ -26,7 +28,9 @@ import play.exceptions.UnexpectedException;
 	    @Override
 	    public boolean isSatisfied(Object validatedObject, Object value,
 	            OValContext context, Validator validator) {
-	    	return true;
+               // User u=User.find("byUsuario", Seguridade.connected()).<User>first();
+               // return u.tenPermiso("admin");	    	
+                return true;
 	    }
 
 	 

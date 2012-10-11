@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import models.*;
+import org.apache.commons.lang.StringUtils;
 import play.db.Model;
 import play.exceptions.TemplateNotFoundException;
 import play.mvc.*;
@@ -11,7 +12,13 @@ import play.mvc.*;
 @Check("comite")
 @With(Secure.class)
 public class Eventos extends CRUD {    
-    
+@Before
+     static void setDefaultOrder() {
+	if(StringUtils.isBlank(request.params.get("orderBy"))) {
+		request.params.put("order", "DESC");
+		request.params.put("orderBy", "dataRealizacion");
+	}
+}
 public static void list(int page,  String where,String search,String from,String searchFields,
             String orderBy, String order) {
         ObjectType type = ObjectType.get(getControllerClass());
@@ -50,11 +57,12 @@ public static void list(int page,  String where,String search,String from,String
       
       Evento evento=Evento.findById(Long.parseLong(id));
       TipoEstadoAviso tsa=TipoEstadoAviso.findById(Long.parseLong("1"));
-      ListaDistribucion li= ListaDistribucion.getListaAutomaticaAfiliados();
+      ListaDistribucion li= ListaDistribucion.getListaAutomaticaAfiliados(Seguridade.organismo());
       Set<ListaDistribucion> sli=new HashSet<ListaDistribucion>();
       sli.add(li);            
       
-      Aviso aviso=new Aviso(evento,null,evento.nome,evento.descricion,null,sli,tsa,null,null);
+      Aviso aviso=new Aviso(evento);
+      aviso.setFirma(Seguridade.usuario());
       aviso.organismo=Seguridade.organismo();
       aviso._save();
       flash.success(play.i18n.Messages.get("crud.avisoGardado", evento.toString()));

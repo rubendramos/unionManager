@@ -10,13 +10,35 @@
     </div>
 
     <div id="crudListPagination">
-        #{crud.paginationForeign /}
+        #{crud.pagination /}
     </div>    
-    
-    <div id="crudListTable">
-        #{crud.table fields:['afiliado']}
+       
         
+ <div id="crudListTable">
+        #{crud.table fields:['afiliado','dataAlta','dataBaixa','estadoUsuario','afiliado.accion']}
+        #{crud.custom 'dataAlta'}
+        #{if (object.dataAlta!=null)}
+        ${object.dataAlta.format()}
+        #{/if}
+        #{/crud.custom}
+        #{crud.custom 'dataBaixa'}
+        #{if (object.dataBaixa!=null)}
+        ${object.dataBaixa.format()}
+        #{/if}
+        #{/crud.custom}
+              
+        #{crud.custom 'afiliado.accion'}  
+        #{if (object.estadoUsuario.id==1) }
+        <input src="/public/images/line/transparentInputImage.png" class="afiliadosmenos"   type="image" title="&{'user.facerBaixa'}  ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:confirmaAccionSubmitSearching('&{'user.confirmarBaixa',object.afiliado.persoa}','darDebaixaUsuarioERepintar',${page},${object._key()})" value="" /> 
+        #{/if}
+        #{if (object.estadoUsuario.id==2) }
+        <input src="/public/images/line/transparentInputImage.png" class="afiliadosmais" type="image" title="&{'user.facerAlta'}  ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:confirmaAccionSubmitSearching('&{'user.confirmarAlta',object.afiliado.persoa}','darDeAltaUsuarioERepintar',${page},${object._key()})" value="" /> 
+        #{/if}
+        #{/crud.custom}            
         #{/crud.table}
+    </div>        
+        
+        
     </div>
 
     <div id="crudListPagination">

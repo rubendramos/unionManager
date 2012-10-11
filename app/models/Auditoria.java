@@ -49,7 +49,12 @@ public class Auditoria extends UnionSecureModel {
     }
     
     public String toString() {
-        return usuario.afiliado.persoa.nomeCompleto+" - "+dataAccion+" - "+accion+" - "+ descricion;
+        if(usuario.toString().equals("Administrador")){
+            return "Administrador";
+        }else{
+            return this.usuario.afiliado.persoa.toString();        
+        }
+        
     }
 
   

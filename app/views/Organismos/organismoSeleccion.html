@@ -1,0 +1,31 @@
+#{extends 'CRUD/layoutMenuDocumentacion.html' /}
+#{set title:messages.get('organismo.cambiarOrganismo') /}
+
+
+
+
+<div id="anuncioImportante" class="${type.name}">
+&{'acceso.usuarioAdministrador'}
+</div>
+<div id="organismoSeleccion" class="${type.name}">
+
+    <h2 id="crudBlankTitle">&{'organismo.cambiarOrganismo'}</h2>
+
+    <div class="objectForm">
+        #{form @cambiaOrganismo()}
+        
+        <label for="object_email">
+                &{'organismo.seleccionaOrganismo'}
+            </label> 
+        <div class="crudField crud_text">
+         
+         #{select 'organismo', items:organismos,  labelProperty:'descricion', value:'organismos', class:"", id:'select' /}
+        </div>    
+ 
+        <p class="crudButtons">
+            <input type="submit" value="&{'organismo.cambiarOrganismo'}"> 
+            <a class="crudButtons" href="@{Organismos.altaOrganismoBlank()}">&{'organismo.altaNovoOrganismo'}</a>    
+        </p>
+        #{/form}
+    </div>
+</div>

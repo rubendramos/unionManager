@@ -1,6 +1,6 @@
 #{extends 'CRUD/layout.html' /}
 #{set title:messages.get('crud.blank.title', type.modelName) /}
-
+%{ cacheIde = params["cacheId"] }%
 
 <div id="crudBlank" class="${type.name}">
 
@@ -18,6 +18,8 @@
             <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
             <input type="submit" name="_saveAndAddAnother" value="&{'crud.saveAndAddAnother', type.modelName}" />              
             <input type="button" onClick="javascript:submitAccion('list')" value="&{'crud.voltarABusqueda'}" />
+            <input type="hidden" name="cacheId" value="${cacheIde}"/>  
+
         </p>
     #{/form}
     </div>

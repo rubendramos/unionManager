@@ -7,8 +7,12 @@ import play.db.jpa.*;
 
 import javax.persistence.*;
 import java.util.*;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
 
 @Entity
+@FilterDef(name="tipolistadistribucion", defaultCondition="((id != '1'))" )
+@Filter(name="tipolistadistribucion")
 public class TipoListaDistribucion extends Model {
     
     @Required

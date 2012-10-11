@@ -25,7 +25,8 @@ public class Comite extends UnionSecureModel {
     
     @Required
     @ManyToMany
-    @AddForeignKey     
+    @AddForeignKey  
+    @NewForeignKey  
     public Set<Secretaria> secretaria;
     
     @Required

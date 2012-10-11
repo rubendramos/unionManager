@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fondos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="53"/>
 	<parameter name="STITULOENTRADA" class="java.lang.String"/>
 	<parameter name="SAUTORENTRADA" class="java.lang.String"/>
 	<parameter name="SDESCRICIONENTRADA" class="java.lang.String"/>
@@ -23,8 +23,8 @@
 	<parameter name="ATTACHMENT_DIR" class="java.lang.String"/>
 	<parameter name="SSI" class="java.lang.String"/>
 	<parameter name="SNO" class="java.lang.String"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\T00159\\Escritorio\\softRuben\\unionManager\\app\\reports\\"]]></defaultValueExpression>
+	<parameter name="SUBREPORTS_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SFAX" class="java.lang.String"/>
 	<parameter name="STELEFONO" class="java.lang.String"/>
@@ -53,8 +53,7 @@ join tipogeneroFondo tgenfon on tgenfon.id=entfon.tipogenerofondo_id
 where ($P{ORGANISMO_ID}=-1 or entfon.organismo_id =$P{ORGANISMO_ID})
 and ($P{FONDO_ID}=-1 or fon.id =$P{FONDO_ID})
 and ($P{TIPOENTRADA_ID}=-1 or tentfon.id =$P{TIPOENTRADA_ID})
-and ($P{TIPOENTRADAGENERO_ID}=-1 or tgenfon.id =$P{TIPOENTRADAGENERO_ID})
-]]>
+and ($P{TIPOENTRADAGENERO_ID}=-1 or tgenfon.id =$P{TIPOENTRADAGENERO_ID})]]>
 	</queryString>
 	<field name="ANOEDICION" class="java.lang.String"/>
 	<field name="AUTOR" class="java.lang.String"/>
@@ -100,83 +99,83 @@ and ($P{TIPOENTRADAGENERO_ID}=-1 or tgenfon.id =$P{TIPOENTRADAGENERO_ID})
 			<band height="63">
 				<subreport>
 					<reportElement x="1" y="0" width="554" height="52"/>
-					<subreportParameter name="STITULOENTRADA">
-						<subreportParameterExpression><![CDATA[$P{STITULOENTRADA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SAUTORENTRADA">
-						<subreportParameterExpression><![CDATA[$P{SAUTORENTRADA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SDESCRICIONENTRADA">
-						<subreportParameterExpression><![CDATA[$P{SDESCRICIONENTRADA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SENTRADAPRESTABLE">
-						<subreportParameterExpression><![CDATA[$P{SENTRADAPRESTABLE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SANOEDICIONENTRADA">
-						<subreportParameterExpression><![CDATA[$P{SANOEDICIONENTRADA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SFONDO">
-						<subreportParameterExpression><![CDATA[$P{SFONDO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SSINATURAENTRADA">
-						<subreportParameterExpression><![CDATA[$P{SSINATURAENTRADA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="STIPOENTRADA">
-						<subreportParameterExpression><![CDATA[$P{STIPOENTRADA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="ORGANISMO_ID">
-						<subreportParameterExpression><![CDATA[$P{ORGANISMO_ID}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="FONDO_ID">
-						<subreportParameterExpression><![CDATA[$P{FONDO_ID}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="TIPOENTRADA_ID">
-						<subreportParameterExpression><![CDATA[$P{TIPOENTRADA_ID}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="ATTACHMENT_DIR">
-						<subreportParameterExpression><![CDATA[$P{ATTACHMENT_DIR}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SSI">
-						<subreportParameterExpression><![CDATA[$P{SSI}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SNO">
-						<subreportParameterExpression><![CDATA[$P{SNO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SUBREPORT_DIR">
-						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SFAX">
-						<subreportParameterExpression><![CDATA[$P{SFAX}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="STELEFONO">
-						<subreportParameterExpression><![CDATA[$P{STELEFONO}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter name="SAPARTADOCORREOS">
 						<subreportParameterExpression><![CDATA[$P{SAPARTADOCORREOS}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SEMAIL">
-						<subreportParameterExpression><![CDATA[$P{SEMAIL}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="TITULO">
 						<subreportParameterExpression><![CDATA[$P{TITULO}]]></subreportParameterExpression>
 					</subreportParameter>
+					<subreportParameter name="SFAX">
+						<subreportParameterExpression><![CDATA[$P{SFAX}]]></subreportParameterExpression>
+					</subreportParameter>
 					<subreportParameter name="SUBTITULO">
 						<subreportParameterExpression><![CDATA[$P{SUBTITULO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ORGANISMO_ID">
+						<subreportParameterExpression><![CDATA[$P{ORGANISMO_ID}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="TIPOENTRADAGENERO_ID">
 						<subreportParameterExpression><![CDATA[$P{TIPOENTRADAGENERO_ID}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="SXENERO">
-						<subreportParameterExpression><![CDATA[$P{SXENERO}]]></subreportParameterExpression>
+					<subreportParameter name="STITULOENTRADA">
+						<subreportParameterExpression><![CDATA[$P{STITULOENTRADA}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="SFONDODESCATALOGADOS">
-						<subreportParameterExpression><![CDATA[$P{SFONDODESCATALOGADOS}]]></subreportParameterExpression>
+					<subreportParameter name="SSINATURAENTRADA">
+						<subreportParameterExpression><![CDATA[$P{SSINATURAENTRADA}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="SDESFONDODESCATALOGADOS">
 						<subreportParameterExpression><![CDATA[$P{SDESFONDODESCATALOGADOS}]]></subreportParameterExpression>
 					</subreportParameter>
+					<subreportParameter name="STELEFONO">
+						<subreportParameterExpression><![CDATA[$P{STELEFONO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SNO">
+						<subreportParameterExpression><![CDATA[$P{SNO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SUBREPORTS_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORTS_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="TIPOENTRADA_ID">
+						<subreportParameterExpression><![CDATA[$P{TIPOENTRADA_ID}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SSI">
+						<subreportParameterExpression><![CDATA[$P{SSI}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SFONDO">
+						<subreportParameterExpression><![CDATA[$P{SFONDO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SENTRADAPRESTABLE">
+						<subreportParameterExpression><![CDATA[$P{SENTRADAPRESTABLE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SFONDODESCATALOGADOS">
+						<subreportParameterExpression><![CDATA[$P{SFONDODESCATALOGADOS}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="STIPOENTRADA">
+						<subreportParameterExpression><![CDATA[$P{STIPOENTRADA}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="FONDO_ID">
+						<subreportParameterExpression><![CDATA[$P{FONDO_ID}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SXENERO">
+						<subreportParameterExpression><![CDATA[$P{SXENERO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SAUTORENTRADA">
+						<subreportParameterExpression><![CDATA[$P{SAUTORENTRADA}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SEMAIL">
+						<subreportParameterExpression><![CDATA[$P{SEMAIL}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SANOEDICIONENTRADA">
+						<subreportParameterExpression><![CDATA[$P{SANOEDICIONENTRADA}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ATTACHMENT_DIR">
+						<subreportParameterExpression><![CDATA[$P{ATTACHMENT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SDESCRICIONENTRADA">
+						<subreportParameterExpression><![CDATA[$P{SDESCRICIONENTRADA}]]></subreportParameterExpression>
+					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "fondosDescatalogados.jasper"]]></subreportExpression>
+					<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORTS_DIR} + "/fondosDescatalogados.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupFooter>
@@ -201,7 +200,7 @@ and ($P{TIPOENTRADAGENERO_ID}=-1 or tgenfon.id =$P{TIPOENTRADAGENERO_ID})
 					<subreportParameterExpression><![CDATA[$P{SEMAIL}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "enderezoCabeceira.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORTS_DIR} + "/enderezoCabeceira.jasper"]]></subreportExpression>
 			</subreport>
 			<line>
 				<reportElement x="0" y="78" width="555" height="1"/>
@@ -216,7 +215,7 @@ and ($P{TIPOENTRADAGENERO_ID}=-1 or tgenfon.id =$P{TIPOENTRADAGENERO_ID})
 					<subreportParameterExpression><![CDATA[$P{ORGANISMO_ID}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "nomeSindiCabeceira.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORTS_DIR} + "/nomeSindiCabeceira.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement x="0" y="0" width="555" height="20"/>

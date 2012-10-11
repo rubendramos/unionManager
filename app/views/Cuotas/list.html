@@ -1,0 +1,58 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.list.title', type.name) /}
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
+
+    <div id="crudListSearch">
+        #{crud.searchCuotas /}
+    </div>
+
+    <div id="crudListPagination">
+        #{crud.paginationForeign /}
+    </div>    
+    
+    <div id="crudListTable">
+        #{crud.tableCuotas fields:['afiliado','isPagado','checkPagado']}
+        #{crud.custom 'isPagado'}
+        <div class='estadoPagamento${object.id}'>
+        ${object.getEstadoPagamento()}        
+        </div>
+        #{/crud.custom}
+        
+        #{crud.custom 'checkPagado'}       
+        <input id="${object.id}" class="${object.id}" onchange="javascript:saveCheck(${object.id},${object.afiliado.id})" type="checkbox" name="${object.id}" value="${object.isPagado}"        
+        #{if (object.isPagado)}
+        checked="${object.isPagado}"
+        #{/if}        
+        />
+        <input type="hidden" name="${object.id}" value="false" />
+        #{/crud.custom}        
+        
+        #{/crud.tableCuotas}
+    </div>
+
+    <div id="crudListPagination">
+        #{crud.pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">&{'crud.add', type.modelName}</a>
+    </p>
+
+</div>
+<script type="text/javascript">
+    function saveCheck(cuotaId,afiliadoId){
+    var checkFile = document.getElementById(cuotaId);
+    var cuotaIsPagado=checkFile.checked;
+    var updateCuotaAction = #{jsAction @Cuotas.updatePago(':id',':isPagado',':afiliadoId') /};
+    var estadoPagamento="estadoPagamento"+cuotaId;
+    $.post(updateCuotaAction({id: cuotaId,isPagado: cuotaIsPagado,afiliadoId: afiliadoId}), function(data) {
+      
+      
+        $('.estadoPagamento'+cuotaId).text(data);
+      
+    })
+    }    
+</script>

@@ -15,12 +15,11 @@
     
 
     <div id="crudListTable">
-        #{crud.tableNonEliminar fields:['acronimo','nome','descricion','organismo.ficha']}                      
+        #{crud.table fields:['acronimo','nome','descricion','organismo.ficha']}                      
         #{crud.custom 'organismo.ficha'}  
-          <a class="pdf" href="@{xeneraFichaOrganismo(object.id,page,search)}"><img src="/public/images/line/transparentInputImage.png" class="pdf" title="&{'organismo.fichaOrganismo'}"/></a>               
-
+          <a class="pdf" href="/data/manuales/ManualUM.pdf"><img src="/public/images/line/transparentInputImage.png" class="pdf" title="&{'organismo.fichaOrganismo'}"/></a>               
           #{/crud.custom}            
-        #{/crud.tableNonEliminar}
+        #{/crud.table}
     </div>
 
     <div id="crudListPagination">

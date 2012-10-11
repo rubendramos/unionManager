@@ -1,14 +1,17 @@
 #{extends 'Chat/Main.html' /}
 #{set title:'Chat room' /}
 
-<div id="thread">   
+<div id="thread">       
+
     <script type="text/html" id="message_tmpl">
 
         <div id="top"> 
               <p id="members">
              &{'chat.membersChat'} :<%= event.members %>   
+             <a id="aHistorial" title="&{'chat.verHistorial'}"  href="@{Chat.downloadChatLog(idOrganismo)}">&{'chat.verHistorial'} </a>
              </p>
-        </div>
+             
+        </div>        
     <div > 
      <div>         
         <% if(event.type == 'message') { %>
@@ -60,7 +63,7 @@
 
     // Create a socket
     var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket;
-    var socket = new WS('@@{WebSocket.ChatRoomSocket.join(user)}');
+    var socket = new WS('@@{WebSocket.ChatRoomSocket.join(user,idOrganismo)}');
  
     // Message received on the socket
     socket.onmessage = function(event) {

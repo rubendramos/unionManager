@@ -19,7 +19,13 @@
         #{if (object.dataApuntamento!=null)}
         ${object.dataApuntamento.format()}
         #{/if}
-        #{/crud.custom}  
+        #{/crud.custom}
+        #{crud.custom 'importe'}
+        #{if (object.importe!=null)}
+        ${object.importe.formatCurrency("EUR")}        
+        #{/if}
+        #{/crud.custom}
+        
         #{/crud.table}
     </div>
 

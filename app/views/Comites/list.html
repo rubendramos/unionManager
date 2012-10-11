@@ -14,7 +14,7 @@
     </div>    
     
     <div id="crudListTable">
-        #{crud.table fields:['tipoComite','descricion',,'dataAlta','dataBaixa']}
+        #{crud.table fields:['tipoComite','descricion','dataAlta','dataBaixa']}
         #{crud.custom 'dataAlta'}
         #{if (object.dataAlta!=null)}
         ${object.dataAlta.format()}
@@ -27,6 +27,8 @@
         #{/crud.custom}
         #{/crud.table}
     </div>
+    
+
 
     <div id="crudListPagination">
         #{crud.pagination /}

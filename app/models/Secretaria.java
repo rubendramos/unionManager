@@ -7,6 +7,7 @@ import play.db.jpa.*;
 import play.data.validation.*;
 import utils.AddFiltro;
 import utils.AddForeignKey;
+import utils.NewForeignKey;
  
 @Entity
 public class Secretaria extends UnionModel {
@@ -19,7 +20,7 @@ public class Secretaria extends UnionModel {
     
     @Required
     @ManyToOne
-    @AddForeignKey    
+    @AddForeignKey         
     public Afiliado secretario;
     
     @Required

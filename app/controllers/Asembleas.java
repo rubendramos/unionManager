@@ -53,11 +53,12 @@ public static void list(int page,String where, String search,String from,String 
       String where=type.createWhereFilterClausule();
       Asemblea asemblea=Asemblea.findById(Long.parseLong(id));
       TipoEstadoAviso tsa=TipoEstadoAviso.findById(Long.parseLong("1"));
-      ListaDistribucion li= ListaDistribucion.getListaAutomaticaAfiliados();
+      ListaDistribucion li= ListaDistribucion.getListaAutomaticaAfiliados(Seguridade.organismo());
       Set<ListaDistribucion> sli=new HashSet<ListaDistribucion>();
       sli.add(li);            
       
-      Aviso aviso=new Aviso(null,asemblea,asemblea.titulo,asemblea.toString(),null,sli,tsa,null,null);
+      Aviso aviso=new Aviso(asemblea);
+      aviso.setFirma(Seguridade.usuario());
       aviso.organismo=Seguridade.organismo();
       aviso._save();
       flash.success(play.i18n.Messages.get("crud.avisoGardado", asemblea.toString()));

@@ -5,12 +5,17 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 import javax.persistence.Query;
 import models.*;
+import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
+import play.Play;
 
 import play.data.binding.Binder;
 import play.db.Model;
 import play.db.jpa.JPA;
 import play.exceptions.TemplateNotFoundException;
+import play.i18n.Lang;
 import play.mvc.*;
+import play.vfs.VirtualFile;
 import utils.LoadPropertiesFiles;
 
 @Check("admin")
@@ -19,22 +24,24 @@ public class Idiomas extends CRUD {
     
     
     
-    public static void idiomas() {
+    public static void seleccionaIdioma() {
         List<Idioma> idiomas =Idioma.findAll();
         render(idiomas);
     }    
     
-     public static void cambiaIdioma(String idiomas) {
-        LoadPropertiesFiles lpf=new LoadPropertiesFiles();
+     public static void cambiarIdioma(String idiomas) {
         Idioma idiomaO=Idioma.findById(Long.parseLong(idiomas));
-        lpf.loadMessagesIdioma(idiomaO);
-        flash.success(play.i18n.Messages.get("idioma.idiomaActualizado",idiomaO.descricion));
-        idiomas();
+//        LoadPropertiesFiles lpf=new LoadPropertiesFiles();
+//        lpf.addMessagesIdioma(idiomaO);
+        Lang.change(idiomaO.sufixo);        
+        flash.success(play.i18n.Messages.get("idioma.idiomaActualizado",idiomaO.descricion));     
+        seleccionaIdioma();
+        
     }  
      
      public static int creaEntradasMensaxesIdioma(String idIdioma) {
           
-          Query query = JPA.em().createNativeQuery("insert into mensaxesidioma select (select max(id) from mensaxesidioma)+rownum id,clave clave,valor valor ,'"+ idIdioma+"' idioma_id,'' cometario,funcionalidade_id funcionalidade_id from mensaxesidioma where idioma_id='1'");
+          Query query = JPA.em().createNativeQuery("insert into mensaxesidioma select (select max(id) from mensaxesidioma)+rownum id,clave clave,valor valor ,funcionalidade_id funcionalidade_id ,'"+ idIdioma+"' idioma_id from mensaxesidioma where idioma_id='1'");
           return query.executeUpdate();
      }       
      
@@ -76,6 +83,13 @@ public class Idiomas extends CRUD {
             
         }
         
+        LoadPropertiesFiles lpf=new LoadPropertiesFiles();
+        Idioma idiomaO=Idioma.findById(object._key());
+        lpf.addMessagesIdioma(idiomaO);
+        
+        String langs=Play.configuration.getProperty("application.langs");
+        langs=langs+","+idiomaO.sufixo;
+        lpf.loadAplicatonProperties("application.langs",langs);
         
         flash.success(play.i18n.Messages.get("crud.created", type.modelName));
         if (params.get("_save") != null) {

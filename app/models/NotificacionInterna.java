@@ -13,7 +13,7 @@ import utils.AddForeignKey;
 import utils.Tools;
 
 @Entity
-public class NotificacionInterna extends UnionModel {
+public class NotificacionInterna extends Model {
 
             
     @Required 

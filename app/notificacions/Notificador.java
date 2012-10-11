@@ -9,148 +9,162 @@ import org.apache.commons.mail.EmailAttachment;
 import play.Play;
 
 public class Notificador extends Mailer {
-    
-    private static String NOTIFICADOR="rubendramos@gmail.com";
 
-    public static boolean notificacionEvento(Aviso aviso) throws Exception {
-        
-        int i=0;
+    private static String NOTIFICADOR = Play.configuration.getProperty("mail.notificador");
+
+    public static boolean notificacionAviso(Aviso aviso) throws Exception {
+
+        int i = 0;
+
         //asunto do mail
         setSubject(aviso.getAsunto());
-                
-        
+
+
         //Engadimos os destinatarios               
-        
-       for(Contacto con : aviso.getContactosListasDistribucion()){
-           
-           String nome=con.apelido1+" "+con.apelido2+","+con.nome;
-           
-           if(i==0){
-               addRecipient(new InternetAddress(con.email, nome));
-           }else{
+
+        for (Contacto con : aviso.getContactosListasDistribucion()) {
+
+            String nome = con.apelido1 + " " + con.apelido2 + "," + con.nome;
+
+            if (i == 0) {
+                addRecipient(new InternetAddress(con.email, nome));
+            } else {
                 addBcc(new InternetAddress(con.email, nome));
-           }
-           i++;
-       }
-       //Contacto que o envía
-       setFrom(new InternetAddress(NOTIFICADOR));
-        
-       if(aviso.evento.getAdxuntos()!=null && !aviso.evento.getAdxuntos().isEmpty()){
-            for(Documento doc : aviso.evento.getAdxuntos()){
-                    EmailAttachment attachment = new EmailAttachment();
-                    attachment.setDescription(doc.descricion);
-                    attachment.setPath(doc.ficheiro.getFile().getPath());
-                    addAttachment(attachment);                                
+            }
+            i++;
+        }
+        //Contacto que o envía
+        setFrom(new InternetAddress(NOTIFICADOR));
+
+        //Adxuntamos os docs
+        if (aviso.docsAdxuntos != null && !aviso.docsAdxuntos.isEmpty()) {
+            for (Documento doc : aviso.docsAdxuntos) {
+                EmailAttachment attachment = new EmailAttachment();
+                attachment.setDescription(doc.descricion);
+                attachment.setName(doc.nome);
+                attachment.setPath(doc.ficheiro.getFile().getAbsolutePath());
+                addAttachment(attachment);
             }
         }
-                         
-       
-
-        
         //Enviase e esperase resposta
         return sendAndWait(aviso);
-        
+
+    }
+
+    public static boolean notificacionSistema(Aviso aviso) throws Exception {
+
+
+        //asunto do mail
+        setSubject(aviso.getAsunto());
+       
+        //Engadimos os destinatarios
+        addRecipient("rubendramos@gmail.com");
+
+        //Contacto que o envía
+        setFrom(new InternetAddress(NOTIFICADOR, NOTIFICADOR));
+
+        //Enviase e esperase resposta
+        return sendAndWait(aviso);
+    }
+
+    public static boolean notificacionAltaUsuario(User u, String asunto, String contido,String firma) throws Exception {
+
+        //asunto do mail
+        setSubject(asunto);
+
+        //Engadimos os destinatarios               
+
+
+        String nome = u.afiliado.persoa.apelido1 + " " + u.afiliado.persoa.apelido2 + "," + u.afiliado.persoa.nome;
+
+        addRecipient(new InternetAddress(u.afiliado.persoa.email, nome));
+
+        //Contacto que o envía
+        setFrom(new InternetAddress(NOTIFICADOR));
+
+        //Enviase e esperase resposta
+        return sendAndWait(contido,firma);
+
     }
     
-    
-   public static boolean notificacionAsemblea(Aviso aviso) throws Exception {
-        
-        int i=0;
-        //asunto do mail
-        setSubject(aviso.getAsunto());
-                
-        
-        //Engadimos os destinatarios               
-        
-       for(Contacto con : aviso.getContactosListasDistribucion()){
-           
-           String nome=con.apelido1+" "+con.apelido2+","+con.nome;
-           
-           if(i==0){
-               addRecipient(new InternetAddress(con.email, nome));
-           }else{
-                addBcc(new InternetAddress(con.email, nome));
-           }
-           i++;
-       }
-       //Contacto que o envía
-       setFrom(new InternetAddress(NOTIFICADOR));
-        
-       if(aviso.asemblea.documentacionAsemblea!=null && !aviso.asemblea.documentacionAsemblea.isEmpty()){
-            for(Documento doc : aviso.asemblea.documentacionAsemblea){
-                    EmailAttachment attachment = new EmailAttachment();
-                    attachment.setDescription(doc.descricion);
-                    attachment.setPath(doc.ficheiro.getFile().getPath());                    
-                    addAttachment(attachment);                                
-            }
-        }
-                         
-       
+    public static boolean notificacionBaixaUsuario(User u, String asunto, String contido,String firma) throws Exception {
 
-        
-        //Enviase e esperase resposta
-        return sendAndWait(aviso);
-        
-    }    
-    
-    public static boolean notificacionAviso(Aviso aviso) throws Exception {
-        
-        int i=0;
         //asunto do mail
-        setSubject(aviso.getAsunto());
-                
-        
-        //Engadimos os destinatarios               
-        
-       for(Contacto con : aviso.getContactosListasDistribucion()){
-           
-           String nome=con.apelido1+" "+con.apelido2+","+con.nome;
-           
-           if(i==0){
-               addRecipient(new InternetAddress(con.email, nome));
-           }else{
-                addBcc(new InternetAddress(con.email, nome));
-           }
-           i++;
-       }
-       //Contacto que o envía
-       setFrom(new InternetAddress(NOTIFICADOR));
-        
-        //Adxuntamos os docs
-        if(aviso.docsAdxuntos!=null && !aviso.docsAdxuntos.isEmpty()){
-            for(Documento doc : aviso.docsAdxuntos){
-                    EmailAttachment attachment = new EmailAttachment();
-                    attachment.setDescription(doc.descricion);
-                    attachment.setPath(Play.getFile(doc.nome).getPath());
-                    addAttachment(attachment);                                
-            }
-        }
-        
-      
-                         
-       
+        setSubject(asunto);
 
-        
+        //Engadimos os destinatarios               
+
+
+        String nome = u.afiliado.persoa.apelido1 + " " + u.afiliado.persoa.apelido2 + "," + u.afiliado.persoa.nome;
+
+        addRecipient(new InternetAddress(u.afiliado.persoa.email, nome));
+
+        //Contacto que o envía
+        setFrom(new InternetAddress(NOTIFICADOR));
+
         //Enviase e esperase resposta
-        return sendAndWait(aviso);
-        
+        return sendAndWait(contido,firma);
+
+    }
+    
+   public static boolean notificacionRecuperaPassword(User u, String asunto, String contido) throws Exception {
+
+        //asunto do mail
+        setSubject(asunto);
+        String firma=play.i18n.Messages.get("mensaxe.firmaSistema");
+
+        //Engadimos os destinatarios               
+
+
+        String nome = u.afiliado.persoa.apelido1 + " " + u.afiliado.persoa.apelido2 + "," + u.afiliado.persoa.nome;
+
+        addRecipient(new InternetAddress(u.afiliado.persoa.email, nome));
+
+        //Contacto que o envía
+        setFrom(new InternetAddress(NOTIFICADOR));
+
+        //Enviase e esperase resposta
+        return sendAndWait(contido,firma);
+
     }    
     
-    public static boolean notificacionSistema(Aviso aviso) throws Exception {
-        
-        
+  public static boolean notificacionBaixaAfiliado(Afiliado u, String asunto, String contido,String firma) throws Exception {
+
         //asunto do mail
-        setSubject(aviso.getAsunto());
-        
-        //Engadimos os destinatarios
-       addRecipient("rubendramos@gmail.com");
-        
-       //Contacto que o envía
-       setFrom(new InternetAddress(NOTIFICADOR, NOTIFICADOR));     
-          
+        setSubject(asunto);
+
+        //Engadimos os destinatarios               
+
+
+        String nome = u.persoa.apelido1 + " " + u.persoa.apelido2 + "," + u.persoa.nome;
+
+        addRecipient(new InternetAddress(u.persoa.email, nome));
+
+        //Contacto que o envía
+        setFrom(new InternetAddress(NOTIFICADOR));
+
         //Enviase e esperase resposta
-        return sendAndWait(aviso);
+        return sendAndWait(contido,firma);
+
     }    
+  
+  public static boolean notificacionAltaAfiliado(Afiliado u, String asunto, String contido,String firma) throws Exception {
+
+        //asunto do mail
+        setSubject(asunto);
+
+        //Engadimos os destinatarios               
+
+        String nome = u.persoa.apelido1 + " " + u.persoa.apelido2 + "," + u.persoa.nome;
+
+        addRecipient(new InternetAddress(u.persoa.email, nome));
+
+        //Contacto que o envía
+        setFrom(new InternetAddress(NOTIFICADOR));
+
+        //Enviase e esperase resposta
+        return sendAndWait(contido,firma);
+
+    }      
     
 }
-

@@ -112,6 +112,10 @@ public class NotificacionInternas extends CRUD {
         List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, where);
         Long count = type.count(search, searchFields, where);
         Long totalCount = type.count(null, null, where);
+            if(objects==null || objects.isEmpty()){
+                Privado.index();
+            
+            }else{
         try {
             //render(type, objects, count, totalCount, page, orderBy, order);
              render("NotificacionInternas/listRecivedNonLeidos.html", type, objects, count, totalCount, page,
@@ -120,6 +124,7 @@ public class NotificacionInternas extends CRUD {
             render("NotificacionInternas/listRecivedNonLeidos.html", type, objects, count, totalCount, page,
                     orderBy, order);
         }
+}        
         
        
     }  

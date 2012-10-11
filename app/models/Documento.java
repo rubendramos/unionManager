@@ -1,5 +1,6 @@
 package models;
  
+import controllers.CRUD.Hidden;
 import java.io.File;
 import java.util.*;
 import javax.persistence.*;
@@ -37,6 +38,9 @@ public class Documento extends UnionSecureModel {
     public String autor ;
     
     public Blob ficheiro;
+    
+    @Hidden
+    private String nomeFicheiro;
   
     public Documento(TipoDocumento tipoDocumento,String nome,String descricion,Date dataCreacion,
             String autor, Blob ficheiro){
@@ -45,7 +49,8 @@ public class Documento extends UnionSecureModel {
         this.dataCreacion=dataCreacion;
         this.autor=autor;
         this.descricion=descricion;
-        this.ficheiro=ficheiro;       
+        this.ficheiro=ficheiro;
+        this.nomeFicheiro=ficheiro.getFile().getName();
     	
     }
 
@@ -67,6 +72,20 @@ public class Documento extends UnionSecureModel {
      */
     public void setFicheiro(Blob ficheiro) {
         this.ficheiro = ficheiro;
+    }
+
+    /**
+     * @return the nomeFicheiro
+     */
+    public String getNomeFicheiro() {
+        return nomeFicheiro;
+    }
+
+    /**
+     * @param nomeFicheiro the nomeFicheiro to set
+     */
+    public void setNomeFicheiro(String nomeFicheiro) {
+        this.nomeFicheiro = getFicheiro().getFile().getName();
     }
 
    

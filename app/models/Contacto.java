@@ -40,6 +40,7 @@ public class Contacto extends UnionModel {
     
     @ManyToOne
     @AddForeignKey
+    @NewForeignKey
     public Enderezo enderezo;
     
     @MaxSize(9)

@@ -1,0 +1,22 @@
+#{extends 'CRUD/layoutSinMenu.html' /}
+#{set title:messages.get('organismo.cambiarOrganismo') /}
+
+
+   
+    
+    <div id="organismoSeleccion" class="${type.name}">
+
+    <h2 id="crudBlankTitle">&{'crud.blank.title', type.modelName}</h2>
+
+    <div class="objectForm">
+        #{form action:@saveOrganismo(), enctype:'multipart/form-data', name:'searching'}
+        #{crud.form/}
+        <p class="crudButtons">
+            <a class="crudButtons" href="@{Organismos.OrganismoSeleccion()}">&{'Voltar'}</a>    
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            
+        </p>
+    #{/form}
+    </div>
+
+</div>

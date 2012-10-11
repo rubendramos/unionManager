@@ -47,8 +47,8 @@
 	<parameter name="STELEFONO" class="java.lang.String"/>
 	<parameter name="SACORREOS" class="java.lang.String"/>
 	<parameter name="SEMAIL" class="java.lang.String"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\T00159\\Escritorio\\softRuben\\unionManager\\app\\reports\\"]]></defaultValueExpression>
+	<parameter name="SUBREPORTS_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select per.nome,per.apelido1 ,per.apelido2 ,per.dni,ram.descricion ramo,ocu.descricion ocupacion,org.acronimo ,org.nome sindicato,tea.descricion estado,af.dataalta ,af.dataBaixa,af.milita
@@ -207,7 +207,7 @@ and ($P{OCUPACION_ID}=-1 or ocu.id =$P{OCUPACION_ID});]]>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{SUBTITULO}]]></textFieldExpression>
 			</textField>
-			<subreport>
+			<subreport isUsingCache="false">
 				<reportElement x="617" y="0" width="185" height="56"/>
 				<subreportParameter name="ORGANISMO_ID">
 					<subreportParameterExpression><![CDATA[$P{ORGANISMO_ID}]]></subreportParameterExpression>
@@ -225,7 +225,7 @@ and ($P{OCUPACION_ID}=-1 or ocu.id =$P{OCUPACION_ID});]]>
 					<subreportParameterExpression><![CDATA[$P{SEMAIL}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "enderezoCabeceira.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORTS_DIR} + "/enderezoCabeceira.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</title>
@@ -281,7 +281,7 @@ and ($P{OCUPACION_ID}=-1 or ocu.id =$P{OCUPACION_ID});]]>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$V{FMILITA}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
 					<reportElement style="Detail" positionType="Float" x="675" y="0" width="65" height="15"/>
 					<textElement>
 						<font fontName="Arial" size="10"/>

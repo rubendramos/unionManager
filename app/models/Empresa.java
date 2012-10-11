@@ -9,6 +9,7 @@ import play.db.jpa.*;
 import play.data.validation.*;
 import utils.AddFiltro;
 import utils.AddForeignKey;
+import utils.NewForeignKey;
  
 @Entity
 public class Empresa extends UnionModel {
@@ -45,6 +46,7 @@ public class Empresa extends UnionModel {
     @Required
     @ManyToOne
     @AddForeignKey
+    @NewForeignKey
     public Enderezo enderezo;    
         
             

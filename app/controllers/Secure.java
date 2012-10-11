@@ -1,71 +1,113 @@
 package controllers;
 
+import controllers.jqueryui.JQueryUI;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import models.ListaDistribucion;
+import models.Organismo;
+import models.TipoListaDistribucion;
 
 import models.User;
+import org.hibernate.Filter;
+import org.hibernate.Session;
 import play.Play;
 import play.mvc.*;
 import play.data.validation.*;
+import play.db.jpa.JPA;
 import play.libs.*;
 import play.utils.*;
+import utils.Tools;
+import models.jqueryui.InitDBProcess;
 
-public class Secure extends Controller {
+public class Secure extends JQueryUI {
 
-    @Before(unless={"login", "authenticate", "logout"})
+    @Before(unless = {"login", "authenticate", "logout","Password.forgotPassword","forgotPassword"})
     static void checkAccess() throws Throwable {
         // Authent
-        if(!session.contains("username")) {
+        if (!session.contains("username")) {
             flash.put("url", "GET".equals(request.method) ? request.url : "/"); // seems a good default
             login();
         }
+
+        String furl = getFuncionalidadeForUrl(request.url);
+
+
         // Checks
         Check check = getActionAnnotation(Check.class);
-        if(check != null) {
-            check(check);
+
+
+
+        String fun = getControllerClass().getSimpleName();
+        if (check != null) {
+            checkFuncionalidade(fun, furl);
+            //check(check);
         }
         check = getControllerInheritedAnnotation(Check.class);
-        if(check != null) {
-            check(check);
+        if (check != null) {
+            checkFuncionalidade(fun, furl);
+            //check(check);
         }
     }
 
     private static void check(Check check) throws Throwable {
-        for(String profile : check.value()) {
-            boolean hasProfile = (Boolean)Security.invoke("check", profile);
-            if(!hasProfile) {
+        for (String profile : check.value()) {
+            boolean hasProfile = (Boolean) Security.invoke("check", profile);
+            if (!hasProfile) {
                 Security.invoke("onCheckFailed", profile);
             }
         }
     }
 
-    // ~~~ Login
+    private static void checkFuncionalidade(String funcionalidade, String url) throws Throwable {
+        boolean hasProfile = false;
+        hasProfile = (Boolean) Security.invoke("checkFuncionalidade", funcionalidade);
+        if (!hasProfile) {
+            hasProfile = (Boolean) Security.invoke("checkFuncionalidade", url);
+        }
+        if (!hasProfile) {
+            Security.invoke("onCheckFailed", funcionalidade);
+        }
+    }
 
+    // ~~~ Login
     public static void login() throws Throwable {
         Http.Cookie remember = request.cookies.get("rememberme");
-        if(remember != null && remember.value.indexOf("-") > 0) {
+        String processId = null;
+        if (remember != null && remember.value.indexOf("-") > 0) {
             String sign = remember.value.substring(0, remember.value.indexOf("-"));
             String username = remember.value.substring(remember.value.indexOf("-") + 1);
-            if(Crypto.sign(username).equals(sign)) {
+            if (Crypto.sign(username).equals(sign)) {
                 session.put("username", username);
-                redirectToOriginalURL();
+                redirectToOriginalURL(null);
             }
         }
+
+        //Si e a primeira vez que se enta na aplicación executanse
+        //os scripts de inicializacion da base de datos
+        if (!User.existsAdminUser()) {
+            final InitDBProcess process = new InitDBProcess();
+            process.now();
+            processId = process.id;
+            InitDBProcess.registry.put(processId, process);
+        }
+
         flash.keep("url");
-        render();
+        render(processId);
     }
 
     public static void authenticate(@Required String username, String password, boolean remember) throws Throwable {
         // Check tokens
         Boolean allowed = false;
+        String processId = null;
         try {
             // This is the deprecated method name
-            allowed = (Boolean)Security.invoke("authentify", username, password);
-        } catch (UnsupportedOperationException e ) {
+            allowed = (Boolean) Security.invoke("authentify", username, password);
+        } catch (UnsupportedOperationException e) {
             // This is the official method name
-            allowed = (Boolean)Security.invoke("authenticate", username, password);
+
+            allowed = (Boolean) Security.invoke("authenticate", username, password);
         }
-        if(validation.hasErrors() || !allowed) {
+        if (validation.hasErrors() || !allowed) {
             flash.keep("url");
             flash.error("secure.error");
             params.flash();
@@ -73,21 +115,29 @@ public class Secure extends Controller {
         }
         // Mark user as connected
         session.put("username", username);
-        
+
         //TODO facer con chache no canto de con session
         //Engadimos o obxeto usuario á session
-        User user=User.connect(username, password);        
+        User user = User.connect(username, password);
         session.put("sindicato", user.getSindicato());
         session.put("user", user.toString());
+        //Facemos comprobacion de existe a lista automatica de distribución.
+        if (!user.tenPermiso("Admin")) {
+            ListaDistribucionValidation();
+        }
+
+
+
         // Remember if needed
-        if(remember) {
+        if (remember) {
             response.setCookie("rememberme", Crypto.sign(username) + "-" + username, "30d");
         }
         // Redirect to the original URL (or /)
-        redirectToOriginalURL();
+        redirectToOriginalURL(processId);
     }
 
     public static void logout() throws Throwable {
+
         Security.invoke("onDisconnect");
         session.clear();
         response.removeCookie("rememberme");
@@ -97,21 +147,42 @@ public class Secure extends Controller {
     }
 
     // ~~~ Utils
-
-    static void redirectToOriginalURL() throws Throwable {
+    static void redirectToOriginalURL(String processId) throws Throwable {
         Security.invoke("onAuthenticated");
         String url = flash.get("url");
-        if(url == null) {
+        if (url == null) {
             url = "/";
         }
-        redirect(url);
+        redirect(url, processId);
+    }
+
+    static void ListaDistribucionValidation() {
+        if (ListaDistribucion.getListaAutomaticaAfiliados(Seguridade.organismo()) == null) {
+            TipoListaDistribucion tld = TipoListaDistribucion.findById(Long.parseLong("1"));
+            ListaDistribucion ld = new ListaDistribucion(play.i18n.Messages.get("listaAutomaticaAfiliados"), tld, null, null);
+            ld.setOrganismo(Seguridade.organismo());
+            ld._save();
+        }
+
+    }
+
+    static String getFuncionalidadeForUrl(String url) {
+        if (url.indexOf("?") > 0) {
+            url = url.substring(1, url.indexOf("?"));
+            url = url.replace("/", "");
+        } else {
+            url = url.substring(url.lastIndexOf("/"), url.length());
+            url = url.replace("/", "");
+        }
+        return url;
+
     }
 
     public static class Security extends Controller {
 
         /**
          * @Deprecated
-         * 
+         *
          * @param username
          * @param password
          * @return
@@ -121,9 +192,10 @@ public class Secure extends Controller {
         }
 
         /**
-         * This method is called during the authentication process. This is where you check if
-         * the user is allowed to log in into the system. This is the actual authentication process
-         * against a third party system (most of the time a DB).
+         * This method is called during the authentication process. This is
+         * where you check if the user is allowed to log in into the system.
+         * This is the actual authentication process against a third party
+         * system (most of the time a DB).
          *
          * @param username
          * @param password
@@ -134,8 +206,9 @@ public class Secure extends Controller {
         }
 
         /**
-         * This method checks that a profile is allowed to view this page/method. This method is called prior
-         * to the method's controller annotated with the @Check method. 
+         * This method checks that a profile is allowed to view this
+         * page/method. This method is called prior to the method's controller
+         * annotated with the @Check method.
          *
          * @param profile
          * @return true if you are allowed to execute this controller method.
@@ -146,6 +219,7 @@ public class Secure extends Controller {
 
         /**
          * This method returns the current connected username
+         *
          * @return
          */
         static String connected() {
@@ -154,35 +228,41 @@ public class Secure extends Controller {
 
         /**
          * Indicate if a user is currently connected
-         * @return  true if the user is connected
+         *
+         * @return true if the user is connected
          */
         static boolean isConnected() {
             return session.contains("username");
         }
 
         /**
-         * This method is called after a successful authentication.
-         * You need to override this method if you with to perform specific actions (eg. Record the time the user signed in)
+         * This method is called after a successful authentication. You need to
+         * override this method if you with to perform specific actions (eg.
+         * Record the time the user signed in)
          */
         static void onAuthenticated() {
         }
 
-         /**
-         * This method is called before a user tries to sign off.
-         * You need to override this method if you wish to perform specific actions (eg. Record the name of the user who signed off)
+        /**
+         * This method is called before a user tries to sign off. You need to
+         * override this method if you wish to perform specific actions (eg.
+         * Record the name of the user who signed off)
          */
         static void onDisconnect() {
         }
 
-         /**
-         * This method is called after a successful sign off.
-         * You need to override this method if you wish to perform specific actions (eg. Record the time the user signed off)
+        /**
+         * This method is called after a successful sign off. You need to
+         * override this method if you wish to perform specific actions (eg.
+         * Record the time the user signed off)
          */
         static void onDisconnected() {
         }
 
         /**
-         * This method is called if a check does not succeed. By default it shows the not allowed page (the controller forbidden method).
+         * This method is called if a check does not succeed. By default it
+         * shows the not allowed page (the controller forbidden method).
+         *
          * @param profile
          */
         static void onCheckFailed(String profile) {
@@ -192,12 +272,10 @@ public class Secure extends Controller {
         private static Object invoke(String m, Object... args) throws Throwable {
 
             try {
-                return Java.invokeChildOrStatic(Security.class, m, args);       
-            } catch(InvocationTargetException e) {
+                return Java.invokeChildOrStatic(Security.class, m, args);
+            } catch (InvocationTargetException e) {
                 throw e.getTargetException();
             }
         }
-
     }
-
 }

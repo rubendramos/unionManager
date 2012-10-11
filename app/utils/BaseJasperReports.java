@@ -14,11 +14,12 @@ import java.util.HashMap;
 	import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
 import play.vfs.VirtualFile;
+import play.Play;
 
 	public class BaseJasperReports {
 	
-	  static String REPORT_DEFINITION_PATH = "/app/reports/";
-          static String ATTACHMENT_PATH = "C:/Documents and Settings/T00159/Escritorio/softRuben/unionManager/data/attachments";
+	  static String REPORT_DEFINITION_PATH = Play.configuration.getProperty("repotrs.path");
+          static String ATTACHMENT_PATH = Play.configuration.getProperty("attachment.path");
 
 	  public static JasperPrint generateReport(String reportDefFile, Map reportParams) {	   
 		JasperPrint jrprint = null;
@@ -28,8 +29,13 @@ import play.vfs.VirtualFile;
                             
               //Engadimos como parametro o path as imaxes que se usan nos repotrs. Nos report temos que engadir este 
               //parámetro na ruta as imaxes.
-              reportParams.put("REPORTS_DIR", play.vfs.VirtualFile.fromRelativePath(REPORT_DEFINITION_PATH).getName());
-              reportParams.put("ATTACHMENT_DIR", "C:/Documents and Settings/T00159/Escritorio/softRuben/unionManager/data/attachments");
+              String absolute_report_path=play.vfs.VirtualFile.fromRelativePath(REPORT_DEFINITION_PATH).getRealFile().getAbsolutePath();
+              String absolute_attachment_path=play.vfs.VirtualFile.fromRelativePath(ATTACHMENT_PATH).getRealFile().getAbsolutePath();
+              play.vfs.VirtualFile.fromRelativePath(reportDefFile).getRealFile().getAbsolutePath();
+              reportParams.put("REPORTS_DIR", absolute_report_path);
+              reportParams.put("SUBREPORTS_DIR", absolute_report_path);
+//              reportParams.put("ATTACHMENT_DIR", "C:/Documents and Settings/T00159/Escritorio/softRuben/unionManager/data/attachments");
+              reportParams.put("ATTACHMENT_DIR", absolute_attachment_path);
               
               jrprint = JasperFillManager.fillReport(compiledFile, reportParams, play.db.DB.getConnection());	      
 	    } catch (Exception e) {

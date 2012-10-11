@@ -3,6 +3,7 @@ package models;
 import com.ning.http.client.websocket.WebSocket;
 import com.sun.xml.internal.ws.developer.MemberSubmissionAddressing;
 import java.util.*;
+import org.eclipse.jdt.core.dom.ThisExpression;
 import play.Logger;
 
 import play.libs.*;
@@ -11,15 +12,19 @@ import utils.Tools;
 
 public class ChatRoom {
     
-    // ~~~~~~~~~ Let's chat! 
     
-    final ArchivedEventStream<ChatRoom.Event> chatEvents = new ArchivedEventStream<ChatRoom.Event>(100);
+    // ~~~~~~~~~ Let's chat!     
+     
+    final ArchivedEventStream<ChatRoom.Event> chatEvents = new ArchivedEventStream<ChatRoom.Event>(15);
     // Members of this room.
-    final static ArrayList<String> members = new ArrayList<String>();
+    final  ArrayList<String> members = new ArrayList<String>();
     /**
      * For WebSocket, when a user join the room we return a continuous event stream
      * of ChatEvent
      */
+
+    
+    
     public EventStream<ChatRoom.Event> join(String user) {
         chatEvents.publish(new Join(user));
         return chatEvents.eventStream();
@@ -72,7 +77,7 @@ public class ChatRoom {
         
     }
     
-    public static class Join extends Event {
+    public  class Join extends Event {
         
         final public String user;
         final public ArrayList<String> membros;
@@ -86,7 +91,7 @@ public class ChatRoom {
         
     }
     
-    public static class Leave extends Event {
+    public  class Leave extends Event {
         
         final public String user;
         final public ArrayList<String> membros;
@@ -100,7 +105,7 @@ public class ChatRoom {
         
     }
     
-    public static class Message extends Event {
+    public  class Message extends Event {
         
         final public String user;
         final public String text;
@@ -115,15 +120,16 @@ public class ChatRoom {
         
     }
     
+    
     // ~~~~~~~~~ Chat room factory
 
     static ChatRoom instance = null;
     public static ChatRoom get() {
+        
         if(instance == null) {
             instance = new ChatRoom();
         }
         return instance;
     }
-    
+      
 }
-

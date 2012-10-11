@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 public class TipoEstadoAviso extends Model {
-    
+       
     @Required
     @MaxSize(50)
     public String descricion;
@@ -24,3 +24,4 @@ public class TipoEstadoAviso extends Model {
     }
 	
 }
+

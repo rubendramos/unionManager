@@ -1,0 +1,19 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('organismo.cambiarOrganismo') /}
+
+
+
+
+
+<div >
+
+    <h2 id="crudBlankTitle">&{'menu.documentacion'}</h2>
+
+    <div class="objectForm">
+    <div>    
+    &{'documentacion.manualUsuario'}
+    <a href="@{Documentacions.renderDoc('ManualUM.pdf')}"><img src="/public/images/line/transparentInputImage.png" id="pdf" title="&{'documentacion.manualUsuario'}"/></a>               
+    <a href="@{Documentacions.renderDoc('ManualUM.ogv')}"><img src="/public/images/line/transparentInputImage.png" id="video" title="&{'documentacion.manualUsuario'}"/></a>
+    </div>
+    </div>
+</div>

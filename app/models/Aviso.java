@@ -9,9 +9,15 @@ import play.data.validation.MaxSize;
 import play.db.jpa.*;
 import utils.AddFiltro;
 import utils.AddForeignKey;
+import utils.Tools;
+
+
+
 
 @Entity
 public class Aviso extends UnionModel {
+    
+    
 
     @Required
     @ManyToMany
@@ -22,17 +28,9 @@ public class Aviso extends UnionModel {
     public String asunto;
     
     
-    @CRUD.Hidden
-    @ManyToOne
-    public Evento evento;
-    
-    @CRUD.Hidden
-    @ManyToOne
-    public Asemblea asemblea;    
-    
     @Lob
     @MaxSize(500)
-    private String contido;
+    public String contido;
     
     @ManyToMany
     @AddForeignKey
@@ -41,21 +39,35 @@ public class Aviso extends UnionModel {
     @ManyToOne
     @Required
     @AddFiltro
-    private TipoEstadoAviso estadoAviso;
+    public TipoEstadoAviso estadoAviso;
     
     @AddFiltro
     @CRUD.Exclude
-    private Date dataRealizacionAviso;
+    public Date dataRealizacionAviso;
     
     public Date dataARealizarAviso;
-        
+       
+    @CRUD.Hidden
+    @ManyToOne
+    public User firma;
 
     public Aviso(){};
     
-    public Aviso(Evento evento,Asemblea asemblea,String asunto,String contido,Set<Documento> docsAdxuntos, Set<ListaDistribucion> contactos, 
-    		TipoEstadoAviso estadoAviso,Date dataRealizacionAviso,Date dataARealizarAviso){
-    	this.asemblea=asemblea;
-        this.evento=evento;
+    
+    public Aviso(Avisable avisable){    	       
+    this.asunto=avisable.getAsunto();
+    this.contido=avisable.getContido();
+    this.docsAdxuntos=new HashSet<Documento>(avisable.getAdxuntos());
+    this.contactos=new HashSet<ListaDistribucion>(avisable.getContactos());
+    this.estadoAviso=TipoEstadoAviso.findById(Long.parseLong("1"));
+    this.dataARealizarAviso=Tools.getCurrentDate();
+    this.dataRealizacionAviso=null;
+    
+      
+    	
+    } 
+    public Aviso(String asunto,String contido,Set<Documento> docsAdxuntos, Set<ListaDistribucion> contactos, 
+    		TipoEstadoAviso estadoAviso,Date dataRealizacionAviso,Date dataARealizarAviso,User firma){    	        
     	this.asunto=asunto;
     	this.contido=contido;
     	this.docsAdxuntos=docsAdxuntos;
@@ -63,19 +75,14 @@ public class Aviso extends UnionModel {
     	this.estadoAviso=estadoAviso;
         this.dataARealizarAviso=dataARealizarAviso;
         this.dataRealizacionAviso=dataRealizacionAviso;
+        this.firma=firma;
       
     	
     }
     
     public String toString(){
-        
-        if(evento!=null){
-            return evento.toString()+"-"+ this.getEstadoAviso().descricion+""+this.getDataRealizacionAviso() ;
-        }else if(asemblea!=null){
-           return asemblea.toString()+"-"+ this.getEstadoAviso().descricion+""+this.getDataRealizacionAviso() ;
-        } else{
+             
             return this.getAsunto()+ "-"+ this.getEstadoAviso().descricion+"-"+ this.getDataRealizacionAviso();
-        }
     }
         
     public List<Contacto> getContactosListasDistribucion() {        
@@ -114,14 +121,8 @@ public class Aviso extends UnionModel {
     /**
      * @param contido the contido to set
      */
-    public void setContido(String contido) {
-        if(evento!=null){
-            this.contido=this.evento.nome;
-        }else if (asemblea!=null){
-            this.contido = this.asemblea.titulo;
-        }else {
-            this.contido = contido;
-        }
+    public void setContido(String contido) {       
+            this.contido = contido;        
     }
 
     /**
@@ -156,6 +157,20 @@ public class Aviso extends UnionModel {
      */
     public void setDataRealizacionAviso(Date dataRealizacionAviso) {
         this.dataRealizacionAviso = dataRealizacionAviso;
+    }
+
+    /**
+     * @return the firma
+     */
+    public User getFirma() {
+        return firma;
+    }
+
+    /**
+     * @param firma the firma to set
+     */
+    public void setFirma(User firma) {
+        this.firma = firma;
     }
 
 }
