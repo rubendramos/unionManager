@@ -70,7 +70,7 @@ function submitAccion(accion) {
 }
 
 function showPopupChat(url) {
-newwindow=window.open(url,'name','height=690,width=520,top=100,left=550,location=0');
+newwindow=window.open(url,'name','height=670,width=520,top=100,left=550,location=0');
 if (window.focus) {newwindow.focus()}
 }
 

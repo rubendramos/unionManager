@@ -95,6 +95,7 @@
         margin-bottom: 5px;
 
 	-moz-border-radius: 4px;
+        border-radius: 4px;
 	-webkit-border-radius: 4px;
 	color: #fff !important;
 	
@@ -117,7 +118,7 @@
 
 
 #crud #crudContent table {
-	min-width: 100%;
+	width: 100%;
 	border: 1px solid #ddd;
 	border-top: none;
 	border-collapse: collapse;
@@ -214,6 +215,7 @@
 	padding: 1px 4px;
 	font-size: 75%;        
 	-moz-border-radius: 4px;
+        border-radius: 4px;
 	-webkit-border-radius: 2px;
 	color: #fff !important;
 	text-decoration: none;
@@ -228,6 +230,7 @@
         cursor:pointer;
         border:0px;
 	-moz-border-radius: 4px;
+        border-radius: 4px;
 	-webkit-border-radius: 2px;
 	color: #fff !important;
 	text-decoration: none;
@@ -248,6 +251,7 @@
 	padding: 2px 8px;        
 	font-size: 90%;
 	-moz-border-radius: 4px;
+        border-radius: 4px;
 	-webkit-border-radius: 4px;
 	color: #fff !important;
 	text-decoration: none;
@@ -378,6 +382,15 @@ textarea {
 	border: 1px solid #ddd;
 }
 
+.objectFormPublico {
+	
+        height: 100px;
+}
+
+.crudFieldPublico {
+	padding: 50px;	
+}
+
 label {
 	display: block;
 	font-weight: bold;
@@ -413,6 +426,7 @@ label {
 	padding: 2px 20px;
 	font-size: 90%;
 	-moz-border-radius: 4px;
+        border-radius: 4px;
 	-webkit-border-radius: 4px;
 	cursor: pointer;	
 }
@@ -425,6 +439,7 @@ label {
 	padding: 2px 20px;
 	font-size: 90%;
 	-moz-border-radius: 4px;
+        border-radius: 4px;
 	-webkit-border-radius: 4px;
 	cursor: pointer;
         
@@ -453,6 +468,7 @@ label {
 	padding: 2px 20px;
 	font-size: 90%;
 	-moz-border-radius: 4px;
+        border-radius: 4px;
 	-webkit-border-radius: 4px;
 	cursor: pointer;
 }
@@ -470,6 +486,7 @@ label {
 	font-size: 90%;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
+        border-radius: 4px;
         min-width: 85px;
 	cursor: pointer;        
 }
@@ -541,6 +558,7 @@ form .removeAttachment {
 	padding: 2px 10px;
 	font-size: 90%;
 	-moz-border-radius: 4px;
+        border-radius: 4px;
 	-webkit-border-radius: 4px;
 	color: #fff !important;
 	text-decoration: none;
@@ -562,7 +580,8 @@ form .removeAttachment {
 	background: #ffffff;
 	-webkit-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
 	-moz-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
-	border-radius: 10px;
+        box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
+	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
@@ -578,6 +597,7 @@ form .removeAttachment {
 	background: #ffffff;
 	-webkit-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
 	-moz-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
+        box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
 	border-radius: 10px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -608,6 +628,7 @@ form .removeAttachment {
 	padding: 3px 10px;
 	font-size: 90%;
 	-moz-border-radius: 4px;
+        border-radius: 4px;
 	-webkit-border-radius: 4px;
 	color: #fff !important;
 	text-decoration: none;
@@ -650,6 +671,7 @@ form .removeAttachment {
 	padding: 2px 10px;
 	font-size: 90%;
 	-moz-border-radius: 4px;
+        border-radius: 4px;
 	-webkit-border-radius: 4px;
 	cursor: pointer;
 }
@@ -693,6 +715,7 @@ form .removeAttachment {
 	padding: 2px 3px;
 	font-size: 90%;
 	-moz-border-radius: 4px;
+        border-radius: 4px;
 	-webkit-border-radius: 4px;
 	cursor: pointer;
 }
@@ -714,6 +737,7 @@ form .removeAttachment {
 	padding: 2px 10px;
 	font-size: 90%;
 	-moz-border-radius: 4px;
+        border-radius: 4px;
 	-webkit-border-radius: 4px;
 	cursor: pointer;
         display: none;
@@ -740,8 +764,9 @@ form .removeAttachment {
 	min-height: 150px;
 	background: #ffffff;
 	-webkit-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
-	-moz-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
-	border-radius: 10px;
+	-moz-box-shadow:rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
+        box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
+	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;    
                 
@@ -896,7 +921,8 @@ display:none;
 	background: #ffffff;
 	-webkit-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
 	-moz-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;
-	border-radius: 10px;
+        box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #aa5511 0 1px 1px, #ffffff 0 -1px 0px;        	
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+        border-radius: 4px;
 }

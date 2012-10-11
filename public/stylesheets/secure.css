@@ -1,61 +1,76 @@
-@import url(main.css);
-
-html, body {	
+#loginBody {	
     font-family: 'Lucida grande', verdana, sans-serif;
+   
 }
 
+#loginHtmlBlack {	
+    font-family: 'Lucida grande', verdana, sans-serif;
+ height: 100%;
+  	
+background: #050000; /* Old browsers */
+background: -moz-linear-gradient(top, #050000 23%, #ba2737 81%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(23%,#050000), color-stop(81%,#ba2737)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #050000 23%,#ba2737 81%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #050000 23%,#ba2737 81%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #050000 23%,#ba2737 81%); /* IE10+ */
+background: linear-gradient(to bottom, #050000 23%,#ba2737 81%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#050000', endColorstr='#ba2737',GradientType=0 ); /* IE6-9 */
+}
+
+#loginHtml {	
+    font-family: 'Lucida grande', verdana, sans-serif;
+ height: 100%;
+  	
+background: #efeae8; /* Old browsers */
+background: -moz-linear-gradient(top, #efeae8 19%, #ffffff 59%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(19%,#efeae8), color-stop(59%,#ffffff)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #efeae8 19%,#ffffff 59%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #efeae8 19%,#ffffff 59%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #efeae8 19%,#ffffff 59%); /* IE10+ */
+background: linear-gradient(to bottom, #efeae8 19%,#ffffff 59%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efeae8', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+}
 
 #login {
 
     margin: 15px auto;
     text-align: center; 
-    height: 10px;    
+    height: 100%;    
     
 }
 
 #login h1 {
-    font-weight: bold;
     color: #111;
 }
 
-#login2 form {        
-    text-align: left;
-	background: #888;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	padding: 5px 10px;
-	font-size: 80%;
-	text-decoration: none;
-	color: #fff;
-	font-weight: bold;
-	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .3);    
-}
+ 
 
-#login form {        
-    width: 350px;
+#login form {   
+    color:#fff;
+        width: 300px;
 	margin: 30px auto 20px;
 	padding: 10px 10px 10px;
-	position: relative;
-	top:80px;
+	position: relative;	
 	left:20px;
 	padding: 5px 10px;
-	text-align: left;
-	text-decoration: none;
-	min-height: 150px;
+        margin-top: 50px;
+	text-align: left;	
+	min-height: 300px;
 	background: #000000;
-	background: -webkit-gradient(radial,50% -50,50,50% -100,220, from(rgba(255,255,255,1)), to(rgba(255,255,255,0))) no-repeat, -webkit-gradient(linear, left top, left bottom, from(#ff1111), to(#000000)) no-repeat;
-	background: -moz-radial-gradient(50% 10%, closest-side, rgba(255,255,255,1), rgba(255,255,255,0)) no-repeat, -moz-linear-gradient(-90deg, #ff1111, #000000) no-repeat;
-	-webkit-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #ff1111 0 1px 1px, #000000 0 -1px 0px;
-	-moz-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #ff1111 0 1px 1px, #000000 0 -1px 0px;
+	background: -webkit-gradient(radial,50% -50,50,50% -100,220, from(rgba(255,255,255,1)), to(rgba(255,255,255,0))) no-repeat, -webkit-gradient(linear, left top, left bottom, from(#A23636), to(#C84444)) no-repeat;
+	background: -moz-radial-gradient(50% 10%, closest-side, rgba(255,255,255,1), rgba(255,255,255,0)) no-repeat, -moz-linear-gradient(-90deg, #A23636, #C84444) no-repeat;
+	-webkit-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #ffffff 0 1px 1px, #000000 0 0px 0px;
+	-moz-box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #ffffff 0 1px 1px, #000000 0 0px 0px;
+        box-shadow: rgba(0,0,0,0.4) 0 15px 40px, #ffffff 0 1px 1px, #000000 0 0px 0px;
 	border-radius: 10px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;	   
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;	   
 }
 
 
 
 #login form p {
-    margin: 10px; 
+    margin: 20px; 
        
 }
 
@@ -65,27 +80,45 @@ html, body {
 
 #username-field label, #password-field label {
     display: block;
-    width: 150px;
-    float: left;
-    text-align: right;
+    width: 250px;        
     margin-right: 5px;
-    color: #333;
-    font-size: 15px;
+    color: #fff;
+    font-size: 11px;
 }
 
 #username-field input {
-    width: 150px;
-	padding-left: 0;
-    font-size: 13px;
-    border-color:#000000;
-	border-width:1px;
+    position: relative;
+    width: 250px;
+    height: 20px;
+    font-size: 13px;   
+    border-width:1px;
+}
+
+#username-field input:focus {
+  outline:none;
+    border-color:#000;
+    box-shadow:0 0 10px #000;
+}
+
+#username-field input:hover {
+    	opacity: .9;
 }
 
 #password-field input {
-    width: 150px;
-    font-size: 13px;
-    border-color:#000000;
-	border-width:1px;
+    position: relative;
+    width: 250px;
+    height: 20px;       
+    border-width:1px;
+}
+
+#password-field input:focus {
+    outline:none;
+    border-color:#000;
+    box-shadow:0 0 10px #000;
+}
+
+#password-field input:hover {
+    	opacity: .9;
 }
 
 #remember-field input {
@@ -97,42 +130,72 @@ html, body {
     color: #666;
 }
 
-#signin-field2 input {
-    margin-left: 155px;
+#login .forgotPassword a {   
+    font-size: 10px;
+    color:white;
+    font-weight: bolder;    
+    float:left;
     margin-top: 10px;
+    
 }
 
+
+
 #signin-field{
-	text-align: right;	
+
+	text-align: right;
+       
 	
 }
 #signin-field input{
-color: #ffffff;
+color: #fff;
 	border:none;	
-	position: relative;
-	background: #000;
-	padding: 2px 20px;
-	font-size: 90%;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+	background: #000;        
+	padding: 7px 20px;	
+        font-size: 12px;
+        font-weight: bold;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+        border-radius: 2px;
 	cursor: pointer;
+        
 	
 }
+
+#loginlogo {
+width:250px; 
+height:180px; 
+border:0;
+background: transparent url(/public/images/logologin.png) no-repeat center;
+border-style: none;
+vertical-align: sub;
+}
+
+
+#loginTitle {
+color:#fff;
+text-align: center;
+font-weight: bold;
+}
+
 
 #signin-field input:hover {
 	opacity: .7;
 }
 
 #login .error, #login .success  {
-    color: #fff;
+    
     font-size: 12px;
+    font-weight: bolder;
     text-align: center;
-    margin-bottom: 10px;
     padding: 5px;
 }
 
 #login .error {
-    background: #c00 !important;
+    background: transparent !important;
+    -webkit-box-shadow: 0 0px 0 #800;
+    -moz-box-shadow: 0 0px 0 #800;
+    -box-shadow: 0 0px 0 #800;
 }
 
 #login .success {
