@@ -33,7 +33,7 @@ public class PersoaTest extends UnitTest {
        Sexo s=Sexo.all().first();
        Enderezo enderezo=Enderezo.all().first();
         
-        //new Persoa(p.nome,p.apelido1,p.apelido2,p.dni,p.email,s,p.dataNacemento,enderezo).save();
+       Persoa p2=new Persoa(p.nome,p.apelido1,p.apelido2,p.dni,p.email,s,p.dataNacemento,enderezo,null).save();
         
        
 
@@ -41,8 +41,8 @@ public class PersoaTest extends UnitTest {
         
 
         // Test 
-        //assertNotNull(bob);
-        //assertEquals("diaz ramos, ruben", bob.nomeCompleto);
+        assertNotNull(p);
+        assertEquals("diaz ramos, ruben", p2.nomeCompleto);
     }
 
 }

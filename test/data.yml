@@ -31,8 +31,8 @@ Sexo(masculino):
   
 Persoa(rubenpersoa):
   email: rubendramos@gmail.com
-  nome: rubens
-  aplido1:  diaz
+  nome: ruben
+  apelido1: diaz
   apelido2: ramos
   dni:  11111111H
   sexo: masculino
@@ -46,7 +46,7 @@ Ocupacion(mestre):
   descricion: mestre
   ramo: educacion
   
-Sindicato(santiago):
+Organismo(santiago):
   nome: santiago
   cif: 76767676Z
   acronimo: SOV
@@ -65,12 +65,22 @@ Afiliado(rubenafiliado):
   dataBaixa:  22/11/2010
   milita: true
   carnetConfederado: qwqwqw
-  sindicado:  santiago  
+  
   
 User(ruben):
-  password: trinity
+  password: aa
   usuario:  rubendramos@gmail.com
   afiliado: rubenafiliado
-  isAdmin:  true
-  isComite: true
-    
+
+TipoFuncionalidade(tipoFuncionalidadeRuben):
+   descricion: tipo1
+ 
+Funcionalidade(funcionalidadeRuben):
+  tipoFuncionalidade: tipoFuncionalidadeRuben
+  nome: funcionalidade1
+  descricion:  funcionalidade1
+
+Permiso(permisoRuben):
+  nome: Sxeral
+  descricion: Sxeral
+  funcionalidade: funcionalidadeRuben  
