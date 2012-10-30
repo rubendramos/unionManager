@@ -1,0 +1,261 @@
+
+
+%{ pName = 'object.' + _name + '.' + play.db.Model.Manager.factoryFor(_field.property.relationType).keyName() }%
+
+
+
+
+
+#{field 'object.' + _name}
+#{if !_field.multiple}
+<label for="${field.id}">
+    &{_name}
+</label>
+#{/if}
+#{else}
+<label for="${field.id}">
+
+</label>
+#{/else}
+#{if _field.multiple}
+
+#{if _field.addForeignKey}	
+
+
+
+<table class="tableForeig">
+    <thead>
+        <tr>
+            <th>
+                &{_field.name}
+
+            </th>
+            
+                <th class="accion"> 
+                    #{if _estado==null || _estado.id==1}
+                    <a  class="img" href="javascript:summitInputTypeSubmit('add${_field.nomeCampo}')"><img src="/public/images/line/transparentInputImage.png" class="add" title="&{'crud.add',''}${_field.nomeCampo}" border="0"/> </a> 
+                    #{if _field.newForeignKey}
+                    <a  class="img" href="javascript:summitInputTypeSubmit('addNovo${_field.nomeCampo}')"><img src="/public/images/line/transparentInputImage.png" class="new" title="&{'crud.addNovo',''}${_field.nomeCampo}" border="0"/> </a>  
+                    #{/if}
+                    #{/if} 
+                    #{ifError field.name}
+                    <span class="error">${field.error.raw()}</span>
+                    #{/ifError}
+             
+            </th>
+        </tr>
+    </thead>
+    %{
+        even=true;
+        _field.choices.each() { }%
+
+        %{
+        selected = false;
+       
+        if(field.error?.message != 'validation.required') {
+        if(params[pName]) {
+        selected = params.getAll(${pName}).contains(it._key().toString())
+        } else {
+        for (it2 in _value) {
+        if(it2._key() == it._key()) {
+        selected = true;
+        }
+        }
+        }
+        }
+        if (!(selected==false)){
+         if(even){
+            even=false;
+        }else{
+            even=true;
+        }
+
+        }%
+ 
+        
+         <tr class="${even ? 'even' : 'odd'}">
+        
+        <td>
+            <a  href="/${_field.tipo}s/show?id=${it._key()}">${it}</a>
+        </td>
+       
+        <td class="accion">
+            %{ if(_estado==null || _estado.id==1){}%
+            <a  href="javascript:deleteMultiSelecRegister('${field.id}',${it._key()}, true,'deleteForeignKey_${_field.nomeCampo}')"/>  <img src="/public/images/line/transparentInputImage.png" class="del" title="&{'crud.delete',''}${_field.nomeCampo}" border="0"> </a> 
+            %{}}%
+        </td>            
+        %{ } }%
+    </tr>
+
+    %{ } }%
+
+</table>
+
+
+
+
+<input type="hidden" name="${pName}" value="" />
+#{if _estado!=null && _estado.id==2}
+%{disabled='disabled'}%
+#{/if}
+<select ${disabled} id="${field.id}" name="${pName}" multiple="yes" style="display:none;">
+    %{ _field.choices.each() { }%
+    %{
+    selected = false;
+    if(field.error?.message != 'validation.required') {
+    if(params[pName]) {
+    selected = params.getAll(${pName}).contains(it._key().toString())
+    } else {
+    for (it2 in _value) {
+    if(it2._key() == it._key()) {
+    selected = true;
+    }
+    }
+    }
+    }
+    if (!(selected==false)){
+    }%
+    <option value="${it._key()}" ${selected ? 'selected="true"'.raw() : ''}>${it}</option>
+    %{ } }%
+    %{ } }%
+</select>
+%{ _field.choices.each() { }%
+%{
+selected = false;
+if(field.error?.message != 'validation.required') {
+if(params[pName]) {
+selected = params.getAll(${pName}).contains(it._key().toString())
+} else {
+for (it2 in _value) {
+if(it2._key() == it._key()) {
+selected = true;
+}
+}
+}
+}
+if (!(selected==false)){
+}%
+<input type="hidden" name="${field.id}_Todos" value="${it._key()}" />   
+%{ } }%
+%{ } }%
+
+
+<p class="crudForeignButton">
+    
+    <input type="submit" id="add${_field.nomeCampo}" name="_addForeignKey" value="&{'crud.add',''}${_field.nomeCampo}"	 />    
+</p>
+<p class="crudForeignButton">
+    <input type="submit" id="deleteForeignKey_${_field.nomeCampo}" name="_deleteForeignKey" value="&{'crud.delete',''}${_field.nomeCampo}" 	 />
+</p>
+    #{if _field.newForeignKey}
+<p class="crudForeignButton">
+    <input type="submit" id="addNovo${_field.nomeCampo}" name="_newForeignKey" value="&{'crud.addNovo',''}${_field.nomeCampo}"	 />
+</p>
+    #{/if} 
+    <input type="hidden" name="_campo_${_field.nomeCampo}" value="${field.name}"	 />
+    <input  type="hidden" name="_tipo_${_field.nomeCampo}" value="${_field.tipo}"	 />
+</p>
+
+
+#{/if}
+#{else}
+<input type="hidden" name="${pName}" value="" />
+<select id="${field.id}" name="${pName}" multiple="yes">
+    %{ _field.choices.each() { }%
+    %{
+    selected = false;
+    if(field.error?.message != 'validation.required') {
+    if(params[pName]) {
+    selected = params.getAll(${pName}).contains(it._key().toString())
+    } else {
+    for (it2 in _value) {
+    if(it2._key() == it._key()) {
+    selected = true;
+    }
+    }
+    }
+    }
+    }%
+    <option value="${it._key()}" ${selected ? 'selected="true"'.raw() : ''}>${it}</option>
+    %{ } }%
+</select>
+#{/else}
+#{/if}
+#{else}
+
+#{if _field.addForeignKey}
+#{if _estado!=null && _estado.id==2}
+%{disabled='disabled'}%
+#{/if}
+<select ${disabled} id="${field.id}" name="${pName}">
+    #{ifnot _field.required}
+    <option value="">&{'crud.none'}</option>
+    #{/ifnot}
+    #{else}
+    <option value="" >&{'crud.selectValue'}</option>  
+    #{/else}
+    %{if(params[field.name]?.escape()?.raw() ?:  _value?._key()!=null) {}%
+    <option value="${params[field.name]?.escape()?.raw() ?:  _value?._key()}"  selected="true">${params[field.name]?.escape()?.raw() ?:  _value?.escape()?.raw()}</option>
+    %{}}%
+</select>
+#{if _estado==null || _estado.id==1}
+   <a class="img" href="javascript:summitInputTypeSubmit('add${_field.nomeCampo}')"><img src="/public/images/line/transparentInputImage.png" class="add" title="&{'crud.add',''}${_field.nomeCampo}" border="0"/> </a>                 
+   #{if _field.newForeignKey}
+    <a class="img" href="javascript:summitInputTypeSubmit('addNovo${_field.nomeCampo}')"><img src="/public/images/line/transparentInputImage.png" class="new" title="&{'crud.addNovo',''}${_field.nomeCampo}" border="0"/> </a>                          
+   #{/if}
+   #{ifError field.name}
+    <span class="error">${field.error.raw()}</span>
+   #{/ifError}   
+#{/if} 
+
+
+   <p class="crudForeignButton">
+    <input type="submit" id="add${_field.nomeCampo}" name="_addForeignKey" value="&{'crud.add',''}${_field.nomeCampo}"	 />
+    </p>
+    #{if _field.newForeignKey}
+    <p class="crudForeignButton">    
+    <input type="submit" id="addNovo${_field.nomeCampo}" name="_newForeignKey" value="&{'crud.addNovo',''}${_field.nomeCampo}"	 />
+    </p>
+    #{/if}    
+    <input type="hidden" name="_campo_${_field.nomeCampo}" value="${field.name}"	 />
+    <input type="hidden" name="_tipo_${_field.nomeCampo}" value="&{_field.tipo}"	 />
+</p>
+
+
+#{/if}
+#{else}  
+#{if _estado!=null && _estado.id==2}
+%{disabled='disabled'}%
+#{/if}
+<select ${disabled} id="${field.id}" name="${pName}">
+    #{ifnot _field.required}
+    <option value="">&{'crud.none'}</option>
+    #{/ifnot}
+    #{else}
+    <option value="">&{'crud.selectValue'}</option>
+    #{/else}
+    %{ _field.choices.each() { }%
+    %{
+    selected = false
+    if(field.error?.message != 'validation.required') {
+    if(params[pName]) {
+    selected = (it._key().toString() == params[pName])
+    } else {
+    selected = it._key() == _value?._key()
+    }
+    }
+
+    }%
+    <option value="${it._key()}" ${selected ? 'selected="true"'.raw() : ''}>${it}</option>
+
+    %{ } }%
+</select>
+#{ifError field.name}
+    <span class="error">${field.error.raw()}</span>
+#{/ifError}
+#{/else}
+#{/else}
+
+
+
+#{/field}

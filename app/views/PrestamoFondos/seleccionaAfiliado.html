@@ -1,0 +1,25 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:'Cambia idioma' /}
+
+<div id="crudBlank" class="${type.name}">
+
+    <h2 id="crudBlankTitle">&{'idioma.cambiarIdioma'}</h2>
+
+    <div class="objectForm">
+        #{form @cambiarIdioma()}
+        
+        <label for="object_email">
+                &{'idioma.seleccionaIdioma'}
+            </label> 
+        <div class="crudField crud_text">
+         
+         #{select 'idiomas', items:idiomas, valueProperty:'id', labelProperty:'descricion', value:'idiomas', class:"", id:'select' /}
+        </div>    
+ 
+        <p class="crudButtons">
+            <input type="submit" value="&{'crud.save'}"> 
+            <a class="crudButtons" href="@{privado.index()}">&{'crud.cancel'}</a>    
+        </p>
+        #{/form}
+    </div>
+</div>
