@@ -579,3 +579,4 @@ follaContas.follaContasPermanencia = Folla de contas da permanencia &{%s}
 crud.help.playCurrency = Campo moeda. Separador decimal o punto.
 crud.help.playHora = Campo hora hh:mm.
 utils.PlayHora.violated = Formato incorrecto. Lembre hh:mm.
+tipoEntradaFondo = Tipo entada

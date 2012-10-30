@@ -1422,6 +1422,8 @@ public abstract class CRUD extends Controller {
                             valor = f.property.name + " " + (String) valor;
                         } else if ("relation".equals(f.type)) {
                             valor = f.property.name + " ='" + (String) valor + "'";
+                        } else if ("boolean".equals(f.type)) {
+                            valor = f.property.name + " is " + (String) valor;
                         } else {
                             valor = f.property.name + " like '%" + (String) valor + "%'";
                         }
@@ -1491,7 +1493,7 @@ public abstract class CRUD extends Controller {
             public String name;
             public boolean multiple;
             public boolean required;
-            public boolean addForeignKey;            
+            public boolean addForeignKey;
             public boolean newForeignKey;
             public String pai = "unknown";
             public String tipo = "unknown";
@@ -1518,20 +1520,20 @@ public abstract class CRUD extends Controller {
                     }
                     if (field.isAnnotationPresent(PlayHora.class)) {
                         type = "hora";
-                    }                    
+                    }
                 }
                 if (Number.class.isAssignableFrom(field.getType())
                         || field.getType().equals(double.class)
                         || field.getType().equals(int.class)
                         || field.getType().equals(long.class)) {
-                    
-                if (field.isAnnotationPresent(PlayCurrency.class)) {
-                    type = "playCurrency";
-                } else{
-                    type = "number";
-                }                     
-                    
-                
+
+                    if (field.isAnnotationPresent(PlayCurrency.class)) {
+                        type = "playCurrency";
+                    } else {
+                        type = "number";
+                    }
+
+
                 }
                 if (Boolean.class.isAssignableFrom(field.getType())
                         || field.getType().equals(boolean.class)) {
@@ -1572,8 +1574,8 @@ public abstract class CRUD extends Controller {
                 if (field.isAnnotationPresent(AddForeignKey.class)) {
                     addForeignKey = true;
                 }
-                
-              
+
+
                 if (field.isAnnotationPresent(NewForeignKey.class)) {
                     newForeignKey = true;
                 }

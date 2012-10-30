@@ -32,7 +32,6 @@ _body.setProperty('fieldsHandler', fieldsHandler);
             </th>
             %{ } }%
             <th class="accion">
-                <input class="add" type="button" title="&{'crud.add', _caller.type.name}"  onclick="javascript:accionSubmitSearching('blank',${_caller.page},null)" value="&{'crud.add', _caller.type.name}" />          
                 </th>
         </tr>
     </thead>
@@ -93,18 +92,13 @@ _body.setProperty('fieldsHandler', fieldsHandler);
         %{ } }%
         
         <td class="accion">
-            <input src="/public/images/line/transparentInputImage.png" class='ver' type="image" title="&{'crud.ver',''}&{ _caller.type.name} ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:accionSubmitSearching('show',${_caller.page},${object._key()})" value="" />          
         %{ if(valueEstado!=null){ }%
           %{ if(valueEstado.id==1){ }%
-            <input src="/public/images/line/transparentInputImage.png" class="delete" type="image" title="&{'crud.delete',''}&{ _caller.type.name} ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:confirmaAccionSubmitSearching('&{'generic.confirmaElimiar',object}','delete',${_caller.page},${object._key()})" value="" /> 
-            <input src="/public/images/line/transparentInputImage.png" class="lock" type="image" title="&{'generic.pecharEstado', _caller.type.name}"  onclick="javascript:confirmaAccionSubmitSearching('&{'generic.confirmaAccionPechar',object}','pecharEstado',${_caller.page},${object._key()})" value="" /> 
             %{ } else { }%
             #{secure.check 'secretariaXeral'}  
-            <input src="/public/images/line/transparentInputImage.png" class="unlock" type="image" title="&{'generic.abrirEstado', _caller.type.name}"  onclick="javascript:confirmaAccionSubmitSearching('&{'generic.confirmaAccionAbir',object}','abrirEstado',${_caller.page},${object._key()})" value="" /> 
             #{/secure.check}
             %{ } }%
            %{ } else { }%
-            <input src="/public/images/line/transparentInputImage.png" class="delete" type="image" title="&{'crud.delete',''}&{ _caller.type.name} ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:confirmaAccionSubmitSearching('&{'generic.confirmaElimiar',object}','delete',${_caller.page},${object._key()})" value="" /> 
 
             %{ } }%
             

@@ -15,7 +15,7 @@
     
 
     <div id="crudListTable">
-        #{crud.table fields:['entradaFondo','dataPrestamo','dataDevolucion']}
+        #{crud.table fields:['afiliado','entradaFondo','dataPrestamo','dataDevolucion']}
         #{crud.custom 'dataPrestamo'}
         #{if (object.dataPrestamo!=null)}
         ${object.dataPrestamo.format()}

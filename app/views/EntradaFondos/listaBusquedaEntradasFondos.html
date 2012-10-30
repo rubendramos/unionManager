@@ -6,7 +6,7 @@
     <h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
 
     <div id="crudListSearch">
-        #{crud.search /}
+        #{crud.searchBusquedaEntradasFondos  /}
     </div>
 
     <div id="crudListPagination">
@@ -14,7 +14,24 @@
     </div>    
     
     <div id="crudListTable">
-        #{crud.table fields:['tipoEntradaFondo','tipoGeneroFondo','titulo','autor','ePrestable']/}
+        #{crud.tableBusquedaEntradasFondos fields:['fondo','tipoEntradaFondo','tipoGeneroFondo','titulo','autor','Lectura','Prestamo','devolucion','buquedaFondos.accion']}
+        #{crud.custom 'Lectura'}
+        ${object.estaDisponibleParaLectura()}
+        #{/crud.custom}  
+        #{crud.custom 'Prestamo'}
+        ${object.estaDisponibleParaPrestamo()}
+        #{/crud.custom}  
+        #{crud.custom 'devolucion'}
+        ${object.proximaDataDevolucion()}
+        #{/crud.custom} 
+        #{crud.custom 'buquedaFondos.accion'}  
+        #{if (object.estaDisponibleParaPrestamo())}
+        <input src="/public/images/line/transparentInputImage.png" class="afiliadosmenos"   type="image" title="&{'afiliado.facerBaixa'}  ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:confirmaAccionSubmitSearching('&{'generic.confirmaBaxia',object.titulo}','facerPrestamo',${page},${object._key()})" value="" /> 
+        <a class="pdf" href="@{PrestamoFondos.seleccionaAfiliado(object.id,page,where,search)}"><img src="/public/images/line/transparentInputImage.png" class="pdf" title="&{'afiliado.fichaAfiliado'}"/></a>               
+        #{/if}
+        #{/crud.custom}            
+
+        #{/crud.tableBusquedaEntradasFondos}
     </div>
 
     <div id="crudListPagination">

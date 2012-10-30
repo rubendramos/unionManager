@@ -12,62 +12,36 @@ import utils.AddForeignKey;
 import utils.NewForeignKey;
  
 @Entity
-public class Persoa extends UnionModel {
- 
-    @Required
-    @MaxSize(15)    
-    public String dni;
+public class AutorEntrada extends UnionModel {
     
     @Required
     @MaxSize(50)
     public String nome;
+    
     @Required
     @MaxSize(50)
     public String apelido1;
+    
     @MaxSize(50)
     public String apelido2;
-            
-    @Email
-    @Required
-    @MaxSize(50)
-    public String email;
-        
-    @MaxSize(9)
-    public String telefonoMovil;        
-    
-    @Required
-    @ManyToOne
-    public Sexo sexo;
-    
-    @Required
-    public Date dataNacemento;
-
-    @Required
-    @ManyToOne
-    @AddForeignKey
-    @NewForeignKey
-    public Enderezo enderezo;    
     
     @MaxSize(50)
     @CRUD.Hidden
     public String nomeCompleto;
-    
-    
+        
+    @Lob
+    @MaxSize(500)
+    public String resena;
     
     
   
-    public Persoa(String nome,String apelido1, String apelido2,String dni,String email,Sexo sexo,
-    		Date dataNacemento,Enderezo enderezo,String telefonoMovil){
+    public AutorEntrada(String nome,String apelido1, String apelido2,String resena){
     	this.apelido1=apelido1;
-    	this.apelido2=apelido2;
-    	this.dni=dni;
-    	this.email=email;
-    	this.nomeCompleto=getNomeCompleto();
-    	this.dataNacemento=dataNacemento;
-    	this.sexo=sexo;
+    	this.apelido2=apelido2;    	
+    	this.nomeCompleto=getNomeCompleto();    	
     	this.nome=nome;
-    	this.enderezo=enderezo;        
-        this.telefonoMovil=telefonoMovil;
+        this.resena=resena;
+    	
     }
 
     
@@ -88,10 +62,6 @@ public class Persoa extends UnionModel {
         }                
         return (sApelido1+sApelido2+sNome).toLowerCase().trim();
     } 
-    
-    public String getEmail() {
-        return this.email;
-    }     
     
     
     public String toString() {

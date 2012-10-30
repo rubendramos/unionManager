@@ -4,6 +4,7 @@ import controllers.CRUD.Hidden;
 import java.util.*;
 import javax.persistence.*;
 import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
 import utils.AddForeignKey;
 
  
@@ -13,6 +14,8 @@ import utils.AddFiltro;
 import utils.NewForeignKey;
  
 @Entity
+@FilterDef(name="fondoPublico", defaultCondition="((epublico='TRUE'))" )
+@Filter(name="fondoPublico")
 public class Fondo extends UnionModel {
  
    
@@ -27,24 +30,28 @@ public class Fondo extends UnionModel {
  
     public boolean ePublico;
     
+    @Required
+    @MaxSize(2)
+    public String periodoDiasPrestamo;
+    @Required
+    @MaxSize(1)
+    public String umaxPrestamo;
 
-    @AddForeignKey
-    @NewForeignKey
-    @ManyToMany
-    public Set<EntradaFondo> entradas;
+
     
   
-    public Fondo(String nome,boolean ePublico,String descricion,Set<EntradaFondo> entradas){
+    public Fondo(String nome,boolean ePublico,String descricion,String periodoDiasPrestamo,String umaxPrestamo){
     	this.nome=nome;
+        this.umaxPrestamo=umaxPrestamo;
+        this.periodoDiasPrestamo=periodoDiasPrestamo;
     	this.descricion=descricion;
-        this.ePublico=ePublico;    	
-        this.entradas=entradas;
+        this.ePublico=ePublico;    	       
     }
 
     
     
     public String toString() {
-        return this.nome+"-"+this.descricion;
+        return this.nome;
     }
 
     

@@ -206,4 +206,8 @@ public class Tools {
             is.close();
         }
     }
+    
+    public static Date addDaysToDate(Date d,int days){
+            return new Date(d.getTime() + (days * 24 * 3600 * 1000));
+    }
 }

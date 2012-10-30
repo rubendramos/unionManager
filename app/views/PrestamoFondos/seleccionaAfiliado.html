@@ -1,21 +1,28 @@
-#{extends 'CRUD/layout.html' /}
-#{set title:'Cambia idioma' /}
+#{extends 'CRUD/layoutSinMenu.html' /}
+#{set title:'Selecciona Afiliado' /}
 
-<div id="crudBlank" class="${type.name}">
+<div id="onlyShow" class="${type.name}">
 
-    <h2 id="crudBlankTitle">&{'idioma.cambiarIdioma'}</h2>
+    <h2 id="crudBlankTitle">&{'prestamo.facerPerstamo'}</h2>
 
     <div class="objectForm">
-        #{form @cambiarIdioma()}
-        
+        #{form @facerPrestamo()}
+        <input type="hidden" name="page" value="${page}">            
+        <input type="hidden" name="where" value="${where}">
+        <input type="hidden" name="search" value="${search}">
+        <input type="hidden" name="efId" value="${ef.id}">
         <label for="object_email">
-                &{'idioma.seleccionaIdioma'}
-            </label> 
-        <div class="crudField crud_text">
-         
-         #{select 'idiomas', items:idiomas, valueProperty:'id', labelProperty:'descricion', value:'idiomas', class:"", id:'select' /}
+            &{'prestamo.seleccionaAfiliado'}
+        </label> 
+        <div class="crudField crud_text">         
+            #{select 'afiliados', items:afiliados, valueProperty:'id', labelProperty:'persoa.nome', value:'afiliados', class:"", id:'select' /}
         </div>    
- 
+        <label for="object_email">
+            &{'prestamo.entrada'}
+        </label> 
+        <div class="crudField crud_text">       
+            ${ef}
+        </div>    
         <p class="crudButtons">
             <input type="submit" value="&{'crud.save'}"> 
             <a class="crudButtons" href="@{privado.index()}">&{'crud.cancel'}</a>    

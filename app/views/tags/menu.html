@@ -71,6 +71,8 @@
             <ul class="sub">
                 #{secure.checkFuncionalidade 'Fondos'} <li><a href="@{Fondos.list()}">&{'menu.propaganda.fondos'}</a></li>#{/secure.checkFuncionalidade}
                 #{secure.checkFuncionalidade 'EntradaFondos'}<li><a href="@{EntradaFondos.list()}">&{'menu.propaganda.entradas'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'PrestamoFondos'}<li><a href="@{PrestamoFondos.list()}">&{'menu.propaganda.prestamosFondos'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'PrestamoFondos'}<li><a href="@{EntradaFondos.listaPrestables()}">&{'menu.propaganda.prestamosFondos'}</a></li>#{/secure.checkFuncionalidade}
             </ul>
             <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>

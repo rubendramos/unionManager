@@ -10,32 +10,29 @@ import utils.AddForeignKey;
 import play.db.jpa.*;
 import play.data.validation.*;
 import utils.AddFiltro;
+import utils.NewForeignKey;
  
 @Entity
-public class PrestamoFondo extends UnionModel {
+public class AfiliadoPrestamoFondo extends UnionModel {
  
     @Required
-    @ManyToOne    
-    public EntradaFondo entradaFondo;
+    @ManyToOne   
+    @AddFiltro
+    public Afiliado afiliado;
     
     @Required
-    public Date dataPrestamo;
-   
-    public Date dataDevolucion;
-    
-
-    
+    @ManyToMany
+    @AddForeignKey
+    @NewForeignKey
+    public Set<PrestamoFondo> prestamoFondo;
   
-    public PrestamoFondo(EntradaFondo entradaFondo,Date dataPrestamo, Date dataDevolucion){
-    	this.entradaFondo=entradaFondo;    	
-    	this.dataPrestamo=dataPrestamo;
-    	this.dataDevolucion=dataDevolucion;
+    public AfiliadoPrestamoFondo(Set<PrestamoFondo> prestamoFondo,Afiliado afiliado){
+    	this.prestamoFondo=prestamoFondo;    	    	
+    	this.afiliado=afiliado;
     }
-
-    
     
     public String toString() {
-        return this.entradaFondo.toString()+"-"+ this.dataPrestamo+"-"+ this.dataDevolucion;
+        return this.afiliado.toString()+"-"+ this.prestamoFondo;
     }
 
     

@@ -82,7 +82,7 @@
         #{/if}
 
         #{if field.type == 'relation'}
-            #{crud.relationField name:field.name, value:(currentObject ? currentObject[field.name] : null), field:field /}
+            #{crud.relationFieldFiltro name:field.name, value:(currentObject ? currentObject[field.name] : null), field:field /}
         #{/if}
 
         #{if field.type == 'boolean'}
