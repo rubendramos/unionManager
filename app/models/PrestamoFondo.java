@@ -29,7 +29,7 @@ public class PrestamoFondo extends UnionModel {
     @Required
     public Date dataPrestamo;
    
-    public Date dataDevolucion;
+    private Date dataDevolucion;
             
     
   
@@ -43,7 +43,7 @@ public class PrestamoFondo extends UnionModel {
     
     
     public String toString() {
-        return this.afiliado+"-"+this.entradaFondo.toString()+"-"+ this.dataPrestamo+"-"+ this.dataDevolucion;
+        return this.afiliado+"-"+this.entradaFondo.toString()+"-"+ this.dataPrestamo+"-"+ this.getDataDevolucion();
     }
 
     
@@ -53,5 +53,19 @@ public class PrestamoFondo extends UnionModel {
         PrestamoFondo pf=(PrestamoFondo)jpa.first();        
         Fondo f=Fondo.findById(entradaFondo.fondo.id);
         return pf==null?null: Tools.addDaysToDate(pf.dataPrestamo,Integer.parseInt(f.periodoDiasPrestamo));
-    } 
+    }
+
+    /**
+     * @return the dataDevolucion
+     */
+    public Date getDataDevolucion() {
+        return dataDevolucion;
+    }
+
+    /**
+     * @param dataDevolucion the dataDevolucion to set
+     */
+    public void setDataDevolucion(Date dataDevolucion) {
+        this.dataDevolucion = dataDevolucion;
+    }
 }

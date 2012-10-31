@@ -134,4 +134,11 @@ public class EntradaFondo extends UnionModel {
     public void setnExemplaresPrestados(String nExemplaresPrestados) {
         this.nExemplaresPrestados = nExemplaresPrestados;
     }
+    
+    public  String exemplaresDisponiblePrestamo() {
+        int iExemplaresPrestados=Integer.parseInt(this.nExemplaresPrestados);
+        int iExemplaresParaPrestar=Integer.parseInt(this.nExemplaresPrestamo);
+        int res=iExemplaresParaPrestar-iExemplaresPrestados;
+        return Integer.toString(res);
+    }    
 }

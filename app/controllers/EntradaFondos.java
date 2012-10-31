@@ -2,6 +2,9 @@ package controllers;
 
 import java.util.List;
 import java.util.logging.Level;
+import models.Afiliado;
+import models.EntradaFondo;
+import models.PrestamoFondo;
 import models.User;
 import org.hibernate.Filter;
 import org.hibernate.Session;
@@ -60,4 +63,8 @@ public class EntradaFondos extends CRUD {
             render("EntradaFondos/listaBusquedaEntradasFondos.html", type, objects, count, totalCount, page, orderBy, order);
         }
     }
+    
+    public static void seleccionaAfiliado(String id,String page,String where,String search) throws Exception{
+        PrestamoFondos.seleccionaAfiliado(id, page, where, search);
+    }    
 }

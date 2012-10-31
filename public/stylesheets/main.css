@@ -652,6 +652,26 @@ tr.odd {
     vertical-align: sub;
 }
 
+#checkSI {
+    width:20px; 
+    height:20px; 
+    border:0;
+    text-align: right;
+    background: transparent url(/public/images/checkSi20.png) no-repeat center;
+    border-style: none;
+    vertical-align: sub;
+}
+
+#checkNO {
+    width:20px; 
+    height:20px; 
+    border:0;
+    text-align: right;
+    background: transparent url(/public/images/checkNo20.png) no-repeat center;
+    border-style: none;
+    vertical-align: sub;
+}
+
 #crudListTable  img.prioridadeAlta {
     width:15px; 
     height:15px; 
@@ -977,6 +997,24 @@ tr.odd {
     vertical-align: sub;
 }
 
+#facerPrestamo {
+    width:20px; 
+    height:20px; 
+    border:0;
+    text-align: right;
+    background: transparent url(/public/images/facerPrestamo.png) no-repeat center;
+    border-style: none;
+    vertical-align: sub;
+}
+#facerDevolucionPrestamo {
+    width:20px; 
+    height:20px; 
+    border:0;
+    text-align: right;
+    background: transparent url(/public/images/facerDevolucion.png) no-repeat center;
+    border-style: none;
+    vertical-align: sub;
+}
 
 #video {
     width:20px; 
@@ -986,4 +1024,21 @@ tr.odd {
     background: transparent url(/public/images/video_icon.png) no-repeat center;
     border-style: none;
     vertical-align: sub;
+}
+
+#resaltaTextoRed{    
+    font-weight: bold;
+    color: red;    
+}
+
+#superindice 
+{
+    font-size: 80%;
+    font-weight: bold;
+    vertical-align:super
+} 
+#subindice 
+{    font-size: 80%;
+    font-weight: bold;
+    vertical-align:sub
 }

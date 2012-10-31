@@ -3,29 +3,49 @@
 
 <div id="onlyShow" class="${type.name}">
 
-    <h2 id="crudBlankTitle">&{'prestamo.facerPerstamo'}</h2>
-
+        <h2 id="crudBlankTitle">       
+           &{'prestamoFondo.mesaxeFondoPrestamo'}
+        </h2>
     <div class="objectForm">
-        #{form @facerPrestamo()}
+        #{form action:@facerPrestamo(), enctype:'multipart/form-data', name:'searching'}        
         <input type="hidden" name="page" value="${page}">            
         <input type="hidden" name="where" value="${where}">
         <input type="hidden" name="search" value="${search}">
         <input type="hidden" name="efId" value="${ef.id}">
-        <label for="object_email">
+        <input type="hidden" name="from" value="true">
+
+        <div> 
+
+            </br>
+
+         <div>   
+             <span id="resaltaTextoRed">&{'fondo'}:</span>${ef.fondo}
+         </div>   
+         <div>   
+             <span id="resaltaTextoRed">&{'titulo'}:</span>${ef.titulo}
+         </div>   
+         <div>
+           <span id="resaltaTextoRed">&{'autor'}:</span>${ef.autor}
+         </div>   
+         <div>
+           <span id="resaltaTextoRed">&{'anoEdicion'}:</span>${ef.anoEdicion}
+         </div>   
+             
+        </div>
+        </br>
+        <label>
             &{'prestamo.seleccionaAfiliado'}
         </label> 
         <div class="crudField crud_text">         
             #{select 'afiliados', items:afiliados, valueProperty:'id', labelProperty:'persoa.nome', value:'afiliados', class:"", id:'select' /}
         </div>    
-        <label for="object_email">
-            &{'prestamo.entrada'}
-        </label> 
-        <div class="crudField crud_text">       
-            ${ef}
-        </div>    
+        </br>
         <p class="crudButtons">
-            <input type="submit" value="&{'crud.save'}"> 
-            <a class="crudButtons" href="@{privado.index()}">&{'crud.cancel'}</a>    
+            <input type="submit" value="&{'prestamoFondo.FacerPrestamo'}"> 
+            <a class="crudButtons" href="@{EntradaFondos.listaPrestables()}">&{'crud.cancel'}</a>    
+                    <input src="/public/images/line/transparentInputImage.png" id="facerPrestamo" type="image" title="&{'prestamoFondo.tituloFacerPrestamo',object}"  onclick="javascript:accionSubmitSearching('facerPrestamo',${page},${ef.id})" value="" />          
+                    <input src="/public/images/line/transparentInputImage.png" id="facerPrestamo" type="image" title="&{'prestamoFondo.tituloFacerPrestamo',object}"  onclick="javascript:accionSubmitSearching('listaPrestables',${page},${ef.id})" value="" />          
+
         </p>
         #{/form}
     </div>

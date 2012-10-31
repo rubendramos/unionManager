@@ -14,20 +14,54 @@
     </div>    
     
     <div id="crudListTable">
-        #{crud.tableBusquedaEntradasFondos fields:['fondo','tipoEntradaFondo','tipoGeneroFondo','titulo','autor','Lectura','Prestamo','devolucion','buquedaFondos.accion']}
-        #{crud.custom 'Lectura'}
-        ${object.estaDisponibleParaLectura()}
+        #{crud.tableBusquedaEntradasFondos fields:['fondo','tipoEntradaFondo','tipoGeneroFondo','titulo','autor','prestamoFondo.disponibleLectura','prestamoFondo.disponiblePrestamo','prestamoFondo.DataDevolucion','prestamoFondo.FacerPrestamo']}
+        #{crud.custom 'prestamoFondo.disponibleLectura'}
+        #{if (object.estaDisponibleParaLectura())}
+        <img src="/public/images/line/transparentInputImage.png" id="checkSI" title="&{'prestamoFondo.tituloDisponibleLectura',object.nExemplaresLectura}"/>  
+        <span id='subindice'>(${object.nExemplaresLectura})</span> 
+        #{/if}
+        #{else}
+        <img src="/public/images/line/transparentInputImage.png" id="checkNO" title="&{'prestamoFondo.nonDisponibleLectura'}"/>  
+       
+        
+        #{/else}
         #{/crud.custom}  
-        #{crud.custom 'Prestamo'}
-        ${object.estaDisponibleParaPrestamo()}
-        #{/crud.custom}  
-        #{crud.custom 'devolucion'}
-        ${object.proximaDataDevolucion()}
-        #{/crud.custom} 
-        #{crud.custom 'buquedaFondos.accion'}  
+        
+        
+        #{crud.custom 'prestamoFondo.disponiblePrestamo'}
+        #{if (object.ePrestable)}       
         #{if (object.estaDisponibleParaPrestamo())}
-        <input src="/public/images/line/transparentInputImage.png" class="afiliadosmenos"   type="image" title="&{'afiliado.facerBaixa'}  ${field}${object.toString()?.escape()?.raw() ?: '(no value)'}"  onclick="javascript:confirmaAccionSubmitSearching('&{'generic.confirmaBaxia',object.titulo}','facerPrestamo',${page},${object._key()})" value="" /> 
-        <a class="pdf" href="@{PrestamoFondos.seleccionaAfiliado(object.id,page,where,search)}"><img src="/public/images/line/transparentInputImage.png" class="pdf" title="&{'afiliado.fichaAfiliado'}"/></a>               
+        <img src="/public/images/line/transparentInputImage.png" id="checkSI" title="&{'prestamoFondo.tituloDisponiblePrestamo',object.exemplaresDisponiblePrestamo()}"/> 
+        <span id='subindice'>(${object.exemplaresDisponiblePrestamo()})</span>
+        
+        #{/if}
+        #{else}
+        <img src="/public/images/line/transparentInputImage.png" id="checkNO" title="&{'prestamoFondo.nonDisponiblePrestamo'}"/>       
+        #{/else}
+        #{/if}
+        #{else}
+        <span id='resaltaTextoRed'>&{'prestamoFondo.NonPrestable'}</span> 
+        
+        #{/else}
+        
+        #{/crud.custom}  
+        
+        
+        #{crud.custom 'prestamoFondo.DataDevolucion'}
+        #{if (object.ePrestable)} 
+        #{if (!object.estaDisponibleParaPrestamo())}
+        ${object.proximaDataDevolucion()}
+        #{/if}
+        #{/if}
+        #{/crud.custom} 
+
+
+        #{crud.custom 'prestamoFondo.FacerPrestamo'}  
+        #{if (object.estaDisponibleParaPrestamo())}
+        <a  href="@{PrestamoFondos.seleccionaAfiliado(object.id,page,where,search)}"><img src="/public/images/line/transparentInputImage.png" id="facerPrestamo" title="&{'prestamoFondo.tituloFacerPrestamo',object}"/></a>               
+        <input src="/public/images/line/transparentInputImage.png" id="facerPrestamo" type="image" title="&{'prestamoFondo.tituloFacerPrestamo',object}"  onclick="javascript:accionSubmitSearching('seleccionaAfiliado',${page},${object._key()})" value="" />          
+        <input src="/public/images/line/transparentInputImage.png" id='facerPrestamo' type="image" title="&{'prestamoFondo.tituloFacerPrestamo',object}"  onclick="javascript:accionSubmitSearching('seleccionaAfiliado')" value="" />          
+
         #{/if}
         #{/crud.custom}            
 
