@@ -114,6 +114,8 @@
     
     <input type="hidden" name="page"/>
     <input type="hidden" name="id"/>
+    <input type="hidden" name="order" value="${params.order?.escape()?.raw()}"/>   
+    <input type="hidden" name="orderBy" value="${params.orderBy?.escape()?.raw()}"/>
     #{if _fields}
         <input type="hidden" name="searchFields" value="${_fields.toString().substring(1, _fields.toString().length()-1).replace(',', '')}" />
     #{/if}

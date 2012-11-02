@@ -25,7 +25,11 @@ public class EntradaFondos extends CRUD {
 
         ((Session) JPA.em().getDelegate()).enableFilter("fondoPublico");      
 
-        
+        if("".equals(orderBy)){
+            order=null;
+            orderBy=null;
+            
+        }
         
         
         ObjectType type = ObjectType.get(getControllerClass());
@@ -53,18 +57,25 @@ public class EntradaFondos extends CRUD {
         Long count = type.count(search, searchFields, whereClausule);
         Long totalCount = type.count(null, null, (String) request.args.get("where"));
 
-
+        where=whereClausule;
         ((Session) JPA.em().getDelegate()).disableFilter("fondoPublico"); 
 
         try {
-            render(type, objects, count, totalCount, page, orderBy, order);
+            render(type, objects, count, totalCount, page, orderBy, order,where);
 
         } catch (TemplateNotFoundException e) {
-            render("EntradaFondos/listaBusquedaEntradasFondos.html", type, objects, count, totalCount, page, orderBy, order);
+            render("EntradaFondos/listaBusquedaEntradasFondos.html", type, objects, count, totalCount, page, orderBy, order,where);
         }
     }
     
-    public static void seleccionaAfiliado(String id,String page,String where,String search) throws Exception{
-        PrestamoFondos.seleccionaAfiliado(id, page, where, search);
+    public static void seleccionaAfiliado(String id,String page,String where,String search,String order,String orderBy) throws Exception{
+        String fondoFiltro=params.get("object.fondo.id");
+        String generoFiltro=params.get("object.tipoGeneroFondo.id");
+        String tipoEntradaFiltro=params.get("object.tipoEntradaFondo.id");
+        //String order=params.get("order");
+        //String orderBy=params.get("orderBy");
+       
+                                        
+        PrestamoFondos.seleccionaAfiliado(id, page, search,order,orderBy,fondoFiltro,generoFiltro,tipoEntradaFiltro);
     }    
 }

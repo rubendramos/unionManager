@@ -6,13 +6,13 @@
     <h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
 
     <div id="crudListSearch">
-        #{crud.searchBusquedaEntradasFondos  /}
+        #{crud.searchBusquedaEntradasFondos  /}        
     </div>
 
     <div id="crudListPagination">
         #{crud.pagination /}
     </div>    
-    
+  
     <div id="crudListTable">
         #{crud.tableBusquedaEntradasFondos fields:['fondo','tipoEntradaFondo','tipoGeneroFondo','titulo','autor','prestamoFondo.disponibleLectura','prestamoFondo.disponiblePrestamo','prestamoFondo.DataDevolucion','prestamoFondo.FacerPrestamo']}
         #{crud.custom 'prestamoFondo.disponibleLectura'}
@@ -58,10 +58,7 @@
 
         #{crud.custom 'prestamoFondo.FacerPrestamo'}  
         #{if (object.estaDisponibleParaPrestamo())}
-        <a  href="@{PrestamoFondos.seleccionaAfiliado(object.id,page,where,search)}"><img src="/public/images/line/transparentInputImage.png" id="facerPrestamo" title="&{'prestamoFondo.tituloFacerPrestamo',object}"/></a>               
         <input src="/public/images/line/transparentInputImage.png" id="facerPrestamo" type="image" title="&{'prestamoFondo.tituloFacerPrestamo',object}"  onclick="javascript:accionSubmitSearching('seleccionaAfiliado',${page},${object._key()})" value="" />          
-        <input src="/public/images/line/transparentInputImage.png" id='facerPrestamo' type="image" title="&{'prestamoFondo.tituloFacerPrestamo',object}"  onclick="javascript:accionSubmitSearching('seleccionaAfiliado')" value="" />          
-
         #{/if}
         #{/crud.custom}            
 

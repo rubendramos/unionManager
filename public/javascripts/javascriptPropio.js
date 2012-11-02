@@ -54,6 +54,15 @@ function accionSubmitSearching(accion,page,id) {
     document.searching.submit();  
 }
 
+function accionSubmitSearchingOrder(accion,page,id,order,orderBy) {
+
+    document.searching.page.value=page;
+    document.searching.id.value=id;
+    document.searching.action=accion;    
+    document.searching.order=order;    
+    document.searching.orderBy=orderBy;    
+    document.searching.submit();  
+}
 
 
 function submitAccionSave(save,saveAndContinue) {

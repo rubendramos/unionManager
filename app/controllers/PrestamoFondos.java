@@ -17,7 +17,7 @@ import utils.Tools;
 @With(Secure.class)
 public class PrestamoFondos extends CRUD {
 
-    public static void facerPrestamo(String afiliados, String efId, String page, String where, String search) {
+    public static void facerPrestamo(String afiliados, String efId, int page, String where, String search) {
         EntradaFondo ef = EntradaFondo.findById(Long.parseLong(efId));
         Afiliado afiliado = Afiliado.findById(Long.parseLong(afiliados));
         PrestamoFondo pf = new PrestamoFondo(afiliado, ef, Tools.getCurrentDate(), null);
@@ -27,8 +27,8 @@ public class PrestamoFondos extends CRUD {
         pf.setOrganismo(Seguridade.organismo());
         pf._save();
         flash.success(play.i18n.Messages.get("crud.avisoGardado", pf.toString()));
-        EntradaFondos.listaPrestables(Integer.parseInt(page), where, search, "false", null, null, null);
-
+        //listaPrestables(page, search, "true", null, null, null);
+        EntradaFondos.listaPrestables(page, getWhereListaPrestables(), search, "true", null, null, null);
     }
 
     public static void facerDevolucionPrestamo(String id, String page, String where, String search) {
@@ -56,16 +56,16 @@ public class PrestamoFondos extends CRUD {
 
     }
 
-    public static void seleccionaAfiliado(String id, String page, String where, String search) throws Exception {
+    public static void seleccionaAfiliado(String id, String page,String search,String order,String orderBy, String fondoFiltro,String generoFiltro,String tipoEntradaFiltro) throws Exception {
         ObjectType type = ObjectType.get(getControllerClass());
-        notFoundIfNull(type);
+        notFoundIfNull(type);        
         EntradaFondo ef = EntradaFondo.findById(Long.parseLong(id));
         PrestamoFondo object = new PrestamoFondo(null, ef, null, null);
         //Constructor<?> constructor = type.entityClass.getDeclaredConstructor();
         //Model object = (Model) constructor.newInstance();
         //notFoundIfNull(object);
         List<Afiliado> afiliados = Afiliado.getListaAfiliadosAlta();
-        render(afiliados, ef, page, where, search);
+        render(afiliados, ef, page, search,fondoFiltro,generoFiltro,tipoEntradaFiltro,order,orderBy);
     }
 
     public static void list(int page, String where, String search, String from, String searchFields,
@@ -100,6 +100,21 @@ public class PrestamoFondos extends CRUD {
             render(type, objects, count, totalCount, page, orderBy, order);
         } catch (TemplateNotFoundException e) {
             render("CRUD/list.html", type, objects, count, totalCount, page, orderBy, order);
+        }
+    }
+    
+    public static void listaPrestables(int page, String search, String from, String searchFields,
+            String orderBy, String order){                 
+            EntradaFondos.listaPrestables(page, getWhereListaPrestables(), search, from, searchFields, orderBy, order);
+    }
+    
+    private static String getWhereListaPrestables() {
+        try {
+            ObjectType type = ObjectType.forClass("models.EntradaFondo");
+            return type.createWhereFilterClausule();
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(PrestamoFondos.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 

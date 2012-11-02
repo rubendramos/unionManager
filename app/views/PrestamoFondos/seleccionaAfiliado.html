@@ -8,11 +8,15 @@
         </h2>
     <div class="objectForm">
         #{form action:@facerPrestamo(), enctype:'multipart/form-data', name:'searching'}        
-        <input type="hidden" name="page" value="${page}">            
-        <input type="hidden" name="where" value="${where}">
+        <input type="hidden" name="page" value="${page}">                   
         <input type="hidden" name="search" value="${search}">
+        <input type="hidden" name="order" value="${order}">
+        <input type="hidden" name="orderBy" value="${orderBy}">
         <input type="hidden" name="efId" value="${ef.id}">
-        <input type="hidden" name="from" value="true">
+        <input type="hidden" name="from" value="true">        
+        <input type="hidden" name="object.tipoEntradaFondo.id" value="${tipoEntradaFiltro}">
+        <input type="hidden" name="object.tipoGeneroFondo.id" value="${generoFiltro}">
+        <input type="hidden" name="object.fondo.id" value="${fondoFiltro}">
 
         <div> 
 
@@ -42,9 +46,7 @@
         </br>
         <p class="crudButtons">
             <input type="submit" value="&{'prestamoFondo.FacerPrestamo'}"> 
-            <a class="crudButtons" href="@{EntradaFondos.listaPrestables()}">&{'crud.cancel'}</a>    
-                    <input src="/public/images/line/transparentInputImage.png" id="facerPrestamo" type="image" title="&{'prestamoFondo.tituloFacerPrestamo',object}"  onclick="javascript:accionSubmitSearching('facerPrestamo',${page},${ef.id})" value="" />          
-                    <input src="/public/images/line/transparentInputImage.png" id="facerPrestamo" type="image" title="&{'prestamoFondo.tituloFacerPrestamo',object}"  onclick="javascript:accionSubmitSearching('listaPrestables',${page},${ef.id})" value="" />          
+            <input type="button" onclick="javascript:accionSubmitSearching('listaPrestables',${page},${ef.id})"" value="&{'crud.voltarABusqueda'}" />
 
         </p>
         #{/form}
