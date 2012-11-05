@@ -20,6 +20,8 @@ public class PrestamoFondos extends CRUD {
     public static void facerPrestamo(String afiliados, String efId, int page, String where, String search) {
         EntradaFondo ef = EntradaFondo.findById(Long.parseLong(efId));
         Afiliado afiliado = Afiliado.findById(Long.parseLong(afiliados));
+        
+        if(validaCondicionsPrestamo(ef,afiliado)){
         PrestamoFondo pf = new PrestamoFondo(afiliado, ef, Tools.getCurrentDate(), null);
 
         ef.setnExemplaresPrestados(Integer.toString(Integer.parseInt(ef.getnExemplaresPrestados()) + 1));
@@ -27,6 +29,7 @@ public class PrestamoFondos extends CRUD {
         pf.setOrganismo(Seguridade.organismo());
         pf._save();
         flash.success(play.i18n.Messages.get("crud.avisoGardado", pf.toString()));
+        }
         //listaPrestables(page, search, "true", null, null, null);
         EntradaFondos.listaPrestables(page, getWhereListaPrestables(), search, "true", null, null, null);
     }
@@ -71,6 +74,13 @@ public class PrestamoFondos extends CRUD {
     public static void list(int page, String where, String search, String from, String searchFields,
             String orderBy, String order) throws Exception {
 
+        if(orderBy==null || "".equals(orderBy)){
+            order="DESC";
+            orderBy="dataPrestamo";
+            
+        }
+        
+        
         ObjectType type = ObjectType.get(getControllerClass());
         String whereClausule = null;
 
@@ -116,6 +126,28 @@ public class PrestamoFondos extends CRUD {
             java.util.logging.Logger.getLogger(PrestamoFondos.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+    
+    private static boolean validaCondicionsPrestamo(EntradaFondo entradaFondo,Afiliado afiliado){
+        boolean res=true;        
+        
+        List<EntradaFondo> prestamosActivosNoFondo=PrestamoFondo.getPrestamosActivosPorAfiliadoEFondo(afiliado,entradaFondo.fondo);
+        List<EntradaFondo> prestamosVencidos=PrestamoFondo.getPrestamosVencidosPorAfiliado(afiliado);
+        
+        //Validamos se ten prestamos caducatos
+        if(prestamosVencidos!=null && prestamosVencidos.size()>0){
+            flash.error(play.i18n.Messages.get("prestamo.tenPrestamosVencidos"));
+            res=false;
+        //Validamos si supera o maximo de prestamos para o fondo
+        }else if(prestamosActivosNoFondo!=null && prestamosActivosNoFondo.size()>=Integer.parseInt(entradaFondo.fondo.umaxPrestamo)){
+            flash.error(play.i18n.Messages.get("prestamo.superaMaxPrestamosFondo", entradaFondo.fondo.umaxPrestamo ,entradaFondo.fondo.toString()));            
+            res=false;
+        //Valiadmos si xa ten o mesmo fondo prestado
+        }else if (prestamosActivosNoFondo.contains(entradaFondo)){
+            flash.error(play.i18n.Messages.get("prestamo.xaTenPrestado", entradaFondo.toString()));            
+            res=false;
+        }
+        return res;
     }
 
 }

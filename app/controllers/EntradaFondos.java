@@ -68,6 +68,56 @@ public class EntradaFondos extends CRUD {
         }
     }
     
+    public static void listaEnVenda(int page, String where, String search, String from, String searchFields,
+            String orderBy, String order) {
+
+        ((Session) JPA.em().getDelegate()).enableFilter("fondoPublico");      
+        ((Session) JPA.em().getDelegate()).enableFilter("entradasEnVenda"); 
+
+        if("".equals(orderBy)){
+            order=null;
+            orderBy=null;
+            
+        }
+        
+        
+        ObjectType type = ObjectType.get(getControllerClass());
+        String whereClausule = null;
+
+        notFoundIfNull(type);
+
+        if (page < 1) {
+            page = 1;
+        }
+
+        if (from != null && "true".equals(from)) {
+            if (where != null && !"".equals(where)) {
+                whereClausule = where;
+            }
+            type.setValuesFromSearch(where);
+
+        } else {
+            whereClausule = type.createWhereFilterClausule();
+        }
+
+
+
+        List<Model> objects = type.findPage(page, search, searchFields, orderBy, order, whereClausule);
+        Long count = type.count(search, searchFields, whereClausule);
+        Long totalCount = type.count(null, null, (String) request.args.get("where"));
+
+        where=whereClausule;
+        ((Session) JPA.em().getDelegate()).disableFilter("fondoPublico"); 
+        ((Session) JPA.em().getDelegate()).disableFilter("entradasEnVenda"); 
+
+        try {
+            render(type, objects, count, totalCount, page, orderBy, order,where);
+
+        } catch (TemplateNotFoundException e) {
+            render("EntradaFondos/listaVendaFondos.html", type, objects, count, totalCount, page, orderBy, order,where);
+        }
+    }    
+    
     public static void seleccionaAfiliado(String id,String page,String where,String search,String order,String orderBy) throws Exception{
         String fondoFiltro=params.get("object.fondo.id");
         String generoFiltro=params.get("object.tipoGeneroFondo.id");

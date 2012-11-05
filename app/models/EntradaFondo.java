@@ -7,18 +7,19 @@ import javax.persistence.*;
 import org.apache.log4j.pattern.IntegerPatternConverter;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.Filters;
 import utils.AddForeignKey;
 
  
 import play.db.jpa.*;
 import play.data.validation.*;
-import utils.AddFiltro;
-import utils.NewForeignKey;
-import utils.Tools;
+import utils.*;
  
 @Entity
-@FilterDef(name="entradasPrestables", defaultCondition="((eprestable = 'TRUE'))" )
-@Filter(name="entradasPrestables")
+@FilterDef(name="entradasEnVenda")
+@Filter(name="entradasEnVenda", condition="((estaEnVenda = 'TRUE'))" )
+
+
 public class EntradaFondo extends UnionModel {
  
 
@@ -76,10 +77,27 @@ public class EntradaFondo extends UnionModel {
 
     @CRUD.Hidden    
     private String nExemplaresPrestados;
+    
+    
+    public boolean estaEnVenda;
+    
+    @Required
+    @MaxSize(3)
+    public String nExemplaresEnVenda;
+    
+    @CRUD.Hidden    
+    private String nExemplaresVendidos;
+    
+    
+    @PlayCurrency
+    public Double importe;
+    
+    public String descontoAfiliados;
   
     public EntradaFondo(TipoEntradaFondo tipoEntradaFondo,TipoGeneroFondo tipoGeneroFondo,String titulo, 
             String anoEdicion, String autor,boolean ePrestable,String descricion,Blob caratula,
-            String sinatura,String nExemplares,String nExemplaresLectura,String nExemplaresPrestamo,String nExemplaresPrestados){
+            String sinatura,String nExemplares,String nExemplaresLectura,String nExemplaresPrestamo,String nExemplaresPrestados,boolean estaEnVenda,String nExemplaresEnVenda,
+            String nExemplaresVendidos,Double importe,String descontoAfiliados){
     	this.tipoEntradaFondo=tipoEntradaFondo;
     	this.tipoGeneroFondo=tipoGeneroFondo;
     	this.titulo=titulo;
@@ -93,7 +111,11 @@ public class EntradaFondo extends UnionModel {
         this.nExemplaresLectura=nExemplaresLectura;
         this.nExemplaresPrestados=nExemplaresPrestados;
         this.nExemplaresPrestamo=nExemplaresPrestamo;
-        
+        this.estaEnVenda=estaEnVenda;
+        this.nExemplaresEnVenda=nExemplaresEnVenda;
+        this.nExemplaresVendidos=nExemplaresVendidos;   
+        this.importe=importe;
+        this.descontoAfiliados=descontoAfiliados;        
     }
 
     
@@ -107,6 +129,13 @@ public class EntradaFondo extends UnionModel {
         
         return (this.ePrestable && iPrestados<iPrestamo)?true:false;
     }
+    
+    public boolean estaDisponibleParaVenda(){
+        int iVendidos=Integer.parseInt(getnExemplaresVendidos());
+        int iAVenda=Integer.parseInt(nExemplaresEnVenda);
+        
+        return (this.estaEnVenda && iVendidos<iAVenda)?true:false;
+    }    
     
     public boolean estaDisponibleParaLectura(){
         int iExemplaresLectura=Integer.parseInt(this.nExemplaresLectura);        
@@ -140,5 +169,28 @@ public class EntradaFondo extends UnionModel {
         int iExemplaresParaPrestar=Integer.parseInt(this.nExemplaresPrestamo);
         int res=iExemplaresParaPrestar-iExemplaresPrestados;
         return Integer.toString(res);
+    }
+    
+    public  String exemplaresDisponibleVenda() {
+        int iExemplaresEnVenta=Integer.parseInt(this.nExemplaresEnVenda);
+        int iExemplaresVendidos=Integer.parseInt(this.nExemplaresVendidos);
+        int res=iExemplaresEnVenta-iExemplaresVendidos;
+        return Integer.toString(res);
     }    
+
+    /**
+     * @return the nExemplaresVendidos
+     */
+    public String getnExemplaresVendidos() {
+        return nExemplaresVendidos;
+    }
+
+    /**
+     * @param nExemplaresVendidos the nExemplaresVendidos to set
+     */
+    public void setnExemplaresVendidos(String nExemplaresVendidos) {
+        this.nExemplaresVendidos = nExemplaresVendidos;
+    }
+    
+
 }

@@ -485,3 +485,531 @@ select entradafon0_.id as id2615_, entradafon0_.organismo_id as organismo13_2615
 	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
 	at java.lang.Thread.run(Thread.java:662)
+11-05 09:38:57 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Columna "ID_AFILIADO" no encontrada
+Column "ID_AFILIADO" not found; SQL statement:
+select * from prestamofondo  where id_afiliado=1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.expression.Comparison.optimize(Comparison.java:159)
+	at org.h2.command.dml.Select.prepare(Select.java:802)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 09:50:02 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Error de Sintaxis en sentencia SQL "SELECT * CADUCADAS[*] FROM PRESTAMOFONDO  WHERE AFILIADO_ID =1 AND DATADEVOLUCION  IS NULL "
+Syntax error in SQL statement "SELECT * CADUCADAS[*] FROM PRESTAMOFONDO  WHERE AFILIADO_ID =1 AND DATADEVOLUCION  IS NULL "; SQL statement:
+select * caducadas from prestamofondo  where afiliado_id =1 and datadevolucion  is null [42000-166]
+11-05 10:14:47 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Error de Sintaxis en sentencia SQL "SELECT * NUMEROPRESTAMOSACTIVOS[*] FROM PRESTAMOFONDO  WHERE AFILIADO_ID =1 AND DATADEVOLUCION  IS NULL "
+Syntax error in SQL statement "SELECT * NUMEROPRESTAMOSACTIVOS[*] FROM PRESTAMOFONDO  WHERE AFILIADO_ID =1 AND DATADEVOLUCION  IS NULL "; SQL statement:
+select * numeroPrestamosActivos from prestamofondo  where afiliado_id =1 and datadevolucion  is null [42000-166]
+11-05 10:17:47 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Columna "PF.AFILIADO_ID" no encontrada
+Column "PF.AFILIADO_ID" not found; SQL statement:
+select * from prestamofondo fp
+inner join entradafondo ef on (fp.entradafondo_id=ef.id)
+where pf.afiliado_id =1 and pf.datadevolucion  is null
+and ef.id=1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.expression.Comparison.optimize(Comparison.java:159)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:126)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:126)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:126)
+	at org.h2.command.dml.Select.prepare(Select.java:802)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 10:18:08 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Columna "FP.ENTRADAFONDO_ID" no encontrada
+Column "FP.ENTRADAFONDO_ID" not found; SQL statement:
+select * from prestamofondo pf
+inner join entradafondo ef on (fp.entradafondo_id=ef.id)
+where pf.afiliado_id =1 and pf.datadevolucion  is null
+and ef.id=1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.expression.Comparison.optimize(Comparison.java:159)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:127)
+	at org.h2.command.dml.Select.prepare(Select.java:802)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 10:18:40 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Columna "PF" no encontrada
+Column "PF" not found; SQL statement:
+select pf from prestamofondo pf
+inner join entradafondo ef on (pf.entradafondo_id=ef.id)
+where pf.afiliado_id =1 and pf.datadevolucion  is null
+and ef.id=1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.command.dml.Select.prepare(Select.java:799)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 10:23:55 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Columna "PF" no encontrada
+Column "PF" not found; SQL statement:
+select pf from prestamofondo pf
+inner join entradafondo ef on (pf.entradafondo_id=ef.id)
+where pf.afiliado_id =1 and pf.datadevolucion  is null
+and ef.id=1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.command.dml.Select.prepare(Select.java:799)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 10:23:56 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Columna "PF" no encontrada
+Column "PF" not found; SQL statement:
+select pf from prestamofondo pf
+inner join entradafondo ef on (pf.entradafondo_id=ef.id)
+inner join fondo f on (f.id=ef.fondo_id)
+where pf.afiliado_id =1 and sysdate> pf.datadevolucion+f.
+and ef.id=1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.command.dml.Select.prepare(Select.java:799)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 10:24:25 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Columna "PF" no encontrada
+Column "PF" not found; SQL statement:
+select pf from prestamofondo pf
+inner join entradafondo ef on (pf.entradafondo_id=ef.id)
+where pf.afiliado_id =1 and pf.datadevolucion  is null
+and ef.id=1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.command.dml.Select.prepare(Select.java:799)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 10:24:25 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Columna "PF" no encontrada
+Column "PF" not found; SQL statement:
+select pf from prestamofondo pf
+inner join entradafondo ef on (pf.entradafondo_id=ef.id)
+inner join fondo f on (f.id=ef.fondo_id)
+where pf.afiliado_id =1 and sysdate> pf.datadevolucion+f.periododiasprestamo
+and ef.id=1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.command.dml.Select.prepare(Select.java:799)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 10:24:53 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Columna "PF" no encontrada
+Column "PF" not found; SQL statement:
+select pf from prestamofondo pf
+inner join entradafondo ef on (pf.entradafondo_id=ef.id)
+where pf.afiliado_id =1 and pf.datadevolucion  is null
+and ef.id=1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.command.dml.Select.prepare(Select.java:799)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 10:24:53 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Columna "PF" no encontrada
+Column "PF" not found; SQL statement:
+select pf from prestamofondo pf
+inner join entradafondo ef on (pf.entradafondo_id=ef.id)
+inner join fondo f on (f.id=ef.fondo_id)
+where pf.afiliado_id =1 and sysdate> pf.datadevolucion+f.periododiasprestamo
+and ef.id=1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.command.dml.Select.prepare(Select.java:799)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 10:26:25 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Columna "PF" no encontrada
+Column "PF" not found; SQL statement:
+select pf from prestamofondo pf
+inner join entradafondo ef on (pf.entradafondo_id=ef.id)
+where pf.afiliado_id =1 and pf.datadevolucion  is null
+and ef.id=1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.command.dml.Select.prepare(Select.java:799)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 10:26:25 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Columna "PF" no encontrada
+Column "PF" not found; SQL statement:
+select pf from prestamofondo pf
+inner join entradafondo ef on (pf.entradafondo_id=ef.id)
+inner join fondo f on (f.id=ef.fondo_id)
+where pf.afiliado_id =1 and sysdate> pf.datadevolucion+f.periododiasprestamo
+and ef.id=1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.command.dml.Select.prepare(Select.java:799)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 10:27:15 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Caracteristica no soportada: "VARCHAR + TIMESTAMP"
+Feature not supported: "VARCHAR + TIMESTAMP"; SQL statement:
+select * from prestamofondo pf
+inner join entradafondo ef on (pf.entradafondo_id=ef.id)
+inner join fondo f on (f.id=ef.fondo_id)
+where pf.afiliado_id =1 and sysdate> pf.datadevolucion+f.periododiasprestamo
+and ef.id=1 [50100-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.message.DbException.getUnsupportedException(DbException.java:204)
+	at org.h2.expression.Operation.optimize(Operation.java:302)
+	at org.h2.expression.Comparison.optimize(Comparison.java:161)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:127)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:126)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:126)
+	at org.h2.command.dml.Select.prepare(Select.java:802)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 10:30:48 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Error de Sintaxis en sentencia SQL "SELECT * FROM PRESTAMOFONDO PF
+INNER JOIN ENTRADAFONDO EF ON (PF.ENTRADAFONDO_ID=EF.ID)
+INNER JOIN FONDO F ON (F.ID=EF.FONDO_ID)
+WHERE PF.AFILIADO_ID =1 AND SYSDATE> PF.DATADEVOLUCION+ CAST(F.PERIODODIASPRESTAMO,[*]INTEGER)
+AND EF.ID=1 "; se esperaba "., [, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, AS"
+Syntax error in SQL statement "SELECT * FROM PRESTAMOFONDO PF
+INNER JOIN ENTRADAFONDO EF ON (PF.ENTRADAFONDO_ID=EF.ID)
+INNER JOIN FONDO F ON (F.ID=EF.FONDO_ID)
+WHERE PF.AFILIADO_ID =1 AND SYSDATE> PF.DATADEVOLUCION+ CAST(F.PERIODODIASPRESTAMO,[*]INTEGER)
+AND EF.ID=1 "; expected "., [, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, AS"; SQL statement:
+select * from prestamofondo pf
+inner join entradafondo ef on (pf.entradafondo_id=ef.id)
+inner join fondo f on (f.id=ef.fondo_id)
+where pf.afiliado_id =1 and sysdate> pf.datadevolucion+ cast(f.periododiasprestamo,INTEGER)
+and ef.id=1 [42001-166]
+11-05 11:25:08 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Error de Sintaxis en sentencia SQL "SELECT PF FROM PRESTAMOFONDO PF INNER JOIN ENTRADAFONDO EF ON (PF.ENTRADAFONDO_ID=EF.ID) WHERE PF.AFILIADO_ID = :[*]AFILIADOPEPE AND PF.DATADEVOLUCION IS NULL AND EF.ID= :FONDOID "; se esperaba "ALL, ANY, SOME, SELECT, FROM"
+Syntax error in SQL statement "SELECT PF FROM PRESTAMOFONDO PF INNER JOIN ENTRADAFONDO EF ON (PF.ENTRADAFONDO_ID=EF.ID) WHERE PF.AFILIADO_ID = :[*]AFILIADOPEPE AND PF.DATADEVOLUCION IS NULL AND EF.ID= :FONDOID "; expected "ALL, ANY, SOME, SELECT, FROM"; SQL statement:
+select pf from prestamofondo pf inner join entradafondo ef on (pf.entradafondo_id=ef.id) where pf.afiliado_id = :afiliadoPepe and pf.datadevolucion is null and ef.id= :fondoId [42001-166]
+11-05 11:25:25 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Columna "PF" no encontrada
+Column "PF" not found; SQL statement:
+select pf from prestamofondo pf inner join entradafondo ef on (pf.entradafondo_id=ef.id) where pf.afiliado_id = 1 and pf.datadevolucion is null and ef.id= 1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.command.dml.Select.prepare(Select.java:799)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 12:22:33 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: Columna "FP" no encontrada
+Column "FP" not found; SQL statement:
+select fp from prestamofondo pf inner join entradafondo ef on (pf.entradafondo_id=ef.id) where pf.afiliado_id = 1 and pf.datadevolucion is null and ef.id= 1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.command.dml.Select.prepare(Select.java:799)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:164)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:152)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1311)
+	at org.h2.server.web.WebApp.query(WebApp.java:1001)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:964)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:967)
+	at org.h2.server.web.WebThread.process(WebThread.java:166)
+	at org.h2.server.web.WebThread.run(WebThread.java:93)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 12:24:16 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Caracteristica no soportada: "VARCHAR + TIMESTAMP"
+Feature not supported: "VARCHAR + TIMESTAMP"; SQL statement:
+select prestamofo0_.id as id501_0_, entradafon1_.id as id535_1_, fondo2_.id as id490_2_, prestamofo0_.organismo_id as organismo4_501_0_, prestamofo0_.afiliado_id as afiliado5_501_0_, prestamofo0_.dataDevolucion as dataDevo2_501_0_, prestamofo0_.dataPrestamo as dataPres3_501_0_, prestamofo0_.entradaFondo_id as entradaF6_501_0_, entradafon1_.organismo_id as organismo13_535_1_, entradafon1_.anoEdicion as anoEdicion535_1_, entradafon1_.autor as autor535_1_, entradafon1_.caratula as caratula535_1_, entradafon1_.descricion as descricion535_1_, entradafon1_.ePrestable as ePrestable535_1_, entradafon1_.fondo_id as fondo14_535_1_, entradafon1_.nExemplares as nExempla7_535_1_, entradafon1_.nExemplaresLectura as nExempla8_535_1_, entradafon1_.nExemplaresPrestados as nExempla9_535_1_, entradafon1_.nExemplaresPrestamo as nExempl10_535_1_, entradafon1_.sinatura as sinatura535_1_, entradafon1_.tipoEntradaFondo_id as tipoEnt15_535_1_, entradafon1_.tipoGeneroFondo_id as tipoGen16_535_1_, entradafon1_.titulo as titulo535_1_, fondo2_.organismo_id as organismo7_490_2_, fondo2_.descricion as descricion490_2_, fondo2_.ePublico as ePublico490_2_, fondo2_.nome as nome490_2_, fondo2_.periodoDiasPrestamo as periodoD5_490_2_, fondo2_.umaxPrestamo as umaxPres6_490_2_ from PrestamoFondo prestamofo0_ inner join EntradaFondo entradafon1_ on prestamofo0_.entradaFondo_id=entradafon1_.id inner join Fondo fondo2_ on entradafon1_.fondo_id=fondo2_.id where prestamofo0_.afiliado_id=? and (prestamofo0_.dataDevolucion is null) and sysdate>prestamofo0_.dataPrestamo+fondo2_.periodoDiasPrestamo+1 [50100-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.message.DbException.getUnsupportedException(DbException.java:204)
+	at org.h2.expression.Operation.optimize(Operation.java:302)
+	at org.h2.expression.Operation.optimize(Operation.java:177)
+	at org.h2.expression.Comparison.optimize(Comparison.java:161)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:127)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:126)
+	at org.h2.command.dml.Select.prepare(Select.java:802)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:71)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:266)
+	at com.mchange.v2.c3p0.impl.NewProxyConnection.prepareStatement(NewProxyConnection.java:213)
+	at org.hibernate.jdbc.AbstractBatcher.getPreparedStatement(AbstractBatcher.java:534)
+	at org.hibernate.jdbc.AbstractBatcher.getPreparedStatement(AbstractBatcher.java:452)
+	at org.hibernate.jdbc.AbstractBatcher.prepareQueryStatement(AbstractBatcher.java:161)
+	at org.hibernate.loader.Loader.prepareQueryStatement(Loader.java:1700)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:801)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:274)
+	at org.hibernate.loader.Loader.doList(Loader.java:2542)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2276)
+	at org.hibernate.loader.Loader.list(Loader.java:2271)
+	at org.hibernate.loader.hql.QueryLoader.list(QueryLoader.java:459)
+	at org.hibernate.hql.ast.QueryTranslatorImpl.list(QueryTranslatorImpl.java:365)
+	at org.hibernate.engine.query.HQLQueryPlan.performList(HQLQueryPlan.java:196)
+	at org.hibernate.impl.SessionImpl.list(SessionImpl.java:1268)
+	at org.hibernate.impl.QueryImpl.list(QueryImpl.java:102)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:246)
+	at play.db.jpa.GenericModel$JPAQuery.fetch(GenericModel.java:378)
+	at models.PrestamoFondo.getPrestamosVencidosPorAfiliado(PrestamoFondo.java:75)
+	at controllers.PrestamoFondos.validaCondicionsPrestamo(PrestamoFondos.java:128)
+	at controllers.PrestamoFondos.facerPrestamo(PrestamoFondos.java:24)
+	at sun.reflect.GeneratedMethodAccessor397.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at play.mvc.ActionInvoker.invokeWithContinuation(ActionInvoker.java:557)
+	at play.mvc.ActionInvoker.invoke(ActionInvoker.java:508)
+	at play.mvc.ActionInvoker.invokeControllerMethod(ActionInvoker.java:484)
+	at play.mvc.ActionInvoker.invokeControllerMethod(ActionInvoker.java:479)
+	at play.mvc.ActionInvoker.invoke(ActionInvoker.java:161)
+	at play.server.PlayHandler$NettyInvocation.execute(PlayHandler.java:251)
+	at play.Invoker$Invocation.run(Invoker.java:278)
+	at play.server.PlayHandler$NettyInvocation.run(PlayHandler.java:229)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:98)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:206)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:662)
+11-05 12:24:50 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Columna "INTEGER.PARSEINT" no encontrada
+Column "INTEGER.PARSEINT" not found; SQL statement:
+select prestamofo0_.id as id501_0_, entradafon1_.id as id535_1_, fondo2_.id as id490_2_, prestamofo0_.organismo_id as organismo4_501_0_, prestamofo0_.afiliado_id as afiliado5_501_0_, prestamofo0_.dataDevolucion as dataDevo2_501_0_, prestamofo0_.dataPrestamo as dataPres3_501_0_, prestamofo0_.entradaFondo_id as entradaF6_501_0_, entradafon1_.organismo_id as organismo13_535_1_, entradafon1_.anoEdicion as anoEdicion535_1_, entradafon1_.autor as autor535_1_, entradafon1_.caratula as caratula535_1_, entradafon1_.descricion as descricion535_1_, entradafon1_.ePrestable as ePrestable535_1_, entradafon1_.fondo_id as fondo14_535_1_, entradafon1_.nExemplares as nExempla7_535_1_, entradafon1_.nExemplaresLectura as nExempla8_535_1_, entradafon1_.nExemplaresPrestados as nExempla9_535_1_, entradafon1_.nExemplaresPrestamo as nExempl10_535_1_, entradafon1_.sinatura as sinatura535_1_, entradafon1_.tipoEntradaFondo_id as tipoEnt15_535_1_, entradafon1_.tipoGeneroFondo_id as tipoGen16_535_1_, entradafon1_.titulo as titulo535_1_, fondo2_.organismo_id as organismo7_490_2_, fondo2_.descricion as descricion490_2_, fondo2_.ePublico as ePublico490_2_, fondo2_.nome as nome490_2_, fondo2_.periodoDiasPrestamo as periodoD5_490_2_, fondo2_.umaxPrestamo as umaxPres6_490_2_ from PrestamoFondo prestamofo0_ inner join EntradaFondo entradafon1_ on prestamofo0_.entradaFondo_id=entradafon1_.id inner join Fondo fondo2_ on entradafon1_.fondo_id=fondo2_.id where prestamofo0_.afiliado_id=? and (prestamofo0_.dataDevolucion is null) and sysdate>prestamofo0_.dataPrestamo+Integer.parseInt(fondo2_.periodoDiasPrestamo)+1 [42122-166]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:138)
+	at org.h2.expression.Operation.optimize(Operation.java:197)
+	at org.h2.expression.Comparison.optimize(Comparison.java:161)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:127)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:126)
+	at org.h2.command.dml.Select.prepare(Select.java:802)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1111)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:71)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:266)
+	at com.mchange.v2.c3p0.impl.NewProxyConnection.prepareStatement(NewProxyConnection.java:213)
+	at org.hibernate.jdbc.AbstractBatcher.getPreparedStatement(AbstractBatcher.java:534)
+	at org.hibernate.jdbc.AbstractBatcher.getPreparedStatement(AbstractBatcher.java:452)
+	at org.hibernate.jdbc.AbstractBatcher.prepareQueryStatement(AbstractBatcher.java:161)
+	at org.hibernate.loader.Loader.prepareQueryStatement(Loader.java:1700)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:801)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:274)
+	at org.hibernate.loader.Loader.doList(Loader.java:2542)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2276)
+	at org.hibernate.loader.Loader.list(Loader.java:2271)
+	at org.hibernate.loader.hql.QueryLoader.list(QueryLoader.java:459)
+	at org.hibernate.hql.ast.QueryTranslatorImpl.list(QueryTranslatorImpl.java:365)
+	at org.hibernate.engine.query.HQLQueryPlan.performList(HQLQueryPlan.java:196)
+	at org.hibernate.impl.SessionImpl.list(SessionImpl.java:1268)
+	at org.hibernate.impl.QueryImpl.list(QueryImpl.java:102)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:246)
+	at play.db.jpa.GenericModel$JPAQuery.fetch(GenericModel.java:378)
+	at models.PrestamoFondo.getPrestamosVencidosPorAfiliado(PrestamoFondo.java:75)
+	at controllers.PrestamoFondos.validaCondicionsPrestamo(PrestamoFondos.java:128)
+	at controllers.PrestamoFondos.facerPrestamo(PrestamoFondos.java:24)
+	at sun.reflect.GeneratedMethodAccessor397.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at play.mvc.ActionInvoker.invokeWithContinuation(ActionInvoker.java:557)
+	at play.mvc.ActionInvoker.invoke(ActionInvoker.java:508)
+	at play.mvc.ActionInvoker.invokeControllerMethod(ActionInvoker.java:484)
+	at play.mvc.ActionInvoker.invokeControllerMethod(ActionInvoker.java:479)
+	at play.mvc.ActionInvoker.invoke(ActionInvoker.java:161)
+	at play.server.PlayHandler$NettyInvocation.execute(PlayHandler.java:251)
+	at play.Invoker$Invocation.run(Invoker.java:278)
+	at play.server.PlayHandler$NettyInvocation.run(PlayHandler.java:229)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:98)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:206)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:662)

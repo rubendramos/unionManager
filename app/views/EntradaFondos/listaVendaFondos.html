@@ -1,0 +1,51 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.list.title', type.name) /}
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
+
+    <div id="crudListSearch">
+        #{crud.searchBusquedaEntradasFondos  /}        
+    </div>
+
+    <div id="crudListPagination">
+        #{crud.pagination /}
+    </div>    
+  
+    <div id="crudListTable">
+        #{crud.tableBusquedaEntradasFondos fields:['fondo','tipoEntradaFondo','tipoGeneroFondo','titulo','autor','vendaFondo.disponibleVenda','importe','descontoAfiliados','vendaFondo.FacerVenda']}
+                   
+        #{crud.custom 'vendaFondo.disponibleVenda'}
+        #{if (object.estaEnVenda)}       
+
+        #{if (object.estaDisponibleParaVenda())}
+        <img src="/public/images/line/transparentInputImage.png" id="checkSI" title="&{'prestamoFondo.tituloDisponiblePrestamo',object.exemplaresDisponiblePrestamo()}"/> 
+        <span id='subindice'>(${object.exemplaresDisponibleVenda()})</span>        
+        #{/if}
+        
+        #{else}
+        <img src="/public/images/line/transparentInputImage.png" id="checkNO" title="&{'prestamoFondo.nonDisponiblePrestamo'}"/>       
+        #{/else}        
+        #{/if}                
+        #{/crud.custom}  
+        
+
+        #{crud.custom 'vendaFondo.FacerVenda'}  
+        #{if (object.estaDisponibleParaVenda())}
+        <input src="/public/images/line/transparentInputImage.png" id="facerPrestamo" type="image" title="&{'prestamoFondo.tituloFacerPrestamo',object}"  onclick="javascript:accionSubmitSearching('seleccionaAfiliado',${page},${object._key()})" value="" />          
+        #{/if}
+        #{/crud.custom}            
+
+        #{/crud.tableBusquedaEntradasFondos}
+    </div>
+
+    <div id="crudListPagination">
+        #{crud.pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">&{'crud.add', type.modelName}</a>
+    </p>
+
+</div>

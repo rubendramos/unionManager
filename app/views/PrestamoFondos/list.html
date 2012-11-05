@@ -18,7 +18,7 @@
                 <input type="hidden" name="from" value="true">
 
     <div id="crudListTable">
-        #{crud.table fields:['afiliado','entradaFondo','dataPrestamo','dataDevolucion','prestamo.facerDevolucion']}
+        #{crud.table fields:['afiliado','entradaFondo','dataPrestamo','dataDevolucion','vencemento','prestamo.facerDevolucion']}
         #{crud.custom 'dataPrestamo'}
         #{if (object.dataPrestamo!=null)}
         ${object.dataPrestamo.format()}
@@ -29,6 +29,19 @@
         ${object.dataDevolucion.format()}
         #{/if}
         #{/crud.custom}
+        
+        #{crud.custom 'vencemento'}
+        #{if (object.dataPrestamo!=null)}
+        ${object.getDataVencemento().format()}        
+        #{/if}
+        #{if (object.dataDevolucion==null)}
+        
+        #{if (object.estaPrestamoVencido())}
+        <img src="/public/images/line/transparentInputImage.png" class="prestamoFondoVencido" title="&{'prestamo.estaVencido'}"/>
+        #{/if}
+        #{/if}
+        #{/crud.custom}
+        
         #{crud.custom 'prestamo.facerDevolucion'}
         #{if (object.dataDevolucion==null)}
         <input src="/public/images/line/transparentInputImage.png" id="facerDevolucionPrestamo"   type="image" title="&{'prestamo.facerDevolucion'} "  onclick="javascript:confirmaAccionSubmitSearching('&{'prestamo.confirmaDevolucion',object}','facerDevolucionPrestamo',${page},${object._key()})" value="" /> 
