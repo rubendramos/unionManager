@@ -18,35 +18,31 @@
                 <input type="hidden" name="from" value="true">
 
     <div id="crudListTable">
-        #{crud.table fields:['afiliado','entradaFondo','dataPrestamo','dataDevolucion','vencemento','prestamo.facerDevolucion']}
-        #{crud.custom 'dataPrestamo'}
-        #{if (object.dataPrestamo!=null)}
-        ${object.dataPrestamo.format()}
-        #{/if}
-        #{/crud.custom}
-        #{crud.custom 'dataDevolucion'}
-        #{if (object.dataDevolucion!=null)}
-        ${object.dataDevolucion.format()}
+        #{crud.table fields:['entradaFondo','afiliado','dataVenda','nUnidades','dataDevolucionVenda','importevenda','venda.facerDevolucion']}
+       
+        #{crud.custom 'dataVenda'}
+        #{if (object.dataVenda!=null)}
+        ${object.dataVenda.format()}
         #{/if}
         #{/crud.custom}
         
-        #{crud.custom 'vencemento'}
-        #{if (object.dataPrestamo!=null)}
-        ${object.getDataVencemento().format()}        
+        #{crud.custom 'dataDevolucionVenda'}
+        #{if (object.dataDevolucionVenda!=null)}
+        ${object.dataDevolucionVenda.format()}
         #{/if}
-        #{if (object.dataDevolucion==null)}
+        #{/crud.custom}        
         
-        #{if (object.estaPrestamoVencido())}
-        <img src="/public/images/line/transparentInputImage.png" class="prestamoFondoVencido" title="&{'prestamo.estaVencido'}"/>
-        #{/if}
+        #{crud.custom 'importevenda'}
+        #{if (object.importeVenda!=null)}
+        ${object.importeVenda.formatCurrency("EUR")}        
         #{/if}
         #{/crud.custom}
         
-        #{crud.custom 'prestamo.facerDevolucion'}
-        #{if (object.dataDevolucion==null)}
-        <input src="/public/images/line/transparentInputImage.png" id="facerDevolucionPrestamo"   type="image" title="&{'prestamo.facerDevolucion'} "  onclick="javascript:confirmaAccionSubmitSearching('&{'prestamo.confirmaDevolucion',object}','facerDevolucionPrestamo',${page},${object._key()})" value="" /> 
+        #{crud.custom 'venda.facerDevolucion'}
+        #{if (object.dataDevolucionVenda==null)}
+        <input src="/public/images/line/transparentInputImage.png" id="facerDevolucionPrestamo"   type="image" title="&{'venda.facerDevolucion'} "  onclick="javascript:confirmaAccionSubmitSearching('&{'venda.confirmaDevolucion',object}','facerDevolucionVenda',${page},${object._key()})" value="" /> 
+        #{/if}
 
-        #{/if}
         #{/crud.custom}
         #{/crud.table}
     </div>

@@ -127,5 +127,15 @@ public class EntradaFondos extends CRUD {
        
                                         
         PrestamoFondos.seleccionaAfiliado(id, page, search,order,orderBy,fondoFiltro,generoFiltro,tipoEntradaFiltro);
-    }    
+    }   
+    public static void seleccionaAfiliadoEUnidades(String id,String page,String where,String search,String order,String orderBy) throws Exception{
+        String fondoFiltro=params.get("object.fondo.id");
+        String generoFiltro=params.get("object.tipoGeneroFondo.id");
+        String tipoEntradaFiltro=params.get("object.tipoEntradaFondo.id");
+        //String order=params.get("order");
+        //String orderBy=params.get("orderBy");
+       
+                                        
+        VendaFondos.seleccionaAfiliadoEUnidades(id, page, search,order,orderBy,fondoFiltro,generoFiltro,tipoEntradaFiltro);
+    }     
 }

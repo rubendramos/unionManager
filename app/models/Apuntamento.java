@@ -85,6 +85,38 @@ public class Apuntamento extends UnionSecureModel {
         return find("byDescricionAndOrganismo",descricion,organismo).first();           
     }  
      
+     public static Apuntamento createApuntamentoVendaFondos(User u,VendaFondo vendaFondo,Organismo organismo){
+        String descricion="";
+        TipoApuntamento ta=null;
+        
+         if (vendaFondo.dataDevolucionVenda==null || "".equals(vendaFondo.dataDevolucionVenda)){
+           descricion=play.i18n.Messages.get("apuntamento.apuntamentoVendaFondos",vendaFondo.entradaFondo.toString());               
+           ta=TipoApuntamento.findById(Long.parseLong("1"));
+         }else{
+           descricion=play.i18n.Messages.get("apuntamento.apuntamentoDevolucionVendaFondos",vendaFondo.entradaFondo.toString());                           
+           ta=TipoApuntamento.findById(Long.parseLong("2"));
+        }        
+        TipoConcepto tc=TipoConcepto.findById(Long.parseLong("6"));
+        TipoEstado te=TipoEstado.findById(Long.parseLong("1"));
+       
+        Apuntamento ap=new Apuntamento(ta,tc,descricion,vendaFondo.importeVenda,null, Tools.getCurrentDate(), u);
+        ap.setEstado(te);
+        ap.setOrganismo(organismo);
+        ap._save();    
+        return ap;
+    }  
+     
+     public static Apuntamento getApuntamentoVendaFondos(Afiliado af,Organismo organismo,VendaFondo vendaFondo){
+         String descricion="";
+         if (vendaFondo.dataDevolucionVenda==null || "".equals(vendaFondo.dataDevolucionVenda)){
+           descricion=play.i18n.Messages.get("apuntamento.apuntamentoVendaFondos",vendaFondo.entradaFondo.toString());                        
+         }else{
+           descricion=play.i18n.Messages.get("apuntamento.apuntamentoDevolucionVendaFondos",vendaFondo.entradaFondo.toString());                                    
+        }    
+        return find("byDescricionAndOrganismo",descricion,organismo).first();           
+    }       
+     
+     
    public String getFormatoMoeda(){
        return Tools.getCurrency(this.importe);
        

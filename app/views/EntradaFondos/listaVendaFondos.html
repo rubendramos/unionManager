@@ -20,12 +20,12 @@
         #{if (object.estaEnVenda)}       
 
         #{if (object.estaDisponibleParaVenda())}
-        <img src="/public/images/line/transparentInputImage.png" id="checkSI" title="&{'prestamoFondo.tituloDisponiblePrestamo',object.exemplaresDisponiblePrestamo()}"/> 
+        <img src="/public/images/line/transparentInputImage.png" id="checkSI" title="&{'prestamoFondo.tituloDisponiblePrestamo',object.exemplaresDisponibleVenda()}"/> 
         <span id='subindice'>(${object.exemplaresDisponibleVenda()})</span>        
         #{/if}
         
         #{else}
-        <img src="/public/images/line/transparentInputImage.png" id="checkNO" title="&{'prestamoFondo.nonDisponiblePrestamo'}"/>       
+        <img src="/public/images/line/transparentInputImage.png" id="checkNO" title="&{'vebdaFondo.agotadaVenda'}"/>       
         #{/else}        
         #{/if}                
         #{/crud.custom}  
@@ -33,7 +33,7 @@
 
         #{crud.custom 'vendaFondo.FacerVenda'}  
         #{if (object.estaDisponibleParaVenda())}
-        <input src="/public/images/line/transparentInputImage.png" id="facerPrestamo" type="image" title="&{'prestamoFondo.tituloFacerPrestamo',object}"  onclick="javascript:accionSubmitSearching('seleccionaAfiliado',${page},${object._key()})" value="" />          
+        <input src="/public/images/line/transparentInputImage.png" id="facerPrestamo" type="image" title="&{'vendaFondo.tituloFacerVenda',object}"  onclick="javascript:accionSubmitSearching('seleccionaAfiliadoEUnidades',${page},${object._key()})" value="" />          
         #{/if}
         #{/crud.custom}            
 

@@ -87,4 +87,29 @@ public class FollaConta extends UnionSecureModel {
         return fc;
     }    
     
+     public static FollaConta createFollaContasPropaganda(Fondo f,Organismo organismo){
+        String descricion=play.i18n.Messages.get("follaContas.follaContasFondo", f.descricion);                       
+        LibroConta lc=LibroConta.getLibroContasPermanencia(organismo);
+        Set<FollaConta> follasconta=lc.follasContas;
+        FollaConta fc=new FollaConta(descricion, null, Tools.getCurrentDate(), null);
+        TipoEstado te=TipoEstado.findById(Long.parseLong("1"));
+        HashSet<Apuntamento> ap=new HashSet<Apuntamento>();
+        fc.apuntamentos=ap;
+        fc.setOrganismo(organismo);
+        fc.setEstado(te);
+        fc._save();    
+        follasconta.add(fc);
+        lc._save();
+        return fc;
+    }
+     
+    public static FollaConta getFollaContasPropaganda(Organismo organismo,Fondo f){
+        String descricion=play.i18n.Messages.get("follaContas.follaContasFondo", f.descricion);                       
+        FollaConta fc=FollaConta.find("byDescricionAndOrganismo",descricion, organismo).first();
+        if(fc==null){
+           fc= createFollaContasPropaganda(f,organismo);
+        }
+        return fc;
+    }        
+    
 }

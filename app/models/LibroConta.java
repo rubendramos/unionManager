@@ -85,6 +85,27 @@ public class LibroConta extends UnionSecureModel {
            lc= LibroConta.createLibroContasPermanencia(organismo);
         }
         return lc;
-    }         
+    }   
+       
+    private static LibroConta createLibroContasPropaganda(Organismo organismo){
+        String descricion=play.i18n.Messages.get("libroContas.libroAutomaticoPraganda");               
+        LibroConta lc=new LibroConta(descricion, null, Tools.getCurrentDate(), null);
+        TipoEstado te=TipoEstado.findById(Long.parseLong("1"));
+        HashSet<FollaConta> fc=new HashSet<FollaConta>();
+        lc.follasContas=fc;
+        lc.setOrganismo(organismo);
+        lc.setEstado(te);
+        lc._save(); 
+        return lc;
+    }
+        
+  public static LibroConta getLibroContasPropaganda(Organismo organismo){
+        String descricion=play.i18n.Messages.get("libroContas.libroAutomaticoPropaganda");         
+        LibroConta lc=LibroConta.find("byDescricionAndOrganismo",descricion, organismo).first();
+        if(lc==null){
+           lc= LibroConta.createLibroContasPropaganda(organismo);
+        }
+        return lc;        
+    }       
 	
 }
