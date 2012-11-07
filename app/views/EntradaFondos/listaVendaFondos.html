@@ -14,8 +14,8 @@
     </div>    
   
     <div id="crudListTable">
-        #{crud.tableBusquedaEntradasFondos fields:['fondo','tipoEntradaFondo','tipoGeneroFondo','titulo','autor','vendaFondo.disponibleVenda','importe','descontoAfiliados','vendaFondo.FacerVenda']}
-                   
+        #{crud.tableBusquedaEntradasFondos fields:['fondo','tipoEntradaFondo','tipoGeneroFondo','titulo','autor','vendaFondo.disponibleVenda','vendidos','descontoAfiliados','importe','vendaFondo.FacerVenda']}
+                
         #{crud.custom 'vendaFondo.disponibleVenda'}
         #{if (object.estaEnVenda)}       
 
@@ -29,7 +29,23 @@
         #{/else}        
         #{/if}                
         #{/crud.custom}  
+        #{crud.custom 'vendidos'}
+        #{if (object!=null)}
+        ${object.getnExemplaresVendidos()} 
+        #{/if}
+        #{/crud.custom}
         
+        #{crud.custom 'descontoAfiliados'}
+        #{if (object.descontoAfiliados!=null)}
+        ${object.descontoAfiliados}%     
+        #{/if}
+        #{/crud.custom}
+        
+        #{crud.custom 'importe'}
+        #{if (object.importe!=null)}
+        ${object.importe.formatCurrency('EUR')}     
+        #{/if}
+        #{/crud.custom}
 
         #{crud.custom 'vendaFondo.FacerVenda'}  
         #{if (object.estaDisponibleParaVenda())}

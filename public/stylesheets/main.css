@@ -1027,6 +1027,37 @@ tr.odd {
     vertical-align: sub;
 }
 
+
+#facerVenda {
+    width:20px; 
+    height:20px; 
+    border:0;
+    text-align: right;
+    background: transparent url(/public/images/facerPrestamo.png) no-repeat center;
+    border-style: none;
+    vertical-align: sub;
+}
+#facerDevolucionVenda {
+    width:20px; 
+    height:20px; 
+    border:0;
+    text-align: right;
+    background: transparent url(/public/images/facerDevolucion.png) no-repeat center;
+    border-style: none;
+    vertical-align: sub;
+}
+
+#nonCaratula {
+    width:100px; 
+    height:80px; 
+    border:0;
+    float: left;
+    text-align: right;
+    background: transparent url(/public/images/nonCaratula.png) no-repeat center;
+    border-style: none;
+    vertical-align: sub;
+}
+
 #video {
     width:20px; 
     height:20px; 
@@ -1040,6 +1071,11 @@ tr.odd {
 #resaltaTextoRed{    
     font-weight: bold;
     color: red;    
+}
+
+#resaltaTextoNegro{    
+    font-weight: bold;
+    color: black;    
 }
 
 #superindice 

@@ -31,8 +31,6 @@ _body.setProperty('fieldsHandler', fieldsHandler);
                 </a>
             </th>
             %{ } }%
-            <th class="accion">
-                </th>
         </tr>
     </thead>
     %{ _caller.objects.eachWithIndex() { object, k -> 
@@ -91,18 +89,6 @@ _body.setProperty('fieldsHandler', fieldsHandler);
 
         %{ } }%
         
-        <td class="accion">
-        %{ if(valueEstado!=null){ }%
-          %{ if(valueEstado.id==1){ }%
-            %{ } else { }%
-            #{secure.check 'secretariaXeral'}  
-            #{/secure.check}
-            %{ } }%
-           %{ } else { }%
-
-            %{ } }%
-            
-        </td>
     </tr>
     %{ } }%
 </table>

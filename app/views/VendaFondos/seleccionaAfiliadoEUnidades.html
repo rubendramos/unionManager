@@ -20,44 +20,66 @@
 
         <div> 
 
+            </br>            
+            <div>   
+                <input src="/public/images/line/transparentInputImage.png" id="nonCaratula"   type="image" title="&{'venda.facerDevolucion'} "  /> 
+            </div>
+            <div >
+                <div>   
+                    <span id="resaltaTextoNegro">&{'fondo'}:</span>${ef.fondo}
+                </div>   
+                <div>   
+                    <span id="resaltaTextoNegro">&{'titulo'}:</span>${ef.titulo}
+                </div>   
+                <div>
+                    <span id="resaltaTextoNegro">&{'autor'}:</span>${ef.autor}
+                </div>   
+                <div>
+                    <span id="resaltaTextoNegro">&{'anoEdicion'}:</span>${ef.anoEdicion}
+                </div>   
+            </div>
             </br>
+            <div>
+                </br>
+                <div class="crudField crud_text">         
+                    #{crud.texto name:'importe', value:ef.importe.formatCurrency('EUR') /}  
+                    <span class="crudHelp">
+                       
+                    </span>
+                </div>
+                
+                <div class="crudField crud_text">         
+                    #{crud.texto name:'descontoAfiliados', value:ef.descontoAfiliados+'%' /}  
+                    <span class="crudHelp">
+                      
+                    </span>
+                </div>                
 
-            <div>   
-                <span id="resaltaTextoRed">&{'fondo'}:</span>${ef.fondo}
-            </div>   
-            <div>   
-                <span id="resaltaTextoRed">&{'titulo'}:</span>${ef.titulo}
-            </div>   
-            <div>
-                <span id="resaltaTextoRed">&{'autor'}:</span>${ef.autor}
-            </div>   
-            <div>
-                <span id="resaltaTextoRed">&{'anoEdicion'}:</span>${ef.anoEdicion}
-            </div>   
-            <div>
-                <span id="resaltaTextoRed">&{'importe'}:</span>${ef.importe.formatCurrency('EUR')}
-            </div>  
+                </br>
+                <div class="crudField crud_text">         
+                    #{crud.numberField name:'nUnidades' /}  
+                    <span class="crudHelp">
+                        &{ messages.get('crud.help.numeric',play.libs.I18N.getDateFormat())}
+                        &{messages.get('crud.help.required')}
+                        &{ messages.get('crud.help.maxlength', 2)}
+                    </span>
+                </div>
+
+
+
+                <div class="crudField crud_text">    
+                    <label>
+                        &{'prestamo.seleccionaAfiliado'}
+                    </label>
+                    #{select 'afiliados',name:'prestamo.seleccionaAfiliado', items:afiliados, valueProperty:'id', labelProperty:'persoa.nome', value:'afiliados', class:"", id:'select' /}
+                </div>   
+
+                </br>
+                <p class="crudButtons">
+                    <input type="submit" value="&{'vendaFondo.FacerVenda'}"> 
+                    <input type="button" onclick="javascript:accionSubmitSearching('listaEnVenda',${page},${ef.id})"" value="&{'crud.voltarABusqueda'}" />
+
+                </p>
+                #{/form}
+            </div>
         </div>
-        </br>
-               
-        <div class="crudField crud_text">         
-            #{crud.textField name:'unidades' /}        
-        </div>
-
-  
-
-        <div class="crudField crud_text">    
-                  <label>
-            &{'prestamo.seleccionaAfiliado'}
-        </label>
-            #{select 'afiliados',name:'prestamo.seleccionaAfiliado', items:afiliados, valueProperty:'id', labelProperty:'persoa.nome', value:'afiliados', class:"", id:'select' /}
-        </div>    
-        </br>
-        <p class="crudButtons">
-            <input type="submit" value="&{'vendaFondo.FacerVenda'}"> 
-            <input type="button" onclick="javascript:accionSubmitSearching('listaEnVenda',${page},${ef.id})"" value="&{'crud.voltarABusqueda'}" />
-
-        </p>
-        #{/form}
-    </div>
-</div>

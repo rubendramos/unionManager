@@ -24,7 +24,7 @@ public class PrestamoFondos extends CRUD {
         if(validaCondicionsPrestamo(ef,afiliado)){
         PrestamoFondo pf = new PrestamoFondo(afiliado, ef, Tools.getCurrentDate(), null);
 
-        ef.setnExemplaresPrestados(Integer.toString(Integer.parseInt(ef.getnExemplaresPrestados()) + 1));
+        ef.setnExemplaresPrestados(ef.getnExemplaresPrestados() + 1);
         ef._save();
         pf.setOrganismo(Seguridade.organismo());
         pf._save();
@@ -41,7 +41,7 @@ public class PrestamoFondos extends CRUD {
             PrestamoFondo pf = PrestamoFondo.findById(Long.parseLong(id));
             EntradaFondo ef = pf.entradaFondo;
 
-            ef.setnExemplaresPrestados(Integer.toString(Integer.parseInt(ef.getnExemplaresPrestados()) - 1));
+            ef.setnExemplaresPrestados(ef.getnExemplaresPrestados() - 1);
 
             ef._save();
             pf.setDataDevolucion(Tools.getCurrentDate());

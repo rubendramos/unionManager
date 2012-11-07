@@ -18,7 +18,7 @@
                 <input type="hidden" name="from" value="true">
 
     <div id="crudListTable">
-        #{crud.table fields:['entradaFondo','afiliado','dataVenda','nUnidades','dataDevolucionVenda','importevenda','venda.facerDevolucion']}
+        #{crud.table fields:['entradaFondo','afiliado','dataVenda','nUnidades','dataDevolucionVenda','importeVenda','venda.facerDevolucion']}
        
         #{crud.custom 'dataVenda'}
         #{if (object.dataVenda!=null)}
@@ -32,9 +32,9 @@
         #{/if}
         #{/crud.custom}        
         
-        #{crud.custom 'importevenda'}
+        #{crud.custom 'importeVenda'}
         #{if (object.importeVenda!=null)}
-        ${object.importeVenda.formatCurrency("EUR")}        
+        ${object.importeVenda.formatCurrency('EUR')}     
         #{/if}
         #{/crud.custom}
         

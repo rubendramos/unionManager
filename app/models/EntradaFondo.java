@@ -57,47 +57,49 @@ public class EntradaFondo extends UnionModel {
     
     @Required
     @MaxSize(4)
-    public String anoEdicion;
+    public int anoEdicion;
            
     public boolean ePrestable;
     
-    public Blob caratula;  
+    
     
     @Required
     @MaxSize(2)
-    public String nExemplares;
+    public int nExemplares;
     
     @Required
     @MaxSize(2)
-    public String nExemplaresLectura;
+    public int nExemplaresLectura;
    
     @Required
     @MaxSize(2)
-    public String nExemplaresPrestamo;
+    public int nExemplaresPrestamo;
 
     @CRUD.Hidden    
-    private String nExemplaresPrestados;
+    private int nExemplaresPrestados;
     
     
     public boolean estaEnVenda;
     
     @Required
     @MaxSize(3)
-    public String nExemplaresEnVenda;
+    public int nExemplaresEnVenda;
     
     @CRUD.Hidden    
-    private String nExemplaresVendidos;
+    private int nExemplaresVendidos;
     
     
     @PlayCurrency
     public Double importe;
     
-    public String descontoAfiliados;
+    public Double descontoAfiliados;
+    
+    public Blob caratula;  
   
     public EntradaFondo(TipoEntradaFondo tipoEntradaFondo,TipoGeneroFondo tipoGeneroFondo,String titulo, 
-            String anoEdicion, String autor,boolean ePrestable,String descricion,Blob caratula,
-            String sinatura,String nExemplares,String nExemplaresLectura,String nExemplaresPrestamo,String nExemplaresPrestados,boolean estaEnVenda,String nExemplaresEnVenda,
-            String nExemplaresVendidos,Double importe,String descontoAfiliados){
+            int anoEdicion, String autor,boolean ePrestable,String descricion,Blob caratula,
+            String sinatura,int nExemplares,int nExemplaresLectura,int nExemplaresPrestamo,int nExemplaresPrestados,boolean estaEnVenda,int nExemplaresEnVenda,
+            int nExemplaresVendidos,Double importe,Double descontoAfiliados){
     	this.tipoEntradaFondo=tipoEntradaFondo;
     	this.tipoGeneroFondo=tipoGeneroFondo;
     	this.titulo=titulo;
@@ -124,21 +126,21 @@ public class EntradaFondo extends UnionModel {
     }
  
     public boolean estaDisponibleParaPrestamo(){
-        int iPrestados=Integer.parseInt(getnExemplaresPrestados());
-        int iPrestamo=Integer.parseInt(nExemplaresPrestamo);
+        int iPrestados=getnExemplaresPrestados();
+        int iPrestamo=nExemplaresPrestamo;
         
         return (this.ePrestable && iPrestados<iPrestamo)?true:false;
     }
     
     public boolean estaDisponibleParaVenda(){
-        int iVendidos=Integer.parseInt(getnExemplaresVendidos());
-        int iAVenda=Integer.parseInt(nExemplaresEnVenda);
+        int iVendidos=getnExemplaresVendidos();
+        int iAVenda=nExemplaresEnVenda;
         
         return (this.estaEnVenda && iVendidos<iAVenda)?true:false;
     }    
     
     public boolean estaDisponibleParaLectura(){
-        int iExemplaresLectura=Integer.parseInt(this.nExemplaresLectura);        
+        int iExemplaresLectura=this.nExemplaresLectura;        
         if(iExemplaresLectura>0){
             return true;
         }else{
@@ -153,27 +155,27 @@ public class EntradaFondo extends UnionModel {
 
     }
     
-    public String getnExemplaresPrestados(){
-        return (this.nExemplaresPrestados==null || "".equals(this.nExemplaresPrestados)) ?"0" :this.nExemplaresPrestados;        
+    public int getnExemplaresPrestados(){
+        return (Integer.valueOf(this.nExemplaresPrestados)==null || this.nExemplaresPrestados==0) ? 0 : this.nExemplaresPrestados;        
     }
 
     /**
      * @param nExemplaresPrestados the nExemplaresPrestados to set
      */
-    public void setnExemplaresPrestados(String nExemplaresPrestados) {
+    public void setnExemplaresPrestados(int nExemplaresPrestados) {
         this.nExemplaresPrestados = nExemplaresPrestados;
     }
     
     public  String exemplaresDisponiblePrestamo() {
-        int iExemplaresPrestados=Integer.parseInt(this.nExemplaresPrestados);
-        int iExemplaresParaPrestar=Integer.parseInt(this.nExemplaresPrestamo);
+        int iExemplaresPrestados=this.nExemplaresPrestados;
+        int iExemplaresParaPrestar=this.nExemplaresPrestamo;
         int res=iExemplaresParaPrestar-iExemplaresPrestados;
         return Integer.toString(res);
     }
     
     public  String exemplaresDisponibleVenda() {
-        int iExemplaresEnVenta=Integer.parseInt(this.nExemplaresEnVenda);
-        int iExemplaresVendidos=Integer.parseInt(this.nExemplaresVendidos);
+        int iExemplaresEnVenta=this.nExemplaresEnVenda;
+        int iExemplaresVendidos=this.nExemplaresVendidos;
         int res=iExemplaresEnVenta-iExemplaresVendidos;
         return Integer.toString(res);
     }    
@@ -181,14 +183,14 @@ public class EntradaFondo extends UnionModel {
     /**
      * @return the nExemplaresVendidos
      */
-    public String getnExemplaresVendidos() {
+    public int getnExemplaresVendidos() {
         return nExemplaresVendidos;
     }
 
     /**
      * @param nExemplaresVendidos the nExemplaresVendidos to set
      */
-    public void setnExemplaresVendidos(String nExemplaresVendidos) {
+    public void setnExemplaresVendidos(int nExemplaresVendidos) {
         this.nExemplaresVendidos = nExemplaresVendidos;
     }
     

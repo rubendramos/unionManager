@@ -7,6 +7,8 @@ import java.util.logging.Level;
 import models.*;
 import org.hibernate.Session;
 import play.*;
+import play.data.validation.Validation;
+import play.data.validation.ValidationPlugin;
 import play.db.Model;
 import play.db.jpa.GenericModel;
 import play.db.jpa.JPA;
@@ -18,27 +20,36 @@ import utils.Tools;
 @With(Secure.class)
 public class VendaFondos extends CRUD {
 
-    public static void facerVenda(String afiliados, String efId, int page, String where, String search) {
+    public static void facerVenda(String afiliados,String efId, int page, String search, String order, String orderBy, String fondoFiltro, String generoFiltro, String tipoEntradaFiltro) {
         EntradaFondo ef = EntradaFondo.findById(Long.parseLong(efId));
         Afiliado afiliado = Afiliado.findById(Long.parseLong(afiliados));
         User user = User.find("byUsuario", Seguridade.connected()).first();
+        Double descontoAfiliado = 0.0;
 
-        int iUnidades = Integer.parseInt(params.get("object.unidades"));
-        String unidades=params.get("object.unidades");
-        Double importeVenda = ef.importe * iUnidades;
+        String unidades = params.get("object.nUnidades");
 
-        if (validaCondicionsVenda(ef, afiliado)) {
-            VendaFondo vf = new VendaFondo(afiliado, ef, Tools.getCurrentDate(), importeVenda, unidades, null);
+        if (validaCondicionsVenda(ef, unidades)) {
+            
+            int iUnidades = Integer.parseInt(unidades);
+            if (afiliado != null) {
+                descontoAfiliado = (ef.importe * ef.descontoAfiliados) / 100;
+            }
 
-            ef.setnExemplaresVendidos(Integer.toString(Integer.parseInt(ef.getnExemplaresVendidos()) + iUnidades));
+            Double importeVenda = (ef.importe - descontoAfiliado) * iUnidades;
+            VendaFondo vf = new VendaFondo(afiliado, ef, Tools.getCurrentDate(), importeVenda, iUnidades, null);
+
+            ef.setnExemplaresVendidos(ef.getnExemplaresVendidos() + iUnidades);
             ef._save();
             vf.setOrganismo(Seguridade.organismo());
             vf._save();
             engadeApuntamentoCuotaAFollaFondo(user, vf);
             flash.success(play.i18n.Messages.get("crud.avisoGardado", vf.toString()));
+            EntradaFondos.listaEnVenda(page, getWhereListaPrestables(), search, "true", null, null, null);
+        } else {
+            VendaFondos.seleccionaAfiliadoEUnidades(efId, page, search, order, orderBy, fondoFiltro, generoFiltro, tipoEntradaFiltro);
         }
         //listaPrestables(page, search, "true", null, null, null);
-        EntradaFondos.listaPrestables(page, getWhereListaPrestables(), search, "true", null, null, null);
+
     }
 
     public static void facerDevolucionVenda(String id, String page, String where, String search) {
@@ -47,11 +58,11 @@ public class VendaFondos extends CRUD {
 
             VendaFondo vf = VendaFondo.findById(Long.parseLong(id));
             EntradaFondo ef = vf.entradaFondo;
-            User user = User.find("byUsuario", Seguridade.connected()).first();            
+            User user = User.find("byUsuario", Seguridade.connected()).first();
 
-            int iUnidades=Integer.parseInt(vf.nUnidades);
-            
-            ef.setnExemplaresVendidos(Integer.toString(Integer.parseInt(ef.getnExemplaresVendidos()) - iUnidades));
+            int iUnidades = vf.nUnidades;
+
+            ef.setnExemplaresVendidos(ef.getnExemplaresVendidos() - iUnidades);
 
             ef._save();
             vf.setDataDevolucionVenda(Tools.getCurrentDate());
@@ -70,11 +81,11 @@ public class VendaFondos extends CRUD {
 
     }
 
-    public static void seleccionaAfiliadoEUnidades(String id, String page, String search, String order, String orderBy, String fondoFiltro, String generoFiltro, String tipoEntradaFiltro) throws Exception {
+    public static void seleccionaAfiliadoEUnidades(String id, int page, String search, String order, String orderBy, String fondoFiltro, String generoFiltro, String tipoEntradaFiltro) {
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);
         EntradaFondo ef = EntradaFondo.findById(Long.parseLong(id));
-        VendaFondo object = new VendaFondo(null, ef, null, null, null, null);
+        VendaFondo object = new VendaFondo(null, ef, null, null, 0, null);
         //Constructor<?> constructor = type.entityClass.getDeclaredConstructor();
         //Model object = (Model) constructor.newInstance();
         //notFoundIfNull(object);
@@ -149,9 +160,47 @@ public class VendaFondos extends CRUD {
 
     }
 
-    private static boolean validaCondicionsVenda(EntradaFondo entradaFondo, Afiliado afiliado) {
+    private static boolean validaCondicionsVenda(EntradaFondo entradaFondo, String unidades) {
         boolean res = true;
+        
+        if(unidades==null || "".equals(unidades)){
+            flash.error(play.i18n.Messages.get("venda.unidadesObligatorio"));
+            return false;
+        }
 
+        if(!formatoNumericoValido(unidades,2)){
+            flash.error(play.i18n.Messages.get("venda.unidadesFormatoIncorrecto"));
+            return false;
+        }        
+        
+             
+        if (entradaFondo.estaDisponibleParaVenda()) {          
+            int iUnidades=Integer.parseInt(unidades);
+            int iDisponible = Integer.parseInt(entradaFondo.exemplaresDisponibleVenda());
+            if (iDisponible < iUnidades) {
+                res = false;
+                flash.error(play.i18n.Messages.get("venda.superaMaxDiponibleVenda", unidades, Integer.toString(iDisponible)));
+            }
+        } else {
+            flash.error(play.i18n.Messages.get("venda.nonDisponibleVenda"));
+            res = false;
+        }
         return res;
+    }
+    
+    private static boolean formatoNumericoValido(String numero,int tamMax){
+        int maxValue=1;
+        
+        try{
+            
+        int iNumero=Integer.parseInt(numero);
+        for(int i=0;i<tamMax;i++){
+            maxValue=maxValue*10;
+        }
+        return (iNumero>0 && iNumero<maxValue)?true:false;
+                
+        }catch(NumberFormatException e){
+            return false;
+        }
     }
 }

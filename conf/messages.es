@@ -576,3 +576,5 @@ menu.tesoureria.Apuntamentos = Apunte contable
 libroContas.libroAutomaticoPermanencia = Libro de cuentas de las permanencias
 follaContas.follaContasPermanencia = Hoja de cuentas de la permanencia &{%s}
 tipoEntradaFondo = Tipo entrada
+crud.help.playCurrency = Campo moneda. Separador decimal el punto.
+crud.help.playHora = Campo hora hh:mm

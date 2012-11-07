@@ -90,10 +90,10 @@ public class Apuntamento extends UnionSecureModel {
         TipoApuntamento ta=null;
         
          if (vendaFondo.dataDevolucionVenda==null || "".equals(vendaFondo.dataDevolucionVenda)){
-           descricion=play.i18n.Messages.get("apuntamento.apuntamentoVendaFondos",vendaFondo.entradaFondo.toString());               
+           descricion=play.i18n.Messages.get("apuntamento.apuntamentoVendaFondos",Integer.toString(vendaFondo.nUnidades),vendaFondo.entradaFondo.toString());               
            ta=TipoApuntamento.findById(Long.parseLong("1"));
          }else{
-           descricion=play.i18n.Messages.get("apuntamento.apuntamentoDevolucionVendaFondos",vendaFondo.entradaFondo.toString());                           
+           descricion=play.i18n.Messages.get("apuntamento.apuntamentoDevolucionVendaFondos",Integer.toString(vendaFondo.nUnidades),vendaFondo.entradaFondo.toString());                           
            ta=TipoApuntamento.findById(Long.parseLong("2"));
         }        
         TipoConcepto tc=TipoConcepto.findById(Long.parseLong("6"));
@@ -109,9 +109,9 @@ public class Apuntamento extends UnionSecureModel {
      public static Apuntamento getApuntamentoVendaFondos(Afiliado af,Organismo organismo,VendaFondo vendaFondo){
          String descricion="";
          if (vendaFondo.dataDevolucionVenda==null || "".equals(vendaFondo.dataDevolucionVenda)){
-           descricion=play.i18n.Messages.get("apuntamento.apuntamentoVendaFondos",vendaFondo.entradaFondo.toString());                        
+           descricion=play.i18n.Messages.get("apuntamento.apuntamentoVendaFondos",Integer.toString(vendaFondo.nUnidades),vendaFondo.entradaFondo.toString());                        
          }else{
-           descricion=play.i18n.Messages.get("apuntamento.apuntamentoDevolucionVendaFondos",vendaFondo.entradaFondo.toString());                                    
+           descricion=play.i18n.Messages.get("apuntamento.apuntamentoDevolucionVendaFondos",Integer.toString(vendaFondo.nUnidades),vendaFondo.entradaFondo.toString());                                    
         }    
         return find("byDescricionAndOrganismo",descricion,organismo).first();           
     }       

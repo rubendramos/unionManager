@@ -73,13 +73,12 @@
 
         #{if field.type == 'number'}
             #{crud.numberField name:field.name, value:(currentObject ? currentObject[field.name] : null) /}
-            %{ am = messages.get('crud.help.playCurrency',play.libs.I18N.getDateFormat()) }%
+            %{ am = messages.get('crud.help.numeric',play.libs.I18N.getDateFormat()) }%
         #{/if}
 
         #{if field.type == 'playCurrency'}
             #{crud.currencyField name:field.name, value:(currentObject ? currentObject[field.name] : null) /}
-            %{ am = 'crud.help.playCurrency' }%
-            
+            %{ am = 'crud.help.playCurrency' }%            
         #{/if}        
         
         #{if field.type == 'date'}

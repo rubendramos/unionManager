@@ -34,14 +34,15 @@ public class VendaFondo extends UnionModel {
     public Date dataDevolucionVenda;
     
     @Required
-    public String nUnidades;
+    @MaxSize(3)
+    public int nUnidades;
     
     @Required
     @PlayCurrency
     public Double importeVenda;
 
     public VendaFondo(Afiliado afiliado, EntradaFondo entradaFondo, Date dataVenda,
-            Double importeVenda,String nUnidades,Date dataDevolucionVenda) {
+            Double importeVenda,int nUnidades,Date dataDevolucionVenda) {
         this.entradaFondo = entradaFondo;
         this.dataVenda = dataVenda;
         this.nUnidades = nUnidades;
