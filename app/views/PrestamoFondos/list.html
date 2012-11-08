@@ -18,7 +18,7 @@
                 <input type="hidden" name="from" value="true">
 
     <div id="crudListTable">
-        #{crud.table fields:['afiliado','entradaFondo','dataPrestamo','dataDevolucion','vencemento','prestamo.facerDevolucion']}
+        #{crud.table fields:['afiliado','entradaFondo','dataPrestamo','dataDevolucion','vencemento','']}
         #{crud.custom 'dataPrestamo'}
         #{if (object.dataPrestamo!=null)}
         ${object.dataPrestamo.format()}
@@ -42,7 +42,7 @@
         #{/if}
         #{/crud.custom}
         
-        #{crud.custom 'prestamo.facerDevolucion'}
+        #{crud.custom ''}
         #{if (object.dataDevolucion==null)}
         <input src="/public/images/line/transparentInputImage.png" id="facerDevolucionPrestamo"   type="image" title="&{'prestamo.facerDevolucion'} "  onclick="javascript:confirmaAccionSubmitSearching('&{'prestamo.confirmaDevolucion',object}','facerDevolucionPrestamo',${page},${object._key()})" value="" /> 
 

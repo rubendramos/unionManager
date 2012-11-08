@@ -14,7 +14,16 @@
     </div>    
     
     <div id="crudListTable">
-        #{crud.table fields:['fondo','tipoEntradaFondo','tipoGeneroFondo','titulo','autor','nExemplares','ePrestable']/}
+        #{crud.table fields:['fondo','tipoEntradaFondo','tipoGeneroFondo','titulo','autor','ePrestable']}
+            #{crud.custom 'ePrestable'}
+            #{if (object.ePrestable)}
+            &{'generic.si'}     
+            #{/if}
+            #{else}
+            &{'generic.no'}
+            #{/else}
+            #{/crud.custom}
+        #{/crud.table}
     </div>
 
     <div id="crudListPagination">

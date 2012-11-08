@@ -1,0 +1,6 @@
+${contido}
+
+${firma}
+
+
+${play.i18n.Messages.get("aviso.legal.proteccionDatos")}

@@ -20,9 +20,27 @@ import utils.Tools;
 @With(Secure.class)
 public class VendaFondos extends CRUD {
 
-    public static void facerVenda(String afiliados,String efId, int page, String search, String order, String orderBy, String fondoFiltro, String generoFiltro, String tipoEntradaFiltro) {
+    public static void facerVenda(String afiliados,int page) {
+        
+        String tipoEntradaFiltro=params.get("object.tipoEntradaFondo.id");
+        String generoFiltro=params.get("object.generoFiltro.id");
+        String fondoFiltro=params.get("object.fondoFiltro.id");
+        String orderBy=params.get("object.orderBy");
+        String order=params.get("object.order");        
+        String search=params.get("search");
+        String efId=params.get("efId");
+        
+        
+        
         EntradaFondo ef = EntradaFondo.findById(Long.parseLong(efId));
-        Afiliado afiliado = Afiliado.findById(Long.parseLong(afiliados));
+        Afiliado afiliado=null;
+        
+
+        
+        if(afiliados!=null && "".equals(afiliados)){
+            afiliado = Afiliado.findById(Long.parseLong(afiliados));
+        }
+        
         User user = User.find("byUsuario", Seguridade.connected()).first();
         Double descontoAfiliado = 0.0;
 
@@ -43,7 +61,7 @@ public class VendaFondos extends CRUD {
             vf.setOrganismo(Seguridade.organismo());
             vf._save();
             engadeApuntamentoCuotaAFollaFondo(user, vf);
-            flash.success(play.i18n.Messages.get("crud.avisoGardado", vf.toString()));
+            flash.success(play.i18n.Messages.get("vendaFondo.vendaFondoExito", vf.entradaFondo));
             EntradaFondos.listaEnVenda(page, getWhereListaPrestables(), search, "true", null, null, null);
         } else {
             VendaFondos.seleccionaAfiliadoEUnidades(efId, page, search, order, orderBy, fondoFiltro, generoFiltro, tipoEntradaFiltro);
@@ -69,7 +87,7 @@ public class VendaFondos extends CRUD {
             vf.setOrganismo(Seguridade.organismo());
             vf._save();
             engadeApuntamentoCuotaAFollaFondo(user, vf);
-            flash.success(play.i18n.Messages.get("crud.avisoGardado", vf.toString()));
+            flash.success(play.i18n.Messages.get("vendaFondo.devolucionExito", vf.entradaFondo,Tools.getCurrency(vf.importeVenda)));
             ObjectType type = ObjectType.get(getControllerClass());
             if (where == null || "".equals(where)) {
                 where = type.createWhereFilterClausule();
@@ -202,5 +220,5 @@ public class VendaFondos extends CRUD {
         }catch(NumberFormatException e){
             return false;
         }
-    }
+    }    
 }

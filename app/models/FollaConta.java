@@ -89,7 +89,7 @@ public class FollaConta extends UnionSecureModel {
     
      public static FollaConta createFollaContasPropaganda(Fondo f,Organismo organismo){
         String descricion=play.i18n.Messages.get("follaContas.follaContasFondo", f.descricion);                       
-        LibroConta lc=LibroConta.getLibroContasPermanencia(organismo);
+        LibroConta lc=LibroConta.getLibroContasPropaganda(organismo);
         Set<FollaConta> follasconta=lc.follasContas;
         FollaConta fc=new FollaConta(descricion, null, Tools.getCurrentDate(), null);
         TipoEstado te=TipoEstado.findById(Long.parseLong("1"));

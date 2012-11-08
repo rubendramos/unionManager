@@ -3,9 +3,9 @@
 
 <div id="onlyShow" class="${type.name}">
 
-        <h2 id="crudBlankTitle">       
-           &{'prestamoFondo.mesaxeFondoPrestamo'}
-        </h2>
+    <h2 id="crudBlankTitle">       
+        &{'prestamoFondo.mesaxeFondoPrestamo'}
+    </h2>
     <div class="objectForm">
         #{form action:@facerPrestamo(), enctype:'multipart/form-data', name:'searching'}        
         <input type="hidden" name="page" value="${page}">                   
@@ -18,31 +18,52 @@
         <input type="hidden" name="object.tipoGeneroFondo.id" value="${generoFiltro}">
         <input type="hidden" name="object.fondo.id" value="${fondoFiltro}">
 
-        <div> 
-
-            </br>
-
-         <div>   
-             <span id="resaltaTextoRed">&{'fondo'}:</span>${ef.fondo}
-         </div>   
-         <div>   
-             <span id="resaltaTextoRed">&{'titulo'}:</span>${ef.titulo}
-         </div>   
-         <div>
-           <span id="resaltaTextoRed">&{'autor'}:</span>${ef.autor}
-         </div>   
-         <div>
-           <span id="resaltaTextoRed">&{'anoEdicion'}:</span>${ef.anoEdicion}
-         </div>   
-             
+        <div id="anuncioImportante">
+            <div >
+                #{if (ef.caratula.exists())}
+                    <img src="@{EntradaFondos.pintaCaratula(ef.id)}" id="caratula">
+                #{/if}
+                #{else}
+                    <input src="/public/images/line/transparentInputImage.png" id="nonCaratula"   type="image" title="&{'venda.facerDevolucion'} "  /> 
+                #{/else}
+            </div>
+            <div id="aliniamentoEsquerda">
+                <div>   
+                    <span id="resaltaTextoNegro">&{'fondo'}:</span>${ef.fondo}
+                </div>   
+                <div>   
+                    <span id="resaltaTextoNegro">&{'titulo'}:</span>${ef.titulo}
+                </div>   
+                <div>
+                    <span id="resaltaTextoNegro">&{'autor'}:</span>${ef.autor}
+                </div>   
+                <div>
+                    <span id="resaltaTextoNegro">&{'anoEdicion'}:</span>${ef.anoEdicion}
+                </div>   
+            </div>
         </div>
         </br>
-        <label>
-            &{'prestamo.seleccionaAfiliado'}
-        </label> 
-        <div class="crudField crud_text">         
-            #{select 'afiliados', items:afiliados, valueProperty:'id', labelProperty:'persoa.nome', value:'afiliados', class:"", id:'select' /}
-        </div>    
+
+
+        </br>
+
+        <div class="crudField crud_text">    
+            <label>
+                &{'prestamo.seleccionaAfiliado'}
+            </label>                    
+            <select ${disabled} id="select" name="afiliados">
+                <option value="">&{'crud.selectValue'}</option>
+                %{ afiliados.each() { }%
+                %{selected = false
+                selected = it._key() == _value?._key()
+                }%
+                <option value="${it._key()}" ${selected ? 'selected="true"'.raw() : ''}>${it}</option>
+                %{ } }%
+            </select>                
+        </div> 
+
+        </br>
+
         </br>
         <p class="crudButtons">
             <input type="submit" value="&{'prestamoFondo.FacerPrestamo'}"> 

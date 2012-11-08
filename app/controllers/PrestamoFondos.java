@@ -17,21 +17,34 @@ import utils.Tools;
 @With(Secure.class)
 public class PrestamoFondos extends CRUD {
 
-    public static void facerPrestamo(String afiliados, String efId, int page, String where, String search) {
-        EntradaFondo ef = EntradaFondo.findById(Long.parseLong(efId));
-        Afiliado afiliado = Afiliado.findById(Long.parseLong(afiliados));
+    public static void facerPrestamo(String afiliados, int page) {
         
-        if(validaCondicionsPrestamo(ef,afiliado)){
+        String tipoEntradaFiltro=params.get("object.tipoEntradaFondo.id");
+        String generoFiltro=params.get("object.generoFiltro.id");
+        String fondoFiltro=params.get("object.fondoFiltro.id");
+        String orderBy=params.get("object.orderBy");
+        String order=params.get("object.order");        
+        String search=params.get("search");        
+        String efId=params.get("efId");
+        
+        
+       EntradaFondo ef = EntradaFondo.findById(Long.parseLong(efId));
+        
+        if(validaCondicionsPrestamo(ef,afiliados)){
+         
+        Afiliado afiliado = Afiliado.findById(Long.parseLong(afiliados));    
         PrestamoFondo pf = new PrestamoFondo(afiliado, ef, Tools.getCurrentDate(), null);
 
         ef.setnExemplaresPrestados(ef.getnExemplaresPrestados() + 1);
         ef._save();
         pf.setOrganismo(Seguridade.organismo());
         pf._save();
-        flash.success(play.i18n.Messages.get("crud.avisoGardado", pf.toString()));
-        }
-        //listaPrestables(page, search, "true", null, null, null);
-        EntradaFondos.listaPrestables(page, getWhereListaPrestables(), search, "true", null, null, null);
+        flash.success(play.i18n.Messages.get("prestamo.prestamoRealizadoExito",pf.entradaFondo, Tools.getLocaleDateFormat(pf.getDataVencemento())));
+            EntradaFondos.listaPrestables(page, getWhereListaPrestables(), search, "true", null, null, null);
+        } else {
+            PrestamoFondos.seleccionaAfiliado(efId, page, search, order, orderBy, fondoFiltro, generoFiltro, tipoEntradaFiltro);
+        }        
+        
     }
 
     public static void facerDevolucionPrestamo(String id, String page, String where, String search) {
@@ -47,7 +60,7 @@ public class PrestamoFondos extends CRUD {
             pf.setDataDevolucion(Tools.getCurrentDate());
             pf.setOrganismo(Seguridade.organismo());
             pf._save();
-            flash.success(play.i18n.Messages.get("crud.avisoGardado", pf.toString()));
+            flash.success(play.i18n.Messages.get("prestamo.devolucionExito", pf.entradaFondo));
             ObjectType type = ObjectType.get(getControllerClass());
             if (where == null || "".equals(where)) {
                 where = type.createWhereFilterClausule();
@@ -59,7 +72,7 @@ public class PrestamoFondos extends CRUD {
 
     }
 
-    public static void seleccionaAfiliado(String id, String page,String search,String order,String orderBy, String fondoFiltro,String generoFiltro,String tipoEntradaFiltro) throws Exception {
+    public static void seleccionaAfiliado(String id, int page,String search,String order,String orderBy, String fondoFiltro,String generoFiltro,String tipoEntradaFiltro)  {
         ObjectType type = ObjectType.get(getControllerClass());
         notFoundIfNull(type);        
         EntradaFondo ef = EntradaFondo.findById(Long.parseLong(id));
@@ -128,18 +141,28 @@ public class PrestamoFondos extends CRUD {
         }
     }
     
-    private static boolean validaCondicionsPrestamo(EntradaFondo entradaFondo,Afiliado afiliado){
+    private static boolean validaCondicionsPrestamo(EntradaFondo entradaFondo,String afiliadoId){
         boolean res=true;        
         
+        
+        //O afiliado e obrigatori
+        if (afiliadoId==null || "".equals(afiliadoId)){
+            flash.error(play.i18n.Messages.get("prestamo.afiliadoObrigatorio"));
+            res=false;  
+            return res;
+        }
+        
+        
+        Afiliado afiliado=Afiliado.findById(Long.parseLong(afiliadoId));
         List<EntradaFondo> prestamosActivosNoFondo=PrestamoFondo.getPrestamosActivosPorAfiliadoEFondo(afiliado,entradaFondo.fondo);
         List<EntradaFondo> prestamosVencidos=PrestamoFondo.getPrestamosVencidosPorAfiliado(afiliado);
-        
+
         //Validamos se ten prestamos caducatos
         if(prestamosVencidos!=null && prestamosVencidos.size()>0){
             flash.error(play.i18n.Messages.get("prestamo.tenPrestamosVencidos"));
             res=false;
         //Validamos si supera o maximo de prestamos para o fondo
-        }else if(prestamosActivosNoFondo!=null && prestamosActivosNoFondo.size()>=Integer.parseInt(entradaFondo.fondo.umaxPrestamo)){
+        }else if(prestamosActivosNoFondo!=null && prestamosActivosNoFondo.size()>=entradaFondo.fondo.umaxPrestamo){
             flash.error(play.i18n.Messages.get("prestamo.superaMaxPrestamosFondo", entradaFondo.fondo.umaxPrestamo ,entradaFondo.fondo.toString()));            
             res=false;
         //Valiadmos si xa ten o mesmo fondo prestado

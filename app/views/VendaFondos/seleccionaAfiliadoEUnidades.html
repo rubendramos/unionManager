@@ -17,41 +17,47 @@
         <input type="hidden" name="object.tipoEntradaFondo.id" value="${tipoEntradaFiltro}">
         <input type="hidden" name="object.tipoGeneroFondo.id" value="${generoFiltro}">
         <input type="hidden" name="object.fondo.id" value="${fondoFiltro}">
-
         <div> 
+            </br>   
+            <div id="anuncioImportante">
+                <div >
+                    #{if (ef.caratula.exists())}
+                    <img src="@{EntradaFondos.pintaCaratula(ef.id)}" id="caratula">
+                    #{/if}
+                    #{else}
+                    <input src="/public/images/line/transparentInputImage.png" id="nonCaratula"   type="image" title="&{'venda.facerDevolucion'} "  /> 
+                    #{/else}
+                </div>
 
-            </br>            
-            <div>   
-                <input src="/public/images/line/transparentInputImage.png" id="nonCaratula"   type="image" title="&{'venda.facerDevolucion'} "  /> 
-            </div>
-            <div >
-                <div>   
-                    <span id="resaltaTextoNegro">&{'fondo'}:</span>${ef.fondo}
-                </div>   
-                <div>   
-                    <span id="resaltaTextoNegro">&{'titulo'}:</span>${ef.titulo}
-                </div>   
-                <div>
-                    <span id="resaltaTextoNegro">&{'autor'}:</span>${ef.autor}
-                </div>   
-                <div>
-                    <span id="resaltaTextoNegro">&{'anoEdicion'}:</span>${ef.anoEdicion}
-                </div>   
+                <div id="aliniamentoEsquerda">
+                    <div>   
+                        <span id="resaltaTextoNegro">&{'fondo'}:</span>${ef.fondo}
+                    </div>   
+                    <div>   
+                        <span id="resaltaTextoNegro">&{'titulo'}:</span>${ef.titulo}
+                    </div>   
+                    <div>
+                        <span id="resaltaTextoNegro">&{'autor'}:</span>${ef.autor}
+                    </div>   
+                    <div>
+                        <span id="resaltaTextoNegro">&{'anoEdicion'}:</span>${ef.anoEdicion}
+                    </div>   
+                </div>
             </div>
             </br>
             <div>
                 </br>
-                <div class="crudField crud_text">         
+                <div class="crudField crud_text" id="resaltaTextoRed">         
                     #{crud.texto name:'importe', value:ef.importe.formatCurrency('EUR') /}  
                     <span class="crudHelp">
-                       
+
                     </span>
                 </div>
-                
-                <div class="crudField crud_text">         
+
+                <div class="crudField crud_text" id="resaltaTextoRed">         
                     #{crud.texto name:'descontoAfiliados', value:ef.descontoAfiliados+'%' /}  
                     <span class="crudHelp">
-                      
+
                     </span>
                 </div>                
 
@@ -64,21 +70,28 @@
                         &{ messages.get('crud.help.maxlength', 2)}
                     </span>
                 </div>
-
-
-
                 <div class="crudField crud_text">    
                     <label>
                         &{'prestamo.seleccionaAfiliado'}
-                    </label>
-                    #{select 'afiliados',name:'prestamo.seleccionaAfiliado', items:afiliados, valueProperty:'id', labelProperty:'persoa.nome', value:'afiliados', class:"", id:'select' /}
+                    </label>                    
+                    <select ${disabled} id="afiliado" name="afiliado">
+                        <option value="">&{'crud.selectValue'}</option>
+                        %{ afiliados.each() { }%
+                        %{selected = false
+                        selected = it._key() == _value?._key()
+                        }%
+                        <option value="${it._key()}" ${selected ? 'selected="true"'.raw() : ''}>${it}</option>
+                        %{ } }%
+                    </select>                
                 </div>   
+
+
+
 
                 </br>
                 <p class="crudButtons">
                     <input type="submit" value="&{'vendaFondo.FacerVenda'}"> 
                     <input type="button" onclick="javascript:accionSubmitSearching('listaEnVenda',${page},${ef.id})"" value="&{'crud.voltarABusqueda'}" />
-
                 </p>
                 #{/form}
             </div>

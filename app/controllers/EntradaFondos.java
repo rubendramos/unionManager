@@ -118,7 +118,7 @@ public class EntradaFondos extends CRUD {
         }
     }       
     
-    public static void seleccionaAfiliado(String id,String page,String where,String search,String order,String orderBy) throws Exception{
+    public static void seleccionaAfiliado(String id,int page,String where,String search,String order,String orderBy) throws Exception{
         String fondoFiltro=params.get("object.fondo.id");
         String generoFiltro=params.get("object.tipoGeneroFondo.id");
         String tipoEntradaFiltro=params.get("object.tipoEntradaFondo.id");
@@ -135,8 +135,14 @@ public class EntradaFondos extends CRUD {
         String tipoEntradaFiltro=params.get("object.tipoEntradaFondo.id");
         //String order=params.get("order");
         //String orderBy=params.get("orderBy");
-       
-                                        
         VendaFondos.seleccionaAfiliadoEUnidades(id, page, search,order,orderBy,fondoFiltro,generoFiltro,tipoEntradaFiltro);
     }     
+    
+    
+public static void pintaCaratula(Long entadaFondoId) {
+   final EntradaFondo ef = EntradaFondo.findById(entadaFondoId);
+   notFoundIfNull(ef);
+   response.setContentTypeIfNotSet(ef.caratula.type());
+   renderBinary(ef.caratula.get());
+}    
 }

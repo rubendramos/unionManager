@@ -1048,8 +1048,8 @@ tr.odd {
 }
 
 #nonCaratula {
-    width:100px; 
-    height:80px; 
+    width:120px; 
+    height:100px; 
     border:0;
     float: left;
     text-align: right;
@@ -1057,6 +1057,18 @@ tr.odd {
     border-style: none;
     vertical-align: sub;
 }
+
+#caratula {
+    width:120px; 
+    height:80px; 
+    border:0;
+    float: left;
+    text-align: right;    
+    border-style: none;
+    border-radius: 4px;
+    vertical-align: sub;
+}
+
 
 #video {
     width:20px; 
@@ -1076,6 +1088,10 @@ tr.odd {
 #resaltaTextoNegro{    
     font-weight: bold;
     color: black;    
+}
+
+#aliniamentoEsquerda{    
+   text-align: left;  
 }
 
 #superindice 
