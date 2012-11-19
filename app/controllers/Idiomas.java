@@ -31,13 +31,19 @@ public class Idiomas extends CRUD {
     
      public static void cambiarIdioma(String idiomas) {
         Idioma idiomaO=Idioma.findById(Long.parseLong(idiomas));
-//        LoadPropertiesFiles lpf=new LoadPropertiesFiles();
-//        lpf.addMessagesIdioma(idiomaO);
         Lang.change(idiomaO.sufixo);        
         flash.success(play.i18n.Messages.get("idioma.idiomaActualizado",idiomaO.descricion));     
-        seleccionaIdioma();
+       seleccionaIdioma();
         
     }  
+     
+     public static void actualizaMensaxesIdioma(String idiomas) {
+        Idioma idiomaO=Idioma.findById(Long.parseLong(idiomas));
+        LoadPropertiesFiles lpf=new LoadPropertiesFiles();
+        lpf.addMessagesIdioma(idiomaO);       
+        flash.success(play.i18n.Messages.get("idioma.idiomaActualizado",idiomaO.descricion));     
+        seleccionaIdioma();
+    }     
      
      public static int creaEntradasMensaxesIdioma(String idIdioma) {
           
