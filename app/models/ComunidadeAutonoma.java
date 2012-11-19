@@ -7,7 +7,7 @@ import play.db.jpa.*;
 import play.data.validation.*;
  
 @Entity
-public class ComunidadeAutonoma extends UnionModel {
+public class ComunidadeAutonoma extends Model {
  
     
     @Required
