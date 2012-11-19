@@ -44,11 +44,11 @@ public class PrestamoFondo extends UnionModel {
         JPAQuery jpa = find(query).setParameter("entradaFondo", entradaFondo.id);
         PrestamoFondo pf = (PrestamoFondo) jpa.first();
         Fondo f = Fondo.findById(entradaFondo.fondo.id);
-        return pf == null ? null : Tools.addDaysToDate(pf.dataPrestamo, Integer.parseInt(f.periodoDiasPrestamo));
+        return pf == null ? null : Tools.addDaysToDate(pf.dataPrestamo, f.periodoDiasPrestamo);
     }
 
     public  Date getDataVencemento(){
-        int days=Integer.parseInt(this.entradaFondo.fondo.periodoDiasPrestamo);
+        int days=this.entradaFondo.fondo.periodoDiasPrestamo;
         return Tools.addDaysToDate(dataPrestamo, days);    
     }
     
@@ -79,7 +79,7 @@ public class PrestamoFondo extends UnionModel {
                 + "join ef.fondo f " 
                 + "where pf.afiliado.id = :afiliadoId  "
                 + "and pf.dataDevolucion is null "
-                + "and sysdate > (pf.dataPrestamo + (cast(f.periodoDiasPrestamo ,int)+1))";
+                + "and sysdate() > (pf.dataPrestamo + f.periodoDiasPrestamo)";
 
 
         JPAQuery jpa = find(query).setParameter("afiliadoId", afiliado.id);       
@@ -100,6 +100,17 @@ public class PrestamoFondo extends UnionModel {
         return jpa.fetch();
         
                
-    }    
+    }  
+    
+        public static List<PrestamoFondo> getPrestamosVencidos() {
+        
+            String query = "select pf from PrestamoFondo pf "
+                + "join pf.entradaFondo ef "
+                + "join ef.fondo f " 
+                + "where pf.dataDevolucion is null "                              
+                + "and sysdate() > (pf.dataPrestamo + f.periodoDiasPrestamo)";
+
+        return find(query).fetch();
+    }
     
 }

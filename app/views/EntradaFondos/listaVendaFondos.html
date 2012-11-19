@@ -6,7 +6,7 @@
     <h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
 
     <div id="crudListSearch">
-        #{crud.searchBusquedaEntradasFondos  /}        
+        #{crud.searchBusquedaVendaFondos  /}        
     </div>
 
     <div id="crudListPagination">
@@ -14,7 +14,7 @@
     </div>    
   
     <div id="crudListTable">
-        #{crud.tableBusquedaEntradasFondos fields:['fondo','tipoEntradaFondo','tipoGeneroFondo','titulo','autor','vendaFondo.disponibleVenda','vendidos','descontoAfiliados','importe','vendaFondo.FacerVenda']}
+        #{crud.tableBusquedaVendaFondos fields:['fondo','tipoEntradaFondo','tipoGeneroFondo','titulo','autor','vendaFondo.disponibleVenda','vendidos','descontoAfiliados','importe','']}
                 
         #{crud.custom 'vendaFondo.disponibleVenda'}
         #{if (object.estaEnVenda)}       
@@ -47,13 +47,13 @@
         #{/if}
         #{/crud.custom}
 
-        #{crud.custom 'vendaFondo.FacerVenda'}  
+        #{crud.custom ''}  
         #{if (object.estaDisponibleParaVenda())}
         <input src="/public/images/line/transparentInputImage.png" id="facerPrestamo" type="image" title="&{'vendaFondo.tituloFacerVenda',object}"  onclick="javascript:accionSubmitSearching('seleccionaAfiliadoEUnidades',${page},${object._key()})" value="" />          
         #{/if}
         #{/crud.custom}            
 
-        #{/crud.tableBusquedaEntradasFondos}
+        #{/crud.tableBusquedaVendaFondos}
     </div>
 
     <div id="crudListPagination">

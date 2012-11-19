@@ -88,7 +88,7 @@ public class LibroConta extends UnionSecureModel {
     }   
        
     private static LibroConta createLibroContasPropaganda(Organismo organismo){
-        String descricion=play.i18n.Messages.get("libroContas.libroAutomaticoPraganda");               
+        String descricion=play.i18n.Messages.get("libroContas.libroAutomaticoPropaganda");               
         LibroConta lc=new LibroConta(descricion, null, Tools.getCurrentDate(), null);
         TipoEstado te=TipoEstado.findById(Long.parseLong("1"));
         HashSet<FollaConta> fc=new HashSet<FollaConta>();

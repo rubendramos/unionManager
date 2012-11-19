@@ -32,20 +32,26 @@ public class Fondo extends UnionModel {
     
     @Required
     @MaxSize(2)
-    public String periodoDiasPrestamo;
+    public int periodoDiasPrestamo;
+    
+    @Required
+    @MaxSize(2)
+    public int diasDemoraAvisoVencemento;
+    
     @Required
     @MaxSize(1)
-    public String umaxPrestamo;
+    public int umaxPrestamo;
 
 
     
   
-    public Fondo(String nome,boolean ePublico,String descricion,String periodoDiasPrestamo,String umaxPrestamo){
+    public Fondo(String nome,boolean ePublico,String descricion,int periodoDiasPrestamo,int umaxPrestamo,int diasDemoraAvisoVencemento){
     	this.nome=nome;
         this.umaxPrestamo=umaxPrestamo;
         this.periodoDiasPrestamo=periodoDiasPrestamo;
     	this.descricion=descricion;
-        this.ePublico=ePublico;    	       
+        this.ePublico=ePublico;   
+        this.diasDemoraAvisoVencemento=diasDemoraAvisoVencemento;
     }
 
     

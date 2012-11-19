@@ -7,6 +7,7 @@ import javax.mail.internet.*;
 import models.*;
 import org.apache.commons.mail.EmailAttachment;
 import play.Play;
+import utils.Tools;
 
 public class Notificador extends Mailer {
 
@@ -165,6 +166,30 @@ public class Notificador extends Mailer {
         //Enviase e esperase resposta
         return sendAndWait(contido,firma);
 
-    }      
+    }   
+  
+    public static boolean notificacionPrestamoVencido(PrestamoFondo prestamoFondo) throws Exception {
+
+        //asunto do mail
+        String asunto=play.i18n.Messages.get("mensaxe.asunto.vencementoPrestamo", prestamoFondo.entradaFondo.titulo);    
+        String contido=play.i18n.Messages.get("mensaxe.contido.vencementoPrestamo", prestamoFondo.entradaFondo.titulo,Tools.getLocaleDateFormat(prestamoFondo.dataPrestamo),Tools.getLocaleDateFormat(prestamoFondo.getDataVencemento()));
+        String firma="";
+        Afiliado af=prestamoFondo.afiliado;
+        
+        //Engadimos asusnto
+        setSubject(asunto);
+
+        //Engadimos os destinatarios               
+        String nome = af.persoa.apelido1 + " " + af.persoa.apelido2 + "," + af.persoa.nome;
+
+        addRecipient(new InternetAddress(af.persoa.email, nome));
+
+        //Contacto que o envía
+        setFrom(new InternetAddress(NOTIFICADOR));
+
+        //Enviase e esperase resposta
+        return sendAndWait(contido,firma);
+
+    }  
     
 }

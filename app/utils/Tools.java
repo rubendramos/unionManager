@@ -210,4 +210,12 @@ public class Tools {
     public static Date addDaysToDate(Date d,int days){
             return new Date(d.getTime() + (days * 24 * 3600 * 1000));
     }
+    
+
+
+    public static long getDiasEntreDatas(Date date1,Date date2){    
+    long millsPerDay = 1000 * 60 * 60 * 24;    
+    return ( date1.getTime() - date2.getTime() ) / millsPerDay;   
+    }
+    
 }

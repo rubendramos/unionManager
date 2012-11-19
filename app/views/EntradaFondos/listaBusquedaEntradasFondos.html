@@ -14,7 +14,7 @@
     </div>    
   
     <div id="crudListTable">
-        #{crud.tableBusquedaEntradasFondos fields:['fondo','tipoEntradaFondo','tipoGeneroFondo','titulo','autor','prestamoFondo.disponibleLectura','prestamoFondo.disponiblePrestamo','prestamoFondo.DataDevolucion','prestamoFondo.FacerPrestamo']}
+        #{crud.tableBusquedaEntradasFondos fields:['fondo','tipoEntradaFondo','tipoGeneroFondo','titulo','autor','prestamoFondo.disponibleLectura','prestamoFondo.disponiblePrestamo','prestamoFondo.DataDevolucion','']}
         #{crud.custom 'prestamoFondo.disponibleLectura'}
         #{if (object.estaDisponibleParaLectura())}
         <img src="/public/images/line/transparentInputImage.png" id="checkSI" title="&{'prestamoFondo.tituloDisponibleLectura',object.nExemplaresLectura}"/>  
@@ -56,7 +56,7 @@
         #{/crud.custom} 
 
 
-        #{crud.custom 'prestamoFondo.FacerPrestamo'}  
+        #{crud.custom ''}  
         #{if (object.estaDisponibleParaPrestamo())}
         <input src="/public/images/line/transparentInputImage.png" id="facerPrestamo" type="image" title="&{'prestamoFondo.tituloFacerPrestamo',object}"  onclick="javascript:accionSubmitSearching('seleccionaAfiliado',${page},${object._key()})" value="" />          
         #{/if}
