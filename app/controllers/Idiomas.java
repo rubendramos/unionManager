@@ -47,7 +47,7 @@ public class Idiomas extends CRUD {
      
      public static int creaEntradasMensaxesIdioma(String idIdioma) {
           
-          Query query = JPA.em().createNativeQuery("insert into mensaxesidioma select (select max(id) from mensaxesidioma)+rownum id,clave clave,valor valor ,funcionalidade_id funcionalidade_id ,'"+ idIdioma+"' idioma_id from mensaxesidioma where idioma_id='1'");
+          Query query = JPA.em().createNativeQuery("insert into MensaxesIdioma select (select max(id) from MensaxesIdioma)+rownum id,clave clave,valor valor ,funcionalidade_id funcionalidade_id ,'"+ idIdioma+"' idioma_id from MensaxesIdioma where idioma_id='1'");
           return query.executeUpdate();
      }       
      

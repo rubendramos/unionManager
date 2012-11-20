@@ -17,9 +17,8 @@ import utils.NewForeignKey;
  
 
 
-
-@Entity
-@Table(name = "organismo")
+@javax.persistence.Entity
+@Table(name = "Organismo")
 public class OrganismoSimple extends UnionModel {
  
     
