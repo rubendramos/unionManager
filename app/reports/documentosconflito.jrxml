@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="documentosconflito" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="5.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="1310"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="CONFLITO_ID" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -15,7 +15,7 @@
 	<parameter name="STITULODOCUMENTOS" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select tdoc.descricion tipoDocumento,doc.nome nomeDocumento, doc.descricion descricion
-from conflito conf, documento doc,conflito_documento confdoc,tipodocumento tdoc
+from Conflito conf, Documento doc,Conflito_Documento confdoc,TipoDocumento tdoc
 where
 ($P{CONFLITO_ID}=-1 or conf.id =$P{CONFLITO_ID})
 and ($P{ORGANISMO_ID}=-1 or conf.organismo_id =$P{ORGANISMO_ID})
@@ -23,9 +23,9 @@ and confdoc.conflito_id =conf.id
 and confdoc.documentacion_id =doc.id
 and tdoc.id=doc.tipodocumento_id ;]]>
 	</queryString>
-	<field name="TIPODOCUMENTO" class="java.lang.String"/>
-	<field name="NOMEDOCUMENTO" class="java.lang.String"/>
-	<field name="DESCRICION" class="java.lang.String"/>
+	<field name="tipoDocumento" class="java.lang.String"/>
+	<field name="nomeDocumento" class="java.lang.String"/>
+	<field name="descricion" class="java.lang.String"/>
 	<columnHeader>
 		<band height="32" splitType="Stretch">
 			<frame>
@@ -71,21 +71,21 @@ and tdoc.id=doc.tipodocumento_id ;]]>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{TIPODOCUMENTO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipoDocumento}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="93" y="0" width="139" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMEDOCUMENTO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nomeDocumento}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="232" y="0" width="315" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{DESCRICION}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{descricion}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="7" y="-10" width="540" height="20"/>

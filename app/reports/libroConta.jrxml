@@ -18,31 +18,31 @@
 	<queryString>
 		<![CDATA[select org.acronimo as acronimo, org.nome as nomeSindicato,lc.descricion descricionLibro,lc.dataalta dataAltaLibro,lc.dataBaixa dataBaixaLibro,
 fc.descricion descricionfolla,fc.dataAlta dataAltaFolla,fc.dataBaixa dataBaixaFolla,tap.descricion descricionTipoApuntamento,tc.descricion descricionTipoConcepto, ap.descricion descricionApuntamento, ap.importe importeApuntamento,ap.dataApuntamento dataApuntamento, ap.dataRexistro dataRexistroApuntamento
-from libroconta lc, follaconta fc, libroconta_follaconta lcfc, follaconta_apuntamento fcap, apuntamento  ap, organismo org, tipoApuntamento tap,tipoConcepto  tc
+from LibroConta lc, FollaConta fc, LibroConta_FollaConta lcfc, FollaConta_Apuntamento fcap, Apuntamento  ap, Organismo org, TipoApuntamento tap,TipoConcepto  tc
 where lc.id=lcfc.libroconta_id
 and fc.id=lcfc.follascontas_id
 and fc.id=fcap.follaconta_id
 and ap.id=fcap.apuntamentos_id
-and org.id=lc.sindicato_id
+and org.id=lc.organismo_id
 and tap.id=ap.tipoapuntamento_id
 and tc.id=ap.concepto_id
 and $P{ORGANISMO_ID}='-1' or lc.organismo_id =$P{ORGANISMO_ID}
 and $P{LIBRO_ID}='-1' or lc.id=$P{LIBRO_ID};]]>
 	</queryString>
-	<field name="ACRONIMO" class="java.lang.String"/>
-	<field name="NOMESINDICATO" class="java.lang.String"/>
-	<field name="DESCRICIONLIBRO" class="java.lang.String"/>
-	<field name="DATAALTALIBRO" class="java.sql.Timestamp"/>
-	<field name="DATABAIXALIBRO" class="java.sql.Timestamp"/>
-	<field name="DESCRICIONFOLLA" class="java.lang.String"/>
-	<field name="DATAALTAFOLLA" class="java.sql.Timestamp"/>
-	<field name="DATABAIXAFOLLA" class="java.sql.Timestamp"/>
-	<field name="DESCRICIONTIPOAPUNTAMENTO" class="java.lang.String"/>
-	<field name="DESCRICIONTIPOCONCEPTO" class="java.lang.String"/>
-	<field name="DESCRICIONAPUNTAMENTO" class="java.lang.String"/>
-	<field name="IMPORTEAPUNTAMENTO" class="java.lang.String"/>
-	<field name="DATAAPUNTAMENTO" class="java.sql.Timestamp"/>
-	<field name="DATAREXISTROAPUNTAMENTO" class="java.sql.Timestamp"/>
+	<field name="acronimo" class="java.lang.String"/>
+	<field name="nomeSindicato" class="java.lang.String"/>
+	<field name="descricionLibro" class="java.lang.String"/>
+	<field name="dataAltaLibro" class="java.sql.Timestamp"/>
+	<field name="dataBaixaLibro" class="java.sql.Timestamp"/>
+	<field name="descricionfolla" class="java.lang.String"/>
+	<field name="dataAltaFolla" class="java.sql.Timestamp"/>
+	<field name="dataBaixaFolla" class="java.sql.Timestamp"/>
+	<field name="descricionTipoApuntamento" class="java.lang.String"/>
+	<field name="descricionTipoConcepto" class="java.lang.String"/>
+	<field name="descricionApuntamento" class="java.lang.String"/>
+	<field name="importeApuntamento" class="java.lang.Double"/>
+	<field name="dataApuntamento" class="java.sql.Timestamp"/>
+	<field name="dataRexistroApuntamento" class="java.sql.Timestamp"/>
 	<group name="NOMESINDICATO">
 		<groupExpression><![CDATA[$F{NOMESINDICATO}]]></groupExpression>
 		<groupHeader>

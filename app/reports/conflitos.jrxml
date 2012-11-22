@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="conflitos" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="736"/>
+	<property name="ireport.x" value="497"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
@@ -48,7 +48,7 @@
 	<parameter name="SNOMECONFLITO" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select org.id ogranismoID,org.descricion sindicato,org.acronimo acronimo,conf.id conflitoID,conf.datainicio dataInicio,conf.dataremate dataRemate,conf.descricion descricionConflito,conf.nome nomeConflito,tconf.descricion descricionTipoConflito
-from conflito conf,organismo org,tipoconflito tconf
+from Conflito conf,Organismo org,TipoConflito tconf
 where conf.organismo_id =org.id
 and conf.tipoconflito_id=tconf.id
 and ($P{ORGANISMO_ID}=-1 or conf.organismo_id =$P{ORGANISMO_ID})
@@ -58,21 +58,21 @@ and ($P{DATABAIXAFIN}='-1' or conf.dataremate <=convert($P{DATABAIXAFIN},date))
 and ($P{DATABAIXAINI}='-1' or conf.dataremate >=convert($P{DATABAIXAINI},date))
 and ($P{TIPOCONFLITO_ID}=-1 or tconf.id =$P{TIPOCONFLITO_ID});]]>
 	</queryString>
-	<field name="OGRANISMOID" class="java.lang.Long"/>
-	<field name="SINDICATO" class="java.lang.String"/>
-	<field name="ACRONIMO" class="java.lang.String"/>
-	<field name="CONFLITOID" class="java.lang.Long"/>
-	<field name="DATAINICIO" class="java.sql.Timestamp"/>
-	<field name="DATAREMATE" class="java.sql.Timestamp"/>
-	<field name="DESCRICIONCONFLITO" class="java.sql.Clob"/>
-	<field name="NOMECONFLITO" class="java.lang.String"/>
-	<field name="DESCRICIONTIPOCONFLITO" class="java.lang.String"/>
-	<sortField name="DATAINICIO" order="Descending"/>
+	<field name="ogranismoID" class="java.lang.Long"/>
+	<field name="sindicato" class="java.lang.String"/>
+	<field name="acronimo" class="java.lang.String"/>
+	<field name="conflitoID" class="java.lang.Long"/>
+	<field name="dataInicio" class="java.sql.Timestamp"/>
+	<field name="dataRemate" class="java.sql.Timestamp"/>
+	<field name="descricionConflito" class="java.lang.String"/>
+	<field name="nomeConflito" class="java.lang.String"/>
+	<field name="descricionTipoConflito" class="java.lang.String"/>
+	<sortField name="dataInicio" order="Descending"/>
 	<variable name="vNOMESINDI" class="java.lang.String">
-		<variableExpression><![CDATA[$F{ACRONIMO}+" "+$F{SINDICATO}]]></variableExpression>
+		<variableExpression><![CDATA[$F{acronimo}+" "+$F{sindicato}]]></variableExpression>
 	</variable>
 	<group name="SINDICATO">
-		<groupExpression><![CDATA[$F{SINDICATO}]]></groupExpression>
+		<groupExpression><![CDATA[$F{sindicato}]]></groupExpression>
 		<groupHeader>
 			<band height="36">
 				<frame>
@@ -92,14 +92,14 @@ and ($P{TIPOCONFLITO_ID}=-1 or tconf.id =$P{TIPOCONFLITO_ID});]]>
 						<textElement>
 							<font fontName="Arial" size="14" isBold="true"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{SINDICATO}]]></textFieldExpression>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{sindicato}]]></textFieldExpression>
 					</textField>
 					<textField pattern="" isBlankWhenNull="false">
 						<reportElement mode="Transparent" x="0" y="0" width="42" height="20" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
 						<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 							<font fontName="Arial" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{ACRONIMO}]]></textFieldExpression>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{acronimo}]]></textFieldExpression>
 					</textField>
 				</frame>
 				<textField>
@@ -200,34 +200,34 @@ and ($P{TIPOCONFLITO_ID}=-1 or tconf.id =$P{TIPOCONFLITO_ID});]]>
 					<textElement>
 						<font fontName="Arial"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[""+$F{DESCRICIONCONFLITO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[""+$F{descricionConflito}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="false">
 					<reportElement mode="Transparent" x="72" y="0" width="100" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
 					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 						<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMECONFLITO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nomeConflito}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<textField>
 				<reportElement x="2" y="0" width="72" height="15"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONTIPOCONFLITO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionTipoConflito}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="531" y="0" width="134" height="15"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAINICIO}]]></textFieldExpression>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataInicio}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="665" y="0" width="137" height="15"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAREMATE}]]></textFieldExpression>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataRemate}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

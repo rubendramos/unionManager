@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="afiliadosconflito" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="347"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="CONFLITO_ID" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -17,7 +17,7 @@
 	<parameter name="SDATABAIXA" class="java.lang.String"/>
 	<parameter name="STITULOAFILIADOSCONFLOTO" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select per.dni, per.apelido1 ||' ' || per.apelido2||', ' ||per.nome nomeAfiliado, af.dataalta dataalta, af.databaixa databaixa from conflito conf,conflito_afiliado confaf,afiliado af,persoa per
+		<![CDATA[select per.dni, per.apelido1 ||' ' || per.apelido2||', ' ||per.nome nomeAfiliado, af.dataalta dataalta, af.databaixa databaixa from Conflito conf,Conflito_Afiliado confaf,Afiliado af,Persoa per
 where
 ($P{CONFLITO_ID}=-1 or conf.id =$P{CONFLITO_ID})
 and ($P{ORGANISMO_ID}=-1 or conf.organismo_id =$P{ORGANISMO_ID})
@@ -25,10 +25,10 @@ and  confaf.afiliados_id =af.id
 and confaf.conflito_id =conf.id
 and af.persoa_id =per.id;]]>
 	</queryString>
-	<field name="DNI" class="java.lang.String"/>
-	<field name="NOMEAFILIADO" class="java.lang.String"/>
-	<field name="DATAALTA" class="java.sql.Timestamp"/>
-	<field name="DATABAIXA" class="java.sql.Timestamp"/>
+	<field name="dni" class="java.lang.String"/>
+	<field name="nomeAfiliado" class="java.lang.Long"/>
+	<field name="dataalta" class="java.sql.Timestamp"/>
+	<field name="databaixa" class="java.sql.Timestamp"/>
 	<columnHeader>
 		<band height="31" splitType="Stretch">
 			<frame>
@@ -74,21 +74,21 @@ and af.persoa_id =per.id;]]>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMEAFILIADO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nomeAfiliado}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="281" y="0" width="140" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAALTA}]]></textFieldExpression>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataalta}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="421" y="0" width="127" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATABAIXA}]]></textFieldExpression>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{databaixa}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="7" y="-10" width="541" height="20"/>

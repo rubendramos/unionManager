@@ -2,9 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fichaOrganismo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
-	<parameter name="SUBREPORTS_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	<property name="ireport.y" value="14"/>
+	<parameter name="SUBREPORTS_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/home/rubens/NetBeansProjects/unionManager/app/reports"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ORGANISMO_ID" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -36,21 +36,21 @@
 	<queryString>
 		<![CDATA[select org.acronimo acronimo ,org.nome nome ,org.cif cif, org.descricion,org.enderezo_id enderezoid,org.email,org.direccionweb web,
 orgorg.organismosfillo_id,org.dataAlta dataAlta,org.dataBaixa dataBaixa
-from organismo_organismo orgorg right join organismo org   on (org.id=orgorg.organismo_id)
+from Organismo_Organismo orgorg right join Organismo org   on (org.id=orgorg.organismo_id)
 where org.id=$P{ORGANISMO_ID};]]>
 	</queryString>
-	<field name="ACRONIMO" class="java.lang.String"/>
-	<field name="NOME" class="java.lang.String"/>
-	<field name="CIF" class="java.lang.String"/>
-	<field name="DESCRICION" class="java.lang.String"/>
-	<field name="ENDEREZOID" class="java.lang.Long"/>
-	<field name="EMAIL" class="java.lang.String"/>
-	<field name="WEB" class="java.lang.String"/>
-	<field name="ORGANISMOSFILLO_ID" class="java.lang.Long"/>
-	<field name="DATAALTA" class="java.sql.Timestamp"/>
-	<field name="DATABAIXA" class="java.sql.Timestamp"/>
+	<field name="acronimo" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="cif" class="java.lang.String"/>
+	<field name="descricion" class="java.lang.String"/>
+	<field name="enderezoid" class="java.lang.Long"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="web" class="java.lang.String"/>
+	<field name="organismosfillo_id" class="java.lang.Long"/>
+	<field name="dataAlta" class="java.sql.Timestamp"/>
+	<field name="dataBaixa" class="java.sql.Timestamp"/>
 	<variable name="VTITULO" class="java.lang.String">
-		<variableExpression><![CDATA[$F{NOME}+$F{ACRONIMO}+$F{NOME}]]></variableExpression>
+		<variableExpression><![CDATA[$F{nome}+$F{acronimo}+$F{nome}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -186,7 +186,7 @@ where org.id=$P{ORGANISMO_ID};]]>
 					<subreportParameterExpression><![CDATA[$P{SCONCELLO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="ORGANISMO_ID">
-					<subreportParameterExpression><![CDATA[$F{ORGANISMOSFILLO_ID}.toString()]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{organismosfillo_id}.toString()]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SCOMUNIDADE">
 					<subreportParameterExpression><![CDATA[$P{SCOMUNIDADE}]]></subreportParameterExpression>

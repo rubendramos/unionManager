@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fichaConflito" language="groovy" pageWidth="595" pageHeight="802" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="51"/>
+	<property name="ireport.x" value="45"/>
+	<property name="ireport.y" value="494"/>
 	<parameter name="CONFLITO_ID" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -40,23 +40,23 @@
 	<parameter name="SAPARTADOCORREOS" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select org.id ogranismoID,org.acronimo ||' '||org.nome  sindicato, conf.id conflitoID,conf.datainicio dataInicio,conf.dataremate dataRemate,conf.descricion descricionConflito,conf.nome nomeConflito,tconf.descricion descricionTipoConflito,conf.valoracion valoracion,conf.organismo_id organismoID
-from conflito conf,organismo org,tipoconflito tconf
+from Conflito conf,Organismo org,TipoConflito tconf
 where conf.organismo_id =org.id
 and conf.tipoconflito_id=tconf.id
 and ($P{CONFLITO_ID}=-1 or conf.id =$P{CONFLITO_ID});]]>
 	</queryString>
-	<field name="OGRANISMOID" class="java.lang.Long"/>
-	<field name="SINDICATO" class="java.lang.String"/>
-	<field name="CONFLITOID" class="java.lang.Long"/>
-	<field name="DATAINICIO" class="java.sql.Timestamp"/>
-	<field name="DATAREMATE" class="java.sql.Timestamp"/>
-	<field name="DESCRICIONCONFLITO" class="java.sql.Clob"/>
-	<field name="NOMECONFLITO" class="java.lang.String"/>
-	<field name="DESCRICIONTIPOCONFLITO" class="java.lang.String"/>
-	<field name="VALORACION" class="java.sql.Clob"/>
-	<field name="ORGANISMOID" class="java.lang.Long"/>
+	<field name="ogranismoID" class="java.lang.Long"/>
+	<field name="sindicato" class="java.lang.Long"/>
+	<field name="conflitoID" class="java.lang.Long"/>
+	<field name="dataInicio" class="java.sql.Timestamp"/>
+	<field name="dataRemate" class="java.sql.Timestamp"/>
+	<field name="descricionConflito" class="java.lang.String"/>
+	<field name="nomeConflito" class="java.lang.String"/>
+	<field name="descricionTipoConflito" class="java.lang.String"/>
+	<field name="valoracion" class="java.lang.String"/>
+	<field name="organismoID" class="java.lang.Long"/>
 	<variable name="VNOMECONFLITO" class="java.lang.String">
-		<variableExpression><![CDATA[$P{STITULOCONFLITO}+" "+$F{NOMECONFLITO}]]></variableExpression>
+		<variableExpression><![CDATA[$P{STITULOCONFLITO}+" "+$F{nomeConflito}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -81,7 +81,7 @@ and ($P{CONFLITO_ID}=-1 or conf.id =$P{CONFLITO_ID});]]>
 					<subreportParameterExpression><![CDATA[$P{SFAX}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="ORGANISMO_ID">
-					<subreportParameterExpression><![CDATA[$F{OGRANISMOID}.toString()]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{organismoID}.toString()]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORTS_DIR} + "/enderezoCabeceira.jasper"]]></subreportExpression>
@@ -97,7 +97,7 @@ and ($P{CONFLITO_ID}=-1 or conf.id =$P{CONFLITO_ID});]]>
 					<textElement>
 						<font fontName="Arial" size="14" isBold="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMECONFLITO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nomeConflito}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="0" y="0" width="54" height="17" forecolor="#FFFFFF"/>
@@ -111,7 +111,7 @@ and ($P{CONFLITO_ID}=-1 or conf.id =$P{CONFLITO_ID});]]>
 					<textElement textAlignment="Right">
 						<font fontName="Arial" size="14" isBold="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{SINDICATO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{sindicato}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -126,35 +126,35 @@ and ($P{CONFLITO_ID}=-1 or conf.id =$P{CONFLITO_ID});]]>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAINICIO}]]></textFieldExpression>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataInicio}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="157" y="40" width="118" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAREMATE}]]></textFieldExpression>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataRemate}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="157" y="20" width="390" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{DESCRICIONCONFLITO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{descricionConflito}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="78" y="20" width="79" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMECONFLITO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nomeConflito}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="7" y="20" width="72" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONTIPOCONFLITO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionTipoConflito}]]></textFieldExpression>
 			</textField>
 			<frame>
 				<reportElement mode="Opaque" x="6" y="10" width="541" height="10" backcolor="#F0EFEF"/>
@@ -212,7 +212,7 @@ and ($P{CONFLITO_ID}=-1 or conf.id =$P{CONFLITO_ID});]]>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{VALORACION}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{valoracion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="6" y="0" width="542" height="10" backcolor="#000000"/>
@@ -242,7 +242,7 @@ and ($P{CONFLITO_ID}=-1 or conf.id =$P{CONFLITO_ID});]]>
 					<subreportParameterExpression><![CDATA[$P{SNOMEAFILIADO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="ORGANISMO_ID">
-					<subreportParameterExpression><![CDATA[$F{OGRANISMOID}.toString()]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{organismoID}.toString()]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SDATABAIXA">
 					<subreportParameterExpression><![CDATA[$P{SDATABAIXA}]]></subreportParameterExpression>
@@ -268,7 +268,7 @@ and ($P{CONFLITO_ID}=-1 or conf.id =$P{CONFLITO_ID});]]>
 					<subreportParameterExpression><![CDATA[$P{STIPODOCUMENTO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="ORGANISMO_ID">
-					<subreportParameterExpression><![CDATA[$F{OGRANISMOID}.toString()]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{organismoID}.toString()]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SDESCRICIONDOCUMENTO">
 					<subreportParameterExpression><![CDATA[$P{SDESCRICIONDOCUMENTO}]]></subreportParameterExpression>
@@ -285,7 +285,7 @@ and ($P{CONFLITO_ID}=-1 or conf.id =$P{CONFLITO_ID});]]>
 					<subreportParameterExpression><![CDATA[$P{STIPOEVENTO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="CONFLITO_ID">
-					<subreportParameterExpression><![CDATA[$F{CONFLITOID}.toString()]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{conflitoID}.toString()]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SVALORACIONEVENTO">
 					<subreportParameterExpression><![CDATA[$P{SVALORACIONEVENTO}]]></subreportParameterExpression>
@@ -300,7 +300,7 @@ and ($P{CONFLITO_ID}=-1 or conf.id =$P{CONFLITO_ID});]]>
 					<subreportParameterExpression><![CDATA[$P{SUBREPORTS_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="ORGANISMO_ID">
-					<subreportParameterExpression><![CDATA[$F{OGRANISMOID}.toString()]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{organismoID}.toString()]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="EVENTO_ID"/>
 				<subreportParameter name="STITULOEVENTO">
@@ -333,7 +333,7 @@ and ($P{CONFLITO_ID}=-1 or conf.id =$P{CONFLITO_ID});]]>
 					<textElement>
 						<font fontName="Arial" size="14" isBold="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{SINDICATO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{sindicato}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

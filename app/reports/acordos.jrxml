@@ -37,12 +37,12 @@
 		<![CDATA[select tpase.descricion tipoPuntoAsemblea,ase.datacelebracion dataAsemblea,ase.titulo tituloAsemblea, pase.descricion descricionPunto,pase.acordo,pase.apeticionde_id apetidionde_id,ase.id asembleaID,
 per.nome||' '||per.apelido1||' '||per.apelido2||'('||af.carnetconfederado||')' apeticionDe
 from
-asemblea ase join asemblea_puntoasemblea asepase on ase.id=asepase.asemblea_id
-join puntoasemblea pase on pase.id=asepase.ordedodia_id
-join organismo org on org.id=ase.organismo_id
-join tipopuntoasemblea tpase on tpase.id=pase.tipopuntoasemblea_id
-left join afiliado af on  pase.apeticionde_id =af.id
-left join  persoa per on per.id=af.persoa_id
+Asemblea ase join Asemblea_PuntoAsemblea asepase on ase.id=asepase.asemblea_id
+join PuntoAsemblea pase on pase.id=asepase.ordedodia_id
+join Organismo org on org.id=ase.organismo_id
+join TipoPuntoAsemblea tpase on tpase.id=pase.tipopuntoasemblea_id
+left join Afiliado af on  pase.apeticionde_id =af.id
+left join  Persoa per on per.id=af.persoa_id
 where
 ($P{ASEMBLEA_ID}=-1 or ase.id =$P{ASEMBLEA_ID})
 and ($P{APETICIONDE_ID}=-1 or pase.apeticionde_id=$P{APETICIONDE_ID})
@@ -52,17 +52,17 @@ and ($P{DATACELEBRACIONINI}='-1' or ase.datacelebracion >=convert($P{DATACELEBRA
 and ($P{TIPOPUNTOASEMBLEA_ID}=-1 or tpase.id =$P{TIPOPUNTOASEMBLEA_ID})
 and ($P{SOACORDOS}=-1 or (pase.acordo !='' and pase.acordo is not null));]]>
 	</queryString>
-	<field name="TIPOPUNTOASEMBLEA" class="java.lang.String"/>
-	<field name="DATAASEMBLEA" class="java.sql.Timestamp"/>
-	<field name="TITULOASEMBLEA" class="java.lang.String"/>
-	<field name="DESCRICIONPUNTO" class="java.lang.String"/>
-	<field name="ACORDO" class="java.lang.String"/>
-	<field name="APETIDIONDE_ID" class="java.lang.Long"/>
-	<field name="ASEMBLEAID" class="java.lang.Long"/>
-	<field name="APETICIONDE" class="java.lang.String"/>
-	<sortField name="DATAASEMBLEA" order="Descending"/>
+	<field name="tipoPuntoAsemblea" class="java.lang.String"/>
+	<field name="dataAsemblea" class="java.sql.Timestamp"/>
+	<field name="tituloAsemblea" class="java.lang.String"/>
+	<field name="descricionPunto" class="java.lang.String"/>
+	<field name="acordo" class="java.lang.String"/>
+	<field name="apetidionde_id" class="java.lang.Long"/>
+	<field name="asembleaID" class="java.lang.Long"/>
+	<field name="apeticionDe" class="java.lang.Long"/>
+	<sortField name="dataAsemblea" order="Descending"/>
 	<group name="asemblea">
-		<groupExpression><![CDATA[$F{ASEMBLEAID}]]></groupExpression>
+		<groupExpression><![CDATA[$F{asembleaID}]]></groupExpression>
 		<groupHeader>
 			<band height="24">
 				<rectangle>
@@ -75,7 +75,7 @@ and ($P{SOACORDOS}=-1 or (pase.acordo !='' and pase.acordo is not null));]]>
 						<textElement textAlignment="Right">
 							<font fontName="Arial"/>
 						</textElement>
-						<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAASEMBLEA}]]></textFieldExpression>
+						<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataAsemblea}]]></textFieldExpression>
 					</textField>
 				</frame>
 				<textField>
@@ -83,7 +83,7 @@ and ($P{SOACORDOS}=-1 or (pase.acordo !='' and pase.acordo is not null));]]>
 					<textElement>
 						<font fontName="Arial" isBold="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{TITULOASEMBLEA}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{tituloAsemblea}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="0" y="12" width="274" height="12"/>
@@ -175,28 +175,28 @@ and ($P{SOACORDOS}=-1 or (pase.acordo !='' and pase.acordo is not null));]]>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{ACORDO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{acordo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="1" y="7" width="273" height="20"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONPUNTO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionPunto}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="1" y="0" width="113" height="7"/>
 				<textElement>
 					<font fontName="Arial" size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{TIPOPUNTOASEMBLEA}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipoPuntoAsemblea}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="114" y="0" width="160" height="7"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{APETICIONDE}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{apeticionDe}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

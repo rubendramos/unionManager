@@ -14,46 +14,46 @@
 		<![CDATA[select org.acronimo,org.nome,org.email,org.direccionweb web,en.enderezo enderezo, en.concello concello,
 loc.descricion localidade,
 loc.codigopostal codigopostal,prv.descricion provincia,com.descricion comunidade,en.telefono,en.fax,en.apartadocorreos
-from enderezo en,localidade loc,provincia prv,comunidadeautonoma com,
-organismo org
+from Enderezo en,Localidade loc,Provincia prv,ComunidadeAutonoma com,
+Organismo org
 where org.enderezo_id=en.id
 and en.localidade_id=loc.id
 and loc.provincia_id=prv.id
 and loc.comunidadeautonoma_id =com.id
 and org.id=$P{ORGANISMO_ID};]]>
 	</queryString>
-	<field name="ACRONIMO" class="java.lang.String"/>
-	<field name="NOME" class="java.lang.String"/>
-	<field name="EMAIL" class="java.lang.String"/>
-	<field name="WEB" class="java.lang.String"/>
-	<field name="ENDEREZO" class="java.lang.String"/>
-	<field name="CONCELLO" class="java.lang.String"/>
-	<field name="LOCALIDADE" class="java.lang.String"/>
-	<field name="CODIGOPOSTAL" class="java.lang.String"/>
-	<field name="PROVINCIA" class="java.lang.String"/>
-	<field name="COMUNIDADE" class="java.lang.String"/>
-	<field name="TELEFONO" class="java.lang.String"/>
-	<field name="FAX" class="java.lang.String"/>
-	<field name="APARTADOCORREOS" class="java.lang.String"/>
+	<field name="acronimo" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="web" class="java.lang.String"/>
+	<field name="enderezo" class="java.lang.String"/>
+	<field name="concello" class="java.lang.String"/>
+	<field name="localidade" class="java.lang.String"/>
+	<field name="codigopostal" class="java.lang.String"/>
+	<field name="provincia" class="java.lang.String"/>
+	<field name="comunidade" class="java.lang.String"/>
+	<field name="telefono" class="java.lang.String"/>
+	<field name="fax" class="java.lang.String"/>
+	<field name="apartadocorreos" class="java.lang.String"/>
 	<variable name="nomeSindi" class="java.lang.String">
-		<variableExpression><![CDATA[$F{ACRONIMO}+" "+$F{NOME}]]></variableExpression>
+		<variableExpression><![CDATA[$F{acronimo}+" "+$F{nome}]]></variableExpression>
 	</variable>
 	<variable name="enderezo" class="java.lang.String">
-		<variableExpression><![CDATA[$F{ENDEREZO}+" "+$F{LOCALIDADE}+" "+$F{CODIGOPOSTAL}+" "+$F{CONCELLO} +
-" "+$F{PROVINCIA}]]></variableExpression>
+		<variableExpression><![CDATA[$F{enderezo}+" "+$F{localidade}+" "+$F{codigopostal}+" "+$F{concello} +
+" "+$F{provincia}]]></variableExpression>
 	</variable>
 	<variable name="Telefonos" class="java.lang.String">
-		<variableExpression><![CDATA[($F{TELEFONO}!=null?$P{STELEFONO}+": "+$F{TELEFONO}+". " :"")+
-($F{FAX}!=null?$P{SFAX}+": "+ $F{FAX}  : "")]]></variableExpression>
+		<variableExpression><![CDATA[($F{telefono}!=null?$P{STELEFONO}+": "+$F{telefono}+". " :"")+
+($F{fax}!=null?$P{SFAX}+": "+ $F{fax}  : "")]]></variableExpression>
 	</variable>
 	<variable name="apartadoCorreos" class="java.lang.String">
-		<variableExpression><![CDATA[($F{APARTADOCORREOS}!=null?$P{SAPARTADOCORREOS}+" "+$F{APARTADOCORREOS}+". ":"")]]></variableExpression>
+		<variableExpression><![CDATA[($F{apartadocorreos}!=null?$P{SAPARTADOCORREOS}+" "+$F{apartadocorreos}+". ":"")]]></variableExpression>
 	</variable>
 	<variable name="email" class="java.lang.String">
-		<variableExpression><![CDATA[($F{EMAIL}!=null?$P{SEMAIL}+": "+$F{EMAIL}:"")]]></variableExpression>
+		<variableExpression><![CDATA[($F{email}!=null?$P{SEMAIL}+": "+$F{email}:"")]]></variableExpression>
 	</variable>
 	<variable name="web" class="java.lang.String">
-		<variableExpression><![CDATA[($F{WEB}!=null?$F{WEB}:"")]]></variableExpression>
+		<variableExpression><![CDATA[($F{web}!=null?$F{web}:"")]]></variableExpression>
 	</variable>
 	<detail>
 		<band height="67" splitType="Stretch">

@@ -23,7 +23,7 @@
 	<parameter name="SSUBTITULOEVENTO" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select teven.descricion tipoEvento ,even.nome nome  , even.horarealizacion horaevento,even.descricion descricionEvento,even.datarealizacion, even.valoracion valoracion,end.id enderezo_id,org.acronimo||' '||org.nome sidicato
-from  evento even,tipoevento teven,enderezo end,localidade loc,organismo org
+from  Evento even,TipoEvento teven,Enderezo end,Localidade loc,Organismo org
 where ($P{EVENTO_ID}=-1 or even.id =$P{EVENTO_ID})
 and ($P{ORGANISMO_ID}=-1 or even.organismo_id =$P{ORGANISMO_ID})
 and org.id=even.organismo_id
@@ -31,16 +31,16 @@ and teven.id=even.tipoevento_id
 and end.id=even.lugar_id
 and loc.id=end.localidade_id;]]>
 	</queryString>
-	<field name="TIPOEVENTO" class="java.lang.String"/>
-	<field name="NOME" class="java.lang.String"/>
-	<field name="HORAEVENTO" class="java.lang.String"/>
-	<field name="DESCRICIONEVENTO" class="java.lang.String"/>
-	<field name="DATAREALIZACION" class="java.sql.Timestamp"/>
-	<field name="VALORACION" class="java.lang.String"/>
-	<field name="ENDEREZO_ID" class="java.lang.Long"/>
-	<field name="SIDICATO" class="java.lang.String"/>
+	<field name="tipoEvento" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="horaevento" class="java.lang.String"/>
+	<field name="descricionEvento" class="java.lang.String"/>
+	<field name="datarealizacion" class="java.sql.Timestamp"/>
+	<field name="valoracion" class="java.lang.String"/>
+	<field name="enderezo_id" class="java.lang.Long"/>
+	<field name="sidicato" class="java.lang.Long"/>
 	<group name="sindicato">
-		<groupExpression><![CDATA[$F{SIDICATO}]]></groupExpression>
+		<groupExpression><![CDATA[$F{sidicato}]]></groupExpression>
 		<groupHeader>
 			<band height="44">
 				<frame>
@@ -60,7 +60,7 @@ and loc.id=end.localidade_id;]]>
 						<textElement>
 							<font fontName="Arial" size="12" isBold="true"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{SIDICATO}]]></textFieldExpression>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{sidicato}]]></textFieldExpression>
 					</textField>
 				</frame>
 			</band>
@@ -74,7 +74,7 @@ and loc.id=end.localidade_id;]]>
 						<textElement textAlignment="Right">
 							<font fontName="Arial" size="12" isBold="true"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{SIDICATO}]]></textFieldExpression>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{sidicato}]]></textFieldExpression>
 					</textField>
 				</frame>
 			</band>
@@ -114,7 +114,7 @@ and loc.id=end.localidade_id;]]>
 					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 						<font fontName="Arial" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{NOME}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
@@ -128,35 +128,35 @@ and loc.id=end.localidade_id;]]>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOME}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="8" y="20" width="88" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{TIPOEVENTO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipoEvento}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="8" y="60" width="540" height="24"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{VALORACION}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{valoracion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="100" y="40" width="103" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{HORAEVENTO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{horaevento}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="8" y="40" width="93" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAREALIZACION}]]></textFieldExpression>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{datarealizacion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="8" y="10" width="88" height="10"/>
@@ -223,7 +223,7 @@ and loc.id=end.localidade_id;]]>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{DESCRICIONEVENTO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{descricionEvento}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="8" y="30" width="88" height="10"/>

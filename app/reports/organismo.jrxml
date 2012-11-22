@@ -6,8 +6,8 @@
 	<parameter name="ORGANISMO_ID" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SUBREPORTS_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	<parameter name="SUBREPORTS_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/home/rubens/NetBeansProjects/unionManager/app/reports"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SSECRETARIA" class="java.lang.String"/>
 	<parameter name="SDATABAXIA" class="java.lang.String"/>
@@ -33,20 +33,20 @@
 	<parameter name="SNOMEAFILIADO" class="java.lang.String"/>
 	<parameter name="STITCOMITE" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select org.acronimo acronimo ,org.nome nome ,org.cif cif, org.descricion,org.enderezo_id enderezoid,org.email,org.direccionweb web ,torg.descricion tipoorganismo from organismo org,tipoorganismo torg
+		<![CDATA[select org.acronimo acronimo ,org.nome nome ,org.cif cif, org.descricion,org.enderezo_id enderezoid,org.email,org.direccionweb web ,torg.descricion tipoorganismo from Organismo org,TipoOrganismo torg
 where org.tipoorganismo_id=torg.id
 and org.id=$P{ORGANISMO_ID};]]>
 	</queryString>
-	<field name="ACRONIMO" class="java.lang.String"/>
-	<field name="NOME" class="java.lang.String"/>
-	<field name="CIF" class="java.lang.String"/>
-	<field name="DESCRICION" class="java.lang.String"/>
-	<field name="ENDEREZOID" class="java.lang.Long"/>
-	<field name="EMAIL" class="java.lang.String"/>
-	<field name="WEB" class="java.lang.String"/>
-	<field name="TIPOORGANISMO" class="java.lang.String"/>
+	<field name="acronimo" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="cif" class="java.lang.String"/>
+	<field name="descricion" class="java.lang.String"/>
+	<field name="enderezoid" class="java.lang.Long"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="web" class="java.lang.String"/>
+	<field name="tipoorganismo" class="java.lang.String"/>
 	<variable name="nomeSindi" class="java.lang.String">
-		<variableExpression><![CDATA[$F{TIPOORGANISMO}+": "+$F{ACRONIMO}+" "+$F{NOME}]]></variableExpression>
+		<variableExpression><![CDATA[$F{tipoorganismo}+": "+$F{acronimo}+" "+$F{nome}]]></variableExpression>
 	</variable>
 	<title>
 		<band splitType="Stretch"/>

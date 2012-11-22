@@ -45,33 +45,32 @@
 	<queryString>
 		<![CDATA[select distinct entfon.anoedicion anoEdicion,entfon.autor autor,entfon.descricion descricion,entfon.eprestable ePrestable,entfon.sinatura sinatura,entfon.titulo titulo,entfon.caratula caratula,
 $P{SDESFONDODESCATALOGADOS} descricionFondo,false fondoPublico,$P{SFONDODESCATALOGADOS} nomeFondo,tentfon.descricion tipoEntradaFondo,tgenfon.descricion xenero
-from entradafondo entfon
-join tipoEntradafondo tentfon on entfon.tipoentradafondo_id=tentfon.id
-join tipogeneroFondo tgenfon on tgenfon.id=entfon.tipogenerofondo_id
-join fondo_entradafondo fentfon
-join fondo fon on fentfon.fondo_id=fon.id
-where entfon.id not in (select fonentfons.entradas_id from fondo_entradafondo fonentfons)
+from EntradaFondo entfon
+join TipoEntradaFondo tentfon on entfon.tipoentradafondo_id=tentfon.id
+join TipoGeneroFondo tgenfon on tgenfon.id=entfon.tipogenerofondo_id
+join Fondo fon on entfon.fondo_id=fon.id
+where entfon.id is null
 and ($P{ORGANISMO_ID}=-1 or entfon.organismo_id =$P{ORGANISMO_ID})
 and ($P{TIPOENTRADA_ID}=-1 or tentfon.id =$P{TIPOENTRADA_ID})
 and ($P{TIPOENTRADAGENERO_ID}=-1 or tgenfon.id =$P{TIPOENTRADAGENERO_ID});]]>
 	</queryString>
-	<field name="ANOEDICION" class="java.lang.String"/>
-	<field name="AUTOR" class="java.lang.String"/>
-	<field name="DESCRICION" class="java.lang.String"/>
-	<field name="EPRESTABLE" class="java.lang.Boolean"/>
-	<field name="SINATURA" class="java.lang.String"/>
-	<field name="TITULO" class="java.lang.String"/>
-	<field name="CARATULA" class="java.lang.String"/>
-	<field name="DESCRICIONFONDO" class="java.lang.Object"/>
-	<field name="FONDOPUBLICO" class="java.lang.Boolean"/>
-	<field name="NOMEFONDO" class="java.lang.Object"/>
-	<field name="TIPOENTRADAFONDO" class="java.lang.String"/>
-	<field name="XENERO" class="java.lang.String"/>
+	<field name="anoEdicion" class="java.lang.Integer"/>
+	<field name="autor" class="java.lang.String"/>
+	<field name="descricion" class="java.lang.String"/>
+	<field name="ePrestable" class="java.lang.Boolean"/>
+	<field name="sinatura" class="java.lang.String"/>
+	<field name="titulo" class="java.lang.String"/>
+	<field name="caratula" class="java.lang.String"/>
+	<field name="descricionFondo" class="java.lang.Object"/>
+	<field name="fondoPublico" class="java.lang.Long"/>
+	<field name="nomeFondo" class="java.lang.Object"/>
+	<field name="tipoEntradaFondo" class="java.lang.String"/>
+	<field name="xenero" class="java.lang.String"/>
 	<variable name="VPRESTABLE" class="java.lang.String">
-		<variableExpression><![CDATA[$F{EPRESTABLE}? $P{SSI}:$P{SNO}]]></variableExpression>
+		<variableExpression><![CDATA[$F{ePrestable}? $P{SSI}:$P{SNO}]]></variableExpression>
 	</variable>
 	<group name="fondo">
-		<groupExpression><![CDATA[$F{NOMEFONDO}]]></groupExpression>
+		<groupExpression><![CDATA[$F{nomeFondo}]]></groupExpression>
 		<groupHeader>
 			<band height="14">
 				<frame>
@@ -104,14 +103,14 @@ and ($P{TIPOENTRADAGENERO_ID}=-1 or tgenfon.id =$P{TIPOENTRADAGENERO_ID});]]>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{ANOEDICION}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{anoEdicion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="355" y="12" width="200" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{AUTOR}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{autor}]]></textFieldExpression>
 			</textField>
 			<frame>
 				<reportElement mode="Opaque" x="64" y="3" width="491" height="9" backcolor="#F1EFEF"/>
@@ -176,7 +175,7 @@ and ($P{TIPOENTRADAGENERO_ID}=-1 or tgenfon.id =$P{TIPOENTRADAGENERO_ID});]]>
 				<textElement>
 					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{TIPOENTRADAFONDO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipoEntradaFondo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="65" y="3" width="35" height="9"/>
@@ -190,28 +189,28 @@ and ($P{TIPOENTRADAGENERO_ID}=-1 or tgenfon.id =$P{TIPOENTRADAGENERO_ID});]]>
 			</rectangle>
 			<image>
 				<reportElement x="0" y="3" width="64" height="58"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{ATTACHMENT_DIR}.toString()+"/"+$F{CARATULA}.substring(0,$F{CARATULA}.indexOf( "|" ))]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$P{ATTACHMENT_DIR}.toString()+"/"+$F{caratula}.substring(0,$F{caratula}.indexOf( "|" ))]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="65" y="31" width="491" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICION}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descricion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="132" y="50" width="373" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{SINATURA}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{sinatura}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="166" y="12" width="189" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{TITULO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{titulo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="505" y="50" width="50" height="10"/>
@@ -228,7 +227,7 @@ and ($P{TIPOENTRADAGENERO_ID}=-1 or tgenfon.id =$P{TIPOENTRADAGENERO_ID});]]>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{XENERO}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{xenero}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

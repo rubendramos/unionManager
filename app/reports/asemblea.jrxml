@@ -21,30 +21,30 @@
 	<parameter name="SAPARTADOCORREOS" class="java.lang.String"/>
 	<parameter name="SEMAIL" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select asem.titulo tituloAsemblea, asem.datacelebracion dataAsemblea, pasem.id puntoID,pasem.descricion,asem.convocante_id convocanteid,asem.lugarCelebracion_id enderezoid,asem.organismo_id organismoid,sysdate dataActual
-from asemblea asem,puntoasemblea pasem,asemblea_puntoasemblea  asempasem
+		<![CDATA[select asem.titulo tituloAsemblea, asem.datacelebracion dataAsemblea, pasem.id puntoID,pasem.descricion,asem.convocante_id convocanteid,asem.lugarCelebracion_id enderezoid,asem.organismo_id organismoid,sysdate() dataActual
+from Asemblea asem,PuntoAsemblea pasem,Asemblea_PuntoAsemblea  asempasem
 where asem.id=$P{ASAMBLEA_ID}
 and asempasem.asemblea_id=asem.id
 and asempasem.ordedodia_id=pasem.id]]>
 	</queryString>
-	<field name="TITULOASEMBLEA" class="java.lang.String"/>
-	<field name="DATAASEMBLEA" class="java.sql.Timestamp"/>
-	<field name="PUNTOID" class="java.lang.Long"/>
-	<field name="DESCRICION" class="java.lang.String"/>
-	<field name="CONVOCANTEID" class="java.lang.Long"/>
-	<field name="ENDEREZOID" class="java.lang.Long"/>
-	<field name="ORGANISMOID" class="java.lang.Long"/>
-	<field name="DATAACTUAL" class="java.sql.Timestamp"/>
+	<field name="tituloAsemblea" class="java.lang.String"/>
+	<field name="dataAsemblea" class="java.sql.Timestamp"/>
+	<field name="puntoID" class="java.lang.Long"/>
+	<field name="descricion" class="java.lang.String"/>
+	<field name="convocanteid" class="java.lang.Long"/>
+	<field name="enderezoid" class="java.lang.Long"/>
+	<field name="organismoid" class="java.lang.Long"/>
+	<field name="dataActual" class="java.sql.Timestamp"/>
 	<variable name="DETAIL_COUNT" class="java.lang.Integer" resetType="None" calculation="Count">
 		<variableExpression><![CDATA[$V{DETAIL_COUNT}++]]></variableExpression>
 		<initialValueExpression><![CDATA[$V{DETAIL_COUNT}.parseInt( "1" )]]></initialValueExpression>
 	</variable>
 	<variable name="puntoAsemblea" class="java.lang.String">
-		<variableExpression><![CDATA[$V{DETAIL_COUNT}+".- "+$F{DESCRICION}]]></variableExpression>
+		<variableExpression><![CDATA[$V{DETAIL_COUNT}+".- "+$F{descricion}]]></variableExpression>
 	</variable>
 	<variable name="VCONVOCATORIA" class="java.lang.String"/>
 	<group name="convocante">
-		<groupExpression><![CDATA[$F{CONVOCANTEID}]]></groupExpression>
+		<groupExpression><![CDATA[$F{convocanteid}]]></groupExpression>
 		<groupHeader>
 			<band height="2"/>
 		</groupHeader>
@@ -56,10 +56,10 @@ and asempasem.ordedodia_id=pasem.id]]>
 						<subreportParameterExpression><![CDATA[$P{SCARNECONF}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="ORGANISMO_ID">
-						<subreportParameterExpression><![CDATA[$F{ORGANISMOID}.toString()]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$F{organismoid}.toString()]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="AFILIADO_ID">
-						<subreportParameterExpression><![CDATA[$F{CONVOCANTEID}.toString()]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$F{convocanteid}.toString()]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="SSECRETARIA">
 						<subreportParameterExpression><![CDATA[$P{SSECRETARIA}]]></subreportParameterExpression>
@@ -78,7 +78,7 @@ and asempasem.ordedodia_id=pasem.id]]>
 			<subreport isUsingCache="false">
 				<reportElement x="361" y="3" width="194" height="95"/>
 				<subreportParameter name="ORGANISMO_ID">
-					<subreportParameterExpression><![CDATA[$F{ORGANISMOID}.toString()]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{organismoid}.toString()]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SFAX">
 					<subreportParameterExpression><![CDATA[$P{SFAX}]]></subreportParameterExpression>
@@ -102,7 +102,7 @@ and asempasem.ordedodia_id=pasem.id]]>
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="16"/>
 				<subreportParameter name="ENDEREZO_ID">
-					<subreportParameterExpression><![CDATA[$F{ENDEREZOID}.toString()]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{enderezoid}.toString()]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORTS_DIR} + "/firmaLugarEData.jasper"]]></subreportExpression>

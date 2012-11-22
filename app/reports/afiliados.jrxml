@@ -48,11 +48,11 @@
 	<parameter name="SACORREOS" class="java.lang.String"/>
 	<parameter name="SEMAIL" class="java.lang.String"/>
 	<parameter name="SUBREPORTS_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["/home/rubens/NetBeansProjects/unionManager/app/reports"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select per.nome,per.apelido1 ,per.apelido2 ,per.dni,ram.descricion ramo,ocu.descricion ocupacion,org.acronimo ,org.nome sindicato,tea.descricion estado,af.dataalta ,af.dataBaixa,af.milita
-from afiliado af,persoa per,ramo ram,ocupacion ocu, organismo org,tipoestadoafiliado tea
+from Afiliado af,Persoa per,Ramo ram,Ocupacion ocu, Organismo org,TipoEstadoAfiliado tea
 where af.persoa_id =per.id
 and af.ramo_id =ram.id
 and af.organismo_id =org.id
@@ -66,27 +66,27 @@ and ($P{DATABAIXAINI}='-1' or af.databaixa >=convert($P{DATABAIXAINI},date))
 and ($P{RAMO_ID}=-1 or ram.id =$P{RAMO_ID})
 and ($P{OCUPACION_ID}=-1 or ocu.id =$P{OCUPACION_ID});]]>
 	</queryString>
-	<field name="NOME" class="java.lang.String"/>
-	<field name="APELIDO1" class="java.lang.String"/>
-	<field name="APELIDO2" class="java.lang.String"/>
-	<field name="DNI" class="java.lang.String"/>
-	<field name="RAMO" class="java.lang.String"/>
-	<field name="OCUPACION" class="java.lang.String"/>
-	<field name="ACRONIMO" class="java.lang.String"/>
-	<field name="SINDICATO" class="java.lang.String"/>
-	<field name="ESTADO" class="java.lang.String"/>
-	<field name="DATAALTA" class="java.sql.Timestamp"/>
-	<field name="DATABAIXA" class="java.sql.Timestamp"/>
-	<field name="MILITA" class="java.lang.Boolean"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="apelido1" class="java.lang.String"/>
+	<field name="apelido2" class="java.lang.String"/>
+	<field name="dni" class="java.lang.String"/>
+	<field name="ramo" class="java.lang.String"/>
+	<field name="ocupacion" class="java.lang.String"/>
+	<field name="acronimo" class="java.lang.String"/>
+	<field name="sindicato" class="java.lang.String"/>
+	<field name="estado" class="java.lang.String"/>
+	<field name="dataalta" class="java.sql.Timestamp"/>
+	<field name="dataBaixa" class="java.sql.Timestamp"/>
+	<field name="milita" class="java.lang.Boolean"/>
 	<sortField name="FNOME" type="Variable"/>
 	<variable name="FNOME" class="java.lang.String">
-		<variableExpression><![CDATA[$F{APELIDO1}+' '+$F{APELIDO2}+', '+$F{NOME}]]></variableExpression>
+		<variableExpression><![CDATA[$F{apelido1}+' '+$F{apelido2}+', '+$F{nome}]]></variableExpression>
 	</variable>
 	<variable name="FMILITA" class="java.lang.String">
-		<variableExpression><![CDATA[$F{MILITA}? $P{SSI}:$P{SNO}]]></variableExpression>
+		<variableExpression><![CDATA[$F{milita}? $P{SSI}:$P{SNO}]]></variableExpression>
 	</variable>
 	<group name="SINDICATO">
-		<groupExpression><![CDATA[$F{SINDICATO}]]></groupExpression>
+		<groupExpression><![CDATA[$F{sindicato}]]></groupExpression>
 		<groupHeader>
 			<band height="55">
 				<frame>
@@ -96,14 +96,14 @@ and ($P{OCUPACION_ID}=-1 or ocu.id =$P{OCUPACION_ID});]]>
 						<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 							<font fontName="Times New Roman" size="18" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{ACRONIMO}]]></textFieldExpression>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{acronimo}]]></textFieldExpression>
 					</textField>
 					<textField isStretchWithOverflow="true">
 						<reportElement style="SubTitle" x="48" y="0" width="649" height="24" forecolor="#FFFFFF"/>
 						<textElement>
 							<font isBold="false"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{SINDICATO}]]></textFieldExpression>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{sindicato}]]></textFieldExpression>
 					</textField>
 				</frame>
 				<staticText>
@@ -244,21 +244,21 @@ and ($P{OCUPACION_ID}=-1 or ocu.id =$P{OCUPACION_ID});]]>
 					<textElement>
 						<font fontName="Arial" size="10"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{RAMO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{ramo}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" positionType="Float" x="411" y="0" width="123" height="15"/>
 					<textElement>
 						<font fontName="Arial" size="10"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{OCUPACION}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{ocupacion}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="false">
 					<reportElement mode="Transparent" x="0" y="0" width="70" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
 					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DNI}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{dni}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="false">
 					<reportElement mode="Transparent" x="70" y="0" width="188" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
@@ -272,7 +272,7 @@ and ($P{OCUPACION_ID}=-1 or ocu.id =$P{OCUPACION_ID});]]>
 					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					</textElement>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAALTA}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataalta}]]></textFieldExpression>
 				</textField>
 				<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
 					<reportElement mode="Transparent" x="742" y="0" width="49" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
@@ -286,12 +286,12 @@ and ($P{OCUPACION_ID}=-1 or ocu.id =$P{OCUPACION_ID});]]>
 					<textElement>
 						<font fontName="Arial" size="10"/>
 					</textElement>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATABAIXA}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataBaixa}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="534" y="0" width="68" height="13"/>
 					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{ESTADO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{estado}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

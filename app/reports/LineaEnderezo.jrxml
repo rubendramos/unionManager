@@ -14,29 +14,29 @@
 		<![CDATA[select org.acronimo,org.nome,org.email,en.enderezo enderezo, en.concello concello,
 loc.descricion localidade,
 loc.codigopostal codigopostal,prv.descricion provincia,com.descricion comunidade,en.telefono,en.fax,en.apartadocorreos
-from enderezo en,localidade loc,provincia prv,comunidadeautonoma com,
-organismo org
+from Enderezo en,Localidade loc,Provincia prv,ComunidadeAutonoma com,
+Organismo org
 where org.enderezo_id=en.id
 and en.localidade_id=loc.id
 and loc.provincia_id=prv.id
 and loc.comunidadeautonoma_id =com.id
 and org.id=$P{ORGANISMO_ID};]]>
 	</queryString>
-	<field name="ACRONIMO" class="java.lang.String"/>
-	<field name="NOME" class="java.lang.String"/>
-	<field name="EMAIL" class="java.lang.String"/>
-	<field name="ENDEREZO" class="java.lang.String"/>
-	<field name="CONCELLO" class="java.lang.String"/>
-	<field name="LOCALIDADE" class="java.lang.String"/>
-	<field name="CODIGOPOSTAL" class="java.lang.String"/>
-	<field name="PROVINCIA" class="java.lang.String"/>
-	<field name="COMUNIDADE" class="java.lang.String"/>
-	<field name="TELEFONO" class="java.lang.String"/>
-	<field name="FAX" class="java.lang.String"/>
-	<field name="APARTADOCORREOS" class="java.lang.String"/>
+	<field name="acronimo" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="enderezo" class="java.lang.String"/>
+	<field name="concello" class="java.lang.String"/>
+	<field name="localidade" class="java.lang.String"/>
+	<field name="codigopostal" class="java.lang.String"/>
+	<field name="provincia" class="java.lang.String"/>
+	<field name="comunidade" class="java.lang.String"/>
+	<field name="telefono" class="java.lang.String"/>
+	<field name="fax" class="java.lang.String"/>
+	<field name="apartadocorreos" class="java.lang.String"/>
 	<variable name="enderezo" class="java.lang.String">
-		<variableExpression><![CDATA[$F{ACRONIMO}+" "+$F{NOME}+" - "+$F{ENDEREZO}+" " +$F{LOCALIDADE}+" " +$F{CODIGOPOSTAL}+" "+$F{CONCELLO}+" - " +
-$F{PROVINCIA}+"."]]></variableExpression>
+		<variableExpression><![CDATA[$F{acronimo}+" "+$F{nome}+" - "+$F{enderezo}+" " +$F{localidade}+" " +$F{codigopostal}+" "+$F{concello}+" - " +
+$F{provincia}+"."]]></variableExpression>
 	</variable>
 	<detail>
 		<band height="10" splitType="Stretch">

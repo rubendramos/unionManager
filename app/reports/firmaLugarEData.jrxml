@@ -7,14 +7,14 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select loc.descricion localidade,sysdate dataActual from enderezo en,localidade loc
+		<![CDATA[select loc.descricion localidade,sysdate() dataActual from Enderezo en,Localidade loc
 where en.id=$P{ENDEREZO_ID}
 and en.localidade_id=loc.id;]]>
 	</queryString>
-	<field name="LOCALIDADE" class="java.lang.String"/>
-	<field name="DATAACTUAL" class="java.sql.Timestamp"/>
+	<field name="localidade" class="java.lang.String"/>
+	<field name="dataActual" class="java.sql.Timestamp"/>
 	<variable name="VLUGAREDATA" class="java.lang.String">
-		<variableExpression><![CDATA[$F{LOCALIDADE}+", "]]></variableExpression>
+		<variableExpression><![CDATA[$F{localidade}+", "]]></variableExpression>
 	</variable>
 	<detail>
 		<band height="12" splitType="Stretch">
@@ -30,7 +30,7 @@ and en.localidade_id=loc.id;]]>
 				<textElement textAlignment="Right">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAACTUAL}]]></textFieldExpression>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataActual}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

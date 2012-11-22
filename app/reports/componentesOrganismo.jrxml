@@ -12,17 +12,17 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select per.dni ,per.apelido1||' '||per.apelido2||', '||per.nome nome ,comp.dataAlta dataAlta,comp.dataBaixa dataBaixa from
-componenteorganismo comp join organismo_componenteorganismo orgcomp on comp.id=orgcomp.componentes_id
-join organismo org on org.id=orgcomp.organismo_id
-join afiliado af on af.id=comp.afiliado_id
-join persoa per on per.id=af.persoa_id
+ComponenteOrganismo comp join Organismo_ComponenteOrganismo orgcomp on comp.id=orgcomp.componentes_id
+join Organismo org on org.id=orgcomp.organismo_id
+join Afiliado af on af.id=comp.afiliado_id
+join Persoa per on per.id=af.persoa_id
 where org.id=$P{ORGANISMO_ID};]]>
 	</queryString>
-	<field name="DNI" class="java.lang.String"/>
-	<field name="NOME" class="java.lang.String"/>
-	<field name="DATAALTA" class="java.sql.Timestamp"/>
-	<field name="DATABAIXA" class="java.sql.Timestamp"/>
-	<sortField name="NOME"/>
+	<field name="dni" class="java.lang.String"/>
+	<field name="nome" class="java.lang.Long"/>
+	<field name="dataAlta" class="java.sql.Timestamp"/>
+	<field name="dataBaixa" class="java.sql.Timestamp"/>
+	<sortField name="nome"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -71,28 +71,28 @@ where org.id=$P{ORGANISMO_ID};]]>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOME}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="9" y="0" width="91" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{DNI}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dni}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
 				<reportElement x="421" y="0" width="134" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATABAIXA}]]></textFieldExpression>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataBaixa}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
 				<reportElement x="321" y="0" width="100" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAALTA}]]></textFieldExpression>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataAlta}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="7" y="-10" width="542" height="20"/>

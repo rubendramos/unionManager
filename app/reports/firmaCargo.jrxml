@@ -13,7 +13,7 @@
 	<parameter name="SCARNECONF" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select per.nome||' '||per.apelido1||' '||per.apelido2 nome,tsec.descricion cargo, af.carnetconfederado nafilado
-from afiliado af,persoa per,secretaria sec,tiposecretaria tsec,comite com,comite_secretaria comsec
+from Afiliado af,Persoa per,Secretaria sec,TipoSecretaria tsec,Comite com,Comite_Secretaria comsec
 where af.persoa_id=per.id
 and sec.id=comsec.secretaria_id
 and com.id=comsec.comite_id
@@ -24,14 +24,14 @@ and sec.databaixa  is  null
 and af.id=$P{AFILIADO_ID}
 and af.organismo_id=$P{ORGANISMO_ID};]]>
 	</queryString>
-	<field name="NOME" class="java.lang.String"/>
-	<field name="CARGO" class="java.lang.String"/>
-	<field name="NAFILADO" class="java.lang.String"/>
+	<field name="nome" class="java.lang.Long"/>
+	<field name="cargo" class="java.lang.String"/>
+	<field name="nafilado" class="java.lang.String"/>
 	<variable name="VCARGO" class="java.lang.String">
-		<variableExpression><![CDATA[$P{SSECRETARIA} +" "+$F{CARGO}+". "+$P{SCARNECONF}+" "+$F{NAFILADO}]]></variableExpression>
+		<variableExpression><![CDATA[$P{SSECRETARIA} +" "+$F{cargo}+". "+$P{SCARNECONF}+" "+$F{nafilado}]]></variableExpression>
 	</variable>
 	<variable name="VNOME" class="java.lang.String">
-		<variableExpression><![CDATA[$F{NOME}+"."]]></variableExpression>
+		<variableExpression><![CDATA[$F{nome}+"."]]></variableExpression>
 	</variable>
 	<detail>
 		<band height="28" splitType="Stretch">
