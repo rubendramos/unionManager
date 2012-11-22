@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="librocontas" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -10,36 +13,36 @@
 			<style backcolor="#E6DAC3"/>
 		</conditionalStyle>
 	</style>
-	<queryString language="SQL">
+	<queryString>
 		<![CDATA[select org.acronimo as acronimo, org.nome as nomeSindicato,lc.descricion descricionLibro,lc.dataalta dataAltaLibro,lc.dataBaixa dataBaixaLibro,
 fc.descricion descricionfolla,fc.dataAlta dataAltaFolla,fc.dataBaixa dataBaixaFolla,tap.descricion descricionTipoApuntamento,tc.descricion descricionTipoConcepto, ap.descricion descricionApuntamento, ap.importe importeApuntamento,ap.dataApuntamento dataApuntamento, ap.dataRexistro dataRexistroApuntamento
-from libroconta lc, follaconta fc, libroconta_follaconta lcfc, follaconta_apuntamento fcap, apuntamento  ap, organismo org, tipoApuntamento tap,tipoConcepto  tc
-where lc.id=lcfc.libroconta_id 
-and fc.id=lcfc.follascontas_id 
+from LibroConta lc, FollaConta fc, LibroConta_FollaConta lcfc, FollaConta_Apuntamento fcap, Apuntamento  ap, Organismo org, TipoApuntamento tap,TipoConcepto  tc
+where lc.id=lcfc.libroconta_id
+and fc.id=lcfc.follascontas_id
 and fc.id=fcap.follaconta_id
 and ap.id=fcap.apuntamentos_id
-and org.id=lc.sindicato_id
+and org.id=lc.organismo_id
 and tap.id=ap.tipoapuntamento_id
 and tc.id=ap.concepto_id
 and lc.organismo_id =1
 and lc.id=1 or lc.id=null;]]>
 	</queryString>
-	<field name="ACRONIMO" class="java.lang.String"/>
-	<field name="NOMESINDICATO" class="java.lang.String"/>
-	<field name="DESCRICIONLIBRO" class="java.lang.String"/>
-	<field name="DATAALTALIBRO" class="java.sql.Timestamp"/>
-	<field name="DATABAIXALIBRO" class="java.sql.Timestamp"/>
-	<field name="DESCRICIONFOLLA" class="java.lang.String"/>
-	<field name="DATAALTAFOLLA" class="java.sql.Timestamp"/>
-	<field name="DATABAIXAFOLLA" class="java.sql.Timestamp"/>
-	<field name="DESCRICIONTIPOAPUNTAMENTO" class="java.lang.String"/>
-	<field name="DESCRICIONTIPOCONCEPTO" class="java.lang.String"/>
-	<field name="DESCRICIONAPUNTAMENTO" class="java.lang.String"/>
-	<field name="IMPORTEAPUNTAMENTO" class="java.lang.String"/>
-	<field name="DATAAPUNTAMENTO" class="java.sql.Timestamp"/>
-	<field name="DATAREXISTROAPUNTAMENTO" class="java.sql.Timestamp"/>
+	<field name="acronimo" class="java.lang.String"/>
+	<field name="nomeSindicato" class="java.lang.String"/>
+	<field name="descricionLibro" class="java.lang.String"/>
+	<field name="dataAltaLibro" class="java.sql.Timestamp"/>
+	<field name="dataBaixaLibro" class="java.sql.Timestamp"/>
+	<field name="descricionfolla" class="java.lang.String"/>
+	<field name="dataAltaFolla" class="java.sql.Timestamp"/>
+	<field name="dataBaixaFolla" class="java.sql.Timestamp"/>
+	<field name="descricionTipoApuntamento" class="java.lang.String"/>
+	<field name="descricionTipoConcepto" class="java.lang.String"/>
+	<field name="descricionApuntamento" class="java.lang.String"/>
+	<field name="importeApuntamento" class="java.lang.Double"/>
+	<field name="dataApuntamento" class="java.sql.Timestamp"/>
+	<field name="dataRexistroApuntamento" class="java.sql.Timestamp"/>
 	<group name="DESCRICIONLIBRO">
-		<groupExpression><![CDATA[$F{DESCRICIONLIBRO}]]></groupExpression>
+		<groupExpression><![CDATA[$F{descricionLibro}]]></groupExpression>
 		<groupHeader>
 			<band height="37">
 				<frame>
@@ -55,7 +58,7 @@ and lc.id=1 or lc.id=null;]]>
 						<textElement>
 							<font isBold="true"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONLIBRO}]]></textFieldExpression>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionLibro}]]></textFieldExpression>
 					</textField>
 				</frame>
 			</band>
@@ -65,7 +68,7 @@ and lc.id=1 or lc.id=null;]]>
 		</groupFooter>
 	</group>
 	<group name="DESCRICIONFOLLA">
-		<groupExpression><![CDATA[$F{DESCRICIONFOLLA}]]></groupExpression>
+		<groupExpression><![CDATA[$F{descricionfolla}]]></groupExpression>
 		<groupHeader>
 			<band height="30">
 				<textField>
@@ -73,7 +76,7 @@ and lc.id=1 or lc.id=null;]]>
 					<textElement>
 						<font size="16" isBold="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONFOLLA}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionfolla}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -194,62 +197,62 @@ and lc.id=1 or lc.id=null;]]>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="0" y="0" width="66" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{ACRONIMO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{acronimo}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="66" y="0" width="66" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMESINDICATO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nomeSindicato}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="132" y="0" width="66" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAALTALIBRO}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataAltaLibro}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="198" y="0" width="66" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATABAIXALIBRO}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataBaixaLibro}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="264" y="0" width="66" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAALTAFOLLA}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataAltaFolla}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="330" y="0" width="66" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATABAIXAFOLLA}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataBaixaFolla}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="396" y="0" width="66" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONTIPOAPUNTAMENTO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionTipoApuntamento}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="462" y="0" width="66" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONTIPOCONCEPTO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionTipoConcepto}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="528" y="0" width="66" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONAPUNTAMENTO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionApuntamento}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="594" y="0" width="66" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{IMPORTEAPUNTAMENTO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{importeApuntamento}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="660" y="0" width="66" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAAPUNTAMENTO}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataApuntamento}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="726" y="0" width="66" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAREXISTROAPUNTAMENTO}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataRexistroApuntamento}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

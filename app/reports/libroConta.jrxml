@@ -44,7 +44,7 @@ and $P{LIBRO_ID}='-1' or lc.id=$P{LIBRO_ID};]]>
 	<field name="dataApuntamento" class="java.sql.Timestamp"/>
 	<field name="dataRexistroApuntamento" class="java.sql.Timestamp"/>
 	<group name="NOMESINDICATO">
-		<groupExpression><![CDATA[$F{NOMESINDICATO}]]></groupExpression>
+		<groupExpression><![CDATA[$F{nomeSindicato}]]></groupExpression>
 		<groupHeader>
 			<band height="37">
 				<frame>
@@ -60,14 +60,14 @@ and $P{LIBRO_ID}='-1' or lc.id=$P{LIBRO_ID};]]>
 						<textElement>
 							<font isBold="true"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMESINDICATO}]]></textFieldExpression>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{nomeSindicato}]]></textFieldExpression>
 					</textField>
 					<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
 						<reportElement style="Detail" mode="Transparent" x="71" y="0" width="70" height="24" forecolor="#736343" backcolor="#FFFFFF"/>
 						<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 							<font fontName="Arial" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{ACRONIMO}]]></textFieldExpression>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{acronimo}]]></textFieldExpression>
 					</textField>
 				</frame>
 			</band>
@@ -77,7 +77,7 @@ and $P{LIBRO_ID}='-1' or lc.id=$P{LIBRO_ID};]]>
 		</groupFooter>
 	</group>
 	<group name="DESCRICIONLIBRO">
-		<groupExpression><![CDATA[$F{DESCRICIONLIBRO}]]></groupExpression>
+		<groupExpression><![CDATA[$F{descricionLibro}]]></groupExpression>
 		<groupHeader>
 			<band height="30">
 				<textField>
@@ -85,23 +85,23 @@ and $P{LIBRO_ID}='-1' or lc.id=$P{LIBRO_ID};]]>
 					<textElement>
 						<font size="16" isBold="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONLIBRO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionLibro}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="198" y="9" width="72" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAALTALIBRO}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataAltaLibro}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="288" y="9" width="72" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATABAIXALIBRO}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataBaixaLibro}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
 	</group>
 	<group name="DESCRICIONFOLLA">
-		<groupExpression><![CDATA[$F{DESCRICIONFOLLA}]]></groupExpression>
+		<groupExpression><![CDATA[$F{descricionfolla}]]></groupExpression>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
@@ -199,42 +199,42 @@ and $P{LIBRO_ID}='-1' or lc.id=$P{LIBRO_ID};]]>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="216" y="0" width="72" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAALTAFOLLA}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataAltaFolla}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="288" y="0" width="72" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATABAIXAFOLLA}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataBaixaFolla}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="360" y="0" width="72" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONTIPOAPUNTAMENTO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionTipoApuntamento}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="432" y="0" width="72" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONTIPOCONCEPTO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionTipoConcepto}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="504" y="0" width="72" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONAPUNTAMENTO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionApuntamento}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="576" y="0" width="72" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{IMPORTEAPUNTAMENTO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{importeApuntamento}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="648" y="0" width="72" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAAPUNTAMENTO}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataApuntamento}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="720" y="0" width="72" height="15"/>
 					<textElement/>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAREXISTROAPUNTAMENTO}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataRexistroApuntamento}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

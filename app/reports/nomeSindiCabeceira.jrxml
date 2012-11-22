@@ -7,11 +7,11 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select org.acronimo ||' '||org.nome nomeSindi, org.descricion  from organismo org
+		<![CDATA[select org.acronimo ||' '||org.nome nomeSindi, org.descricion  from Organismo org
 where org.id=$P{ORGANISMO_ID};]]>
 	</queryString>
-	<field name="NOMESINDI" class="java.lang.String"/>
-	<field name="DESCRICION" class="java.lang.String"/>
+	<field name="nomeSindi" class="java.lang.Long"/>
+	<field name="descricion" class="java.lang.String"/>
 	<detail>
 		<band height="13" splitType="Stretch">
 			<textField>
@@ -19,7 +19,7 @@ where org.id=$P{ORGANISMO_ID};]]>
 				<textElement>
 					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMESINDI}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nomeSindi}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

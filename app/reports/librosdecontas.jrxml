@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="librosdecontas" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="255"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -44,7 +44,7 @@
 	<queryString>
 		<![CDATA[select org.acronimo as acronimo, org.nome as nomeSindicato,lc.descricion descricionLibro,lc.dataalta dataAltaLibro,lc.dataBaixa dataBaixaLibro,
 fc.descricion descricionfolla,fc.dataAlta dataAltaFolla,fc.dataBaixa dataBaixaFolla,tap.descricion descricionTipoApuntamento,tc.descricion descricionTipoConcepto, ap.descricion descricionApuntamento,  CASE tap.id     WHEN 1 THEN ap.importe   ELSE ap.importe*(-1) END importeApuntamento,ap.dataApuntamento dataApuntamento, ap.dataRexistro dataRexistroApuntamento
-from libroconta lc, follaconta fc, libroconta_follaconta lcfc, follaconta_apuntamento fcap, apuntamento  ap, organismo org, tipoApuntamento tap,tipoConcepto  tc
+from LibroConta lc, FollaConta fc, LibroConta_FollaConta lcfc, FollaConta_Apuntamento fcap, Apuntamento  ap, Organismo org, TipoApuntamento tap,TipoConcepto  tc
 where lc.id=lcfc.libroconta_id
 and fc.id=lcfc.follascontas_id
 and fc.id=fcap.follaconta_id
@@ -57,43 +57,43 @@ and ($P{LIBRO_ID}=-1 or lc.id=$P{LIBRO_ID})
 and ($P{DATAFIN}='-1' or ap.dataapuntamento <=convert($P{DATAFIN},date))
 and ($P{DATAINI}='-1' or ap.dataapuntamento >=convert($P{DATAINI},date));]]>
 	</queryString>
-	<field name="ACRONIMO" class="java.lang.String"/>
-	<field name="NOMESINDICATO" class="java.lang.String"/>
-	<field name="DESCRICIONLIBRO" class="java.lang.String"/>
-	<field name="DATAALTALIBRO" class="java.sql.Timestamp"/>
-	<field name="DATABAIXALIBRO" class="java.sql.Timestamp"/>
-	<field name="DESCRICIONFOLLA" class="java.lang.String"/>
-	<field name="DATAALTAFOLLA" class="java.sql.Timestamp"/>
-	<field name="DATABAIXAFOLLA" class="java.sql.Timestamp"/>
-	<field name="DESCRICIONTIPOAPUNTAMENTO" class="java.lang.String"/>
-	<field name="DESCRICIONTIPOCONCEPTO" class="java.lang.String"/>
-	<field name="DESCRICIONAPUNTAMENTO" class="java.lang.String"/>
-	<field name="IMPORTEAPUNTAMENTO" class="java.lang.Double"/>
-	<field name="DATAAPUNTAMENTO" class="java.sql.Timestamp"/>
-	<field name="DATAREXISTROAPUNTAMENTO" class="java.sql.Timestamp"/>
+	<field name="acronimo" class="java.lang.String"/>
+	<field name="nomeSindicato" class="java.lang.String"/>
+	<field name="descricionLibro" class="java.lang.String"/>
+	<field name="dataAltaLibro" class="java.sql.Timestamp"/>
+	<field name="dataBaixaLibro" class="java.sql.Timestamp"/>
+	<field name="descricionfolla" class="java.lang.String"/>
+	<field name="dataAltaFolla" class="java.sql.Timestamp"/>
+	<field name="dataBaixaFolla" class="java.sql.Timestamp"/>
+	<field name="descricionTipoApuntamento" class="java.lang.String"/>
+	<field name="descricionTipoConcepto" class="java.lang.String"/>
+	<field name="descricionApuntamento" class="java.lang.String"/>
+	<field name="importeApuntamento" class="java.lang.Double"/>
+	<field name="dataApuntamento" class="java.sql.Timestamp"/>
+	<field name="dataRexistroApuntamento" class="java.sql.Timestamp"/>
 	<variable name="TotalSindicato" class="java.lang.Number" calculation="Sum">
-		<variableExpression><![CDATA[$F{IMPORTEAPUNTAMENTO}]]></variableExpression>
+		<variableExpression><![CDATA[$F{importeApuntamento}]]></variableExpression>
 	</variable>
 	<variable name="TotalLibro" class="java.lang.Number" resetType="Group" resetGroup="DESCRICIONLIBRO" calculation="Sum">
-		<variableExpression><![CDATA[$F{IMPORTEAPUNTAMENTO}]]></variableExpression>
+		<variableExpression><![CDATA[$F{importeApuntamento}]]></variableExpression>
 	</variable>
 	<variable name="totalFolla" class="java.lang.Number" resetType="Group" resetGroup="DESCRICIONFOLLA" calculation="Sum">
-		<variableExpression><![CDATA[$F{IMPORTEAPUNTAMENTO}]]></variableExpression>
+		<variableExpression><![CDATA[$F{importeApuntamento}]]></variableExpression>
 	</variable>
 	<variable name="sTotalFolla" class="java.lang.String">
-		<variableExpression><![CDATA[$P{STOTAL}+' '+$F{DESCRICIONFOLLA} +': ']]></variableExpression>
+		<variableExpression><![CDATA[$P{STOTAL}+' '+$F{descricionfolla} +': ']]></variableExpression>
 	</variable>
 	<variable name="sTotalLibro" class="java.lang.String">
-		<variableExpression><![CDATA[$P{STOTAL}+' ' +$F{DESCRICIONLIBRO} +': ']]></variableExpression>
+		<variableExpression><![CDATA[$P{STOTAL}+' ' +$F{descricionLibro} +': ']]></variableExpression>
 	</variable>
 	<variable name="sTotalSindicato" class="java.lang.String">
-		<variableExpression><![CDATA[$P{STOTAL} +$F{ACRONIMO}+' '+$F{NOMESINDICATO} +': ']]></variableExpression>
+		<variableExpression><![CDATA[$P{STOTAL} +$F{acronimo}+' '+$F{nomeSindicato} +': ']]></variableExpression>
 	</variable>
 	<variable name="sNomeSindi" class="java.lang.String">
-		<variableExpression><![CDATA[$F{ACRONIMO} + ' ' + $F{NOMESINDICATO}]]></variableExpression>
+		<variableExpression><![CDATA[$F{acronimo} + ' ' + $F{nomeSindicato}]]></variableExpression>
 	</variable>
 	<group name="NOMESINDICATO">
-		<groupExpression><![CDATA[$F{NOMESINDICATO}]]></groupExpression>
+		<groupExpression><![CDATA[$F{nomeSindicato}]]></groupExpression>
 		<groupHeader>
 			<band height="25">
 				<frame>
@@ -103,14 +103,14 @@ and ($P{DATAINI}='-1' or ap.dataapuntamento >=convert($P{DATAINI},date));]]>
 						<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 							<font fontName="Arial" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{ACRONIMO}]]></textFieldExpression>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{acronimo}]]></textFieldExpression>
 					</textField>
 					<textField pattern="" isBlankWhenNull="false">
 						<reportElement mode="Transparent" x="102" y="0" width="384" height="25" forecolor="#736343" backcolor="#F9F1E3"/>
 						<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 							<font fontName="Arial" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMESINDICATO}]]></textFieldExpression>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{nomeSindicato}]]></textFieldExpression>
 					</textField>
 				</frame>
 				<rectangle>
@@ -163,7 +163,7 @@ and ($P{DATAINI}='-1' or ap.dataapuntamento >=convert($P{DATAINI},date));]]>
 		</groupFooter>
 	</group>
 	<group name="DESCRICIONLIBRO">
-		<groupExpression><![CDATA[$F{DESCRICIONLIBRO}]]></groupExpression>
+		<groupExpression><![CDATA[$F{descricionLibro}]]></groupExpression>
 		<groupHeader>
 			<band height="20">
 				<textField>
@@ -171,7 +171,7 @@ and ($P{DATAINI}='-1' or ap.dataapuntamento >=convert($P{DATAINI},date));]]>
 					<textElement>
 						<font size="16" isBold="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONLIBRO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionLibro}]]></textFieldExpression>
 				</textField>
 				<rectangle>
 					<reportElement mode="Opaque" x="26" y="0" width="20" height="20" backcolor="#D9D6CD"/>
@@ -220,7 +220,7 @@ and ($P{DATAINI}='-1' or ap.dataapuntamento >=convert($P{DATAINI},date));]]>
 		</groupFooter>
 	</group>
 	<group name="DESCRICIONFOLLA">
-		<groupExpression><![CDATA[$F{DESCRICIONFOLLA}]]></groupExpression>
+		<groupExpression><![CDATA[$F{descricionfolla}]]></groupExpression>
 		<groupHeader>
 			<band height="30">
 				<rectangle>
@@ -234,7 +234,7 @@ and ($P{DATAINI}='-1' or ap.dataapuntamento >=convert($P{DATAINI},date));]]>
 					<textElement>
 						<font size="12" isBold="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONFOLLA}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionfolla}]]></textFieldExpression>
 				</textField>
 				<line>
 					<reportElement x="106" y="28" width="600" height="1"/>
@@ -317,7 +317,7 @@ and ($P{DATAINI}='-1' or ap.dataapuntamento >=convert($P{DATAINI},date));]]>
 		</groupFooter>
 	</group>
 	<group name="DESCRICIONAPUNTAMENTO">
-		<groupExpression><![CDATA[$F{DESCRICIONAPUNTAMENTO}]]></groupExpression>
+		<groupExpression><![CDATA[$F{descricionApuntamento}]]></groupExpression>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
@@ -380,35 +380,35 @@ and ($P{DATAINI}='-1' or ap.dataapuntamento >=convert($P{DATAINI},date));]]>
 					<textElement>
 						<font fontName="Arial" size="10"/>
 					</textElement>
-					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATAAPUNTAMENTO}]]></textFieldExpression>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dataApuntamento}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="0" y="0" width="66" height="12"/>
 					<textElement>
 						<font fontName="Arial" size="10"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONTIPOAPUNTAMENTO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionTipoApuntamento}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="164" y="0" width="164" height="12"/>
 					<textElement>
 						<font fontName="Arial"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONAPUNTAMENTO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionApuntamento}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="71" y="0" width="80" height="12"/>
 					<textElement>
 						<font fontName="Arial" size="10"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRICIONTIPOCONCEPTO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descricionTipoConcepto}]]></textFieldExpression>
 				</textField>
 				<textField pattern=" #,##0.00 €">
 					<reportElement x="520" y="0" width="80" height="12"/>
 					<textElement>
 						<font fontName="Arial"/>
 					</textElement>
-					<textFieldExpression class="java.lang.Double"><![CDATA[$F{IMPORTEAPUNTAMENTO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.Double"><![CDATA[$F{importeApuntamento}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
