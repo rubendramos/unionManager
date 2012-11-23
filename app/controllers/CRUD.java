@@ -281,7 +281,7 @@ public abstract class CRUD extends Controller {
                 notFound();
             }
             response.contentType = attachment.type();
-            renderBinary(attachment.get(), attachment.length());
+             renderBinary(attachment.get(),object.toString(), attachment.length() );
         }
         // DEPRECATED
         if (att instanceof play.db.jpa.FileAttachment) {
@@ -289,7 +289,7 @@ public abstract class CRUD extends Controller {
             if (attachment == null || !attachment.exists()) {
                 notFound();
             }
-            renderBinary(attachment.get(), attachment.filename);
+            renderBinary(attachment.get(), object.toString());
         }
         notFound();
     }
@@ -592,9 +592,8 @@ public abstract class CRUD extends Controller {
     private static void setNomeFicheiroAdxunto(Model object) {
         try {
 
-            Field t = object.getClass().getDeclaredField("nomeFicheiroAdxunto");
-            Documento doc = (Documento) object;
-            // doc.ficheiro.set(new FileInputStream(photo), MimeTypes.getContentType(photo.getName()));
+            Field t = object.getClass().getDeclaredField("nomeFicheiro");
+            Documento doc = (Documento) object;            
 
             String nomeFicheiroAduxunto = doc.ficheiro.getFile().getName();
             t.set(object, nomeFicheiroAduxunto);

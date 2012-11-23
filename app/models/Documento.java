@@ -40,7 +40,7 @@ public class Documento extends UnionSecureModel {
     public Blob ficheiro;
     
     @Hidden
-    private String nomeFicheiro;
+    public String nomeFicheiro;
   
     public Documento(TipoDocumento tipoDocumento,String nome,String descricion,Date dataCreacion,
             String autor, Blob ficheiro){
@@ -64,7 +64,7 @@ public class Documento extends UnionSecureModel {
      * @return the ficheiro
      */
     public Blob getFicheiro() {
-        return ficheiro;
+        return this.ficheiro;
     }
 
     /**
@@ -78,14 +78,14 @@ public class Documento extends UnionSecureModel {
      * @return the nomeFicheiro
      */
     public String getNomeFicheiro() {
-        return nomeFicheiro;
+        return this.nomeFicheiro;
     }
 
     /**
      * @param nomeFicheiro the nomeFicheiro to set
      */
-    public void setNomeFicheiro(String nomeFicheiro) {
-        this.nomeFicheiro = getFicheiro().getFile().getName();
+    public void setNomeFicheiro(String nomeFicheiro) {       
+        this.nomeFicheiro=nomeFicheiro;
     }
 
    

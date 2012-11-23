@@ -19,7 +19,7 @@ import play.Play;
 	public class BaseJasperReports {
 	
 	  static String REPORT_DEFINITION_PATH = Play.configuration.getProperty("repotrs.path");
-          static String ATTACHMENT_PATH = Play.configuration.getProperty("attachment.path");
+          static String ATTACHMENT_PATH = Play.configuration.getProperty("attachments.path");
 
 	  public static JasperPrint generateReport(String reportDefFile, Map reportParams) {	   
 		JasperPrint jrprint = null;
