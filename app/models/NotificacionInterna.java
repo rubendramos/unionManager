@@ -22,7 +22,7 @@ public class NotificacionInterna extends Model {
     
     @Required
     @Lob
-    @MaxSize(500)
+    @MaxSize(1000)
     public String contido;
     
     @Required
