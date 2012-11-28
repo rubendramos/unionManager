@@ -58,6 +58,7 @@
             <!--[if lte IE 6]><table><tr><td><![endif]-->
             <ul class="sub">
                 #{secure.checkFuncionalidade 'Asembleas'}<li><a href="@{Asembleas.list()}">&{'menu.secretariaXeral.asembleas'}</a></li>#{/secure.checkFuncionalidade}
+                #{secure.checkFuncionalidade 'Afiliados'}<li><a href="@{Afiliados.list()}">&{'menu.organizacion.afiliados'}</a></li>#{/secure.checkFuncionalidade}
                 #{secure.checkFuncionalidade 'Eventos'}<li><a href="@{Eventos.list()}">&{'menu.Eventos'}</a></li>#{/secure.checkFuncionalidade}
 
             </ul>
