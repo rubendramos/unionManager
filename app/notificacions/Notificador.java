@@ -52,22 +52,7 @@ public class Notificador extends Mailer {
 
     }
 
-    public static boolean notificacionSistema(Aviso aviso) throws Exception {
-
-
-        //asunto do mail
-        setSubject(aviso.getAsunto());
-       
-        //Engadimos os destinatarios
-        addRecipient("rubendramos@gmail.com");
-
-        //Contacto que o envía
-        setFrom(new InternetAddress(NOTIFICADOR, NOTIFICADOR));
-
-        //Enviase e esperase resposta
-        return sendAndWait(aviso);
-    }
-
+   
     public static boolean notificacionAltaUsuario(User u, String asunto, String contido,String firma) throws Exception {
 
         //asunto do mail
