@@ -93,7 +93,7 @@ public class Cuotas extends CRUD {
 
             Calendar cal = Calendar.getInstance();
             int iAno = cal.get(Calendar.YEAR);
-            int iMes = cal.get(Calendar.MONTH);
+            int iMes = cal.get(Calendar.MONTH)+1;
             
             Long longMes = Long.parseLong(Integer.toString(iMes));
             Long longAno = Long.parseLong(Integer.toString(iAno));

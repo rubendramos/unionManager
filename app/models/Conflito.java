@@ -46,6 +46,7 @@ public class Conflito extends UnionSecureModel {
     
     @ManyToMany
     @AddForeignKey
+    @NewForeignKey
     public Set<Evento> accions = new HashSet();
     
     @ManyToMany
