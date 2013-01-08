@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="unionManager" default="arquive" basedir="."> 
+        
+ 
+     <target name="updateApp" description="Update app" depends="updateAppTar,ftpCnt,clean" />
+     <target name="installApp" description="Update app" depends="clean,installAppTar,ftpCnt,clean" />
+    
+    <target name="updateAppTar" description="Generate tar update app" >
+        <delete dir="dist" />
+        <mkdir dir="dist" />       
+        <tar compression="gzip" destfile="dist/unionManager.tar.gz">
+            <tarfileset dir="." prefix=".">
+                <include name="app/**" />       
+                <include name="notificacions/**" />
+                <include name="public/**" />
+                <include name="lib/**" />
+            </tarfileset>
+        </tar>
+    </target>
+
+    <target name="installAppTar" description="Generate tar install app">
+        <delete dir="dist" />
+        <mkdir dir="dist" />   
+        <tar compression="gzip" destfile="dist/unionManagerInstalation.tar.gz">
+            <tarfileset dir="." prefix=".">
+                <include name="app/**" />       
+                <include name="notifications/**" />
+                <include name="public/**" />
+                <include name="scripbd/**" />
+                <include name="data/**" />
+                <include name="conf/**" />
+                <include name="lib/**" />
+            </tarfileset>
+        </tar>
+    </target>
+
+    <target name="ftpCnt" description="Send tar to cnt server ">
+        <ftp server="cntcompostela.no-ip.org"
+      port="50684"
+      remotedir="/opt/unionManager-master/updates"
+      userid="cnt"
+      password="maradona"
+      passive="yes"
+      verbose="yes"
+      binary="no">
+            <fileset dir="dist">
+                <include name="**/*.tar.gz"/>
+            </fileset>
+        </ftp>
+    </target>
+
+    <target name="clean" description="clean">
+        <delete dir="dist" />    
+    </target>
+
+</project>
